@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <title>Superscheda</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Scheda estesa D&amp;D 3.5</h1>
+
+      <div class="row">
+        <div class="col-md-3 form-group">
+          <label for="nome_personaggio">Nome del personaggio</label>
+          <input type="text" class="form-control" id="nome_personaggio" placeholder="Nome">
+        </div>
+        <div class="col-md-3 form-group">
+          <label for="razza">Razza</label>
+          <input type="text" class="form-control" id="razza" placeholder="Umano">
+        </div>
+        <div class="col-md-3 form-group">
+          <label for="archetipo_1">Archetipo 1</label>
+          <input type="text" class="form-control" id="archetipo_1" placeholder="">
+        </div>
+        <div class="col-md-3 form-group">
+          <label for="archetipo_2">Archetipo 2</label>
+          <input type="text" class="form-control" id="archetipo_2" placeholder="">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 form-group">
+          <label for="nome_giocatore">Nome del giocatore</label>
+          <input type="text" class="form-control" id="nome_giocatore" placeholder="Il tuo nome">
+        </div>
+        <div class="col-md-3 form-group">
+          <label for="classe">Classe</label>
+          <input type="text" class="form-control" id="classe" placeholder="Classe">
+        </div>
+        <div class="col-md-3 form-group">
+          <label for="classe_1">Classe/CdP</label>
+          <input type="text" class="form-control" id="classe_1" placeholder="">
+        </div>
+        <div class="col-md-3 form-group">
+          <label for="classe_2">Classe/CdP</label>
+          <input type="text" class="form-control" id="classe_2" placeholder="">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 form-group">
+          <label for="classe_png">Classe da PNG</label>
+          <input type="text" class="form-control" id="classe_png" placeholder="">
+        </div>
+        <div class="col-md-3 form-group">
+          <label for="classe_png_1">Classe/CdP</label>
+          <input type="text" class="form-control" id="classe_png_1" placeholder="">
+        </div>
+        <div class="col-md-3 form-group">
+          <label for="classe_pgn_2">Classe/CdP</label>
+          <input type="text" class="form-control" id="classe_pgn_2" placeholder="">
+        </div>
+        <div class="col-md-3 form-group">
+          <label for="classe_png_3">Classe/CdP</label>
+          <input type="text" class="form-control" id="classe_png_3" placeholder="">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3">
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="taglia">Taglia</label>
+              <input type="text" class="form-control" id="taglia" placeholder="">
+            </div>
+            <div class="col-md-6 form-group">
+              <label for="altezza">Altezza</label>
+              <input type="text" class="form-control" id="altezza" placeholder="">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="peso">Peso</label>
+              <input type="text" class="form-control" id="peso" placeholder="">
+            </div>
+            <div class="col-md-6 form-group">
+              <label for="occhi">Occhi</label>
+              <input type="text" class="form-control" id="occhi" placeholder="">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="capelli">Capelli</label>
+              <input type="text" class="form-control" id="capelli" placeholder="">
+            </div>
+            <div class="col-md-6 form-group">
+              <label for="pelle">Pelle</label>
+              <input type="text" class="form-control" id="pelle" placeholder="">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="eta">Età</label>
+              <input type="text" class="form-control" id="eta" placeholder="">
+            </div>
+            <div class="col-md-6 form-group">
+              <label for="sesso">Sesso</label>
+              <input type="text" class="form-control" id="sesso" placeholder="">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <label for="segni_particolari">Segni particolari</label>
+          <input type="text" class="form-control" id="segni_particolari" placeholder="">
+        </div>
+        <div class="col-md-3 form-group">
+          <label for="divinita">Divinità</label>
+          <input type="text" class="form-control" id="divinita" placeholder="">
+        </div>
+        <div class="col-md-3 form-group">
+          <label for="allineamento">Allineamento/CdP</label>
+          <input type="text" class="form-control" id="allineamento" placeholder="">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-10 col-md-offset-2">
+          <div class="row">
+            <div class="col-md-1 small"><label>TB</label></div>
+            <div class="col-md-1 small"><label>Razza</label></div>
+            <div class="col-md-1 small"><label>Arch 1</label></div>
+            <div class="col-md-1 small"><label>Arch 2</label></div>
+            <div class="col-md-1 small"><label>Lvl</label></div>
+            <div class="col-md-1 small"><label>Magia</label></div>
+            <div class="col-md-1 small"><label>VV1</label></div>
+            <div class="col-md-1 small"><label>VV2</label></div>
+            <div class="col-md-1 small"><label>Tot</label></div>
+            <div class="col-md-1 small"><label>M Tot</label></div>
+            <div class="col-md-1 small"><label>Temp</label></div>
+            <div class="col-md-1 small"><label>M Temp</label></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2 text-right form-group">
+          <label>Forza</label>
+        </div>
+        <div class="col-md-10">
+          <div class="row">
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2 text-right form-group">
+          <label>Destrezza</label>
+        </div>
+        <div class="col-md-10">
+          <div class="row">
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2 text-right form-group">
+          <label>Costituzione</label>
+        </div>
+        <div class="col-md-10">
+          <div class="row">
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2 text-right form-group">
+          <label>Intelligenza</label>
+        </div>
+        <div class="col-md-10">
+          <div class="row">
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2 text-right form-group">
+          <label>Saggezza</label>
+        </div>
+        <div class="col-md-10">
+          <div class="row">
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2 text-right form-group">
+          <label>Carisma</label>
+        </div>
+        <div class="col-md-10">
+          <div class="row">
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+            <div class="col-md-1 form-group">
+              <input type="text" class="form-control" id="TODO">
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  </body>
+</html>
