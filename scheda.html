@@ -10,12 +10,27 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
     <script>
       function hpath(obj) {
-        var path = $(obj).parents('[data-dd-id]')
-          .map(function(i, item) { return $(item).data('dd-id'); })
-          .reverse();
+        var parents = $(obj).parents('[data-dd-id]');
+        var path = [];
+        if (parents.length > 0) {
+          path = $.makeArray(parents.map(function(i, item) { return $(item).data('dd-id'); })).reverse();
+        }
         path.push($(obj).data('dd-id'));
         return path.join('/')
       }
+
+      $(function() {
+        $('#tbox_highlight_missing_id').click(function() {
+          $('input').not('[data-dd-id]').addClass('is-invalid');
+        })
+        $('#tbox_show_hpath').click(function() {
+          $('input[data-dd-id]').each(function (i, obj) {
+            $(obj).attr('title', hpath(obj));
+            $(obj).data('toggle', 'tooltip');
+            $(obj).tooltip();
+          })
+        })
+      });
     </script>
   </head>
   <body>
@@ -26,7 +41,9 @@
         <div class="card-header">
          <a data-toggle="collapse" href="#debug_features" aria-expanded="true" aria-controls="debug_features">Debug features</a>
         </div>
-        <div id="debug_features" class="card-body collapse show">Nothing yet
+        <div id="debug_features" class="card-body collapse show">
+            <button id="tbox_highlight_missing_id" class="btn btn-secondary" type="button">Highlight missing dd-id</button>
+            <button id="tbox_show_hpath" class="btn btn-secondary" type="button">Show hpath</button>
         </div>
       </div>
 
