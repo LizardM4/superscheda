@@ -16,6 +16,16 @@ function loadHier(hier) {
     });
 }
 
+function notify(cls, text) {
+    var $div = $('<div class="alert alert-dismissible fade show" role="alert">');
+    $div.addClass('alert-' + cls);
+    $div.text(text);
+    $('<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+        '<span aria-hidden="true">&times;</span>' +
+      '</button>').appendTo($div);
+    $div.insertAfter('h1');
+}
+
 $(function() {
     $('input[data-dd-id]').each(function (idx, obj) {
         $(obj).attr('data-dd-path', getHierPath(obj));

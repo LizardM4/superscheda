@@ -10,6 +10,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
     <script src="tree.js"></script>
     <script src="controller.js"></script>
+    <script src="https://unpkg.com/dropbox/dist/Dropbox-sdk.min.js"></script>
     <script>
       $(function() {
         $('#tbox_highlight_missing_id').click(function() {
@@ -25,14 +26,32 @@
         $('#tbox_load_repr').click(function() {
           loadHier(document.hier);
           $('#tbox_txt').val(document.hier.dump());
-        })
+        });
+        $('#tbox_load_dbx').click(function() {
+          token = $('#token');
+          token.prop('disabled', true);
+          $(this).prop('disabled', true);
+          document.dbx = new Dropbox({accessToken: token.val()});
+          $('#tbox_test_dbx').prop('disabled', false);
+        });
+        $('#tbox_test_dbx').click(function() {
+          loadHier(document.hier);
+          document.dbx.filesUpload({path: '/demo.json', mode: 'overwrite', contents: document.hier.dump()})
+            .then(function(response) {
+              notify('success', 'Demo file correctly uploaded.');
+            })
+            .catch(function(error) {
+              console.log(error);
+              notify('danger', 'Somewhere, something went terribly wrong. Check the console.');
+            });
+        });
+        document.hier = new Hier();
       });
     </script>
   </head>
   <body>
     <div class="container">
       <h1>Scheda estesa D&amp;D 3.5</h1>
-
       <div class="card">
         <div class="card-header">
          <a data-toggle="collapse" href="#debug_features" aria-expanded="true" aria-controls="debug_features">Debug features</a>
@@ -41,8 +60,19 @@
             <button id="tbox_highlight_missing_id" class="btn btn-secondary" type="button">Highlight missing dd-id</button>
             <button id="tbox_show_hpath" class="btn btn-secondary" type="button">Show get_hier_path</button>
             <button id="tbox_load_repr" class="btn btn-secondary" type="button">Load representation</button>
+            <button id="tbox_test_dbx" class="btn btn-secondary" type="button" disabled>Test Dropbox</button>
             <br><br>
             <textarea class="form-control" rows="10" readonly id="tbox_txt"></textarea>
+            <br><br>
+            <div class="form-group">
+              <label>Dropbox access token:</label>
+              <div class="input-group">
+                <input type="password" class="form-control" id="token">
+                <span class="input-group-btn">
+                  <button id="tbox_load_dbx" class="btn btn-primary" type="button">Load Dropbox</button>
+                </span>
+              </div>
+            </div>
         </div>
       </div>
 
@@ -62,7 +92,7 @@
             </div>
             <div class="col-md-3 form-group">
               <label>Archetipo 1</label>
-              <input type="number" class="form-control" data-dd-id="archetipo[0]">
+              <input type="text" class="form-control" data-dd-id="archetipo[0]">
             </div>
             <div class="col-md-3 form-group">
               <label>Archetipo 2</label>

@@ -61,4 +61,3 @@ function Hier() {
 
 };
 
-document.hier = new Hier();
