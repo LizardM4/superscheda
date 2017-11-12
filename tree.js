@@ -1,7 +1,9 @@
 function Hier() {
-    this.obj = new Object();
+    var self = this;
 
-    this.parsePath = function(path) {
+    self.obj = new Object();
+
+    self.parsePath = function(path) {
         path = path.split('.');
         for (var i = 0; i < path.length; ++i) {
             var openBracketIdx = path[i].indexOf('[');
@@ -15,11 +17,11 @@ function Hier() {
         return path;
     };
 
-    this.ensureParentExists = function(path) {
+    self.ensureParentExists = function(path) {
         if (typeof path === 'string') {
-            path = this.parsePath(path);
+            path = self.parsePath(path);
         }
-        var node = this.obj;
+        var node = self.obj;
         for (var i = 0; i < path.length - 1; i++) {
             if (!(path[i] in node)) {
                 if (i < path.length - 1 && typeof path[i + 1] === 'number') {
@@ -34,20 +36,20 @@ function Hier() {
         return node;
     };
 
-    this.set = function(path, value) {
+    self.set = function(path, value) {
         if (typeof path == 'string') {
-            path = this.parsePath(path);
+            path = self.parsePath(path);
         }
-        var node = this.ensureParentExists(path);
+        var node = self.ensureParentExists(path);
         node[path[path.length - 1]] = value;
-        return this;
+        return self;
     }
 
-    this.get = function(path) {
+    self.get = function(path) {
         if (typeof path == 'string') {
-            path = this.parsePath(path);
+            path = self.parsePath(path);
         }
-        var node = this.ensureParentExists(path);
+        var node = self.ensureParentExists(path);
         var lastEntry = path[path.length - 1];
         if (!(lastEntry in node)) {
             node[lastEntry] = null;
@@ -55,8 +57,8 @@ function Hier() {
         return node[lastEntry];
     }
 
-    this.dump = function() {
-        return JSON.stringify(this.obj, null, 4);
+    self.dump = function() {
+        return JSON.stringify(self.obj, null, 4);
     }
 
 };
