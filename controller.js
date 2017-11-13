@@ -34,6 +34,48 @@ function Controller() {
         }
     };
 
+    self._setupSaveToModal = function() {
+        self._modalSaveTo = $('#save_to');
+        var save_to_list = self._modalSaveTo.find('.dropbox-file-list');
+        var save_to_form = self._modalSaveTo.find('form');
+        var save_to_file = save_to_form.find('input');
+
+        save_to_form.on('submit', function (event) {
+          event.preventDefault();
+          event.stopPropagation();
+          save_to_form.find('input,button').prop('disabled', true);
+          if (save_to_form[0].checkValidity() === true) {
+            self.save(
+              save_to_form.find('input').val(),
+              function(success) { self._modalSaveTo.modal('hide'); }
+            );
+          }
+          save_to_form.addClass('was-validated');
+        });
+
+        self._modalSaveTo.on('show.bs.modal', function (event) {
+            var event_fn = function(event2) {
+                save_to_file.val($(this).text().trim()).change();
+            };
+            self._populateFileList(save_to_list, event_fn);
+        });
+    };
+
+
+    self._setupLoadFromModal = function() {
+        self._modalLoadFrom = $('#load_from');
+        var load_from_list = self._modalLoadFrom.find('.dropbox-file-list');
+
+        self._modalLoadFrom.on('show.bs.modal', function (event) {
+            var event_fn = function(event2) {
+                self.load($(this).text().trim(), function(success) {
+                    self._modalLoadFrom.modal('hide');
+                });
+            };
+            self._populateFileList(load_from_list, event_fn);
+        });
+    };
+
 
     self.notify = function(cls, text) {
         var $div = $('<div class="alert alert-dismissible fade show" role="alert">');
@@ -48,6 +90,8 @@ function Controller() {
     self.setup = function() {
         self._setupDDPaths();
         self._setupDropBox();
+        self._setupSaveToModal();
+        self._setupLoadFromModal();
     };
 
     self.updateHier = function() {
@@ -64,25 +108,73 @@ function Controller() {
         }
     };
 
+    self._populateFileList = function(obj, file_click_event) {
+        obj = $(obj);
+        obj.empty();
+        $('<i class="fa fa-refresh fa-spin"></i>').appendTo(obj);
+        self.dropBox.filesListFolder({path: ''})
+            .then(function(response) {
+                obj.empty();
+                var $ul = $('<ul class="list-unstyled ml-1"></ul>');
+                for (var i = 0; i < response.entries.length; ++i) {
+                var name = response.entries[i].name;
+                $('<a href="#"></a>')
+                    .text(' ' + name)
+                    .prepend($('<i class="fa fa-file" aria-hidden="true"></i>'))
+                    .click(file_click_event)
+                    .appendTo($('<li></li>').appendTo($ul));
+                }
+                $ul.appendTo(obj);
+            })
+            .catch(function(error) {
+                console.log(error);
+                $('<p class="text-danger">Impossibile caricare la lista di file.</p>')
+                    .appendTo(obj);
+            });
+    };
+
     self.save = function(name, post_action=null) {
-        self.update();
+        self.updateHier();
         self.dropBox.filesUpload({
             path: '/' + name,
             mode: 'overwrite',
             contents: self.data.dump()
         })
             .then(function(response) {
+                self.notify('success', 'Salvato su \'' + name +'\'.');
                 if (post_action) {
                     post_action(true);
                 }
-                self.notify('success', 'Saved to \'' + name +'\'.');
             })
             .catch(function(error) {
+                console.log(error);
+                self.notify('danger', 'Impossibile salvare su DropBox.');
                 if (post_action) {
                     post_action(false);
                 }
-                console.log(error);
-                self.notify('danger', 'Unable to save to DropBox.');
+            });
+    };
+
+    self.load = function(name, post_action=null) {
+        self.dropBox.filesDownload({path: '/' + name})
+            .then(function (response) {
+                var blob = response.fileBlob;
+                var reader = new FileReader();
+                reader.addEventListener('loadend', function() {
+                    self.data.load(reader.result);
+                    self.updateForm();
+                    self.notify('success', 'Caricato \'' + name + '\' da DropBox.');
+                    if (post_action) {
+                        post_action(true);
+                    }
+                });
+                reader.readAsText(blob);
+            })
+            .catch(function (error) {
+                self.notify('danger', 'Impossibile leggere da DropBox.');
+                if (post_action) {
+                    post_action(false);
+                }
             });
     };
 

@@ -53,16 +53,17 @@
       <h1>Scheda estesa D&amp;D 3.5</h1>
       <div class="row">
         <div class="col-md-12">
-          <button id="btn_save" class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#exampleModalLong">Save to <i class="fa fa-dropbox" aria-hidden="true"></i></button>
+          <button id="btn_save" class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#load_from">Carica da <i class="fa fa-dropbox" aria-hidden="true"></i></button>
+          <button id="btn_save" class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#save_to">Salva su <i class="fa fa-dropbox" aria-hidden="true"></i></button>
         </div>
       </div>
 
 
-      <div class="modal fade" tabindex="-1" role="dialog" id="exampleModalLong" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+      <div class="modal fade" tabindex="-1" role="dialog" id="save_to" aria-labelledby="save_to_title" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Save to <i class="fa fa-dropbox" aria-hidden="true"></i></h5>
+              <h5 class="modal-title" id="save_to_title">Salva su <i class="fa fa-dropbox" aria-hidden="true"></i></h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -70,74 +71,42 @@
             <form novalidate>
               <div class="modal-body">
                 <div class="form-group row">
-                  <label class="col-sm-2 col-form-label">Filename: </label>
+                  <label class="col-sm-2 col-form-label">File: </label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" placeholder="file.json" required pattern=".+\.json">
+                    <div class="invalid-feedback">
+                      Il file deve avere estensione JSON.
+                    </div>
                   </div>
                 </div>
                 <hr>
-                <div id="dbox_content">
-                  <i class="fa fa-refresh fa-spin"></i>
-                </div>
+                <div class="dropbox-file-list"></div>
               </div>
               <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Save</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Salva</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
               </div>
             </form>
           </div>
         </div>
       </div>
 
-      <script type="text/javascript">
-        var $save_to_modal = $('#exampleModalLong');
-        var $form = $save_to_modal.find('form');
-        $form.on('submit', function (event) {
-          event.preventDefault();
-          event.stopPropagation();
-          $form.find('input,button').prop('disabled', true);
-          if ($form[0].checkValidity() === true) {
-            DD.save(
-              $form.find('input').val(),
-              function(success) { $save_to_modal.modal('hide'); }
-            );
-          }
-          $form.addClass('was-validated');
-        });
-
-        $save_to_modal.on('show.bs.modal', function (evt) {
-          var $filename_input = $(this).find('input');
-          var $dbox_content = $(this).find('#dbox_content');
-          DD.dropBox.filesListFolder({path: ''})
-            .then(function(response) {
-              $dbox_content.empty();
-              var $ul = $('<ul class="list-unstyled ml-1"></ul>');
-              for (var i = 0; i < response.entries.length; ++i) {
-                var name = response.entries[i].name;
-                $('<a href="#"></a>')
-                  .text(' ' + name)
-                  .prepend($('<i class="fa fa-file" aria-hidden="true"></i>'))
-                  .click(function(evt) {
-                    $filename_input.val(name).change();
-                  })
-                  .appendTo($('<li></li>').appendTo($ul));
-              }
-              $ul.appendTo($dbox_content);
-            })
-            .catch(function(error) {
-              console.log(error);
-              $('<p class="text-danger">Unable to load file list.</p>')
-                .appendTo($dbox_content);
-            });
-        });
-
-        $save_to_modal.on('hidden.bs.modal', function (evt) {
-          var $dbox_content = $(this).find('#dbox_content');
-          $form.find('input,button').prop('disabled', false);
-          $dbox_content.empty();
-          $('<i class="fa fa-refresh fa-spin"></i>').appendTo($dbox_content);
-        });
-      </script>
+      <div class="modal fade" tabindex="-1" role="dialog" id="load_from" aria-labelledby="load_from_title" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="load_from_title">Carica da <i class="fa fa-dropbox" aria-hidden="true"></i></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body dropbox-file-list"></div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <br>
 
