@@ -5,6 +5,7 @@
     <title>Superscheda</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
@@ -36,24 +37,102 @@
           $('#tbox_txt').val(DD.data.dump());
         });
 
-        $('#tbox_test_dbx').click(function() {
-          DD.update();
-          DD.dropBox.filesUpload({path: '/demo.json', mode: 'overwrite', contents: DD.data.dump()})
-            .then(function(response) {
-              DD.notify('success', 'Demo file correctly uploaded.');
-            })
-            .catch(function(error) {
-              console.log(error);
-              DD.notify('danger', 'Somewhere, something went terribly wrong. Check the console.');
-            });
-        });
-
       });
     </script>
   </head>
   <body>
     <div class="container">
       <h1>Scheda estesa D&amp;D 3.5</h1>
+      <div class="row">
+        <div class="col-md-12">
+          <button id="btn_save" class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#exampleModalLong">Save to <i class="fa fa-dropbox" aria-hidden="true"></i></button>
+        </div>
+      </div>
+
+
+      <div class="modal fade" tabindex="-1" role="dialog" id="exampleModalLong" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Save to <i class="fa fa-dropbox" aria-hidden="true"></i></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form novalidate>
+              <div class="modal-body">
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">Filename: </label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="file.json" required pattern=".+\.json">
+                  </div>
+                </div>
+                <hr>
+                <div id="dbox_content">
+                  <i class="fa fa-refresh fa-spin"></i>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <script type="text/javascript">
+        var $save_to_modal = $('#exampleModalLong');
+        var $form = $save_to_modal.find('form');
+        $form.on('submit', function (event) {
+          event.preventDefault();
+          event.stopPropagation();
+          $form.find('input,button').prop('disabled', true);
+          if ($form[0].checkValidity() === true) {
+            DD.save(
+              $form.find('input').val(),
+              function(success) { $save_to_modal.modal('hide'); }
+            );
+          }
+          $form.addClass('was-validated');
+        });
+
+        $save_to_modal.on('show.bs.modal', function (evt) {
+          var $filename_input = $(this).find('input');
+          var $dbox_content = $(this).find('#dbox_content');
+          DD.dropBox.filesListFolder({path: ''})
+            .then(function(response) {
+              $dbox_content.empty();
+              var $ul = $('<ul class="list-unstyled ml-1"></ul>');
+              for (var i = 0; i < response.entries.length; ++i) {
+                var name = response.entries[i].name;
+                $('<a href="#"></a>')
+                  .text(' ' + name)
+                  .prepend($('<i class="fa fa-file" aria-hidden="true"></i>'))
+                  .click(function(evt) {
+                    $filename_input.val(name).change();
+                  })
+                  .appendTo($('<li></li>').appendTo($ul));
+              }
+              $ul.appendTo($dbox_content);
+            })
+            .catch(function(error) {
+              console.log(error);
+              $('<p class="text-danger">Unable to load file list.</p>')
+                .appendTo($dbox_content);
+            });
+        });
+
+        $save_to_modal.on('hidden.bs.modal', function (evt) {
+          var $dbox_content = $(this).find('#dbox_content');
+          $form.find('input,button').prop('disabled', false);
+          $dbox_content.empty();
+          $('<i class="fa fa-refresh fa-spin"></i>').appendTo($dbox_content);
+        });
+      </script>
+
+      <br>
+
       <div class="card">
         <div class="card-header">
          <a data-toggle="collapse" href="#debug_features" aria-expanded="true" aria-controls="debug_features">Debug features</a>
@@ -62,7 +141,6 @@
             <button id="tbox_highlight_missing_id" class="btn btn-secondary" type="button">Highlight missing dd-id</button>
             <button id="tbox_show_hpath" class="btn btn-secondary" type="button">Show get_hier_path</button>
             <button id="tbox_load_repr" class="btn btn-secondary" type="button">Load representation</button>
-            <button id="tbox_test_dbx" class="btn btn-secondary" type="button" disabled>Test Dropbox</button>
             <br><br>
             <textarea class="form-control" rows="10" readonly id="tbox_txt"></textarea>
         </div>

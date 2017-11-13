@@ -56,4 +56,26 @@ function Controller() {
         });
     };
 
+    self.save = function(name, post_action=null) {
+        self.update();
+        self.dropBox.filesUpload({
+            path: '/' + name,
+            mode: 'overwrite',
+            contents: self.data.dump()
+        })
+            .then(function(response) {
+                if (post_action) {
+                    post_action(true);
+                }
+                self.notify('success', 'Saved to \'' + name +'\'.');
+            })
+            .catch(function(error) {
+                if (post_action) {
+                    post_action(false);
+                }
+                console.log(error);
+                self.notify('danger', 'Unable to save to DropBox.');
+            });
+    };
+
 };
