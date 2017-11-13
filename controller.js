@@ -50,10 +50,18 @@ function Controller() {
         self._setupDropBox();
     };
 
-    self.update = function() {
+    self.updateHier = function() {
         self._allControls().each(function (idx, obj) {
             self.data.set($(obj).data('dd-path'), $(obj).val());
         });
+    };
+
+    self.updateForm = function() {
+        var flat_data = self.data.flatten();
+        var ctrls = self._allControls();
+        for (var path in flat_data) {
+            ctrls.filter('[data-dd-path="' + path + '"]').val(flat_data[path]);
+        }
     };
 
     self.save = function(name, post_action=null) {

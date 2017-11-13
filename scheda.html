@@ -13,6 +13,9 @@
     <script src="https://unpkg.com/dropbox/dist/Dropbox-sdk.min.js"></script>
     <script src="controller.js"></script>
     <script src="dd-config.js"></script>
+    <style>
+      #tbox_txt { font-family: monospace; }
+    </style>
     <script>
       DD = new Controller();
 
@@ -33,8 +36,13 @@
         });
 
         $('#tbox_load_repr').click(function() {
-          DD.update();
+          DD.updateHier();
           $('#tbox_txt').val(DD.data.dump());
+        });
+
+        $('#tbox_dump_repr').click(function() {
+          DD.data.load($('#tbox_txt').val());
+          DD.updateForm();
         });
 
       });
@@ -141,8 +149,9 @@
             <button id="tbox_highlight_missing_id" class="btn btn-secondary" type="button">Highlight missing dd-id</button>
             <button id="tbox_show_hpath" class="btn btn-secondary" type="button">Show get_hier_path</button>
             <button id="tbox_load_repr" class="btn btn-secondary" type="button">Load representation</button>
+            <button id="tbox_dump_repr" class="btn btn-secondary" type="button">Dump representation</button>
             <br><br>
-            <textarea class="form-control" rows="10" readonly id="tbox_txt"></textarea>
+            <textarea class="form-control" rows="10" id="tbox_txt"></textarea>
         </div>
       </div>
 
