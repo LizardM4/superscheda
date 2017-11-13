@@ -41,16 +41,15 @@ function Controller() {
         var save_to_file = save_to_form.find('input');
 
         save_to_form.on('submit', function (event) {
-          event.preventDefault();
-          event.stopPropagation();
-          save_to_form.find('input,button').prop('disabled', true);
-          if (save_to_form[0].checkValidity() === true) {
-            self.save(
-              save_to_form.find('input').val(),
-              function(success) { self._modalSaveTo.modal('hide'); }
-            );
-          }
-          save_to_form.addClass('was-validated');
+            // TODO this is not correct
+            event.preventDefault();
+            event.stopPropagation();
+            if (save_to_form[0].checkValidity() === true) {
+                self._modalSaveTo.modal('hide');
+                self.toggleWaiting(true);
+                self.save(save_to_form.find('input').val(), function(res) { self.toggleWaiting(false, res); });
+            }
+            save_to_form.addClass('was-validated');
         });
 
         self._modalSaveTo.on('show.bs.modal', function (event) {
@@ -61,6 +60,17 @@ function Controller() {
         });
     };
 
+    self._setupWaitingModal = function() {
+        self._modalWaiting = $('#waiting');
+
+        self._modalWaiting.on('hidden.bs.modal', function (event) {
+            // Reset the content
+            var p = self._modalWaiting.find('p');
+            p.empty();
+            $('<i class="fa fa-spinner fa-spin fa-5x"></i>').appendTo(p);
+        });
+    };
+
 
     self._setupLoadFromModal = function() {
         self._modalLoadFrom = $('#load_from');
@@ -68,9 +78,9 @@ function Controller() {
 
         self._modalLoadFrom.on('show.bs.modal', function (event) {
             var event_fn = function(event2) {
-                self.load($(this).text().trim(), function(success) {
-                    self._modalLoadFrom.modal('hide');
-                });
+                self._modalLoadFrom.modal('hide');
+                self.toggleWaiting(true);
+                self.load($(this).text().trim(), function(res) { self.toggleWaiting(false, res); });
             };
             self._populateFileList(load_from_list, event_fn);
         });
@@ -92,6 +102,7 @@ function Controller() {
         self._setupDropBox();
         self._setupSaveToModal();
         self._setupLoadFromModal();
+        self._setupWaitingModal();
     };
 
     self.updateHier = function() {
@@ -111,7 +122,7 @@ function Controller() {
     self._populateFileList = function(obj, file_click_event) {
         obj = $(obj);
         obj.empty();
-        $('<i class="fa fa-refresh fa-spin"></i>').appendTo(obj);
+        $('<p class="text-center"><i class="fa fa-refresh fa-spin fa-3x"></i></p>').appendTo(obj);
         self.dropBox.filesListFolder({path: ''})
             .then(function(response) {
                 obj.empty();
@@ -132,6 +143,25 @@ function Controller() {
                     .appendTo(obj);
             });
     };
+
+    self.toggleWaiting = function(on_off, success=null) {
+        if (on_off) {
+            self._modalWaiting.modal('show');
+        } else if (success === null) {
+            self._modalWaiting.modal('hide');
+        } else {
+            var p = self._modalWaiting.find('p');
+            p.empty();
+            if (success) {
+                $('<i class="fa fa-check fa-5x"></i>').appendTo(p);
+            } else {
+                $('<i class="fa fa-times fa-5x"></i>').appendTo(p);
+            }
+            setTimeout(function() {
+                self._modalWaiting.modal('hide');
+            }, 400);
+        }
+    }
 
     self.save = function(name, post_action=null) {
         self.updateHier();
@@ -163,7 +193,6 @@ function Controller() {
                 reader.addEventListener('loadend', function() {
                     self.data.load(reader.result);
                     self.updateForm();
-                    self.notify('success', 'Caricato \'' + name + '\' da DropBox.');
                     if (post_action) {
                         post_action(true);
                     }

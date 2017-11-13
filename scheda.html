@@ -108,6 +108,14 @@
         </div>
       </div>
 
+      <div class="modal fade" tabindex="-1" role="dialog" id="waiting" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document"  style="position: relative; top: 30%;">
+          <p class="text-center text-light">
+            <i class="fa fa-spinner fa-spin fa-5x"></i>
+          </p>
+        </div>
+      </div>
+
       <br>
 
       <div class="card">
@@ -119,6 +127,7 @@
             <button id="tbox_show_hpath" class="btn btn-secondary" type="button">Show get_hier_path</button>
             <button id="tbox_load_repr" class="btn btn-secondary" type="button">Load representation</button>
             <button id="tbox_dump_repr" class="btn btn-secondary" type="button">Dump representation</button>
+            <button id="tbox_test_wait" class="btn btn-secondary" type="button" data-toggle="modal" data-target="#waiting">Test waiting</button>
             <br><br>
             <textarea class="form-control" rows="10" id="tbox_txt"></textarea>
         </div>
