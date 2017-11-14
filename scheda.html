@@ -54,7 +54,8 @@
   <body>
     <div class="container">
       <h1>Scheda estesa D&amp;D 3.5</h1>
-      <div class="row">
+
+      <div class="row mb-3">
         <div class="col-md-12">
           <button id="btn_save" class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#load_from">Carica da <i class="fa fa-dropbox" aria-hidden="true"></i></button>
           <button id="btn_save" class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#save_to">Salva su <i class="fa fa-dropbox" aria-hidden="true"></i></button>
@@ -119,823 +120,969 @@
         </div>
       </div>
 
-      <br>
-
-      <div class="card">
-        <div class="card-header">
-         Debug features
-         <button type="button" class="close" data-toggle="collapse" aria-label="Toggle" href="#debug_features" aria-expanded="true" aria-controls="debug_features">
-            <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
-          </button>
-        </div>
-        <div id="debug_features" class="card-body collapse show">
-            <button id="tbox_highlight_missing_id" class="btn btn-secondary" type="button">Highlight missing dd-id</button>
-            <button id="tbox_show_hpath" class="btn btn-secondary" type="button">Show get_hier_path</button>
-            <button id="tbox_load_repr" class="btn btn-secondary" type="button">Load representation</button>
-            <button id="tbox_dump_repr" class="btn btn-secondary" type="button">Dump representation</button>
-            <button id="tbox_test_wait" class="btn btn-secondary" type="button" data-toggle="modal" data-target="#waiting">Test waiting</button>
-            <br><br>
-            <textarea class="form-control" rows="10" id="tbox_txt"></textarea>
-        </div>
-      </div>
-
-      <br>
-
-      <div class="card">
-        <div class="card-header">Base</div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-3 form-group">
-              <label>Nome del personaggio</label>
-              <input type="text" class="form-control" data-dd-id="nome" placeholder="Nome">
-            </div>
-            <div class="col-md-3 form-group">
-              <label>Razza</label>
-              <input type="text" class="form-control" data-dd-id="razza" placeholder="Umano">
-            </div>
-            <div class="col-md-3 form-group">
-              <label>Archetipo 1</label>
-              <input type="text" class="form-control" data-dd-id="archetipo[0]">
-            </div>
-            <div class="col-md-3 form-group">
-              <label>Archetipo 2</label>
-              <input type="text" class="form-control" data-dd-id="archetipo[1]">
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-3 form-group">
-              <label>Nome del giocatore</label>
-              <input type="text" class="form-control" data-dd-id="giocatore" placeholder="Il tuo nome">
-            </div>
-            <div class="col-md-3 form-group">
-              <label>Classe</label>
-              <input type="text" class="form-control" data-dd-id="classe[0]" placeholder="Classe">
-            </div>
-            <div class="col-md-3 form-group">
-              <label>Classe/CdP</label>
-              <input type="text" class="form-control" data-dd-id="classe[1]">
-            </div>
-            <div class="col-md-3 form-group">
-              <label>Classe/CdP</label>
-              <input type="text" class="form-control" data-dd-id="classe[2]">
-            </div>
-          </div>
-
-          <div class="row" data-dd-id="png">
-            <div class="col-md-3 form-group">
-              <label>Classe da PNG</label>
-              <input type="text" class="form-control" id="classe[0]">
-            </div>
-            <div class="col-md-3 form-group">
-              <label>Classe/CdP</label>
-              <input type="text" class="form-control" id="classe[1]">
-            </div>
-            <div class="col-md-3 form-group">
-              <label>Classe/CdP</label>
-              <input type="text" class="form-control" id="classe[2]">
-            </div>
-            <div class="col-md-3 form-group">
-              <label>Classe/CdP</label>
-              <input type="text" class="form-control" id="classe[3]">
-            </div>
-          </div>
 
 
-          <div class="row">
-            <div class="col-md-3">
-              <div class="row">
-                <div class="col-md-6 form-group">
-                  <label>Taglia</label>
-                  <input type="text" class="form-control" data-dd-id="taglia">
-                </div>
-                <div class="col-md-6 form-group">
-                  <label>Altezza</label>
-                  <input type="text" class="form-control" data-dd-id="altezza">
-                </div>
-              </div>
+
+      <div class="row">
+        <div class="accordion col-md-12">
+
+
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">
+                Debug features
+                <button type="button" class="close" data-toggle="collapse" aria-label="Toggle" href="#debug_features" aria-expanded="true" aria-controls="debug_features">
+                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                </button>
+              </h5>
             </div>
-            <div class="col-md-3">
-              <div class="row">
-                <div class="col-md-6 form-group">
-                  <label>Peso</label>
-                  <input type="text" class="form-control" data-dd-id="peso">
-                </div>
-                <div class="col-md-6 form-group">
-                  <label>Occhi</label>
-                  <input type="text" class="form-control" data-dd-id="occhi">
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="row">
-                <div class="col-md-6 form-group">
-                  <label>Capelli</label>
-                  <input type="text" class="form-control" data-dd-id="capelli">
-                </div>
-                <div class="col-md-6 form-group">
-                  <label>Pelle</label>
-                  <input type="text" class="form-control" data-dd-id="pelle">
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="row">
-                <div class="col-md-6 form-group">
-                  <label>Età</label>
-                  <input type="text" class="form-control" data-dd-id="eta">
-                </div>
-                <div class="col-md-6 form-group">
-                  <label>Sesso</label>
-                  <input type="text" class="form-control" data-dd-id="sesso">
-                </div>
+            <div id="debug_features" class="collapse show">
+              <div class="card-body">
+                <button id="tbox_highlight_missing_id" class="btn btn-secondary" type="button">Highlight missing dd-id</button>
+                <button id="tbox_show_hpath" class="btn btn-secondary" type="button">Show get_hier_path</button>
+                <button id="tbox_load_repr" class="btn btn-secondary" type="button">Load representation</button>
+                <button id="tbox_dump_repr" class="btn btn-secondary" type="button">Dump representation</button>
+                <button id="tbox_test_wait" class="btn btn-secondary" type="button" data-toggle="modal" data-target="#waiting">Test waiting</button>
+                <br><br>
+                <textarea class="form-control" rows="10" id="tbox_txt"></textarea>
               </div>
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-md-6 form-group">
-              <label>Segni particolari</label>
-              <input type="text" class="form-control" data-dd-id="segni_particolari">
+
+
+
+
+
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">
+                Base
+                <button type="button" class="close" data-toggle="collapse" aria-label="Toggle" href="#card_base" aria-expanded="true" aria-controls="card_base">
+                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                </button>
+              </h5>
             </div>
-            <div class="col-md-3 form-group">
-              <label>Divinità</label>
-              <input type="text" class="form-control" data-dd-id="divinita">
-            </div>
-            <div class="col-md-3 form-group">
-              <label>Allineamento/CdP</label>
-              <input type="text" class="form-control" data-dd-id="allineamento">
+            <div class="collapse show" id="card_base">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-3 form-group">
+                    <label>Nome del personaggio</label>
+                    <input type="text" class="form-control" data-dd-id="nome" placeholder="Nome">
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label>Razza</label>
+                    <input type="text" class="form-control" data-dd-id="razza" placeholder="Umano">
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label>Archetipo 1</label>
+                    <input type="text" class="form-control" data-dd-id="archetipo[0]">
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label>Archetipo 2</label>
+                    <input type="text" class="form-control" data-dd-id="archetipo[1]">
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-3 form-group">
+                    <label>Nome del giocatore</label>
+                    <input type="text" class="form-control" data-dd-id="giocatore" placeholder="Il tuo nome">
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label>Classe</label>
+                    <input type="text" class="form-control" data-dd-id="classe[0]" placeholder="Classe">
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label>Classe/CdP</label>
+                    <input type="text" class="form-control" data-dd-id="classe[1]">
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label>Classe/CdP</label>
+                    <input type="text" class="form-control" data-dd-id="classe[2]">
+                  </div>
+                </div>
+
+                <div class="row" data-dd-id="png">
+                  <div class="col-md-3 form-group">
+                    <label>Classe da PNG</label>
+                    <input type="text" class="form-control" id="classe[0]">
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label>Classe/CdP</label>
+                    <input type="text" class="form-control" id="classe[1]">
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label>Classe/CdP</label>
+                    <input type="text" class="form-control" id="classe[2]">
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label>Classe/CdP</label>
+                    <input type="text" class="form-control" id="classe[3]">
+                  </div>
+                </div>
+
+
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="row">
+                      <div class="col-md-6 form-group">
+                        <label>Taglia</label>
+                        <input type="text" class="form-control" data-dd-id="taglia">
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <label>Altezza</label>
+                        <input type="text" class="form-control" data-dd-id="altezza">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="row">
+                      <div class="col-md-6 form-group">
+                        <label>Peso</label>
+                        <input type="text" class="form-control" data-dd-id="peso">
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <label>Occhi</label>
+                        <input type="text" class="form-control" data-dd-id="occhi">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="row">
+                      <div class="col-md-6 form-group">
+                        <label>Capelli</label>
+                        <input type="text" class="form-control" data-dd-id="capelli">
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <label>Pelle</label>
+                        <input type="text" class="form-control" data-dd-id="pelle">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="row">
+                      <div class="col-md-6 form-group">
+                        <label>Età</label>
+                        <input type="text" class="form-control" data-dd-id="eta">
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <label>Sesso</label>
+                        <input type="text" class="form-control" data-dd-id="sesso">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 form-group">
+                    <label>Segni particolari</label>
+                    <input type="text" class="form-control" data-dd-id="segni_particolari">
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label>Divinità</label>
+                    <input type="text" class="form-control" data-dd-id="divinita">
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label>Allineamento/CdP</label>
+                    <input type="text" class="form-control" data-dd-id="allineamento">
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+
+
+
+
+
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">
+                Caratteristiche
+                <button type="button" class="close" data-toggle="collapse" aria-label="Toggle" href="#card_caratteristiche" aria-expanded="true" aria-controls="card_caratteristiche">
+                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                </button>
+              </h5>
+            </div>
+            <div class="collapse show" id="card_caratteristiche">
+              <div class="card-body">
+                <table class="table table-responsive" data-dd-id="caratteristiche">
+                  <thead>
+                    <tr>
+                      <th>Caratteristiche</th>
+                      <th class="text-center">TB</th>
+                      <th class="text-center">Razza</th>
+                      <th class="text-center">Arch 1</th>
+                      <th class="text-center">Arch 2</th>
+                      <th class="text-center">Lvl</th>
+                      <th class="text-center">Magia</th>
+                      <th class="text-center">VV1</th>
+                      <th class="text-center">VV2</th>
+                      <th class="text-center">Tot</th>
+                      <th class="text-center">M Tot</th>
+                      <th class="text-center">Temp</th>
+                      <th class="text-center">M Temp</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-dd-id="for">
+                      <th scope="row">Forza</th>
+                      <td><input type="text" data-dd-id="tiro_base" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="archetipo[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="livello" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
+                      <td><input type="text" data-dd-id="mod_totale" class="text-right form-control form-control-sm" readonly></td>
+                      <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="mod_temp" class="text-right form-control form-control-sm"></td>
+                    </tr>
+                    <tr data-dd-id="des">
+                      <th scope="row">Destrezza</th>
+                      <td><input type="text" data-dd-id="tiro_base" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="archetipo[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="livello" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
+                      <td><input type="text" data-dd-id="mod_totale" class="text-right form-control form-control-sm" readonly></td>
+                      <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="mod_temp" class="text-right form-control form-control-sm"></td>
+                    </tr>
+                    <tr data-dd-id="cos">
+                      <th scope="row">Costituzione</th>
+                      <td><input type="text" data-dd-id="tiro_base" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="archetipo[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="livello" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
+                      <td><input type="text" data-dd-id="mod_totale" class="text-right form-control form-control-sm" readonly></td>
+                      <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="mod_temp" class="text-right form-control form-control-sm"></td>
+                    </tr>
+                    <tr data-dd-id="int">
+                      <th scope="row">Intelligenza</th>
+                      <td><input type="text" data-dd-id="tiro_base" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="archetipo[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="livello" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
+                      <td><input type="text" data-dd-id="mod_totale" class="text-right form-control form-control-sm" readonly></td>
+                      <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="mod_temp" class="text-right form-control form-control-sm"></td>
+                    </tr>
+                    <tr data-dd-id="sag">
+                      <th scope="row">Saggezza</th>
+                      <td><input type="text" data-dd-id="tiro_base" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="archetipo[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="livello" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
+                      <td><input type="text" data-dd-id="mod_totale" class="text-right form-control form-control-sm" readonly></td>
+                      <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="mod_temp" class="text-right form-control form-control-sm"></td>
+                    </tr>
+                    <tr data-dd-id="car">
+                      <th scope="row">Carisma</th>
+                      <td><input type="text" data-dd-id="tiro_base" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="archetipo[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="livello" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
+                      <td><input type="text" data-dd-id="mod_totale" class="text-right form-control form-control-sm" readonly></td>
+                      <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="mod_temp" class="text-right form-control form-control-sm"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">
+                Armatura
+                <button type="button" class="close" data-toggle="collapse" aria-label="Toggle" href="#card_armatura" aria-expanded="true" aria-controls="card_armatura">
+                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                </button>
+              </h5>
+            </div>
+            <div class="collapse show" id="card_armatura">
+              <div class="card-body">
+                <table class="table table-responsive">
+                  <thead>
+                    <tr>
+                      <th>Armatura</th>
+                      <th class="text-center">Base</th>
+                      <th class="text-center">Armat</th>
+                      <th class="text-center">Scudo</th>
+                      <th class="text-center">Des</th>
+                      <th class="text-center">Taglia</th>
+                      <th class="text-center">A Nat</th>
+                      <th class="text-center">Deviaz</th>
+                      <th class="text-center">Cognit</th>
+                      <th class="text-center">VV1</th>
+                      <th class="text-center">VV2</th>
+                      <th class="text-center">Temp</th>
+                      <th class="text-center">Totale</th>
+                      <th class="text-center">Tot Temp</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-dd-id="classe_armatura">
+                      <th>CA</th>
+                      <td class="text-center">10/1d20</td>
+                      <td><input type="text" data-dd-id="armatura" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="scudo" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="des" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="taglia" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="armatura_naturale" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="deviazione" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="cognitivo" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
+                      <td><input type="text" data-dd-id="totale_temp" class="text-right form-control form-control-sm"></td>
+                    </tr>
+                    <tr data-dd-id="contatto">
+                      <th>Contatto</th>
+                      <td class="text-center">10/1d20</td>
+                      <td><input type="text" data-dd-id="armatura" class="text-right form-control form-control-sm" disabled></td>
+                      <td><input type="text" data-dd-id="scudo" class="text-right form-control form-control-sm" disabled></td>
+                      <td><input type="text" data-dd-id="des" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="taglia" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="armatura_naturale" class="text-right form-control form-control-sm" disabled></td>
+                      <td><input type="text" data-dd-id="deviazione" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="cognitivo" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
+                      <td><input type="text" data-dd-id="totale_temp" class="text-right form-control form-control-sm"></td>
+                    </tr>
+                    <tr data-dd-id="colto_alla_sprovvista">
+                      <th>Colto alla s.</th>
+                      <td class="text-center">10/1d20</td>
+                      <td><input type="text" data-dd-id="armatura" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="scudo" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="des" class="text-right form-control form-control-sm" disabled></td>
+                      <td><input type="text" data-dd-id="taglia" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="armatura_naturale" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="deviazione" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="cognitivo" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
+                      <td><input type="text" data-dd-id="totale_temp" class="text-right form-control form-control-sm"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">
+                Attacco
+                <button type="button" class="close" data-toggle="collapse" aria-label="Toggle" href="#card_attacco" aria-expanded="true" aria-controls="card_attacco">
+                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                </button>
+              </h5>
+            </div>
+            <div class="collapse show" id="card_attacco">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <table class="table table-responsive" data-dd-id="bonus_att_base">
+                      <thead>
+                      <tr>
+                        <th></th>
+                        <th class="text-center">Att 1</th>
+                        <th class="text-center">Att 2</th>
+                        <th class="text-center">Att 3</th>
+                        <th class="text-center">Att 4</th>
+                        <th class="text-center">Att 5</th>
+                        <th class="text-center">Att 0</th>
+                      </tr>
+                     </thead>
+                     <tbody>
+                      <tr>
+                        <th class="text-right">BAB</th>
+                        <td><input type="text" data-dd-id="att[0]" class="text-right form-control form-control-sm"></td>
+                        <td><input type="text" data-dd-id="att[1]" class="text-right form-control form-control-sm"></td>
+                        <td><input type="text" data-dd-id="att[2]" class="text-right form-control form-control-sm"></td>
+                        <td><input type="text" data-dd-id="att[3]" class="text-right form-control form-control-sm"></td>
+                        <td><input type="text" data-dd-id="att[4]" class="text-right form-control form-control-sm"></td>
+                        <td><input type="text" class="text-right form-control form-control-sm" readonly value="Att 1"></td>
+                      </tr>
+                     </tbody>
+                    </table>
+                  </div>
+                  <div class="col-md-6">
+                    <table class="table table-responsive" data-dd-id="iniziativa">
+                      <thead>
+                      <tr>
+                        <th></th>
+                        <th class="text-center">Des</th>
+                        <th class="text-center">Tal</th>
+                        <th class="text-center">VV 1</th>
+                        <th class="text-center">VV 2</th>
+                        <th class="text-center">Totale</th>
+                      </tr>
+                     </thead>
+                     <tbody>
+                      <tr>
+                        <th class="text-right">Iniziativa</th>
+                        <td><input type="text" data-dd-id="des" class="text-right form-control form-control-sm"></td>
+                        <td><input type="text" data-dd-id="talento" class="text-right form-control form-control-sm"></td>
+                        <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
+                        <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
+                        <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
+                      </tr>
+                     </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-8">
+                    <table class="table table-responsive" data-dd-id="lotta">
+                      <thead>
+                      <tr>
+                        <th></th>
+                        <th class="text-center">BAB</th>
+                        <th class="text-center">For</th>
+                        <th class="text-center">Taglia</th>
+                        <th class="text-center">Tal</th>
+                        <th class="text-center">Mag</th>
+                        <th class="text-center">VV 1</th>
+                        <th class="text-center">VV 2</th>
+                        <th class="text-center">Totale</th>
+                      </tr>
+                     </thead>
+                     <tbody>
+                      <tr>
+                        <th class="text-right">Lotta</th>
+                        <td><input type="text" data-dd-id="bonus_att_base" class="text-right form-control form-control-sm"></td>
+                        <td><input type="text" data-dd-id="for" class="text-right form-control form-control-sm"></td>
+                        <td><input type="text" data-dd-id="taglia" class="text-right form-control form-control-sm"></td>
+                        <td><input type="text" data-dd-id="talento" class="text-right form-control form-control-sm"></td>
+                        <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
+                        <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
+                        <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
+                        <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
+                      </tr>
+                     </tbody>
+                    </table>
+                  </div>
+                  <div class="col-md-4">
+                    <table class="table table-responsive">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th class="text-center">Totale</th>
+                        </tr>
+                       </thead>
+                       <tbody>
+                        <tr>
+                          <th class="text-right">Attacchi di opportunità</th>
+                          <td><input type="text" data-dd-id="att_opportunita" class="text-right form-control form-control-sm"></td>
+                        </tr>
+                       </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="row">
+                   <div class="col-md-3">
+                    <table class="table table-responsive">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th class="text-center">Totale</th>
+                          <th class="text-center">Tot Temp</th>
+                        </tr>
+                       </thead>
+                       <tbody>
+                        <tr>
+                          <th class="text-right">PF</th>
+                          <td><input type="text" data-dd-id="punti_ferita" class="text-right form-control form-control-sm"></td>
+                          <td><input type="text" data-dd-id="punti_ferita_temp" class="text-right form-control form-control-sm"></td>
+                        </tr>
+                       </tbody>
+                    </table>
+                  </div>
+                   <div class="col-md-3">
+                    <table class="table table-responsive">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th class="text-center">Totale</th>
+                          <th class="text-center">Tot Temp</th>
+                        </tr>
+                       </thead>
+                       <tbody>
+                        <tr>
+                          <th class="text-right">RI</th>
+                          <td><input type="text" class="text-right form-control form-control-sm"></td>
+                          <td><input type="text" class="text-right form-control form-control-sm"></td>
+                        </tr>
+                       </tbody>
+                    </table>
+                  </div>
+                   <div class="col-md-6">
+                    <table class="table table-responsive">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th class="text-center">Tot/Tipo</th>
+                          <th class="text-center">Tot/Tipo</th>
+                          <th class="text-center">Tot/Tipo</th>
+                          <th class="text-center">Tot/Tipo</th>
+                          <th class="text-center">Migl Tot</th>
+                        </tr>
+                       </thead>
+                       <tbody>
+                        <tr>
+                          <th class="text-right">RD</th>
+                          <td><input type="text" class="text-right form-control form-control-sm"></td>
+                          <td><input type="text" class="text-right form-control form-control-sm"></td>
+                          <td><input type="text" class="text-right form-control form-control-sm"></td>
+                          <td><input type="text" class="text-right form-control form-control-sm"></td>
+                          <td><input type="text" class="text-right form-control form-control-sm"></td>
+                        </tr>
+                       </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">
+                Dado vita
+                <button type="button" class="close" data-toggle="collapse" aria-label="Toggle" href="#card_dado_vita" aria-expanded="true" aria-controls="card_dado_vita">
+                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                </button>
+              </h5>
+            </div>
+            <div class="collapse show" id="card_dado_vita">
+              <div class="card-body">
+                <table class="table table-responsive" data-dd-id="dado_vita">
+                  <thead>
+                    <tr>
+                      <th>Dado vita</th>
+                      <th class="text-center">Razza</th>
+                      <th class="text-center">Cl 1</th>
+                      <th class="text-center">Cl 2</th>
+                      <th class="text-center">Cl 3</th>
+                      <th class="text-center">Cl 4</th>
+                      <th class="text-center">Cl 5</th>
+                      <th class="text-center">Cl 6</th>
+                      <th class="text-center">Cl 7</th>
+                      <th class="text-center">Cl 8</th>
+                      <th class="text-center">Cl 9</th>
+                      <th class="text-center">Totale</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th class="text-right">DV</th>
+                      <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="classe[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="classe[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="classe[2]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="classe[3]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="classe[4]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="classe[5]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="classe[6]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="classe[7]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="classe[8]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">
+                Tiri salvezza
+                <button type="button" class="close" data-toggle="collapse" aria-label="Toggle" href="#card_tiri_salvezza" aria-expanded="true" aria-controls="card_tiri_salvezza">
+                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                </button>
+              </h5>
+            </div>
+            <div class="collapse show" id="card_tiri_salvezza">
+              <div class="card-body">
+                <table class="table table-responsive" data-dd-id="tiro_salvezza">
+                  <thead>
+                    <tr>
+                      <th>Tiro salvezza</th>
+                      <th class="text-center">M Car</th>
+                      <th class="text-center">Classe</th>
+                      <th class="text-center">Razza</th>
+                      <th class="text-center">Arch 1</th>
+                      <th class="text-center">Arch 2</th>
+                      <th class="text-center">Magia</th>
+                      <th class="text-center">VV 1</th>
+                      <th class="text-center">VV 2</th>
+                      <th class="text-center">Mod Specifici</th>
+                      <th class="text-center">Tot</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-dd-it="tempra/cos">
+                      <th class="text-right"><sup>Cos</sup> Tempra</th>
+                      <td><input type="text" data-dd-id="mod" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="classe" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="archetipo[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="mod_speciali" class="form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
+                    </tr>
+                    <tr data-dd-id="tempra/des">
+                      <th class="text-right"><sup>Des</sup> Tempra</th>
+                      <td><input type="text" data-dd-id="mod" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="classe" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="archetipo[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="mod_speciali" class="form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
+                    </tr>
+                    <tr data-dd-id="riflessi/des">
+                      <th class="text-right"><sup>Des</sup> Riflessi</th>
+                      <td><input type="text" data-dd-id="mod" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="classe" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="archetipo[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="mod_speciali" class="form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
+                    </tr>
+                    <tr data-dd-id="volonta/sag">
+                      <th class="text-right"><sup>Sag</sup> Volontà</th>
+                      <td><input type="text" data-dd-id="mod" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="classe" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="archetipo[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="mod_speciali" class="form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
+                    </tr>
+                    <tr data-dd-id="volonta/car">
+                      <th class="text-right"><sup>Car</sup> Volontà</th>
+                      <td><input type="text" data-dd-id="mod" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="classe" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="archetipo[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="mod_speciali" class="form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
+                    </tr>
+                    <tr data-dd-id="volonta/int">
+                      <th class="text-right"><sup>Int</sup> Volontà</th>
+                      <td><input type="text" data-dd-id="mod" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="classe" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="archetipo[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="mod_speciali" class="form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">
+                Spostamento
+                <button type="button" class="close" data-toggle="collapse" aria-label="Toggle" href="#card_spostamento" aria-expanded="true" aria-controls="card_spostamento">
+                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                </button>
+              </h5>
+            </div>
+            <div class="collapse show" id="card_spostamento">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-8">
+                    <table class="table table-responsive" data-dd-id="carico">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th class="text-center">Leggero</th>
+                          <th class="text-center">Medio</th>
+                          <th class="text-center">Pesante</th>
+                          <th class="text-center">S. sopra testa</th>
+                          <th class="text-center">S. dal terreno</th>
+                          <th class="text-center">Sping/trasc</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th class="text-right">Carico</th>
+                          <td>
+                            <div class="input-group">
+                              <input type="text" data-dd-id="leggero" class="text-right form-control form-control-sm">
+                              <span class="input-group-addon">kg</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="input-group">
+                              <input type="text" data-dd-id="medio" class="text-right form-control form-control-sm">
+                              <span class="input-group-addon">kg</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="input-group">
+                              <input type="text" data-dd-id="pesante" class="text-right form-control form-control-sm">
+                              <span class="input-group-addon">kg</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="input-group">
+                              <input type="text" data-dd-id="sopra_testa" class="text-right form-control form-control-sm" aria-describedby="aiuto_sopra_testa">
+                              <span class="input-group-addon">kg</span>
+                            </div>
+                            <span id="aiuto_sopra_testa" class="help-block text-center">(carico max)</span>
+                          </td>
+                          <td>
+                            <div class="input-group">
+                              <input type="text" data-dd-id="dal_terreno" class="text-right form-control form-control-sm" aria-describedby="aiuto_dal_terreno">
+                              <span class="input-group-addon">kg</span>
+                            </div>
+                            <span id="aiuto_dal_terreno" class="help-block text-center">(carico max ×2)</span>
+                          </td>
+                          <td>
+                            <div class="input-group">
+                              <input type="text" data-dd-id="sping_trasc" class="text-right form-control form-control-sm" aria-describedby="aiuto_spingere_trascinare">
+                              <span class="input-group-addon">kg</span>
+                            </div>
+                            <span id="aiuto_spingere_trascinare" class="help-block text-center">(carico max ×5)</span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="col-md-4">
+                    <table class="table table-responsive">
+                      <thead>
+                        <tr>
+                          <th class="text-center">Tot peso</th>
+                          <th class="text-center">Pen armatura</th>
+                          <th class="text-center">Pen nuotare</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><input type="text" data-dd-id="peso_totale" class="text-right form-control form-control-sm"></td>
+                          <td><input type="text" data-dd-id="penalita_armatura" class="text-right form-control form-control-sm"></td>
+                          <td><input type="text" data-dd-id="penalita_nuotare" class="text-right form-control form-control-sm"></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-8 col-md-offset-2">
+                    <table class="table table-responsive" data-dd-id="velocita">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th class="text-center">Base</th>
+                          <th class="text-center">Armatura</th>
+                          <th class="text-center">Correre</th>
+                          <th class="text-center">Nuotare</th>
+                          <th class="text-center">Scalare</th>
+                          <th class="text-center">Volare</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr data-dd-id="testme-row">
+                          <th class="text-right">Velocità</th>
+                          <td>
+                            <div class="input-group">
+                              <input type="text" data-dd-id="base" class="text-right form-control form-control-sm">
+                              <span class="input-group-addon">m</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="input-group">
+                              <input type="text" data-dd-id="armatura" class="text-right form-control form-control-sm">
+                              <span class="input-group-addon">m</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="input-group">
+                              <input type="text" data-dd-id="correre" class="text-right form-control form-control-sm">
+                              <span class="input-group-addon">m</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="input-group">
+                              <input type="text" data-dd-id="nuotare" class="text-right form-control form-control-sm">
+                              <span class="input-group-addon">m</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="input-group">
+                              <input type="text" data-dd-id="scalare" class="text-right form-control form-control-sm">
+                              <span class="input-group-addon">m</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="input-group">
+                              <input type="text" data-dd-id="volare" class="text-right form-control form-control-sm">
+                              <span class="input-group-addon">m</span>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">
+                Attacchi
+                <button type="button" class="close" data-toggle="collapse" aria-label="Toggle" href="#card_attacchi" aria-expanded="true" aria-controls="card_attacchi">
+                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                </button>
+              </h5>
+            </div>
+            <div class="collapse show" id="card_attacchi">
+              <div class="card-body"></div>
+            </div>
+          </div>
+
+
+
+
+
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">
+                Note
+                <button type="button" class="close" data-toggle="collapse" aria-label="Toggle" href="#card_note" aria-expanded="true" aria-controls="card_note">
+                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                </button>
+              </h5>
+            </div>
+            <div id="card_note" class="collapse show">
+              <div class="card-body">
+                <textarea data-dd-id="note" class="form-control"></textarea>
+              </div>
+            </div>
+          </div>
+
+
+
 
         </div>
       </div>
-
-      <br>
-
-      <div class="card">
-        <table class="table table-responsive" data-dd-id="caratteristiche">
-          <thead class="card-header">
-            <tr>
-              <th>Caratteristiche</th>
-              <th class="text-center">TB</th>
-              <th class="text-center">Razza</th>
-              <th class="text-center">Arch 1</th>
-              <th class="text-center">Arch 2</th>
-              <th class="text-center">Lvl</th>
-              <th class="text-center">Magia</th>
-              <th class="text-center">VV1</th>
-              <th class="text-center">VV2</th>
-              <th class="text-center">Tot</th>
-              <th class="text-center">M Tot</th>
-              <th class="text-center">Temp</th>
-              <th class="text-center">M Temp</th>
-            </tr>
-          </thead>
-          <tbody class="card-body">
-            <tr data-dd-id="for">
-              <th scope="row">Forza</th>
-              <td><input type="text" data-dd-id="tiro_base" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="archetipo[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="livello" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
-              <td><input type="text" data-dd-id="mod_totale" class="text-right form-control form-control-sm" readonly></td>
-              <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="mod_temp" class="text-right form-control form-control-sm"></td>
-            </tr>
-            <tr data-dd-id="des">
-              <th scope="row">Destrezza</th>
-              <td><input type="text" data-dd-id="tiro_base" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="archetipo[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="livello" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
-              <td><input type="text" data-dd-id="mod_totale" class="text-right form-control form-control-sm" readonly></td>
-              <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="mod_temp" class="text-right form-control form-control-sm"></td>
-            </tr>
-            <tr data-dd-id="cos">
-              <th scope="row">Costituzione</th>
-              <td><input type="text" data-dd-id="tiro_base" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="archetipo[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="livello" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
-              <td><input type="text" data-dd-id="mod_totale" class="text-right form-control form-control-sm" readonly></td>
-              <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="mod_temp" class="text-right form-control form-control-sm"></td>
-            </tr>
-            <tr data-dd-id="int">
-              <th scope="row">Intelligenza</th>
-              <td><input type="text" data-dd-id="tiro_base" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="archetipo[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="livello" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
-              <td><input type="text" data-dd-id="mod_totale" class="text-right form-control form-control-sm" readonly></td>
-              <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="mod_temp" class="text-right form-control form-control-sm"></td>
-            </tr>
-            <tr data-dd-id="sag">
-              <th scope="row">Saggezza</th>
-              <td><input type="text" data-dd-id="tiro_base" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="archetipo[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="livello" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
-              <td><input type="text" data-dd-id="mod_totale" class="text-right form-control form-control-sm" readonly></td>
-              <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="mod_temp" class="text-right form-control form-control-sm"></td>
-            </tr>
-            <tr data-dd-id="car">
-              <th scope="row">Carisma</th>
-              <td><input type="text" data-dd-id="tiro_base" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="archetipo[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="livello" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
-              <td><input type="text" data-dd-id="mod_totale" class="text-right form-control form-control-sm" readonly></td>
-              <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="mod_temp" class="text-right form-control form-control-sm"></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      </br>
-
-      <div class="card">
-        <table class="table table-responsive">
-          <thead class="card-header">
-            <tr>
-              <th>Armatura</th>
-              <th class="text-center">Base</th>
-              <th class="text-center">Armat</th>
-              <th class="text-center">Scudo</th>
-              <th class="text-center">Des</th>
-              <th class="text-center">Taglia</th>
-              <th class="text-center">A Nat</th>
-              <th class="text-center">Deviaz</th>
-              <th class="text-center">Cognit</th>
-              <th class="text-center">VV1</th>
-              <th class="text-center">VV2</th>
-              <th class="text-center">Temp</th>
-              <th class="text-center">Totale</th>
-              <th class="text-center">Tot Temp</th>
-            </tr>
-          </thead>
-          <tbody class="card-body">
-            <tr data-dd-id="classe_armatura">
-              <th>CA</th>
-              <td class="text-center">10/1d20</td>
-              <td><input type="text" data-dd-id="armatura" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="scudo" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="des" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="taglia" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="armatura_naturale" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="deviazione" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="cognitivo" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
-              <td><input type="text" data-dd-id="totale_temp" class="text-right form-control form-control-sm"></td>
-            </tr>
-            <tr data-dd-id="contatto">
-              <th>Contatto</th>
-              <td class="text-center">10/1d20</td>
-              <td><input type="text" data-dd-id="armatura" class="text-right form-control form-control-sm" disabled></td>
-              <td><input type="text" data-dd-id="scudo" class="text-right form-control form-control-sm" disabled></td>
-              <td><input type="text" data-dd-id="des" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="taglia" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="armatura_naturale" class="text-right form-control form-control-sm" disabled></td>
-              <td><input type="text" data-dd-id="deviazione" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="cognitivo" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
-              <td><input type="text" data-dd-id="totale_temp" class="text-right form-control form-control-sm"></td>
-            </tr>
-            <tr data-dd-id="colto_alla_sprovvista">
-              <th>Colto alla s.</th>
-              <td class="text-center">10/1d20</td>
-              <td><input type="text" data-dd-id="armatura" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="scudo" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="des" class="text-right form-control form-control-sm" disabled></td>
-              <td><input type="text" data-dd-id="taglia" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="armatura_naturale" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="deviazione" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="cognitivo" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
-              <td><input type="text" data-dd-id="totale_temp" class="text-right form-control form-control-sm"></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <br>
-
-      <div class="card">
-        <div class="card-header">Attacco</div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-6">
-              <table class="table table-responsive" data-dd-id="bonus_att_base">
-                <thead>
-                <tr>
-                  <th></th>
-                  <th class="text-center">Att 1</th>
-                  <th class="text-center">Att 2</th>
-                  <th class="text-center">Att 3</th>
-                  <th class="text-center">Att 4</th>
-                  <th class="text-center">Att 5</th>
-                  <th class="text-center">Att 0</th>
-                </tr>
-               </thead>
-               <tbody>
-                <tr>
-                  <th class="text-right">BAB</th>
-                  <td><input type="text" data-dd-id="att[0]" class="text-right form-control form-control-sm"></td>
-                  <td><input type="text" data-dd-id="att[1]" class="text-right form-control form-control-sm"></td>
-                  <td><input type="text" data-dd-id="att[2]" class="text-right form-control form-control-sm"></td>
-                  <td><input type="text" data-dd-id="att[3]" class="text-right form-control form-control-sm"></td>
-                  <td><input type="text" data-dd-id="att[4]" class="text-right form-control form-control-sm"></td>
-                  <td><input type="text" class="text-right form-control form-control-sm" readonly value="Att 1"></td>
-                </tr>
-               </tbody>
-              </table>
-            </div>
-            <div class="col-md-6">
-              <table class="table table-responsive" data-dd-id="iniziativa">
-                <thead>
-                <tr>
-                  <th></th>
-                  <th class="text-center">Des</th>
-                  <th class="text-center">Tal</th>
-                  <th class="text-center">VV 1</th>
-                  <th class="text-center">VV 2</th>
-                  <th class="text-center">Totale</th>
-                </tr>
-               </thead>
-               <tbody>
-                <tr>
-                  <th class="text-right">Iniziativa</th>
-                  <td><input type="text" data-dd-id="des" class="text-right form-control form-control-sm"></td>
-                  <td><input type="text" data-dd-id="talento" class="text-right form-control form-control-sm"></td>
-                  <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
-                  <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
-                  <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
-                </tr>
-               </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-8">
-              <table class="table table-responsive" data-dd-id="lotta">
-                <thead>
-                <tr>
-                  <th></th>
-                  <th class="text-center">BAB</th>
-                  <th class="text-center">For</th>
-                  <th class="text-center">Taglia</th>
-                  <th class="text-center">Tal</th>
-                  <th class="text-center">Mag</th>
-                  <th class="text-center">VV 1</th>
-                  <th class="text-center">VV 2</th>
-                  <th class="text-center">Totale</th>
-                </tr>
-               </thead>
-               <tbody>
-                <tr>
-                  <th class="text-right">Lotta</th>
-                  <td><input type="text" data-dd-id="bonus_att_base" class="text-right form-control form-control-sm"></td>
-                  <td><input type="text" data-dd-id="for" class="text-right form-control form-control-sm"></td>
-                  <td><input type="text" data-dd-id="taglia" class="text-right form-control form-control-sm"></td>
-                  <td><input type="text" data-dd-id="talento" class="text-right form-control form-control-sm"></td>
-                  <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
-                  <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
-                  <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
-                  <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
-                </tr>
-               </tbody>
-              </table>
-            </div>
-            <div class="col-md-4">
-              <table class="table table-responsive">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th class="text-center">Totale</th>
-                  </tr>
-                 </thead>
-                 <tbody>
-                  <tr>
-                    <th class="text-right">Attacchi di opportunità</th>
-                    <td><input type="text" data-dd-id="att_opportunita" class="text-right form-control form-control-sm"></td>
-                  </tr>
-                 </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div class="row">
-             <div class="col-md-3">
-              <table class="table table-responsive">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th class="text-center">Totale</th>
-                    <th class="text-center">Tot Temp</th>
-                  </tr>
-                 </thead>
-                 <tbody>
-                  <tr>
-                    <th class="text-right">PF</th>
-                    <td><input type="text" data-dd-id="punti_ferita" class="text-right form-control form-control-sm"></td>
-                    <td><input type="text" data-dd-id="punti_ferita_temp" class="text-right form-control form-control-sm"></td>
-                  </tr>
-                 </tbody>
-              </table>
-            </div>
-             <div class="col-md-3">
-              <table class="table table-responsive">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th class="text-center">Totale</th>
-                    <th class="text-center">Tot Temp</th>
-                  </tr>
-                 </thead>
-                 <tbody>
-                  <tr>
-                    <th class="text-right">RI</th>
-                    <td><input type="text" class="text-right form-control form-control-sm"></td>
-                    <td><input type="text" class="text-right form-control form-control-sm"></td>
-                  </tr>
-                 </tbody>
-              </table>
-            </div>
-             <div class="col-md-6">
-              <table class="table table-responsive">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th class="text-center">Tot/Tipo</th>
-                    <th class="text-center">Tot/Tipo</th>
-                    <th class="text-center">Tot/Tipo</th>
-                    <th class="text-center">Tot/Tipo</th>
-                    <th class="text-center">Migl Tot</th>
-                  </tr>
-                 </thead>
-                 <tbody>
-                  <tr>
-                    <th class="text-right">RD</th>
-                    <td><input type="text" class="text-right form-control form-control-sm"></td>
-                    <td><input type="text" class="text-right form-control form-control-sm"></td>
-                    <td><input type="text" class="text-right form-control form-control-sm"></td>
-                    <td><input type="text" class="text-right form-control form-control-sm"></td>
-                    <td><input type="text" class="text-right form-control form-control-sm"></td>
-                  </tr>
-                 </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <br>
-
-      <div class="card">
-        <table class="table table-responsive" data-dd-id="dado_vita">
-          <thead class="card-header">
-            <tr>
-              <th>Dado vita</th>
-              <th class="text-center">Razza</th>
-              <th class="text-center">Cl 1</th>
-              <th class="text-center">Cl 2</th>
-              <th class="text-center">Cl 3</th>
-              <th class="text-center">Cl 4</th>
-              <th class="text-center">Cl 5</th>
-              <th class="text-center">Cl 6</th>
-              <th class="text-center">Cl 7</th>
-              <th class="text-center">Cl 8</th>
-              <th class="text-center">Cl 9</th>
-              <th class="text-center">Totale</th>
-            </tr>
-          </thead>
-          <tbody class="card-body">
-            <tr>
-              <th class="text-right">DV</th>
-              <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="classe[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="classe[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="classe[2]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="classe[3]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="classe[4]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="classe[5]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="classe[6]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="classe[7]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="classe[8]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <br>
-
-      <div class="card">
-        <table class="table table-responsive" data-dd-id="tiro_salvezza">
-          <thead class="card-header">
-            <tr>
-              <th>Tiro salvezza</th>
-              <th class="text-center">M Car</th>
-              <th class="text-center">Classe</th>
-              <th class="text-center">Razza</th>
-              <th class="text-center">Arch 1</th>
-              <th class="text-center">Arch 2</th>
-              <th class="text-center">Magia</th>
-              <th class="text-center">VV 1</th>
-              <th class="text-center">VV 2</th>
-              <th class="text-center">Mod Specifici</th>
-              <th class="text-center">Tot</th>
-            </tr>
-          </thead>
-          <tbody class="card-body">
-            <tr data-dd-it="tempra/cos">
-              <th class="text-right"><sup>Cos</sup> Tempra</th>
-              <td><input type="text" data-dd-id="mod" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="classe" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="archetipo[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="mod_speciali" class="form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
-            </tr>
-            <tr data-dd-id="tempra/des">
-              <th class="text-right"><sup>Des</sup> Tempra</th>
-              <td><input type="text" data-dd-id="mod" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="classe" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="archetipo[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="mod_speciali" class="form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
-            </tr>
-            <tr data-dd-id="riflessi/des">
-              <th class="text-right"><sup>Des</sup> Riflessi</th>
-              <td><input type="text" data-dd-id="mod" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="classe" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="archetipo[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="mod_speciali" class="form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
-            </tr>
-            <tr data-dd-id="volonta/sag">
-              <th class="text-right"><sup>Sag</sup> Volontà</th>
-              <td><input type="text" data-dd-id="mod" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="classe" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="archetipo[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="mod_speciali" class="form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
-            </tr>
-            <tr data-dd-id="volonta/car">
-              <th class="text-right"><sup>Car</sup> Volontà</th>
-              <td><input type="text" data-dd-id="mod" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="classe" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="archetipo[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="mod_speciali" class="form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
-            </tr>
-            <tr data-dd-id="volonta/int">
-              <th class="text-right"><sup>Int</sup> Volontà</th>
-              <td><input type="text" data-dd-id="mod" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="classe" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="archetipo[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="mod_speciali" class="form-control form-control-sm"></td>
-              <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <br>
-
-      <div class="card">
-        <div class="card-header">Spostamento</div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-8">
-              <table class="table table-responsive" data-dd-id="carico">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th class="text-center">Leggero</th>
-                    <th class="text-center">Medio</th>
-                    <th class="text-center">Pesante</th>
-                    <th class="text-center">S. sopra testa</th>
-                    <th class="text-center">S. dal terreno</th>
-                    <th class="text-center">Sping/trasc</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th class="text-right">Carico</th>
-                    <td>
-                      <div class="input-group">
-                        <input type="text" data-dd-id="leggero" class="text-right form-control form-control-sm">
-                        <span class="input-group-addon">kg</span>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="input-group">
-                        <input type="text" data-dd-id="medio" class="text-right form-control form-control-sm">
-                        <span class="input-group-addon">kg</span>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="input-group">
-                        <input type="text" data-dd-id="pesante" class="text-right form-control form-control-sm">
-                        <span class="input-group-addon">kg</span>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="input-group">
-                        <input type="text" data-dd-id="sopra_testa" class="text-right form-control form-control-sm" aria-describedby="aiuto_sopra_testa">
-                        <span class="input-group-addon">kg</span>
-                      </div>
-                      <span id="aiuto_sopra_testa" class="help-block text-center">(carico max)</span>
-                    </td>
-                    <td>
-                      <div class="input-group">
-                        <input type="text" data-dd-id="dal_terreno" class="text-right form-control form-control-sm" aria-describedby="aiuto_dal_terreno">
-                        <span class="input-group-addon">kg</span>
-                      </div>
-                      <span id="aiuto_dal_terreno" class="help-block text-center">(carico max ×2)</span>
-                    </td>
-                    <td>
-                      <div class="input-group">
-                        <input type="text" data-dd-id="sping_trasc" class="text-right form-control form-control-sm" aria-describedby="aiuto_spingere_trascinare">
-                        <span class="input-group-addon">kg</span>
-                      </div>
-                      <span id="aiuto_spingere_trascinare" class="help-block text-center">(carico max ×5)</span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="col-md-4">
-              <table class="table table-responsive">
-                <thead>
-                  <tr>
-                    <th class="text-center">Tot peso</th>
-                    <th class="text-center">Pen armatura</th>
-                    <th class="text-center">Pen nuotare</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><input type="text" data-dd-id="peso_totale" class="text-right form-control form-control-sm"></td>
-                    <td><input type="text" data-dd-id="penalita_armatura" class="text-right form-control form-control-sm"></td>
-                    <td><input type="text" data-dd-id="penalita_nuotare" class="text-right form-control form-control-sm"></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-              <table class="table table-responsive" data-dd-id="velocita">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th class="text-center">Base</th>
-                    <th class="text-center">Armatura</th>
-                    <th class="text-center">Correre</th>
-                    <th class="text-center">Nuotare</th>
-                    <th class="text-center">Scalare</th>
-                    <th class="text-center">Volare</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr data-dd-id="testme-row">
-                    <th class="text-right">Velocità</th>
-                    <td>
-                      <div class="input-group">
-                        <input type="text" data-dd-id="base" class="text-right form-control form-control-sm">
-                        <span class="input-group-addon">m</span>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="input-group">
-                        <input type="text" data-dd-id="armatura" class="text-right form-control form-control-sm">
-                        <span class="input-group-addon">m</span>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="input-group">
-                        <input type="text" data-dd-id="correre" class="text-right form-control form-control-sm">
-                        <span class="input-group-addon">m</span>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="input-group">
-                        <input type="text" data-dd-id="nuotare" class="text-right form-control form-control-sm">
-                        <span class="input-group-addon">m</span>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="input-group">
-                        <input type="text" data-dd-id="scalare" class="text-right form-control form-control-sm">
-                        <span class="input-group-addon">m</span>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="input-group">
-                        <input type="text" data-dd-id="volare" class="text-right form-control form-control-sm">
-                        <span class="input-group-addon">m</span>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <br>
-
-      <div class="card">
-        <div class="card-header">Attachi</div>
-        <textarea data-dd-id="note" class="card-body form-control"></textarea>
-      </div>
-
-
-      <br>
-
-      <div class="card">
-        <div class="card-header">Note</div>
-        <textarea data-dd-id="note" class="card-body form-control"></textarea>
-      </div>
-
-
     </div>
   </body>
 </html>
