@@ -56,6 +56,8 @@ function Controller() {
             var event_fn = function(event2) {
                 save_to_file.val($(this).text().trim()).change();
             };
+            save_to_form[0].reset();
+            save_to_form.removeClass('was-validated');
             self._populateFileList(save_to_list, event_fn);
         });
     };
