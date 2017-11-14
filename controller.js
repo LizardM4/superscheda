@@ -62,6 +62,37 @@ function Controller() {
         });
     };
 
+    self._setupAnimatedChevrons = function() {
+        // Find all the chevron buttons
+        $('div.card div.card-header button.close i.fa').each(function (idx, obj) {
+            var i = $(obj);
+            var button = i.parents('button');
+            var card = button.parents('div.card');
+            card.on('hide.bs.collapse', function(event) {
+                button.prop('disabled', true);
+                i.animateRotate(180, {
+                    complete: function() {
+                        button.prop('disabled', false);
+                        i.css('transform', '')
+                            .removeClass('fa-chevron-circle-up')
+                            .addClass('fa-chevron-circle-down');
+                    }
+                });
+            });
+            card.on('show.bs.collapse', function(event) {
+                button.prop('disabled', true);
+                i.animateRotate(180, {
+                    complete: function() {
+                        button.prop('disabled', false);
+                        i.css('transform', '')
+                            .removeClass('fa-chevron-circle-down')
+                            .addClass('fa-chevron-circle-up');
+                    }
+                });
+            });
+        });
+    };
+
     self._setupWaitingModal = function() {
         self._modalWaiting = $('#waiting');
 
@@ -105,6 +136,7 @@ function Controller() {
         self._setupSaveToModal();
         self._setupLoadFromModal();
         self._setupWaitingModal();
+        self._setupAnimatedChevrons();
     };
 
     self.updateHier = function() {
@@ -209,4 +241,20 @@ function Controller() {
             });
     };
 
+};
+
+
+// https://stackoverflow.com/a/15191130/1749822
+$.fn.animateRotate = function(angle, duration, easing, complete) {
+  var args = $.speed(duration, easing, complete);
+  var step = args.step;
+  return this.each(function(i, e) {
+    args.complete = $.proxy(args.complete, e);
+    args.step = function(now) {
+      $.style(e, 'transform', 'rotate(' + now + 'deg)');
+      if (step) return step.apply(e, arguments);
+    };
+
+    $({deg: 0}).animate({deg: angle}, args);
+  });
 };
