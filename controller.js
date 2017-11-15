@@ -5,25 +5,31 @@ function Controller() {
     self.dropBox = null;
 
     self._getHierPath = function(obj) {
-        var parents = $(obj).parents('[data-dd-id]');
-        var path = [];
-        if (parents.length > 0) {
-            path = $.makeArray(
-                parents.map(function(i, item) { return $(item).data('dd-id'); })
-            ).reverse();
+        obj = $(obj);
+        var path = obj.data('dd-id');
+        if (obj.data('dd-index') != null) {
+            path += '[' + obj.data('dd-index') + ']'
         }
-        path.push($(obj).data('dd-id'));
-        return path.join('.');
+        // Up one step
+        obj = obj.parent();
+        if (obj.length > 0) {
+            obj = obj.closest('[data-dd-id]');
+        }
+        if (obj.length > 0) {
+            path = self._getHierPath(obj) + '.' + path;
+        }
+        return path;
     };
 
     self._allControls = function() {
-        return $('input[data-dd-path]');
+        return $('.form-control[data-dd-path]');
     };
 
-    self._setupDDPaths = function() {
-        $('input[data-dd-id]').each(function (idx, obj) {
-            $(obj).attr('data-dd-path', self._getHierPath(obj));
-        });
+    self._setupDDPaths = function(objs=$) {
+        $(objs).find('.form-control[data-dd-id]:not([data-dd-array="master"] *)')
+            .each(function (idx, obj) {
+                $(obj).attr('data-dd-path', self._getHierPath(obj));
+            });
     };
 
     self._setupDropBox = function() {
@@ -119,6 +125,40 @@ function Controller() {
         });
     };
 
+    self._setupArrays = function() {
+        $('[data-dd-array="append"]').click(function() { self._arrayAppend(this); });
+        $('[data-dd-array="remove"]').click(function() { self._arrayRemove(this); });
+        $('[data-dd-array="master"]').addClass('d-none');
+    }
+
+    self._arrayAppend = function(obj) {
+        var container = $(obj).closest('[data-dd-array="container"]');
+        var master = container.children('[data-dd-array="master"]');
+        var items = container.children('[data-dd-array="item"]');
+        // Clone the master, but copy the events too (add/remove buttons)
+        var new_item = master.clone(true);
+        new_item.removeClass('d-none')
+            .attr('data-dd-array', 'item')
+            .attr('data-dd-index', items.length.toString())
+            .appendTo(container);
+        self._setupDDPaths(new_item);
+    }
+
+    self._arrayRemove = function(obj) {
+        var item = $(obj).closest('[data-dd-array="item"]');
+        var container = item.closest('[data-dd-array="container"]')
+        item.remove();
+        self._arrayReindex(container);
+    }
+
+    self._arrayReindex = function(obj) {
+        var container = $(obj).closest('[data-dd-array="container"]');
+        var items = container.children('[data-dd-array="item"]');
+        items.each(function (idx, item) {
+            $(item).attr('data-dd-index', idx.toString());
+        });
+    }
+
 
     self.notify = function(cls, text) {
         var $div = $('<div class="alert alert-dismissible sticky-top fade show" role="alert">');
@@ -137,6 +177,7 @@ function Controller() {
         self._setupLoadFromModal();
         self._setupWaitingModal();
         self._setupAnimatedChevrons();
+        self._setupArrays();
     };
 
     self.updateHier = function() {

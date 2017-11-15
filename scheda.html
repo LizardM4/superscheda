@@ -168,13 +168,13 @@
               </h5>
             </div>
             <div class="collapse show" id="card_attacchi">
-              <div class="card-body">
-                <div class="rounded border m-3" data-dd-array data-dd-id="testme">
-                  Hello dear
-                  <button type="button" class="close" aria-label="Add">
-                    <i class="fa fa-plus" aria-hidden="true"></i>
-                  </button>
-                  <button type="button" class="close" aria-label="Remove">
+              <div class="card-body" data-dd-array="container">
+                <button type="button" class="close" data-dd-array="append" aria-label="Add">
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+                <div class="rounded border m-3 d-none" data-dd-array="master" data-dd-id="testme">
+                <input type="text" class="form-control" data-dd-id="test" value="Hellow dear">
+                  <button type="button" class="close" data-dd-array="remove" aria-label="Remove">
                     <i class="fa fa-minus" aria-hidden="true"></i>
                   </button>
                 </div>
