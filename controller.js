@@ -98,9 +98,9 @@ function Controller() {
 
         self._modalWaiting.on('hidden.bs.modal', function (event) {
             // Reset the content
-            var p = self._modalWaiting.find('p');
-            p.empty();
-            $('<i class="fa fa-spinner fa-spin fa-5x"></i>').appendTo(p);
+            var dialog = self._modalWaiting.find('div.modal-dialog');
+            dialog.empty();
+            $('<i class="fa fa-spinner fa-spin fa-5x"></i>').appendTo(dialog);
         });
     };
 
@@ -121,7 +121,7 @@ function Controller() {
 
 
     self.notify = function(cls, text) {
-        var $div = $('<div class="alert alert-dismissible fade show" role="alert">');
+        var $div = $('<div class="alert alert-dismissible sticky-top fade show" role="alert">');
         $div.addClass('alert-' + cls);
         $div.text(text);
         $('<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
@@ -184,12 +184,12 @@ function Controller() {
         } else if (success === null) {
             self._modalWaiting.modal('hide');
         } else {
-            var p = self._modalWaiting.find('p');
-            p.empty();
+            var dialog = self._modalWaiting.find('div.modal-dialog');
+            dialog.empty();
             if (success) {
-                $('<i class="fa fa-check fa-5x"></i>').appendTo(p);
+                $('<i class="fa fa-check fa-5x"></i>').appendTo(dialog);
             } else {
-                $('<i class="fa fa-times fa-5x"></i>').appendTo(p);
+                $('<i class="fa fa-times fa-5x"></i>').appendTo(dialog);
             }
             setTimeout(function() {
                 self._modalWaiting.modal('hide');

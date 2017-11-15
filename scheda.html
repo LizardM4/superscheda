@@ -48,6 +48,10 @@
           DD.updateForm();
         });
 
+        $('#tbox_test_alert').click(function() {
+          DD.notify('warning', 'Test!');
+        });
+
       });
     </script>
   </head>
@@ -113,10 +117,10 @@
       </div>
 
       <div class="modal fade" tabindex="-1" role="dialog" id="waiting" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog" role="document"  style="position: relative; top: 30%;">
-          <p class="text-center text-light">
+        <div class="my-0 h-100 d-flex align-items-center justify-content-center">
+          <div class="modal-dialog text-light" role="document">
             <i class="fa fa-spinner fa-spin fa-5x"></i>
-          </p>
+          </div>
         </div>
       </div>
 
@@ -128,7 +132,7 @@
 
 
           <div class="card">
-            <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_debug_features" aria-expanded="true" aria-controls="card_debug_features">
+            <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_debug_features" aria-expanded="false" aria-controls="card_debug_features">
               <h5 class="mb-0">
                 Debug features
                 <button type="button" class="close" aria-label="Toggle">
@@ -136,17 +140,48 @@
                 </button>
               </h5>
             </div>
-            <div id="card_debug_features" class="collapse show">
+            <div id="card_debug_features" class="collapse">
               <div class="card-body">
                 <button id="tbox_highlight_missing_id" class="btn btn-secondary" type="button">Highlight missing dd-id</button>
                 <button id="tbox_show_hpath" class="btn btn-secondary" type="button">Show get_hier_path</button>
                 <button id="tbox_load_repr" class="btn btn-secondary" type="button">Load representation</button>
                 <button id="tbox_dump_repr" class="btn btn-secondary" type="button">Dump representation</button>
                 <button id="tbox_test_wait" class="btn btn-secondary" type="button" data-toggle="modal" data-target="#waiting">Test waiting</button>
+                <button id="tbox_test_alert" class="btn btn-secondary" type="button">Test alert</button>
                 <textarea class="form-control mt-3" rows="10" id="tbox_txt"></textarea>
               </div>
             </div>
           </div>
+
+
+
+
+
+
+          <div class="card">
+            <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_attacchi" aria-expanded="true" aria-controls="card_attacchi">
+              <h5 class="mb-0">
+                Attacchi
+                <button type="button" class="close" aria-label="Toggle">
+                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                </button>
+              </h5>
+            </div>
+            <div class="collapse show" id="card_attacchi">
+              <div class="card-body">
+                <div class="rounded border m-3" data-dd-array data-dd-id="testme">
+                  Hello dear
+                  <button type="button" class="close" aria-label="Add">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                  </button>
+                  <button type="button" class="close" aria-label="Remove">
+                    <i class="fa fa-minus" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
 
 
 
@@ -1037,26 +1072,6 @@
 
 
 
-
-
-
-
-
-
-          <div class="card">
-            <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_attacchi" aria-expanded="true" aria-controls="card_attacchi">
-              <h5 class="mb-0">
-                Attacchi
-                <button type="button" class="close" aria-label="Toggle">
-                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
-                </button>
-              </h5>
-            </div>
-            <div class="collapse show" id="card_attacchi">
-              <div class="card-body">
-              </div>
-            </div>
-          </div>
 
 
 
