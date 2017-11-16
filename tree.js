@@ -65,6 +65,26 @@ function Hier() {
         self.obj = JSON.parse(json_txt);
     }
 
+    self.arrays = function() {
+        var retval = [];
+        var step = function(path, obj) {
+            if (obj instanceof Array) {
+                retval.push([path, obj.length]);
+                for (var i = 0; i < obj.length; ++i) {
+                    step(path + '[' + i.toString() + ']', obj[i]);
+                }
+            } else if (obj instanceof Object) {
+                for (var key in obj) {
+                    step(path + '.' + key, obj[key]);
+                }
+            }
+        };
+        for (var key in self.obj) {
+            step(key, self.obj[key]);
+        }
+        return retval;
+    };
+
     self.flatten = function() {
         var retval = {};
         var step = function(path, obj) {
