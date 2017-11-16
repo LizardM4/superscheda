@@ -146,17 +146,7 @@ function Controller() {
     }
 
     self._arrayAppend = function(any_obj_in_array) {
-        var container = $(any_obj_in_array).closest('[data-dd-array="container"]');
-        var master = container.children('[data-dd-array="master"]');
-        var items = container.children('[data-dd-array="item"]');
-        // Clone the master, but copy the events too (add/remove buttons)
-        var new_item = master.clone(true);
-        new_item.removeClass('d-none')
-            .attr('data-dd-array', 'item')
-            .attr('data-dd-index', items.length.toString())
-            .appendTo(container);
-        self._setupDDPaths(new_item);
-        self._arrayUpdateCount(container, items.length + 1);
+        self._arrayResize(any_obj_in_array, 1, true);
     }
 
     self._arrayRemove = function(any_obj_in_item) {
@@ -164,6 +154,36 @@ function Controller() {
         var container = item.closest('[data-dd-array="container"]')
         item.remove();
         self._arrayReindex(container);
+        self._arrayUpdateCount(container);
+    }
+
+    self._arrayResize = function(any_obj_in_array, size, relative=false) {
+        var container = $(any_obj_in_array).closest('[data-dd-array="container"]');
+        var items = container.children('[data-dd-array="item"]');
+        if (relative) {
+            size = items.length + size;
+        }
+        if (items.length < size) {
+            var master = container.children('[data-dd-array="master"]');
+            for (var i = 0; i < size - items.length; ++i) {
+                // Clone the master, but copy the events too (add/remove buttons)
+                var new_item = master.clone(true);
+                new_item.removeClass('d-none')
+                    .attr('data-dd-array', 'item')
+                    .attr('data-dd-index', items.length + i)
+                    .appendTo(container);
+                self._setupDDPaths(new_item);
+            }
+        } else if (items.length > size) {
+            // No need for reindexing
+            items.each(function (idx, obj) {
+                if (idx >= size) {
+                    $(obj).remove();
+                }
+            });
+        } else {
+            return;
+        }
         self._arrayUpdateCount(container);
     }
 
