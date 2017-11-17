@@ -65,7 +65,7 @@ function Hier() {
         self.obj = JSON.parse(json_txt);
     }
 
-    self.arrays = function() {
+    self.getArraySizes = function() {
         var retval = [];
         var step = function(path, obj) {
             if (obj instanceof Array) {
