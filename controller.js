@@ -70,7 +70,16 @@ function Controller(dbxAppId) {
             // Enable the button for the authentication
             $('button[data-target="#auth_dbx"]').prop('disabled', false).removeClass('d-none');
             // Generate  the authentication url
-            $('#auth_dbx a').attr('href', self.dropbox.getAuthenticationUrl(window.location));
+            var url = null;
+            if (window.location.hostname == 'localhost') {
+                url = window.location;
+            } else {
+                // Ensure https or Dropbox won't accept the redirect URI
+                // https://stackoverflow.com/a/5818284/1749822
+                url = 'https://' + location.hostname + (location.port ? ':' + location.port : '')
+                url += location.pathname + (location.search ? location.search : '')
+            }
+            $('#auth_dbx a').attr('href', self.dropbox.getAuthenticationUrl(url));
             $(function() {
                 $('#auth_dbx').modal('show');
             });
