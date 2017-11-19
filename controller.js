@@ -20,7 +20,7 @@ function Controller(dbxAppId) {
 
     self.appId = dbxAppId;
     self.data = new Hier();
-    self.dropBox = null;
+    self.dropbox = null;
 
     self._getHierPath = function(obj) {
         obj = $(obj);
@@ -58,13 +58,22 @@ function Controller(dbxAppId) {
             });
     };
 
-    self._setupDropBox = function() {
+    self._setupDropbox = function() {
         parms = parseQueryString();
         if ('access_token' in parms) {
-            self.dropBox = new Dropbox({accessToken: parms['access_token']});
+            self.dropbox = new Dropbox({accessToken: parms['access_token']});
+            // Enable the open and save button
+            $('button[data-target="#load_from"]').prop('disabled', false);
+            $('button[data-target="#save_to"]').prop('disabled', false);
         } else {
-            self.dropBox = new Dropbox({clientId: self.appId});
-            $('#dbx_auth').attr('href', self.dropBox.getAuthenticationUrl(window.location));
+            self.dropbox = new Dropbox({clientId: self.appId});
+            // Enable the button for the authentication
+            $('button[data-target="#auth_dbx"]').prop('disabled', false).removeClass('d-none');
+            // Generate  the authentication url
+            $('#auth_dbx a').attr('href', self.dropbox.getAuthenticationUrl(window.location));
+            $(function() {
+                $('#auth_dbx').modal('show');
+            });
         }
     };
 
@@ -308,7 +317,7 @@ function Controller(dbxAppId) {
 
     self.setup = function() {
         self._setupDDPaths();
-        self._setupDropBox();
+        self._setupDropbox();
         self._setupSaveToModal();
         self._setupLoadFromModal();
         self._setupWaitingModal();
@@ -336,7 +345,7 @@ function Controller(dbxAppId) {
         obj = $(obj);
         obj.empty();
         $('<p class="text-center"><i class="fa fa-refresh fa-spin fa-3x"></i></p>').appendTo(obj);
-        self.dropBox.filesListFolder({path: ''})
+        self.dropbox.filesListFolder({path: ''})
             .then(function(response) {
                 obj.empty();
                 var $ul = $('<ul class="list-unstyled ml-1"></ul>');
@@ -378,7 +387,7 @@ function Controller(dbxAppId) {
 
     self.save = function(name, post_action=null) {
         self.updateHier();
-        self.dropBox.filesUpload({
+        self.dropbox.filesUpload({
             path: '/' + name,
             mode: 'overwrite',
             contents: self.data.dump()
@@ -391,7 +400,7 @@ function Controller(dbxAppId) {
             })
             .catch(function(error) {
                 console.log(error);
-                self.notify('danger', 'Impossibile salvare su DropBox.');
+                self.notify('danger', 'Impossibile salvare su Dropbox.');
                 if (post_action) {
                     post_action(false);
                 }
@@ -399,7 +408,7 @@ function Controller(dbxAppId) {
     };
 
     self.load = function(name, post_action=null) {
-        self.dropBox.filesDownload({path: '/' + name})
+        self.dropbox.filesDownload({path: '/' + name})
             .then(function (response) {
                 var blob = response.fileBlob;
                 var reader = new FileReader();
@@ -413,7 +422,7 @@ function Controller(dbxAppId) {
                 reader.readAsText(blob);
             })
             .catch(function (error) {
-                self.notify('danger', 'Impossibile leggere da DropBox.');
+                self.notify('danger', 'Impossibile leggere da Dropbox.');
                 if (post_action) {
                     post_action(false);
                 }

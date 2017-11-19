@@ -77,9 +77,9 @@ You should have received a copy of the GNU General Public License
 
       <div class="row mb-3">
         <div class="col-md-12">
-          <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#load_from">Carica da <i class="fa fa-dropbox" aria-hidden="true"></i></button>
-          <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#save_to">Salva su <i class="fa fa-dropbox" aria-hidden="true"></i></button>
-          <a class="btn btn-outline-seconday" role="button" href="#" id="dbx_auth">Authenticate</a>
+          <button class="btn btn-outline-primary mr-1 d-none" disabled type="button" data-toggle="modal" data-target="#auth_dbx">Accedi a <i class="fa fa-dropbox" aria-hidden="true"></i></button>
+          <button class="btn btn-outline-primary mr-1" disabled type="button" data-toggle="modal" data-target="#load_from"><i class="fa fa-folder-open-o" aria-hidden="true"></i></button>
+          <button class="btn btn-outline-primary mr-1" disabled type="button" data-toggle="modal" data-target="#save_to"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
         </div>
       </div>
 
@@ -112,6 +112,29 @@ You should have received a copy of the GNU General Public License
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
               </div>
             </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" tabindex="-1" role="dialog" id="auth_dbx" aria-labelledby="auth_dbx_title" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="auth_dbx_title"><i class="fa fa-dropbox" aria-hidden="true"></i> Accesso a Dropbox</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>
+                Superscheda usa Dropbox per salvare e caricare i contenuti.
+                Puoi usare la pagina anche senza accedere a Dropbox, ma non potrai salvare le modifiche.
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Ignora</button>
+              <a href="#" class="btn btn-primary">Accedi a Dropbox</a>
+            </div>
           </div>
         </div>
       </div>
