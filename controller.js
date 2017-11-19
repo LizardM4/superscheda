@@ -15,9 +15,10 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-function Controller() {
+function Controller(dbxAppId) {
     var self = this;
 
+    self.appId = dbxAppId;
     self.data = new Hier();
     self.dropBox = null;
 
@@ -58,10 +59,12 @@ function Controller() {
     };
 
     self._setupDropBox = function() {
-        if (DDConfig && DDConfig['accessToken']) {
-            self.dropBox = new Dropbox({accessToken: DDConfig['accessToken']});
+        parms = parseQueryString();
+        if ('access_token' in parms) {
+            self.dropBox = new Dropbox({accessToken: parms['access_token']});
         } else {
-            self.notify('danger', 'Unable to load DropBox: missing \'accessToken\' entry in \'dd-config.js\'');
+            self.dropBox = new Dropbox({clientId: self.appId});
+            $('#dbx_auth').attr('href', self.dropBox.getAuthenticationUrl(window.location));
         }
     };
 
@@ -422,15 +425,29 @@ function Controller() {
 
 // https://stackoverflow.com/a/15191130/1749822
 $.fn.animateRotate = function(angle, duration, easing, complete) {
-  var args = $.speed(duration, easing, complete);
-  var step = args.step;
-  return this.each(function(i, e) {
-    args.complete = $.proxy(args.complete, e);
-    args.step = function(now) {
-      $.style(e, 'transform', 'rotate(' + now + 'deg)');
-      if (step) return step.apply(e, arguments);
-    };
+    var args = $.speed(duration, easing, complete);
+    var step = args.step;
+    return this.each(function(i, e) {
+        args.complete = $.proxy(args.complete, e);
+        args.step = function(now) {
+            $.style(e, 'transform', 'rotate(' + now + 'deg)');
+            if (step) return step.apply(e, arguments);
+        };
 
-    $({deg: 0}).animate({deg: angle}, args);
-  });
+        $({deg: 0}).animate({deg: angle}, args);
+    });
 };
+
+// https://stackoverflow.com/a/2880929/1749822
+function parseQueryString() {
+    var pl = /\+/g;  // Regex for replacing addition symbol with a space
+    var search = /([^&=]+)=?([^&]*)/g;
+    var decode = function (s) { return decodeURIComponent(s.replace(pl, ' ')); };
+    var query = window.location.hash.substring(1);
+    var match;
+    var url_params = {};
+    while (match = search.exec(query)) {
+        url_params[decode(match[1])] = decode(match[2]);
+    }
+    return url_params;
+}

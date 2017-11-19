@@ -30,14 +30,13 @@ You should have received a copy of the GNU General Public License
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <script src="https://unpkg.com/dropbox/dist/Dropbox-sdk.min.js"></script>
 
-    <script src="dd-config.js"></script>
     <script src="tree.js"></script>
     <script src="controller.js"></script>
     <style>
       #tbox_txt { font-family: monospace; }
     </style>
     <script>
-      DD = new Controller();
+      DD = new Controller('o5r7pjkfba22ymd');
 
       $(function() {
 
@@ -80,6 +79,7 @@ You should have received a copy of the GNU General Public License
         <div class="col-md-12">
           <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#load_from">Carica da <i class="fa fa-dropbox" aria-hidden="true"></i></button>
           <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#save_to">Salva su <i class="fa fa-dropbox" aria-hidden="true"></i></button>
+          <a class="btn btn-outline-seconday" role="button" href="#" id="dbx_auth">Authenticate</a>
         </div>
       </div>
 
