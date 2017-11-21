@@ -1141,7 +1141,7 @@ You should have received a copy of the GNU General Public License
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
                   <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
                 </button>
-                Talenti e Difetti, Maneuvers, Stances
+                Talenti e difetti, maneuvers, stances
                 <span class="close">
                   <span class="text-muted font-weight-light" data-dd-array="count" data-target="#array_talenti">0</span>
                   <i class="fa fa-plus-circle" data-dd-array="append" data-target="#array_talenti" aria-label="Add" aria-hidden="true"></i>
@@ -1152,15 +1152,16 @@ You should have received a copy of the GNU General Public License
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-7 form-group">
-                    <label>Talento/Difetto/…</label>
+                    Talento/Difetto/…
                   </div>
                   <div class="col-md-1 form-group">
-                    <label>Lvl</label>
+                    Lvl
                   </div>
                   <div class="col-md-3 form-group">
-                    <label>Riferimento</label>
+                    Riferimento
                   </div>
                 </div>
+              </div>
               <div class="card-body" id="array_talenti" data-dd-array="container">
                 <div class="row" data-dd-id="talenti" data-dd-array="master">
                   <div class="col-md-7 form-group">
@@ -1181,6 +1182,172 @@ You should have received a copy of the GNU General Public License
               </div>
             </div>
           </div>
+
+          <div class="card">
+            <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_skill" aria-expanded="true" aria-controls="card_skill">
+              <h5 class="mb-0">
+                <button type="button" class="close float-left mr-3" aria-label="Toggle">
+                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                </button>
+                Skill tricks
+                <span class="close">
+                  <span class="text-muted font-weight-light" data-dd-array="count" data-target="#array_skill">0</span>
+                  <i class="fa fa-plus-circle" data-dd-array="append" data-target="#array_skill" aria-label="Add" aria-hidden="true"></i>
+                </span>
+              </h5>
+            </div>
+            <div class="collapse show" id="card_skill">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-7 form-group">
+                    Skill trick
+                  </div>
+                  <div class="col-md-1 form-group">
+                    Lvl
+                  </div>
+                  <div class="col-md-3 form-group">
+                    Riferimento
+                  </div>
+                </div>
+              </div>
+              <div class="card-body" id="array_skill" data-dd-array="container">
+                <div class="row" data-dd-id="skill" data-dd-array="master">
+                  <div class="col-md-7 form-group">
+                    <input type="text" class="form-control" data-dd-id="skill">
+                  </div>
+                  <div class="col-md-1 form-group">
+                    <input type="text" class="form-control" data-dd-id="livello">
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <input type="text" class="form-control" data-dd-id="riferimento">
+                  </div>
+                  <div class="col-md-1">
+                    <button type="button" class="close float-none" data-dd-array="remove" aria-label="Remove">
+                      <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_competenze" aria-expanded="true" aria-controls="card_competenze">
+              <h5 class="mb-0">
+                <button type="button" class="close float-left mr-3" aria-label="Toggle">
+                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                </button>
+                Competenza in armi e armature
+              </h5>
+            </div>
+            <div class="collapse show" id="card_competenze">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" value="">
+                        Armature leggere
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" value="">
+                        Armi semplici
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" value="">
+                        Armature medie
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" value="">
+                        Armi da guerra
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" value="">
+                        Armature pesanti
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" value="">
+                        Scudi
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_privilegi" aria-expanded="true" aria-controls="card_privilegi">
+              <h5 class="mb-0">
+                <button type="button" class="close float-left mr-3" aria-label="Toggle">
+                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                </button>
+                Privilegi di classe e capacità speciali
+                <span class="close">
+                  <span class="text-muted font-weight-light" data-dd-array="count" data-target="#array_privilegi">0</span>
+                  <i class="fa fa-plus-circle" data-dd-array="append" data-target="#array_privilegi" aria-label="Add" aria-hidden="true"></i>
+                </span>
+              </h5>
+            </div>
+            <div class="collapse show" id="card_privilegi">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-5 form-group">
+                    Privilegio/Capacità
+                  </div>
+                  <div class="col-md-3 form-group">
+                    Tipo
+                  </div>
+                  <div class="col-md-3 form-group">
+                    Riferimento
+                  </div>
+                </div>
+              </div>
+              <div class="card-body" id="array_privilegi" data-dd-array="container">
+                <div class="row" data-dd-id="privilegi" data-dd-array="master">
+                  <div class="col-md-5 form-group">
+                    <input type="text" class="form-control" data-dd-id="privilegio">
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <input type="text" class="form-control" data-dd-id="tipo">
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <input type="text" class="form-control" data-dd-id="riferimento">
+                  </div>
+                  <div class="col-md-1">
+                    <button type="button" class="close float-none" data-dd-array="remove" aria-label="Remove">
+                      <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
 
         </div>
       </div>
