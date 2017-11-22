@@ -88,7 +88,7 @@ You should have received a copy of the GNU General Public License
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="save_to_title">Salva su <i class="fa fa-dropbox" aria-hidden="true"></i></h5>
+              <h4 class="modal-title" id="save_to_title">Salva su <i class="fa fa-dropbox" aria-hidden="true"></i></h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -120,7 +120,7 @@ You should have received a copy of the GNU General Public License
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="auth_dbx_title"><i class="fa fa-dropbox" aria-hidden="true"></i> Accesso a Dropbox</h5>
+              <h4 class="modal-title" id="auth_dbx_title"><i class="fa fa-dropbox" aria-hidden="true"></i> Accesso a Dropbox</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -143,7 +143,7 @@ You should have received a copy of the GNU General Public License
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="load_from_title">Carica da <i class="fa fa-dropbox" aria-hidden="true"></i></h5>
+              <h4 class="modal-title" id="load_from_title">Carica da <i class="fa fa-dropbox" aria-hidden="true"></i></h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -173,12 +173,12 @@ You should have received a copy of the GNU General Public License
 
           <div class="card">
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_debug_features" aria-expanded="false" aria-controls="card_debug_features">
-              <h5 class="mb-0">
+              <h4 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
                   <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
                 </button>
                 Debug features
-              </h5>
+              </h4>
             </div>
             <div id="card_debug_features" class="collapse">
               <div class="card-body">
@@ -200,7 +200,7 @@ You should have received a copy of the GNU General Public License
 
           <div class="card">
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_attacchi" aria-expanded="true" aria-controls="card_attacchi">
-              <h5 class="mb-0">
+              <h4 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
                   <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
                 </button>
@@ -209,7 +209,7 @@ You should have received a copy of the GNU General Public License
                   <span class="text-muted font-weight-light" data-dd-array="count" data-target="#array_attacchi">0</span>
                   <i class="fa fa-plus-circle" data-dd-array="append" data-target="#array_attacchi" aria-label="Add" aria-hidden="true"></i>
                 </span>
-              </h5>
+              </h4>
             </div>
             <div class="collapse show" id="card_attacchi">
               <div class="card-body" data-dd-array="container" id="array_attacchi">
@@ -231,68 +231,68 @@ You should have received a copy of the GNU General Public License
 
           <div class="card">
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_base" aria-expanded="true" aria-controls="card_base">
-              <h5 class="mb-0">
+              <h4 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
                   <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
                 </button>
                 Base
-              </h5>
+              </h4>
             </div>
             <div class="collapse show" id="card_base">
               <div class="card-body">
                 <div class="form-row">
                   <div class="col-md-3 form-group">
-                    <label>Nome del personaggio</label>
+                    <label class="col-form-label">Nome del personaggio</label>
                     <input type="text" class="form-control" data-dd-id="nome" placeholder="Nome">
                   </div>
                   <div class="col-md-3 form-group">
-                    <label>Razza</label>
+                    <label class="col-form-label">Razza</label>
                     <input type="text" class="form-control" data-dd-id="razza" placeholder="Umano">
                   </div>
                   <div class="col-md-3 form-group">
-                    <label>Archetipo 1</label>
+                    <label class="col-form-label">Archetipo 1</label>
                     <input type="text" class="form-control" data-dd-id="archetipo[0]">
                   </div>
                   <div class="col-md-3 form-group">
-                    <label>Archetipo 2</label>
+                    <label class="col-form-label">Archetipo 2</label>
                     <input type="text" class="form-control" data-dd-id="archetipo[1]">
                   </div>
                 </div>
 
                 <div class="form-row">
                   <div class="col-md-3 form-group">
-                    <label>Nome del giocatore</label>
+                    <label class="col-form-label">Nome del giocatore</label>
                     <input type="text" class="form-control" data-dd-id="giocatore" placeholder="Il tuo nome">
                   </div>
                   <div class="col-md-3 form-group">
-                    <label>Classe</label>
+                    <label class="col-form-label">Classe</label>
                     <input type="text" class="form-control" data-dd-id="classe[0]" placeholder="Classe">
                   </div>
                   <div class="col-md-3 form-group">
-                    <label>Classe/CdP</label>
+                    <label class="col-form-label">Classe/CdP</label>
                     <input type="text" class="form-control" data-dd-id="classe[1]">
                   </div>
                   <div class="col-md-3 form-group">
-                    <label>Classe/CdP</label>
+                    <label class="col-form-label">Classe/CdP</label>
                     <input type="text" class="form-control" data-dd-id="classe[2]">
                   </div>
                 </div>
 
                 <div class="form-row" data-dd-id="png">
                   <div class="col-md-3 form-group">
-                    <label>Classe da PNG</label>
+                    <label class="col-form-label">Classe da PNG</label>
                     <input type="text" class="form-control" id="classe[0]">
                   </div>
                   <div class="col-md-3 form-group">
-                    <label>Classe/CdP</label>
+                    <label class="col-form-label">Classe/CdP</label>
                     <input type="text" class="form-control" id="classe[1]">
                   </div>
                   <div class="col-md-3 form-group">
-                    <label>Classe/CdP</label>
+                    <label class="col-form-label">Classe/CdP</label>
                     <input type="text" class="form-control" id="classe[2]">
                   </div>
                   <div class="col-md-3 form-group">
-                    <label>Classe/CdP</label>
+                    <label class="col-form-label">Classe/CdP</label>
                     <input type="text" class="form-control" id="classe[3]">
                   </div>
                 </div>
@@ -302,11 +302,11 @@ You should have received a copy of the GNU General Public License
                   <div class="col-md-3">
                     <div class="form-row">
                       <div class="col-md-6 form-group">
-                        <label>Taglia</label>
+                        <label class="col-form-label">Taglia</label>
                         <input type="text" class="form-control" data-dd-id="taglia">
                       </div>
                       <div class="col-md-6 form-group">
-                        <label>Altezza</label>
+                        <label class="col-form-label">Altezza</label>
                         <input type="text" class="form-control" data-dd-id="altezza">
                       </div>
                     </div>
@@ -314,11 +314,11 @@ You should have received a copy of the GNU General Public License
                   <div class="col-md-3">
                     <div class="form-row">
                       <div class="col-md-6 form-group">
-                        <label>Peso</label>
+                        <label class="col-form-label">Peso</label>
                         <input type="text" class="form-control" data-dd-id="peso">
                       </div>
                       <div class="col-md-6 form-group">
-                        <label>Occhi</label>
+                        <label class="col-form-label">Occhi</label>
                         <input type="text" class="form-control" data-dd-id="occhi">
                       </div>
                     </div>
@@ -326,11 +326,11 @@ You should have received a copy of the GNU General Public License
                   <div class="col-md-3">
                     <div class="form-row">
                       <div class="col-md-6 form-group">
-                        <label>Capelli</label>
+                        <label class="col-form-label">Capelli</label>
                         <input type="text" class="form-control" data-dd-id="capelli">
                       </div>
                       <div class="col-md-6 form-group">
-                        <label>Pelle</label>
+                        <label class="col-form-label">Pelle</label>
                         <input type="text" class="form-control" data-dd-id="pelle">
                       </div>
                     </div>
@@ -338,11 +338,11 @@ You should have received a copy of the GNU General Public License
                   <div class="col-md-3">
                     <div class="form-row">
                       <div class="col-md-6 form-group">
-                        <label>Età</label>
+                        <label class="col-form-label">Età</label>
                         <input type="text" class="form-control" data-dd-id="eta">
                       </div>
                       <div class="col-md-6 form-group">
-                        <label>Sesso</label>
+                        <label class="col-form-label">Sesso</label>
                         <input type="text" class="form-control" data-dd-id="sesso">
                       </div>
                     </div>
@@ -351,15 +351,15 @@ You should have received a copy of the GNU General Public License
 
                 <div class="form-row">
                   <div class="col-md-6 form-group">
-                    <label>Segni particolari</label>
+                    <label class="col-form-label">Segni particolari</label>
                     <input type="text" class="form-control" data-dd-id="segni_particolari">
                   </div>
                   <div class="col-md-3 form-group">
-                    <label>Divinità</label>
+                    <label class="col-form-label">Divinità</label>
                     <input type="text" class="form-control" data-dd-id="divinita">
                   </div>
                   <div class="col-md-3 form-group">
-                    <label>Allineamento/CdP</label>
+                    <label class="col-form-label">Allineamento/CdP</label>
                     <input type="text" class="form-control" data-dd-id="allineamento">
                   </div>
                 </div>
@@ -373,12 +373,12 @@ You should have received a copy of the GNU General Public License
 
           <div class="card">
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_caratteristiche" aria-expanded="true" aria-controls="card_caratteristiche">
-              <h5 class="mb-0">
+              <h4 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
                   <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
                 </button>
                 Caratteristiche
-              </h5>
+              </h4>
             </div>
             <div class="collapse show" id="card_caratteristiche">
               <div class="card-body">
@@ -505,12 +505,12 @@ You should have received a copy of the GNU General Public License
 
           <div class="card">
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_armatura" aria-expanded="true" aria-controls="card_armatura">
-              <h5 class="mb-0">
+              <h4 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
                   <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
                 </button>
                 Armatura
-              </h5>
+              </h4>
             </div>
             <div class="collapse show" id="card_armatura">
               <div class="card-body">
@@ -594,12 +594,12 @@ You should have received a copy of the GNU General Public License
 
           <div class="card">
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_attacco" aria-expanded="true" aria-controls="card_attacco">
-              <h5 class="mb-0">
+              <h4 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
                   <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
                 </button>
                 Attacco
-              </h5>
+              </h4>
             </div>
             <div class="collapse show" id="card_attacco">
               <div class="card-body">
@@ -783,12 +783,12 @@ You should have received a copy of the GNU General Public License
 
           <div class="card">
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_dado_vita" aria-expanded="true" aria-controls="card_dado_vita">
-              <h5 class="mb-0">
+              <h4 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
                   <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
                 </button>
                 Dado vita
-              </h5>
+              </h4>
             </div>
             <div class="collapse show" id="card_dado_vita">
               <div class="card-body">
@@ -840,12 +840,12 @@ You should have received a copy of the GNU General Public License
 
           <div class="card">
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_tiri_salvezza" aria-expanded="true" aria-controls="card_tiri_salvezza">
-              <h5 class="mb-0">
+              <h4 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
                   <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
                 </button>
                 Tiri salvezza
-              </h5>
+              </h4>
             </div>
             <div class="collapse show" id="card_tiri_salvezza">
               <div class="card-body">
@@ -958,12 +958,12 @@ You should have received a copy of the GNU General Public License
 
           <div class="card">
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_spostamento" aria-expanded="true" aria-controls="card_spostamento">
-              <h5 class="mb-0">
+              <h4 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
                   <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
                 </button>
                 Spostamento
-              </h5>
+              </h4>
             </div>
             <div class="collapse show" id="card_spostamento">
               <div class="card-body">
@@ -1120,12 +1120,12 @@ You should have received a copy of the GNU General Public License
 
           <div class="card">
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_note" aria-expanded="true" aria-controls="card_note">
-              <h5 class="mb-0">
+              <h4 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
                   <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
                 </button>
                 Note
-              </h5>
+              </h4>
             </div>
             <div class="collapse show" id="card_note">
               <div class="card-body">
@@ -1137,7 +1137,7 @@ You should have received a copy of the GNU General Public License
           <!--############## PERICOLO ATTRAVERSAMENTO AVVOCATI ##############-->
           <div class="card">
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_talenti" aria-expanded="true" aria-controls="card_talenti">
-              <h5 class="mb-0">
+              <h4 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
                   <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
                 </button>
@@ -1146,7 +1146,7 @@ You should have received a copy of the GNU General Public License
                   <span class="text-muted font-weight-light" data-dd-array="count" data-target="#array_talenti">0</span>
                   <i class="fa fa-plus-circle" data-dd-array="append" data-target="#array_talenti" aria-label="Add" aria-hidden="true"></i>
                 </span>
-              </h5>
+              </h4>
             </div>
             <div class="collapse show" id="card_talenti">
               <div class="card-body" id="array_talenti" data-dd-array="container">
@@ -1183,7 +1183,7 @@ You should have received a copy of the GNU General Public License
 
           <div class="card">
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_skill" aria-expanded="true" aria-controls="card_skill">
-              <h5 class="mb-0">
+              <h4 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
                   <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
                 </button>
@@ -1192,7 +1192,7 @@ You should have received a copy of the GNU General Public License
                   <span class="text-muted font-weight-light" data-dd-array="count" data-target="#array_skill">0</span>
                   <i class="fa fa-plus-circle" data-dd-array="append" data-target="#array_skill" aria-label="Add" aria-hidden="true"></i>
                 </span>
-              </h5>
+              </h4>
             </div>
             <div class="collapse show" id="card_skill">
               <div class="card-body" id="array_skill" data-dd-array="container">
@@ -1229,12 +1229,12 @@ You should have received a copy of the GNU General Public License
 
           <div class="card">
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_competenze" aria-expanded="true" aria-controls="card_competenze">
-              <h5 class="mb-0">
+              <h4 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
                   <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
                 </button>
                 Competenza in armi e armature
-              </h5>
+              </h4>
             </div>
             <div class="collapse show" id="card_competenze">
               <div class="card-body">
@@ -1298,7 +1298,7 @@ You should have received a copy of the GNU General Public License
 
           <div class="card">
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_privilegi" aria-expanded="true" aria-controls="card_privilegi">
-              <h5 class="mb-0">
+              <h4 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
                   <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
                 </button>
@@ -1307,7 +1307,7 @@ You should have received a copy of the GNU General Public License
                   <span class="text-muted font-weight-light" data-dd-array="count" data-target="#array_privilegi">0</span>
                   <i class="fa fa-plus-circle" data-dd-array="append" data-target="#array_privilegi" aria-label="Add" aria-hidden="true"></i>
                 </span>
-              </h5>
+              </h4>
             </div>
             <div class="collapse show" id="card_privilegi">
               <div class="card-body" id="array_privilegi" data-dd-array="container">
