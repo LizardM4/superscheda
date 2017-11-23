@@ -70,6 +70,9 @@ You should have received a copy of the GNU General Public License
 
       });
     </script>
+    <style>
+      *[data-dd-array="item"] ~ .array-placeholder { display: none!important; }
+    </style>
   </head>
   <body>
     <div class="container">
@@ -198,31 +201,6 @@ You should have received a copy of the GNU General Public License
 
 
 
-          <div class="card">
-            <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_attacchi" aria-expanded="true" aria-controls="card_attacchi">
-              <h4 class="mb-0">
-                <button type="button" class="close float-left mr-3" aria-label="Toggle">
-                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
-                </button>
-                Attacchi
-                <span class="close">
-                  <span class="text-muted font-weight-light" data-dd-array="count" data-target="#array_attacchi">0</span>
-                  <i class="fa fa-plus-circle" data-dd-array="append" data-target="#array_attacchi" aria-label="Add" aria-hidden="true"></i>
-                </span>
-              </h4>
-            </div>
-            <div class="collapse show" id="card_attacchi">
-              <div class="card-body" data-dd-array="container" id="array_attacchi">
-                <div class="rounded border d-none" data-dd-array="master" data-dd-id="testme">
-                  <button type="button" class="close" data-dd-array="remove" aria-label="Remove">
-                    <i class="fa fa-minus-circle" aria-hidden="true"></i>
-                  </button>
-                  <input type="text" class="form-control" data-dd-id="test" value="Hellow dear">
-                </div>
-              </div>
-            </div>
-          </div>
-
 
 
 
@@ -281,19 +259,19 @@ You should have received a copy of the GNU General Public License
                 <div class="form-row" data-dd-id="png">
                   <div class="col-md-3 form-group">
                     <label class="col-form-label">Classe da PNG</label>
-                    <input type="text" class="form-control" id="classe[0]">
+                    <input type="text" class="form-control" data-dd-id="classe[0]">
                   </div>
                   <div class="col-md-3 form-group">
                     <label class="col-form-label">Classe/CdP</label>
-                    <input type="text" class="form-control" id="classe[1]">
+                    <input type="text" class="form-control" data-dd-id="classe[1]">
                   </div>
                   <div class="col-md-3 form-group">
                     <label class="col-form-label">Classe/CdP</label>
-                    <input type="text" class="form-control" id="classe[2]">
+                    <input type="text" class="form-control" data-dd-id="classe[2]">
                   </div>
                   <div class="col-md-3 form-group">
                     <label class="col-form-label">Classe/CdP</label>
-                    <input type="text" class="form-control" id="classe[3]">
+                    <input type="text" class="form-control" data-dd-id="classe[3]">
                   </div>
                 </div>
 
@@ -1341,6 +1319,358 @@ You should have received a copy of the GNU General Public License
               </div>
             </div>
           </div>
+
+          <!--############## FINE PERICOLO ATTRAVERSAMENTO AVVOCATI #############-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <div class="card">
+            <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_attacchi" aria-expanded="true" aria-controls="card_attacchi">
+              <h4 class="mb-0">
+                <button type="button" class="close float-left mr-3" aria-label="Toggle">
+                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                </button>
+                Attacchi
+                <span class="close">
+                  <span class="text-muted font-weight-light" data-dd-array="count" data-target="#array_attacchi">0</span>
+                  <i class="fa fa-plus-circle" data-dd-array="append" data-target="#array_attacchi" aria-label="Add" aria-hidden="true"></i>
+                </span>
+              </h4>
+            </div>
+            <div class="collapse show" id="card_attacchi">
+              <div class="card-body" data-dd-array="container" id="array_attacchi">
+                <div class="card" data-dd-array="master" data-dd-id="attacchi">
+                  <div class="card-body">
+                    <h5 class="card-title">Attacco in mischia
+                      <button type="button" class="close" data-dd-array="remove" aria-label="Remove">
+                        <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                      </button>
+                    </h5>
+                    <div class="form-row">
+                      <div class="form-group mb-1 col-md-10">
+                        <label class="col-form-label">Nome/descrizione</label>
+                        <input type="text" class="form-control" data-dd-id="nome">
+                      </div>
+                      <div class="form-group mb-1 col-md-2">
+                        <label class="col-form-label">Punti ferita</label>
+                        <input type="text" class="form-control" data-dd-id="punti_ferita">
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group mb-1 col-md-2">
+                        <label class="col-form-label">Peso</label>
+                        <input type="text" class="form-control" data-dd-id="peso">
+                      </div>
+                      <div class="form-group mb-1 col-md-2">
+                        <label class="col-form-label">Taglia ogg.</label>
+                        <input type="text" class="form-control" data-dd-id="taglia_oggetto">
+                      </div>
+                      <div class="form-group mb-1 col-md-2">
+                        <label class="col-form-label">CA arma</label>
+                        <input type="text" class="form-control" data-dd-id="ca_arma">
+                      </div>
+                      <div class="form-group mb-1 col-md-2">
+                        <label class="col-form-label">Materiale</label>
+                        <input type="text" class="form-control" data-dd-id="materiale">
+                      </div>
+                      <div class="form-group mb-1 col-md-2">
+                        <label class="col-form-label">Durezza</label>
+                        <input type="text" class="form-control" data-dd-id="durezza">
+                      </div>
+                      <div class="form-group mb-1 col-md-2">
+                        <label class="col-form-label">Prezzo</label>
+                        <input type="text" class="form-control" data-dd-id="prezzo">
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-2">
+                        <label class="col-form-label">Munizioni</label>
+                        <input type="text" class="form-control" data-dd-id="munizioni">
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label class="col-form-label">Quantità</label>
+                        <input type="text" class="form-control" data-dd-id="quantita">
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label class="col-form-label">Portata</label>
+                        <input type="text" class="form-control" data-dd-id="portata">
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label class="col-form-label">Tipo dell'arma</label>
+                        <input type="text" class="form-control" data-dd-id="tipo">
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label class="col-form-label">Aura</label>
+                        <input type="text" class="form-control" data-dd-id="aura">
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label class="col-form-label">Scuola</label>
+                        <input type="text" class="form-control" data-dd-id="scuola">
+                      </div>
+                    </div>
+
+                    <div class="row mt-3">
+                      <div class="col-md-6 border border-top-0 border-bottom-0 border-left-0" data-dd-id="tiro_colpire">
+                        <h5>Tiro per colpire</h5>
+                        <div class="form-row">
+                          <div class="form-group mb-1 col-3">
+                            <label class="col-form-label col-form-label-sm">Mod effett</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="mod_eff">
+                          </div>
+                          <div class="form-group mb-1 col-3">
+                            <label class="col-form-label col-form-label-sm">Mod</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="mod">
+                          </div>
+                          <div class="form-group mb-1 col-6">
+                            <label class="col-form-label col-form-label-sm">Caratteristica</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="caratteristica">
+                          </div>
+                        </div>
+                        <div class="form-row" data-dd-id="mod_razziali">
+                          <div class="form-group mb-1 col-2">
+                            <label class="col-form-label col-form-label-sm">Mod</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="mod">
+                          </div>
+                          <div class="form-group mb-1 col-10">
+                            <label class="col-form-label col-form-label-sm">Modificatori razziali</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="nome">
+                          </div>
+                        </div>
+                        <div class="form-row" data-dd-id="mod_magici">
+                          <div class="form-group mb-1 col-2">
+                            <label class="col-form-label col-form-label-sm">Mod</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="mod">
+                          </div>
+                          <div class="form-group mb-1 col-10">
+                            <label class="col-form-label col-form-label-sm">Modificatori magici</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="nome">
+                          </div>
+                        </div>
+                        <div class="form-row" data-dd-id="mod_vv[0]">
+                          <div class="form-group mb-1 col-2">
+                            <label class="col-form-label col-form-label-sm">Mod</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="mod">
+                          </div>
+                          <div class="form-group mb-1 col-10">
+                            <label class="col-form-label col-form-label-sm">Modificatori vari 1</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="nome">
+                          </div>
+                        </div>
+                        <div class="form-row" data-dd-id="mod_vv[1]">
+                          <div class="form-group mb-1 col-2">
+                            <label class="col-form-label col-form-label-sm">Mod</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="mod">
+                          </div>
+                          <div class="form-group mb-1 col-10">
+                            <label class="col-form-label col-form-label-sm">Modificatori vari 2</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="nome">
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group mb-1 col-2">
+                            <label class="col-form-label col-form-label-sm">Mod taglia</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="mod_taglia">
+                          </div>
+                          <div class="form-group mb-1 col-10">
+                            <label class="col-form-label col-form-label-sm">Talenti per il chierico</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="chierico_talenti">
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group mb-1 col-2">
+                            <label class="col-form-label col-form-label-sm">BAB</label>
+                            <input type="text" class="form-control form-control-sm" readonly value="Att 1">
+                          </div>
+                          <div class="form-group mb-1 col-10">
+                            <label class="col-form-label col-form-label-sm">Modificatori VV Critico</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="mod_critico">
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group mb-1 col-4">
+                            <label class="col-form-label col-form-label-sm">Totale</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="tot">
+                          </div>
+                          <div class="form-group mb-1 col-4">
+                            <label class="col-form-label col-form-label-sm">Tot Spec</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="tot_spec">
+                          </div>
+                          <div class="form-group mb-1 col-4">
+                            <label class="col-form-label col-form-label-sm">Critico</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="critico">
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group mb-0 col-2">
+                            <label class="col-form-label col-form-label-sm">Mod</label>
+                          </div>
+                          <div class="form-group mb-0 col-10">
+                            <label class="col-form-label col-form-label-sm">Talenti</label>
+                          </div>
+                        </div>
+                        <div data-dd-array="container">
+                          <div class="form-row mb-1" data-dd-array="master" data-dd-id="mod_talenti">
+                            <div class="form-group mb-0 col-2">
+                              <input type="text" class="form-control form-control-sm" data-dd-id="mod">
+                            </div>
+                            <div class="form-group mb-0 col-9">
+                              <input type="text" class="form-control form-control-sm" data-dd-id="nome">
+                            </div>
+                            <div class="form-group mb-0 text-center col-1">
+                              <button type="button" class="close float-none align-text-top" data-dd-array="remove" aria-label="Remove">
+                                <i class="fa fa-minus-square" aria-hidden="true"></i>
+                              </button>
+                            </div>
+                          </div>
+                          <p class="mb-2 text-muted text-center form-text array-placeholder">
+                            <small>Nessun modificatore talenti.</small>
+                          </p>
+                          <p class="form-text text-center">
+                            <button type="button" class="close float-none" data-dd-array="append" aria-label="Append">
+                              <i class="fa fa-plus-square" aria-hidden="true"></i>
+                            </button>
+                          </p>
+                        </div>
+                      </div>
+                      <div class="col-md-6" data-dd-id="tiro_danni">
+                        <h5>Tiro per i danni</h5>
+                        <div class="form-row">
+                          <div class="form-group mb-1 col-3">
+                            <label class="col-form-label col-form-label-sm">Mod effett</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="mod_eff">
+                          </div>
+                          <div class="form-group mb-1 col-3">
+                            <label class="col-form-label col-form-label-sm">Mod</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="mod">
+                          </div>
+                          <div class="form-group mb-1 col-6">
+                            <label class="col-form-label col-form-label-sm">Caratteristica</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="caratteristica">
+                          </div>
+                        </div>
+                        <div class="form-row" data-dd-id="mod_razziali">
+                          <div class="form-group mb-1 col-2">
+                            <label class="col-form-label col-form-label-sm">Mod</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="mod">
+                          </div>
+                          <div class="form-group mb-1 col-10">
+                            <label class="col-form-label col-form-label-sm">Modificatori razziali</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="nome">
+                          </div>
+                        </div>
+                        <div class="form-row" data-dd-id="mod_magici">
+                          <div class="form-group mb-1 col-2">
+                            <label class="col-form-label col-form-label-sm">Mod</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="mod">
+                          </div>
+                          <div class="form-group mb-1 col-10">
+                            <label class="col-form-label col-form-label-sm">Modificatori magici</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="nome">
+                          </div>
+                        </div>
+                        <div class="form-row" data-dd-id="mod_vv[0]">
+                          <div class="form-group mb-1 col-2">
+                            <label class="col-form-label col-form-label-sm">Mod</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="mod">
+                          </div>
+                          <div class="form-group mb-1 col-10">
+                            <label class="col-form-label col-form-label-sm">Modificatori vari 1</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="nome">
+                          </div>
+                        </div>
+                        <div class="form-row" data-dd-id="mod_vv[1]">
+                          <div class="form-group mb-1 col-2">
+                            <label class="col-form-label col-form-label-sm">Mod</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="mod">
+                          </div>
+                          <div class="form-group mb-1 col-10">
+                            <label class="col-form-label col-form-label-sm">Modificatori vari 2</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="nome">
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group mb-1 col-2">
+                            <label class="col-form-label col-form-label-sm">Totale</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="tot">
+                          </div>
+                          <div class="form-group mb-1 col-10">
+                            <label class="col-form-label col-form-label-sm">Danni speciali 1</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="danni_speciali[0]">
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group mb-1 col-2">
+                            <label class="col-form-label col-form-label-sm">Tipo danni</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="tipo_speciali">
+                          </div>
+                          <div class="form-group mb-1 col-10">
+                            <label class="col-form-label col-form-label-sm">Danni speciali 2</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="danni_speciali[1]">
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group mb-1 col-2">
+                            <label class="col-form-label col-form-label-sm">D non Let</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="d_non_let">
+                          </div>
+                          <div class="form-group mb-1 col-10">
+                            <label class="col-form-label col-form-label-sm">Danni speciali 3</label>
+                            <input type="text" class="form-control form-control-sm" data-dd-id="danni_speciali[2]">
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group mb-0 col-2">
+                            <label class="col-form-label col-form-label-sm">Mod</label>
+                          </div>
+                          <div class="form-group mb-0 col-10">
+                            <label class="col-form-label col-form-label-sm">Talenti</label>
+                          </div>
+                        </div>
+                        <div data-dd-array="container">
+                          <div class="form-row mb-1" data-dd-array="master" data-dd-id="mod_talenti">
+                            <div class="form-group mb-0 col-2">
+                              <input type="text" class="form-control form-control-sm" data-dd-id="mod">
+                            </div>
+                            <div class="form-group mb-0 col-9">
+                              <input type="text" class="form-control form-control-sm" data-dd-id="nome">
+                            </div>
+                            <div class="form-group mb-0 text-center col-1">
+                              <button type="button" class="close float-none align-text-top" data-dd-array="remove" aria-label="Remove">
+                                <i class="fa fa-minus-square" aria-hidden="true"></i>
+                              </button>
+                            </div>
+                          </div>
+                          <p class="mb-2 text-muted text-center form-text array-placeholder">
+                            <small>Nessun modificatore talenti.</small>
+                          </p>
+                          <p class="form-text text-center">
+                            <button type="button" class="close float-none" data-dd-array="append" aria-label="Append">
+                              <i class="fa fa-plus-square" aria-hidden="true"></i>
+                            </button>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
 
 
         </div>
