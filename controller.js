@@ -203,13 +203,14 @@ function Controller(dbxAppId) {
         }
         if (items.length < size) {
             var master = container.children('[data-dd-array="master"]');
+            var insertion_point = items.length > 0 ? items.last() : master;
             for (var i = 0; i < size - items.length; ++i) {
                 // Clone the master, but copy the events too (add/remove buttons)
                 var new_item = master.clone(true);
                 new_item.removeClass('d-none')
                     .attr('data-dd-array', 'item')
                     .attr('data-dd-index', items.length + i)
-                    .appendTo(container);
+                    .insertAfter(insertion_point);
                 self._setupDDPaths(new_item);
             }
         } else if (items.length > size) {
@@ -272,7 +273,12 @@ function Controller(dbxAppId) {
         $('[data-dd-array="master"]').each(function (idx, obj) {
             var n_children = $(obj).siblings('[data-dd-array="item"]').length;
             var path = self._getHierPath(obj);
-            self.data.get(path).length = n_children;
+            var item = self.data.get(path);
+            if (item) {
+                item.length = n_children;
+            } else {
+                self.data.set(path, []);
+            }
         });
     }
 
