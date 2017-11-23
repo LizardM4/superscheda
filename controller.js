@@ -48,11 +48,12 @@ function Controller(dbxAppId) {
     };
 
     self._allControls = function() {
-        return $('.form-control[data-dd-path]');
+        return $('.form-control[data-dd-path], .form-check-input[data-dd-path]');
     };
 
     self._setupDDPaths = function(objs=$) {
-        $(objs).find('.form-control[data-dd-id]:not([data-dd-array="master"] *)')
+        $(objs).find('.form-control[data-dd-id], .form-check-input[data-dd-id]')
+            .not('[data-dd-array="master"] *')
             .each(function (idx, obj) {
                 $(obj).attr('data-dd-path', self._getHierPath(obj));
             });
@@ -342,7 +343,12 @@ function Controller(dbxAppId) {
 
     self.updateHier = function() {
         self._allControls().each(function (idx, obj) {
-            self.data.set($(obj).data('dd-path'), $(obj).val());
+            obj = $(obj);
+            if (obj.attr('type') === 'checkbox') {
+                self.data.set(obj.data('dd-path'), obj.is(':checked'));
+            } else {
+                self.data.set(obj.data('dd-path'), obj.val());
+            }
         });
         self._truncateAllHierArrays();
     };
@@ -352,7 +358,12 @@ function Controller(dbxAppId) {
         var flat_data = self.data.flatten();
         var ctrls = self._allControls();
         for (var path in flat_data) {
-            ctrls.filter('[data-dd-path="' + path + '"]').val(flat_data[path]);
+            var ctrl = ctrls.filter('[data-dd-path="' + path + '"]');
+            if (ctrl.attr('type') === 'checkbox') {
+                ctrl.prop('checked', flat_data[path]);
+            } else {
+                ctrl.val(flat_data[path]);
+            }
         }
     };
 
