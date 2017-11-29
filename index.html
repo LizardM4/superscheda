@@ -221,11 +221,11 @@ You should have received a copy of the GNU General Public License
                 <div class="form-row">
                   <div class="col-md-3 form-group">
                     <label class="col-form-label">Nome del personaggio</label>
-                    <input type="text" class="form-control" data-dd-id="nome" placeholder="Nome">
+                    <input type="text" class="form-control" data-dd-id="nome">
                   </div>
                   <div class="col-md-3 form-group">
                     <label class="col-form-label">Razza</label>
-                    <input type="text" class="form-control" data-dd-id="razza" placeholder="Umano">
+                    <input type="text" class="form-control" data-dd-id="razza">
                   </div>
                   <div class="col-md-3 form-group">
                     <label class="col-form-label">Archetipo 1</label>
@@ -240,11 +240,11 @@ You should have received a copy of the GNU General Public License
                 <div class="form-row">
                   <div class="col-md-3 form-group">
                     <label class="col-form-label">Nome del giocatore</label>
-                    <input type="text" class="form-control" data-dd-id="giocatore" placeholder="Il tuo nome">
+                    <input type="text" class="form-control" data-dd-id="giocatore">
                   </div>
                   <div class="col-md-3 form-group">
                     <label class="col-form-label">Classe</label>
-                    <input type="text" class="form-control" data-dd-id="classe[0]" placeholder="Classe">
+                    <input type="text" class="form-control" data-dd-id="classe[0]">
                   </div>
                   <div class="col-md-3 form-group">
                     <label class="col-form-label">Classe/CdP</label>
@@ -360,10 +360,10 @@ You should have received a copy of the GNU General Public License
             </div>
             <div class="collapse show" id="card_caratteristiche">
               <div class="card-body">
-                <table class="table table-responsive" data-dd-id="caratteristiche">
+                <table class="table table-striped table-sm table-responsive" data-dd-id="caratteristiche">
                   <thead>
                     <tr>
-                      <th>Caratteristiche</th>
+                      <th></th>
                       <th class="text-center">TB</th>
                       <th class="text-center">Razza</th>
                       <th class="text-center">Arch 1</th>
@@ -373,14 +373,14 @@ You should have received a copy of the GNU General Public License
                       <th class="text-center">VV1</th>
                       <th class="text-center">VV2</th>
                       <th class="text-center">Tot</th>
-                      <th class="text-center">M Tot</th>
-                      <th class="text-center">Temp</th>
-                      <th class="text-center">M Temp</th>
+                      <th class="text-center">Tmp</th>
+                      <th class="text-center">M&nbsp;Tot</th>
+                      <th class="text-center">M&nbsp;Tmp</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-dd-id="for">
-                      <th scope="row">Forza</th>
+                      <th scope="row" class="text-right align-middle px-3">For</th>
                       <td><input type="text" data-dd-id="tiro_base" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
@@ -389,13 +389,13 @@ You should have received a copy of the GNU General Public License
                       <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
-                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
-                      <td><input type="text" data-dd-id="mod_totale" class="text-right form-control form-control-sm" readonly></td>
+                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="mod_totale" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="mod_temp" class="text-right form-control form-control-sm"></td>
                     </tr>
                     <tr data-dd-id="des">
-                      <th scope="row">Destrezza</th>
+                      <th scope="row" class="text-right align-middle px-3">Des</th>
                       <td><input type="text" data-dd-id="tiro_base" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
@@ -404,13 +404,13 @@ You should have received a copy of the GNU General Public License
                       <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
-                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
-                      <td><input type="text" data-dd-id="mod_totale" class="text-right form-control form-control-sm" readonly></td>
+                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="mod_totale" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="mod_temp" class="text-right form-control form-control-sm"></td>
                     </tr>
                     <tr data-dd-id="cos">
-                      <th scope="row">Costituzione</th>
+                      <th scope="row" class="text-right align-middle px-3">Cos</th>
                       <td><input type="text" data-dd-id="tiro_base" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
@@ -419,13 +419,13 @@ You should have received a copy of the GNU General Public License
                       <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
-                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
-                      <td><input type="text" data-dd-id="mod_totale" class="text-right form-control form-control-sm" readonly></td>
+                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="mod_totale" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="mod_temp" class="text-right form-control form-control-sm"></td>
                     </tr>
                     <tr data-dd-id="int">
-                      <th scope="row">Intelligenza</th>
+                      <th scope="row" class="text-right align-middle px-3">Int</th>
                       <td><input type="text" data-dd-id="tiro_base" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
@@ -434,13 +434,13 @@ You should have received a copy of the GNU General Public License
                       <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
-                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
-                      <td><input type="text" data-dd-id="mod_totale" class="text-right form-control form-control-sm" readonly></td>
+                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="mod_totale" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="mod_temp" class="text-right form-control form-control-sm"></td>
                     </tr>
                     <tr data-dd-id="sag">
-                      <th scope="row">Saggezza</th>
+                      <th scope="row" class="text-right align-middle px-3">Sag</th>
                       <td><input type="text" data-dd-id="tiro_base" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
@@ -449,13 +449,13 @@ You should have received a copy of the GNU General Public License
                       <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
-                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
-                      <td><input type="text" data-dd-id="mod_totale" class="text-right form-control form-control-sm" readonly></td>
+                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="mod_totale" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="mod_temp" class="text-right form-control form-control-sm"></td>
                     </tr>
                     <tr data-dd-id="car">
-                      <th scope="row">Carisma</th>
+                      <th scope="row" class="text-right align-middle px-3">Car</th>
                       <td><input type="text" data-dd-id="tiro_base" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm"></td>
@@ -464,9 +464,9 @@ You should have received a copy of the GNU General Public License
                       <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm"></td>
-                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm" readonly></td>
-                      <td><input type="text" data-dd-id="mod_totale" class="text-right form-control form-control-sm" readonly></td>
+                      <td><input type="text" data-dd-id="totale" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm"></td>
+                      <td><input type="text" data-dd-id="mod_totale" class="text-right form-control form-control-sm"></td>
                       <td><input type="text" data-dd-id="mod_temp" class="text-right form-control form-control-sm"></td>
                     </tr>
                   </tbody>
