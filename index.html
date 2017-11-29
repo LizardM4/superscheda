@@ -1112,98 +1112,143 @@ You should have received a copy of the GNU General Public License
             </div>
           </div>
 
-          <!--############## PERICOLO ATTRAVERSAMENTO AVVOCATI ##############-->
           <div class="card">
-            <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_talenti" aria-expanded="true" aria-controls="card_talenti">
+            <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_talenti_skills" aria-expanded="true" aria-controls="card_talenti_skills">
               <h4 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
                   <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
                 </button>
-                Talenti e difetti, maneuvers, stances <span class="badge badge-info float-left mr-3">WIP</span>
-                <span class="close">
-                  <span class="text-muted font-weight-light" data-dd-array="count" data-target="#array_talenti">0</span>
-                  <i class="fa fa-plus-circle" data-dd-array="append" data-target="#array_talenti" aria-label="Add" aria-hidden="true"></i>
-                </span>
+                Talenti, skill tricks, privilegi di classe
               </h4>
             </div>
-            <div class="collapse show" id="card_talenti">
-              <div class="card-body" id="array_talenti" data-dd-array="container">
+            <div class="collapse show" id="card_talenti_skills">
+              <div class="card-body">
                 <div class="row">
-                  <div class="col-md-7 form-group">
-                    Talento/Difetto/…
+                  <div class="col-md-4 border border-top-0 border-bottom-0 border-left-0">
+                    <h5>Talenti e difetti, maneuvers, stances</h5>
+                    <div class="form-row">
+                      <div class="form-group mb-0 col-7">
+                        <label class="col-form-label col-form-label-sm">Nome</label>
+                      </div>
+                      <div class="form-group mb-0 col-2">
+                        <label class="col-form-label col-form-label-sm">Lvl</label>
+                      </div>
+                      <div class="form-group mb-0 col-2">
+                        <label class="col-form-label col-form-label-sm">Rif</label>
+                      </div>
+                    </div>
+                    <div data-dd-array="container">
+                      <div class="form-row mb-1" data-dd-array="master" data-dd-id="talenti">
+                        <div class="form-group mb-0 col-7">
+                          <input type="text" class="form-control form-control-sm" data-dd-id="nome">
+                        </div>
+                        <div class="form-group mb-0 col-2">
+                          <input type="text" class="form-control form-control-sm" data-dd-id="livello">
+                        </div>
+                        <div class="form-group mb-0 col-2">
+                          <input type="text" class="form-control form-control-sm" data-dd-id="riferimento">
+                        </div>
+                        <div class="form-group mb-0 text-center col-1">
+                          <button type="button" class="close float-none align-text-top" data-dd-array="remove" aria-label="Remove">
+                            <i class="fa fa-minus-square" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <p class="mb-2 text-muted text-center form-text array-placeholder">
+                        <small>Nessuno.</small>
+                      </p>
+                      <p class="form-text text-center">
+                        <button type="button" class="close float-none" data-dd-array="append" aria-label="Append">
+                          <i class="fa fa-plus-square" aria-hidden="true"></i>
+                        </button>
+                      </p>
+                    </div>
                   </div>
-                  <div class="col-md-1 form-group">
-                    Lvl
+                  <div class="col-md-4 border border-top-0 border-bottom-0 border-left-0" data-dd-id="skill_tricks">
+                    <h5>Skill tricks</h5>
+                    <div class="form-row">
+                      <div class="form-group mb-0 col-7">
+                        <label class="col-form-label col-form-label-sm">Nome</label>
+                      </div>
+                      <div class="form-group mb-0 col-2">
+                        <label class="col-form-label col-form-label-sm">Lvl</label>
+                      </div>
+                      <div class="form-group mb-0 col-2">
+                        <label class="col-form-label col-form-label-sm">Rif</label>
+                      </div>
+                    </div>
+                    <div data-dd-array="container">
+                      <div class="form-row mb-1" data-dd-array="master" data-dd-id="skill_tricks">
+                        <div class="form-group mb-0 col-7">
+                          <input type="text" class="form-control form-control-sm" data-dd-id="nome">
+                        </div>
+                        <div class="form-group mb-0 col-2">
+                          <input type="text" class="form-control form-control-sm" data-dd-id="livello">
+                        </div>
+                        <div class="form-group mb-0 col-2">
+                          <input type="text" class="form-control form-control-sm" data-dd-id="riferimento">
+                        </div>
+                        <div class="form-group mb-0 text-center col-1">
+                          <button type="button" class="close float-none align-text-top" data-dd-array="remove" aria-label="Remove">
+                            <i class="fa fa-minus-square" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <p class="mb-2 text-muted text-center form-text array-placeholder">
+                        <small>Nessuno.</small>
+                      </p>
+                      <p class="form-text text-center">
+                        <button type="button" class="close float-none" data-dd-array="append" aria-label="Append">
+                          <i class="fa fa-plus-square" aria-hidden="true"></i>
+                        </button>
+                      </p>
+                    </div>
                   </div>
-                  <div class="col-md-3 form-group">
-                    Riferimento
+                  <div class="col-md-4 border border-top-0 border-bottom-0 border-left-0" data-dd-id="privilegi">
+                    <h5>Privilegi di classe, capacità speciali</h5>
+                    <div class="form-row">
+                      <div class="form-group mb-0 col-7">
+                        <label class="col-form-label col-form-label-sm">Nome</label>
+                      </div>
+                      <div class="form-group mb-0 col-2">
+                        <label class="col-form-label col-form-label-sm">Tipo</label>
+                      </div>
+                      <div class="form-group mb-0 col-2">
+                        <label class="col-form-label col-form-label-sm">Rif</label>
+                      </div>
+                    </div>
+                    <div data-dd-array="container">
+                      <div class="form-row mb-1" data-dd-array="master" data-dd-id="privilegi">
+                        <div class="form-group mb-0 col-7">
+                          <input type="text" class="form-control form-control-sm" data-dd-id="nome">
+                        </div>
+                        <div class="form-group mb-0 col-2">
+                          <input type="text" class="form-control form-control-sm" data-dd-id="tipo">
+                        </div>
+                        <div class="form-group mb-0 col-2">
+                          <input type="text" class="form-control form-control-sm" data-dd-id="riferimento">
+                        </div>
+                        <div class="form-group mb-0 text-center col-1">
+                          <button type="button" class="close float-none align-text-top" data-dd-array="remove" aria-label="Remove">
+                            <i class="fa fa-minus-square" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <p class="mb-2 text-muted text-center form-text array-placeholder">
+                        <small>Nessuno.</small>
+                      </p>
+                      <p class="form-text text-center">
+                        <button type="button" class="close float-none" data-dd-array="append" aria-label="Append">
+                          <i class="fa fa-plus-square" aria-hidden="true"></i>
+                        </button>
+                      </p>
+                    </div>
                   </div>
-                </div>
-                <div class="row d-none" data-dd-id="talenti" data-dd-array="master">
-                  <div class="col-md-7 form-group">
-                    <input type="text" class="form-control" data-dd-id="talento">
-                  </div>
-                  <div class="col-md-1 form-group">
-                    <input type="text" class="form-control" data-dd-id="livello">
-                  </div>
-                  <div class="col-md-3 form-group">
-                    <input type="text" class="form-control" data-dd-id="riferimento">
-                  </div>
-                  <div class="col-md-1">
-                    <button type="button" class="close float-none" data-dd-array="remove" aria-label="Remove">
-                      <i class="fa fa-minus-circle" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
 
-          <div class="card">
-            <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_skill" aria-expanded="true" aria-controls="card_skill">
-              <h4 class="mb-0">
-                <button type="button" class="close float-left mr-3" aria-label="Toggle">
-                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
-                </button>
-                Skill tricks <span class="badge badge-info float-left mr-3">WIP</span>
-                <span class="close">
-                  <span class="text-muted font-weight-light" data-dd-array="count" data-target="#array_skill">0</span>
-                  <i class="fa fa-plus-circle" data-dd-array="append" data-target="#array_skill" aria-label="Add" aria-hidden="true"></i>
-                </span>
-              </h4>
-            </div>
-            <div class="collapse show" id="card_skill">
-              <div class="card-body" id="array_skill" data-dd-array="container">
-                <div class="row">
-                  <div class="col-md-7 form-group">
-                    Skill trick
-                  </div>
-                  <div class="col-md-1 form-group">
-                    Lvl
-                  </div>
-                  <div class="col-md-3 form-group">
-                    Riferimento
-                  </div>
-                </div>
-                <div class="row d-none" data-dd-id="skill" data-dd-array="master">
-                  <div class="col-md-7 form-group">
-                    <input type="text" class="form-control" data-dd-id="skill">
-                  </div>
-                  <div class="col-md-1 form-group">
-                    <input type="text" class="form-control" data-dd-id="livello">
-                  </div>
-                  <div class="col-md-3 form-group">
-                    <input type="text" class="form-control" data-dd-id="riferimento">
-                  </div>
-                  <div class="col-md-1">
-                    <button type="button" class="close float-none" data-dd-array="remove" aria-label="Remove">
-                      <i class="fa fa-minus-circle" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <!--############## PERICOLO ATTRAVERSAMENTO AVVOCATI ##############-->
 
           <div class="card">
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_competenze" aria-expanded="true" aria-controls="card_competenze">
@@ -1274,51 +1319,6 @@ You should have received a copy of the GNU General Public License
             </div>
           </div>
 
-          <div class="card">
-            <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_privilegi" aria-expanded="true" aria-controls="card_privilegi">
-              <h4 class="mb-0">
-                <button type="button" class="close float-left mr-3" aria-label="Toggle">
-                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
-                </button>
-                Privilegi di classe e capacità speciali <span class="badge badge-info float-left mr-3">WIP</span>
-                <span class="close">
-                  <span class="text-muted font-weight-light" data-dd-array="count" data-target="#array_privilegi">0</span>
-                  <i class="fa fa-plus-circle" data-dd-array="append" data-target="#array_privilegi" aria-label="Add" aria-hidden="true"></i>
-                </span>
-              </h4>
-            </div>
-            <div class="collapse show" id="card_privilegi">
-              <div class="card-body" id="array_privilegi" data-dd-array="container">
-                <div class="row">
-                  <div class="col-md-5 form-group">
-                    Privilegio/Capacità
-                  </div>
-                  <div class="col-md-3 form-group">
-                    Tipo
-                  </div>
-                  <div class="col-md-3 form-group">
-                    Riferimento
-                  </div>
-                </div>
-                <div class="row d-none" data-dd-id="privilegi" data-dd-array="master">
-                  <div class="col-md-5 form-group">
-                    <input type="text" class="form-control" data-dd-id="privilegio">
-                  </div>
-                  <div class="col-md-3 form-group">
-                    <input type="text" class="form-control" data-dd-id="tipo">
-                  </div>
-                  <div class="col-md-3 form-group">
-                    <input type="text" class="form-control" data-dd-id="riferimento">
-                  </div>
-                  <div class="col-md-1">
-                    <button type="button" class="close float-none" data-dd-array="remove" aria-label="Remove">
-                      <i class="fa fa-minus-circle" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
 
           <!--############## FINE PERICOLO ATTRAVERSAMENTO AVVOCATI #############-->
 
