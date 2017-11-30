@@ -68,6 +68,31 @@ You should have received a copy of the GNU General Public License
           DD.notify('warning', 'Test!');
         });
 
+        $('#tbox_find_duplicates').click(function() {
+          var all_dd_paths = [];
+          var duplicates = [];
+          $('[data-dd-path]').each(function(idx, obj) {
+            all_dd_paths.push($(obj).data('dd-path'));
+          });
+          all_dd_paths.sort();
+          for (var i = 1; i < all_dd_paths.length; ++i) {
+            if (all_dd_paths[i - 1] == all_dd_paths[i]) {
+              if (duplicates.length == 0 || duplicates[duplicates.length - 1] != all_dd_paths[i]) {
+                duplicates.push(all_dd_paths[i]);
+              }
+            }
+          }
+          if (duplicates.length == 0) {
+            DD.notify('success',
+              'There are ' + all_dd_paths.length.toString() + ' identified unique controls. No duplicates.');
+          } else {
+            $('<pre></pre>').text(duplicates.join('\n')).appendTo(
+              DD.notify('danger',
+              'There are ' + all_dd_paths.length.toString() + ' identified controls, ' + duplicates.length.toString() + ' of them are duplicated.')
+            );
+          }
+        });
+
       });
     </script>
     <style>
@@ -76,7 +101,7 @@ You should have received a copy of the GNU General Public License
   </head>
   <body>
     <div class="container">
-      <h1 class="my-3"><img src="superscheda.svg" class="float-right ml-3" alt="Superscheda Logo" style="width: 3em;">Scheda estesa D&amp;D 3.5</h1>
+      <h1 class="my-3"><img src="superscheda.svg" class="float-right ml-3" alt="Superscheda Logo" style="width: 3em;">Scheda D&amp;D 3.5 <span class="badge badge-primary">Beta</span></h1>
 
       <div class="row mb-3">
         <div class="col-md-12">
@@ -173,28 +198,6 @@ You should have received a copy of the GNU General Public License
       <div class="row">
         <div class="col-md-12" role="tablist">
 
-
-          <div class="card">
-            <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_debug_features" aria-expanded="false" aria-controls="card_debug_features">
-              <h4 class="mb-0">
-                <button type="button" class="close float-left mr-3" aria-label="Toggle">
-                  <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
-                </button>
-                Debug features
-              </h4>
-            </div>
-            <div id="card_debug_features" class="collapse">
-              <div class="card-body">
-                <button id="tbox_highlight_missing_id" class="btn btn-secondary" type="button">Highlight missing dd-id</button>
-                <button id="tbox_show_hpath" class="btn btn-secondary" type="button">Show get_hier_path</button>
-                <button id="tbox_load_repr" class="btn btn-secondary" type="button">Load representation</button>
-                <button id="tbox_dump_repr" class="btn btn-secondary" type="button">Dump representation</button>
-                <button id="tbox_test_wait" class="btn btn-secondary" type="button" data-toggle="modal" data-target="#waiting">Test waiting</button>
-                <button id="tbox_test_alert" class="btn btn-secondary" type="button">Test alert</button>
-                <textarea class="form-control mt-3" rows="10" id="tbox_txt"></textarea>
-              </div>
-            </div>
-          </div>
 
 
 
@@ -1823,6 +1826,64 @@ You should have received a copy of the GNU General Public License
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <div class="card mt-5 mb-3">
+            <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_debug_features" aria-expanded="false" aria-controls="card_debug_features">
+              <h4 class="mb-0">
+                <button type="button" class="close float-left mr-3" aria-label="Toggle">
+                  <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                </button>
+                Debug features
+              </h4>
+            </div>
+            <div id="card_debug_features" class="collapse">
+              <div class="card-body">
+                <div class="form-row">
+                  <div class="form-group col-md-3">
+                    <button id="tbox_highlight_missing_id" class="btn btn-secondary w-100" type="button">Highlight missing dd-id</button>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <button id="tbox_show_hpath" class="btn btn-secondary w-100" type="button">Show get_hier_path</button>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <button id="tbox_load_repr" class="btn btn-secondary w-100" type="button">Load representation</button>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <button id="tbox_dump_repr" class="btn btn-secondary w-100" type="button">Dump representation</button>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-3">
+                    <button id="tbox_test_wait" class="btn btn-secondary w-100" type="button" data-toggle="modal" data-target="#waiting">Test waiting</button>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <button id="tbox_test_alert" class="btn btn-secondary w-100" type="button">Test alert</button>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <button id="tbox_find_duplicates" class="btn btn-secondary w-100" type="button">Find duplicates</button>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <textarea class="form-control" rows="10" id="tbox_txt"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
 
 
