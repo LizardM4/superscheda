@@ -329,6 +329,7 @@ function Controller(dbxAppId) {
             '<span aria-hidden="true">&times;</span>' +
           '</button>').appendTo($div);
         $div.insertAfter('h1');
+        return $div;
     };
 
     self.setup = function() {
