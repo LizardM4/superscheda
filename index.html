@@ -1696,66 +1696,106 @@ You should have received a copy of the GNU General Public License
             </div>
             <div class="collapse show" id="card_spostamento">
               <div class="card-body">
-                <div class="row">
-                  <div class="col-md-8">
-                    <table class="table table-responsive" data-dd-id="carico">
-                      <thead>
-                        <tr>
-                          <th></th>
-                          <th class="text-center">Leggero</th>
-                          <th class="text-center">Medio</th>
-                          <th class="text-center">Pesante</th>
-                          <th class="text-center">S. sopra testa</th>
-                          <th class="text-center">S. dal terreno</th>
-                          <th class="text-center">Sping/trasc</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <th class="text-right">Carico</th>
-                          <td>
-                            <div class="input-group">
-                              <input type="text" data-dd-id="leggero" class="text-right form-control form-control-sm">
-                              <span class="input-group-addon">kg</span>
-                            </div>
-                          </td>
-                          <td>
-                            <div class="input-group">
-                              <input type="text" data-dd-id="medio" class="text-right form-control form-control-sm">
-                              <span class="input-group-addon">kg</span>
-                            </div>
-                          </td>
-                          <td>
-                            <div class="input-group">
-                              <input type="text" data-dd-id="pesante" class="text-right form-control form-control-sm">
-                              <span class="input-group-addon">kg</span>
-                            </div>
-                          </td>
-                          <td>
-                            <div class="input-group">
-                              <input type="text" data-dd-id="sopra_testa" class="text-right form-control form-control-sm" aria-describedby="aiuto_sopra_testa">
-                              <span class="input-group-addon">kg</span>
-                            </div>
-                            <span id="aiuto_sopra_testa" class="help-block text-center">(carico max)</span>
-                          </td>
-                          <td>
-                            <div class="input-group">
-                              <input type="text" data-dd-id="dal_terreno" class="text-right form-control form-control-sm" aria-describedby="aiuto_dal_terreno">
-                              <span class="input-group-addon">kg</span>
-                            </div>
-                            <span id="aiuto_dal_terreno" class="help-block text-center">(carico max ×2)</span>
-                          </td>
-                          <td>
-                            <div class="input-group">
-                              <input type="text" data-dd-id="sping_trasc" class="text-right form-control form-control-sm" aria-describedby="aiuto_spingere_trascinare">
-                              <span class="input-group-addon">kg</span>
-                            </div>
-                            <span id="aiuto_spingere_trascinare" class="help-block text-center">(carico max ×5)</span>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                <h5>Carico</h5>
+                <div class="form-row" data-dd-id="carico">
+                  <div class="form-group col-md-2">
+                    <label class="col-form-label">Leggero</label>
+                    <div class="input-group">
+                      <input type="text" data-dd-id="leggero" class="text-right form-control">
+                      <span class="input-group-addon">kg</span>
+                    </div>
                   </div>
+                  <div class="form-group col-md-2">
+                    <label class="col-form-label">Medio</label>
+                    <div class="input-group">
+                      <input type="text" data-dd-id="medio" class="text-right form-control">
+                      <span class="input-group-addon">kg</span>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label class="col-form-label">Pesante</label>
+                    <div class="input-group">
+                      <input type="text" data-dd-id="pesante" class="text-right form-control">
+                      <span class="input-group-addon">kg</span>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-2 text-truncate">
+                    <label class="col-form-label">Soll. sopra la testa</label>
+                    <div class="input-group">
+                      <input type="text" data-dd-id="sopra_testa" class="text-right form-control" aria-describedby="aiuto_sopra_testa">
+                      <span class="input-group-addon">kg</span>
+                    </div>
+                    <span id="aiuto_sopra_testa" class="help-block form-text text-right text-muted">(carico max)</span>
+                  </div>
+                  <div class="form-group col-md-2 text-truncate">
+                    <label class="col-form-label">Soll. dal terreno</label>
+                    <div class="input-group">
+                      <input type="text" data-dd-id="dal_terreno" class="text-right form-control" aria-describedby="aiuto_dal_terreno">
+                      <span class="input-group-addon">kg</span>
+                    </div>
+                    <span id="aiuto_dal_terreno" class="help-block form-text text-right text-muted">(carico max ×2)</span>
+                  </div>
+                  <div class="form-group col-md-2 text-truncate">
+                    <label class="col-form-label">Sping. o trasc.</label>
+                    <div class="input-group">
+                      <input type="text" data-dd-id="sping_trasc" class="text-right form-control" aria-describedby="aiuto_spingere_trascinare">
+                      <span class="input-group-addon">kg</span>
+                    </div>
+                    <span id="aiuto_spingere_trascinare" class="help-block form-text text-right text-muted">(carico max ×5)</span>
+                  </div>
+                </div>
+
+                <h5>Velocità</h5>
+                <div class="form-row" data-dd-id="velocita">
+                  <div class="form-group col-md-2">
+                    <label class="col-form-label">Base</label>
+                    <div class="input-group">
+                      <input type="text" data-dd-id="base" class="text-right form-control form-control-sm">
+                      <span class="input-group-addon">m</span>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label class="col-form-label">Armatura</label>
+                    <div class="input-group">
+                      <input type="text" data-dd-id="armatura" class="text-right form-control form-control-sm">
+                      <span class="input-group-addon">m</span>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label class="col-form-label">Correre</label>
+                    <div class="input-group">
+                      <input type="text" data-dd-id="correre" class="text-right form-control form-control-sm">
+                      <span class="input-group-addon">m</span>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label class="col-form-label">Nuotare</label>
+                    <div class="input-group">
+                      <input type="text" data-dd-id="nuotare" class="text-right form-control form-control-sm">
+                      <span class="input-group-addon">m</span>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label class="col-form-label">Scalare</label>
+                    <div class="input-group">
+                      <input type="text" data-dd-id="scalare" class="text-right form-control form-control-sm">
+                      <span class="input-group-addon">m</span>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label class="col-form-label">Volare</label>
+                    <div class="input-group">
+                      <input type="text" data-dd-id="volare" class="text-right form-control form-control-sm">
+                      <span class="input-group-addon">m</span>
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+
+                <div class="row">
                   <div class="col-md-4">
                     <table class="table table-responsive">
                       <thead>
@@ -1770,65 +1810,6 @@ You should have received a copy of the GNU General Public License
                           <td><input type="text" data-dd-id="peso_tot" class="text-right form-control form-control-sm"></td>
                           <td><input type="text" data-dd-id="penalita_armatura" class="text-right form-control form-control-sm"></td>
                           <td><input type="text" data-dd-id="penalita_nuotare" class="text-right form-control form-control-sm"></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-8 col-md-offset-2">
-                    <table class="table table-responsive" data-dd-id="velocita">
-                      <thead>
-                        <tr>
-                          <th></th>
-                          <th class="text-center">Base</th>
-                          <th class="text-center">Armatura</th>
-                          <th class="text-center">Correre</th>
-                          <th class="text-center">Nuotare</th>
-                          <th class="text-center">Scalare</th>
-                          <th class="text-center">Volare</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr data-dd-id="testme-row">
-                          <th class="text-right">Velocità</th>
-                          <td>
-                            <div class="input-group">
-                              <input type="text" data-dd-id="base" class="text-right form-control form-control-sm">
-                              <span class="input-group-addon">m</span>
-                            </div>
-                          </td>
-                          <td>
-                            <div class="input-group">
-                              <input type="text" data-dd-id="armatura" class="text-right form-control form-control-sm">
-                              <span class="input-group-addon">m</span>
-                            </div>
-                          </td>
-                          <td>
-                            <div class="input-group">
-                              <input type="text" data-dd-id="correre" class="text-right form-control form-control-sm">
-                              <span class="input-group-addon">m</span>
-                            </div>
-                          </td>
-                          <td>
-                            <div class="input-group">
-                              <input type="text" data-dd-id="nuotare" class="text-right form-control form-control-sm">
-                              <span class="input-group-addon">m</span>
-                            </div>
-                          </td>
-                          <td>
-                            <div class="input-group">
-                              <input type="text" data-dd-id="scalare" class="text-right form-control form-control-sm">
-                              <span class="input-group-addon">m</span>
-                            </div>
-                          </td>
-                          <td>
-                            <div class="input-group">
-                              <input type="text" data-dd-id="volare" class="text-right form-control form-control-sm">
-                              <span class="input-group-addon">m</span>
-                            </div>
-                          </td>
                         </tr>
                       </tbody>
                     </table>
