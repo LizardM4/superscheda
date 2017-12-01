@@ -97,6 +97,7 @@ You should have received a copy of the GNU General Public License
     </script>
     <style>
       *[data-dd-array="item"] ~ .array-placeholder { display: none!important; }
+      button.btn[data-toggle="button"]:not(.active) i.fa { opacity: 0.5; }
     </style>
   </head>
   <body>
@@ -1677,6 +1678,139 @@ You should have received a copy of the GNU General Public License
               </div>
             </div>
           </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <div class="card">
+            <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_abilita" aria-expanded="true" aria-controls="card_abilita">
+              <h4 class="mb-0">
+                <button type="button" class="close float-left mr-3" aria-label="Toggle">
+                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                </button>
+                Abilità
+                <span class="close">
+                  <span class="text-muted font-weight-light" data-dd-array="count" data-target="#array_attacchi">0</span>
+                  <i class="fa fa-plus-circle" data-dd-array="append" data-target="#array_attacchi" aria-label="Add" aria-hidden="true"></i>
+                </span>
+              </h4>
+            </div>
+            <div class="collapse show" id="card_abilita">
+              <div class="card-body">
+
+                <div class="form-row">
+                  <div class="form-group col-md-2">
+                    <label class="col-form-label">Grado massimo</label>
+                    <input type="text" class="form-control" data-dd-id="grado_max">
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label class="col-form-label">Gradi</label>
+                    <input type="text" class="form-control" data-dd-id="gradi">
+                  </div>
+                </div>
+
+                <div class="card" data-dd-id="abilita">
+                  <div class="card-body">
+                    <h5 class="card-title">Abilità
+                      <button type="button" class="close" data-dd-array="remove" aria-label="Remove">
+                        <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                      </button></h5>
+                    <div class="form-row">
+                      <div class="form-group mb-1 col-md-8">
+                        <label class="col-form-label">Nome</label>
+                        <input type="text" class="form-control" data-dd-id="nome">
+                      </div>
+                      <div class="form-group mb-1 col-md-2">
+                        <label class="col-form-label">Mod C</label>
+                        <div class="input-group">
+                          <div class="input-group-btn">
+                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              For
+                            </button>
+                            <div class="dropdown-menu">
+                              <a class="dropdown-item" href="#">For</a>
+                              <a class="dropdown-item" href="#">Des</a>
+                              <a class="dropdown-item" href="#">Cos</a>
+                              <a class="dropdown-item" href="#">Int</a>
+                              <a class="dropdown-item" href="#">Sag</a>
+                              <a class="dropdown-item" href="#">Car</a>
+                            </div>
+                          </div>
+                          <input type="text" class="form-control" data-dd-id="mod_caratteristica">
+                        </div>
+                      </div>
+                      <div class="form-group mb-1 col-md-2">
+                        <label class="col-form-label">Gradi</label>
+                        <div class="input-group">
+                          <span class="input-group-btn">
+                            <button class="btn btn-secondary" type="button" data-toggle="button" aria-pressed="false" autocomplete="off">
+                              <span class="fa-lg align-text-top px-2"><i class="fa fa-copyright fa-lg" aria-hidden="true"></i></span>
+                            </button>
+                          </span>
+                          <input type="text" class="form-control" data-dd-id="gradi">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-row col">
+                        <div class="form-group mb-1 col-md-3">
+                          <label class="col-form-label">Razza</label>
+                          <input type="text" class="form-control" data-dd-id="razza">
+                        </div>
+                        <div class="form-group mb-1 col-md-3">
+                          <label class="col-form-label">Arch&nbsp;1</label>
+                          <input type="text" class="form-control" data-dd-id="archetipo[0]">
+                        </div>
+                        <div class="form-group mb-1 col-md-3">
+                          <label class="col-form-label">Arch&nbsp;2</label>
+                          <input type="text" class="form-control" data-dd-id="archetipo[1]">
+                        </div>
+                        <div class="form-group mb-1 col-md-3">
+                          <label class="col-form-label">B&nbsp;Sin</label>
+                          <input type="text" class="form-control" data-dd-id="b_sinergia">
+                        </div>
+                      </div>
+                      <div class="form-row col">
+                        <div class="form-group mb-1 col-md-3">
+                          <label class="col-form-label">Tal</label>
+                          <input type="text" class="form-control" data-dd-id="talento">
+                        </div>
+                        <div class="form-group mb-1 col-md-3">
+                          <label class="col-form-label">Ogg</label>
+                          <input type="text" class="form-control" data-dd-id="oggetto">
+                        </div>
+                        <div class="form-group mb-1 col-md-3">
+                          <label class="col-form-label">VV</label>
+                          <input type="text" class="form-control" data-dd-id="vari">
+                        </div>
+                        <div class="form-group mb-1 col-md-3">
+                          <label class="col-form-label">Tot</label>
+                          <input type="text" class="form-control" data-dd-id="totale">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
 
 
 
