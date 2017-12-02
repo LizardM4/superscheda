@@ -222,6 +222,7 @@ function Controller(dbxAppId) {
                     .attr('data-dd-array', 'item')
                     .attr('data-dd-index', items.length + i)
                     .insertAfter(insertion_point);
+                insertion_point = new_item;
                 self._setupDDPaths(new_item);
             }
         } else if (items.length > size) {

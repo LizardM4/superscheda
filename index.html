@@ -120,7 +120,7 @@ You should have received a copy of the GNU General Public License
       .btn-custom-checkbox:not(.active) .toggle-active {
         display: none!important;
       }
-      .btn-custom-checkbox:not(.active) ~ .toggle-inactive {
+      .btn-custom-checkbox:not(.active) .toggle-inactive {
         opacity: 0.5;
       }
       .input-group-sm .dropdown-item {
@@ -1963,7 +1963,7 @@ You should have received a copy of the GNU General Public License
                           <label class="col-form-label col-form-label-sm d-md-none">Car chiave · Mod C</label>
                           <div class="input-group input-group-sm">
                             <div class="input-group-btn">
-                              <span tabindex="0" class="btn btn-sm btn-addon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <span tabindex="0" class="btn btn-sm btn-addon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
                                 <input data-dd-id="chiave" type="text" readonly class="form-control-plaintext" value="For">
                               </span>
                               <div class="dropdown-menu">
@@ -1987,39 +1987,31 @@ You should have received a copy of the GNU General Public License
                           <input data-dd-id="totale" type="text" class="form-control form-control-sm">
                         </div>
                       </div>
-                      <div class="form-row mt-2 extra-mods d-none">
-                        <div class="col-md input-group input-group-sm">
-                          <span class="input-group-addon">Raz</span>
+                      <div class="form-row extra-mods d-none">
+                        <label class="col-md col-form-label col-form-label-sm">Razza
                           <input data-dd-id="razza" type="text" class="form-control form-control-sm">
-                        </div>
-                        <div class="col-md input-group input-group-sm">
-                          <span class="input-group-addon">Ar&nbsp;1</span>
+                        </label>
+                        <label class="col-md col-form-label col-form-label-sm">Arch 1
                           <input data-dd-id="archetipo[0]" type="text" class="form-control form-control-sm">
-                        </div>
-                        <div class="col-md input-group input-group-sm">
-                          <span class="input-group-addon">Ar&nbsp;2</span>
+                        </label>
+                        <label class="col-md col-form-label col-form-label-sm">Arch 2
                           <input data-dd-id="archetipo[1]" type="text" class="form-control form-control-sm">
-                        </div>
-                        <div class="col-md input-group input-group-sm">
-                          <span class="input-group-addon">Sin</span>
+                        </label>
+                        <label class="col-md col-form-label col-form-label-sm">Sin
                           <input data-dd-id="sinergia" type="text" class="form-control form-control-sm">
-                        </div>
-                        <div class="col-md input-group input-group-sm">
-                          <span class="input-group-addon">BSin</span>
+                        </label>
+                        <label class="col-md col-form-label col-form-label-sm">B Sin
                           <input data-dd-id="b_sinergia" type="text" class="form-control form-control-sm">
-                        </div>
-                        <div class="col-md input-group input-group-sm">
-                          <span class="input-group-addon">Tal</span>
+                        </label>
+                        <label class="col-md col-form-label col-form-label-sm">Tal
                           <input data-dd-id="talento" type="text" class="form-control form-control-sm">
-                        </div>
-                        <div class="col-md input-group input-group-sm">
-                          <span class="input-group-addon">Ogg</span>
+                        </label>
+                        <label class="col-md col-form-label col-form-label-sm">Ogg
                           <input data-dd-id="oggetto" type="text" class="form-control form-control-sm">
-                        </div>
-                        <div class="col-md input-group input-group-sm">
-                          <span class="input-group-addon">VV</span>
+                        </label>
+                        <label class="col-md col-form-label col-form-label-sm">VV
                           <input data-dd-id="vari" type="text" class="form-control form-control-sm">
-                        </div>
+                        </label>
                       </div>
                     </div>
                   </div>
