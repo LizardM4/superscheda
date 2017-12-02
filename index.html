@@ -126,6 +126,7 @@ You should have received a copy of the GNU General Public License
         border: none;
         min-width: unset;
         width: 1.8rem;
+        background: none;
       }
       .input-group-btn.show .btn-addon, .input-group-btn .btn-addon:focus {
         z-index: 4;
@@ -139,6 +140,13 @@ You should have received a copy of the GNU General Public License
       .btn-custom-checkbox i.fa {
         width: 1rem;
         text-align: left;
+      }
+      .btn-addon:hover {
+        color: #000;
+        background-color: #dae0e5;
+      }
+      .dropdown-toggle:hover input[type="text"] {
+        color: #000;
       }
       .input-group .input-group-btn:first-child .btn-addon:not(.dropdown-toggle) {
         margin-right: -1px!important;
@@ -716,11 +724,11 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1 d-none" data-dd-array="master" data-dd-id="competenze">
                         <div class="input-group input-group-sm mb-0 col-11">
                           <span class="input-group-btn">
-                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </button>
+                            </span>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome">
                         </div>
@@ -733,11 +741,11 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="competenze" data-dd-index="0">
                         <div class="input-group input-group-sm mb-0 col-11">
                           <span class="input-group-btn">
-                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </button>
+                            </span>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Armature leggere">
                         </div>
@@ -750,11 +758,11 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="competenze" data-dd-index="1">
                         <div class="input-group input-group-sm mb-0 col-11">
                           <span class="input-group-btn">
-                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </button>
+                            </span>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Armature medie">
                         </div>
@@ -767,11 +775,11 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="competenze" data-dd-index="2">
                         <div class="input-group input-group-sm mb-0 col-11">
                           <span class="input-group-btn">
-                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </button>
+                            </span>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Armature pesanti">
                         </div>
@@ -784,11 +792,11 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="competenze" data-dd-index="3">
                         <div class="input-group input-group-sm mb-0 col-11">
                           <span class="input-group-btn">
-                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </button>
+                            </span>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Armi semplici">
                         </div>
@@ -801,11 +809,11 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="competenze" data-dd-index="4">
                         <div class="input-group input-group-sm mb-0 col-11">
                           <span class="input-group-btn">
-                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </button>
+                            </span>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Armi da guerra">
                         </div>
@@ -818,11 +826,11 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="competenze" data-dd-index="5">
                         <div class="input-group input-group-sm mb-0 col-11">
                           <span class="input-group-btn">
-                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </button>
+                            </span>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Scudi">
                         </div>
@@ -854,11 +862,11 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1 d-none" data-dd-array="master" data-dd-id="linguaggi">
                         <div class="input-group input-group-sm mb-0 col-11">
                           <span class="input-group-btn">
-                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </button>
+                            </span>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome">
                         </div>
@@ -884,11 +892,11 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1 d-none" data-dd-array="master" data-dd-id="visione">
                         <div class="input-group input-group-sm mb-0 col-8">
                           <span class="input-group-btn">
-                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </button>
+                            </span>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome">
                         </div>
@@ -905,11 +913,11 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="visione" data-dd-index="0">
                         <div class="input-group input-group-sm mb-0 col-8">
                           <span class="input-group-btn">
-                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </button>
+                            </span>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Crepuscolare">
                         </div>
@@ -926,11 +934,11 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="visione" data-dd-index="1">
                         <div class="input-group input-group-sm mb-0 col-8">
                           <span class="input-group-btn">
-                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </button>
+                            </span>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Scurovisione">
                         </div>
@@ -947,11 +955,11 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="visione" data-dd-index="2">
                         <div class="input-group input-group-sm mb-0 col-8">
                           <span class="input-group-btn">
-                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </button>
+                            </span>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Visione del Vero">
                         </div>
@@ -968,11 +976,11 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="visione" data-dd-index="3">
                         <div class="input-group input-group-sm mb-0 col-8">
                           <span class="input-group-btn">
-                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </button>
+                            </span>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Vista cieca">
                         </div>
@@ -1888,30 +1896,30 @@ You should have received a copy of the GNU General Public License
                       <div class="col-md-8">
                         <div class="input-group input-group-sm">
                           <span class="input-group-btn">
-                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </button>
+                            </span>
                           </span>
                           <input type="text" class="form-control form-control-sm">
                           <span class="input-group-btn">
-                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
                               <i class="fa fa-copyright toggle-active" aria-hidden="true"></i>
                               <i class="fa fa-copyright toggle-inactive" aria-hidden="true"></i>
-                            </button>
+                            </span>
                           </span>
                         </div>
                       </div>
                       <div class="col-md-2">
                         <div class="input-group input-group-sm">
                           <div class="input-group-btn">
-                            <button type="button" class="btn btn-sm btn-addon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span tabindex="0" class="btn btn-sm btn-addon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               <input type="text" readonly class="form-control-plaintext" value="For">
-                            </button>
+                            </span>
                             <div class="dropdown-menu">
                               <a class="dropdown-item" href="#">For</a>
                               <a class="dropdown-item" href="#">Des</a>
@@ -2163,27 +2171,27 @@ You should have received a copy of the GNU General Public License
               <div class="card-body">
                 <div class="form-row">
                   <div class="form-group col-md-3">
-                    <button id="tbox_highlight_missing_id" class="btn btn-addon w-100" type="button">Highlight missing dd-id</button>
+                    <button id="tbox_highlight_missing_id" class="btn btn-secondary w-100" type="button">Highlight missing dd-id</button>
                   </div>
                   <div class="form-group col-md-3">
-                    <button id="tbox_show_hpath" class="btn btn-addon w-100" type="button">Show get_hier_path</button>
+                    <button id="tbox_show_hpath" class="btn btn-secondary w-100" type="button">Show get_hier_path</button>
                   </div>
                   <div class="form-group col-md-3">
-                    <button id="tbox_load_repr" class="btn btn-addon w-100" type="button">Load representation</button>
+                    <button id="tbox_load_repr" class="btn btn-secondary w-100" type="button">Load representation</button>
                   </div>
                   <div class="form-group col-md-3">
-                    <button id="tbox_dump_repr" class="btn btn-addon w-100" type="button">Dump representation</button>
+                    <button id="tbox_dump_repr" class="btn btn-secondary w-100" type="button">Dump representation</button>
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-3">
-                    <button id="tbox_test_wait" class="btn btn-addon w-100" type="button" data-toggle="modal" data-target="#waiting">Test waiting</button>
+                    <button id="tbox_test_wait" class="btn btn-secondary w-100" type="button" data-toggle="modal" data-target="#waiting">Test waiting</button>
                   </div>
                   <div class="form-group col-md-3">
-                    <button id="tbox_test_alert" class="btn btn-addon w-100" type="button">Test alert</button>
+                    <button id="tbox_test_alert" class="btn btn-secondary w-100" type="button">Test alert</button>
                   </div>
                   <div class="form-group col-md-3">
-                    <button id="tbox_find_duplicates" class="btn btn-addon w-100" type="button">Find duplicates</button>
+                    <button id="tbox_find_duplicates" class="btn btn-secondary w-100" type="button">Find duplicates</button>
                   </div>
                 </div>
                 <div class="form-row">
