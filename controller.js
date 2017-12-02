@@ -198,6 +198,21 @@ function Controller(dbxAppId) {
         self._arrayResize(any_obj_in_array, 1, true);
     }
 
+
+    self.arraySort = function(container, key_fn) {
+        container = $(container);
+        var items = container.children('[data-dd-array="item"]');
+        items.sort(key_fn);
+        for (var i = 0; i < items.length; ++i) {
+            var item = $(items[i]);
+            item.attr('data-dd-index', i.toString());
+            if (i > 0) {
+                item.insertAfter(items[i - 1]);
+            }
+        }
+    };
+
+
     self._arrayRemove = function(any_obj_in_item) {
         var item = $(any_obj_in_item).closest('[data-dd-array="item"]');
         var container = item.closest('[data-dd-array="container"]')

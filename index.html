@@ -44,12 +44,30 @@ You should have received a copy of the GNU General Public License
 
         $('#toggle_abilities_modifier').click(function() {
           var obj = $(this);
-          var input = obj.find('input');
-          if (input.prop('checked')) {
-            $('.extra-mods').addClass('d-none');
-          } else {
+          var t_active = obj.find('.toggle-active');
+          var t_inactive = obj.find('.toggle-inactive');
+          var cur_state = t_active.hasClass('d-none');
+          if (cur_state) {
+            t_inactive.addClass('d-none');
+            t_active.removeClass('d-none');
             $('.extra-mods').removeClass('d-none');
+            $('#array_abilita').addClass('striped');
+            $('#array_abilita > *[data-dd-array]').addClass('p-2').removeClass('pt-1');
+          } else {
+            t_inactive.removeClass('d-none');
+            t_active.addClass('d-none');
+            $('.extra-mods').addClass('d-none');
+            $('#array_abilita').removeClass('striped');
+            $('#array_abilita > *[data-dd-array]').removeClass('p-2').addClass('pt-1');
           }
+        });
+
+        $('#sort_abilities').click(function() {
+          DD.arraySort($('#array_abilita'), function(x, y) {
+            return $(x).find('input[data-dd-id="nome"]').val().localeCompare(
+              $(y).find('input[data-dd-id="nome"]').val()
+            );
+          });
         });
 
 
@@ -1900,11 +1918,14 @@ You should have received a copy of the GNU General Public License
                   </div>
                   <div class="form-group col-md-2">
                     <label class="col-form-label">Modificatori:</label>
-                    <span tabindex="0" id="toggle_abilities_modifier" class="btn d-block w-100 btn-secondary btn-custom-checkbox" data-toggle="buttons">
-                      <span class="toggle-active">Nascondi</span>
+                    <button type="button" class="btn btn-secondary d-block w-100" id="toggle_abilities_modifier">
                       <span class="toggle-inactive">Mostra</span>
-                      <input type="checkbox">
-                    </span>
+                      <span class="toggle-active d-none">Nascondi</span>
+                    </button>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label class="col-form-label">Ordina:</label>
+                    <button type="button" class="btn btn-secondary d-block w-100" id="sort_abilities">Per nome</button>
                   </div>
                 </div>
 
@@ -1928,8 +1949,8 @@ You should have received a copy of the GNU General Public License
                 </div>
 
 
-                <div data-dd-array="container" class="striped">
-                  <div class="p-2 d-none" data-dd-array="master" data-dd-id="abilita">
+                <div data-dd-array="container" id="array_abilita">
+                  <div class="pt-1 d-none" data-dd-array="master" data-dd-id="abilita">
                     <div class="simulate-alloc-float-right">
                       <div class="simulate-float-right">
                         <button type="button" class="close simulate-va-middle float-none text-danger" data-dd-array="remove" aria-label="Remove">
