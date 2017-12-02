@@ -120,12 +120,6 @@ You should have received a copy of the GNU General Public License
         padding-bottom: .25rem;
         min-width: 5rem;
       }
-      .mr-custom {
-        margin-right: 2%;
-      }
-      .ml-custom {
-        margin-left: 2%;
-      }
       .dropdown-toggle input[type="text"] {
         padding: 0;
         margin: 0;
@@ -164,6 +158,9 @@ You should have received a copy of the GNU General Public License
       i.fa.fa-copyright {
         font-size: 1.3rem;
         vertical-align: -0.1rem;
+      }
+      .separatable:not(:last-of-type) {
+        border-right: 1px solid rgb(233, 236, 239);
       }
     </style>
   </head>
@@ -697,7 +694,7 @@ You should have received a copy of the GNU General Public License
             <div class="collapse show" id="card_competenze">
               <div class="card-body">
                 <div class="row">
-                  <div class="col-md-4 border border-top-0 border-bottom-0 border-left-0">
+                  <div class="col-md-4 separatable">
                     <h5 class="text-truncate">Competenze in armi e armature</h5>
                     <div data-dd-array="container">
                       <div class="form-row mb-1 d-none" data-dd-array="master" data-dd-id="competenze">
@@ -829,7 +826,7 @@ You should have received a copy of the GNU General Public License
                       </p>
                     </div>
                   </div>
-                  <div class="col-md-4 border border-top-0 border-bottom-0 border-left-0">
+                  <div class="col-md-4 separatable">
                     <div class="form-check form-check-inline float-right mb-0">
                       <label class="form-check-label">
                         <input class="form-check-input" type="checkbox" data-dd-id="sa_leggere">
@@ -1123,7 +1120,7 @@ You should have received a copy of the GNU General Public License
                 </table>
 
                 <div class="row">
-                  <div class="col-md-6 border border-top-0 border-bottom-0 border-left-0">
+                  <div class="col-md-6 separatable">
                     <h5 class="mt-3">Bonus attacco base</h5>
                     <table class="table table-striped table-sm table-responsive" data-dd-id="bonus_att_base">
                       <thead>
@@ -1174,7 +1171,7 @@ You should have received a copy of the GNU General Public License
                 </div>
 
                 <div class="row">
-                  <div class="col-md-3 border border-top-0 border-bottom-0 border-left-0">
+                  <div class="col-md-3 separatable">
                     <h5 class="mt-3">Punti ferita</h5>
                     <table class="table table-striped table-sm table-responsive" data-dd-id="punti_ferita">
                       <thead>
@@ -1191,7 +1188,7 @@ You should have received a copy of the GNU General Public License
                        </tbody>
                     </table>
                   </div>
-                  <div class="col-md-3 border border-top-0 border-bottom-0 border-left-0">
+                  <div class="col-md-3 separatable">
                     <h5 class="mt-3 text-truncate">Res. Incantesimi</h5>
                     <table class="table table-striped table-sm table-responsive" data-dd-id="resistenza_incantesimi">
                       <thead>
@@ -1234,7 +1231,7 @@ You should have received a copy of the GNU General Public License
                 </div>
 
                 <div class="row">
-                  <div class="col-md-9 border border-top-0 border-bottom-0 border-left-0">
+                  <div class="col-md-9 separatable">
                     <h5 class="mt-3">Lotta</h5>
                     <table class="table table-striped table-sm table-responsive mb-1" data-dd-id="lotta">
                       <thead>
@@ -1386,7 +1383,7 @@ You should have received a copy of the GNU General Public License
                     </div>
 
                     <div class="row mt-3">
-                      <div class="col-md-6 border border-top-0 border-bottom-0 border-left-0" data-dd-id="tiro_colpire">
+                      <div class="col-md-6 separatable" data-dd-id="tiro_colpire">
                         <h5>Tiro per colpire</h5>
                         <div class="form-row">
                           <div class="form-group mb-1 col-3">
@@ -1673,7 +1670,7 @@ You should have received a copy of the GNU General Public License
             <div class="collapse show" id="card_talenti_skills">
               <div class="card-body">
                 <div class="row">
-                  <div class="col-md-4 border border-top-0 border-bottom-0 border-left-0">
+                  <div class="col-md-4 separatable">
                     <h5 class="text-truncate">Talenti e difetti, maneuvers, stances</h5>
                     <div class="form-row">
                       <div class="form-group mb-0 col-7">
@@ -1713,7 +1710,7 @@ You should have received a copy of the GNU General Public License
                       </p>
                     </div>
                   </div>
-                  <div class="col-md-4 border border-top-0 border-bottom-0 border-left-0" data-dd-id="skill_tricks">
+                  <div class="col-md-4 separatable" data-dd-id="skill_tricks">
                     <h5>Skill tricks</h5>
                     <div class="form-row">
                       <div class="form-group mb-0 col-7">
@@ -1753,7 +1750,7 @@ You should have received a copy of the GNU General Public License
                       </p>
                     </div>
                   </div>
-                  <div class="col-md-4 border border-top-0 border-bottom-0 border-left-0" data-dd-id="privilegi">
+                  <div class="col-md-4" data-dd-id="privilegi">
                     <h5 class="text-truncate">Privilegi di classe, capacità speciali</h5>
                     <div class="form-row">
                       <div class="form-group mb-0 col-7">
@@ -1845,59 +1842,49 @@ You should have received a copy of the GNU General Public License
 
 
 
-                <div class="p-2 m-1">
-
-                  <div class="form-row">
-                    <label class="col-md-7 col-form-label col-form-label-sm">
-                      Acquisita · Nome · Di classe
-                      <span class="fa-lg"><i class="fa fa-angle-left fa-lg text-muted" aria-hidden="true"></i></span>
-                        Mod
-                      <span class="fa-lg"><i class="fa fa-angle-right fa-lg text-muted" aria-hidden="true"></i></span>
-                    </label>
-
-                    <div class="form-row col-md-5 m-0 p-0">
-                      <label class="col-md-5 col-form-label col-form-label-sm">
-                        Car chiave · Mod C
-                      </label>
-                      <label class="col-md-3 col-form-label col-form-label-sm">
-                        Gradi
-                      </label>
-                      <label class="col-md-3 col-form-label col-form-label-sm">
-                        Totale
-                      </label>
-                    </div>
-                  </div>
+                <div class="form-row">
+                  <label class="col-md-8 col-form-label col-form-label-sm">
+                    Acquisita · Nome · Di classe
+                  </label>
+                  <label class="col-md-2 col-form-label col-form-label-sm">
+                    Car chiave · Mod C
+                  </label>
+                  <label class="col-md-1 col-form-label col-form-label-sm">
+                    Gradi
+                  </label>
+                  <label class="col-md-1 col-form-label col-form-label-sm">
+                    Totale
+                  </label>
                 </div>
 
 
 
                 <div>
-
                   <div class="form-row">
-                    <div class="col-md-7 input-group input-group-sm">
-                      <span class="input-group-btn">
-                        <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
-                          <input type="checkbox" autocomplete="off" data-dd-id="attivo">
-                          <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
-                          <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                        </button>
-                      </span>
-                      <input type="text" class="form-control form-control-sm">
-                      <span class="input-group-btn">
-                        <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
-                          <input type="checkbox" autocomplete="off">
-                          <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
-                          <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                          <i class="fa fa-copyright toggle-active" aria-hidden="true"></i>
-                          <i class="fa fa-copyright toggle-inactive" aria-hidden="true"></i>
-                        </button>
-                      </span>
+                    <div class="col-md-8">
+                      <div class="input-group input-group-sm">
+                        <span class="input-group-btn">
+                          <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <input type="checkbox" autocomplete="off" data-dd-id="attivo">
+                            <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
+                            <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
+                          </button>
+                        </span>
+                        <input type="text" class="form-control form-control-sm">
+                        <span class="input-group-btn">
+                          <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <input type="checkbox" autocomplete="off">
+                            <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
+                            <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
+                            <i class="fa fa-copyright toggle-active" aria-hidden="true"></i>
+                            <i class="fa fa-copyright toggle-inactive" aria-hidden="true"></i>
+                          </button>
+                        </span>
+                      </div>
                     </div>
-
-                    <div class="form-row col-md-5 m-0 p-0">
-
-                      <div class="col-md-5 input-group input-group-sm">
-                        <div class="input-group-btn input-group-sm">
+                    <div class="col-md-2">
+                      <div class="input-group input-group-sm">
+                        <div class="input-group-btn">
                           <button type="button" class="btn btn-sm btn-addon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <input type="text" readonly class="form-control-plaintext" value="For">
                           </button>
@@ -1912,30 +1899,16 @@ You should have received a copy of the GNU General Public License
                         </div>
                         <input type="text" class="form-control form-control-sm">
                       </div>
-
-
-                      <div class="col-md-3">
-                        <input type="text" class="form-control form-control-sm">
-                      </div>
-
-                      <div class="col-md-3">
-                        <input type="text" class="form-control form-control-sm">
-                      </div>
-
-                      <div class="col-md-1 text-right">
-                        <!-- <button type="button" class="btn btn-sm btn-danger w-100">Elimina</button> -->
-                        <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
-                          <i class="fa fa-minus-square" aria-hidden="true"></i>
-                        </button>
-                      </div>
                     </div>
-
+                    <div class="col-md-1">
+                      <input type="text" class="form-control form-control-sm">
+                    </div>
+                    <div class="col-md-1">
+                      <input type="text" class="form-control form-control-sm">
+                    </div>
                   </div>
-
-
                   <div class="extra-mods">
                     <div class="form-row mt-2">
-                      <i class="fa fa-angle-left fa-2x mr-2 ml-custom text-muted" aria-hidden="true"></i>
                       <div class="col input-group input-group-sm">
                         <span class="input-group-addon">Raz</span>
                         <input type="text" class="form-control form-control-sm">
@@ -1968,10 +1941,14 @@ You should have received a copy of the GNU General Public License
                         <span class="input-group-addon">VV</span>
                         <input type="text" class="form-control form-control-sm">
                       </div>
-                      <i class="fa fa-angle-right fa-2x mr-custom ml-2 text-muted" aria-hidden="true"></i>
                     </div>
                     <hr class="my-2">
                   </div>
+
+                  <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
+                    <i class="fa fa-minus-square" aria-hidden="true"></i>
+                  </button>
+
 
 
                 </div>
