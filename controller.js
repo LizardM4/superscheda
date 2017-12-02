@@ -48,11 +48,11 @@ function Controller(dbxAppId) {
     };
 
     self._allControls = function() {
-        return $('.form-control[data-dd-path], .form-check-input[data-dd-path]');
+        return $('input[data-dd-path], select[data-dd-path], textarea[data-dd-path]');
     };
 
     self._setupDDPaths = function(objs=$) {
-        $(objs).find('.form-control[data-dd-id], .form-check-input[data-dd-id]')
+        $(objs).find('input[data-dd-id], select[data-dd-id], textarea[data-dd-id]')
             .not('[data-dd-array="master"] *')
             .each(function (idx, obj) {
                 $(obj).attr('data-dd-path', self._getHierPath(obj));
