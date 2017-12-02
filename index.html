@@ -42,6 +42,19 @@ You should have received a copy of the GNU General Public License
 
         DD.setup();
 
+        $('#toggle_abilities_modifier').click(function() {
+          var obj = $(this);
+          var input = obj.find('input');
+          if (input.prop('checked')) {
+            $('.extra-mods').addClass('d-none');
+          } else {
+            $('.extra-mods').removeClass('d-none');
+          }
+        });
+
+
+
+
         $('#tbox_highlight_missing_id').click(function() {
           $('input').not('[data-dd-id]').addClass('is-invalid');
         });
@@ -1876,15 +1889,19 @@ You should have received a copy of the GNU General Public License
             <div class="collapse show" id="card_abilita">
               <div class="card-body">
 
-                <div class="form-row">
-                  <div class="form-group col-md-2">
-                    <label class="col-form-label">Grado massimo</label>
-                    <input type="text" class="form-control" data-dd-id="grado_max">
+                <div class="form-row mb-3">
+                  <div class="col-md-3">
+                    <span tabindex="0" id="toggle_abilities_modifier" class="btn btn-secondary btn-custom-checkbox" data-toggle="buttons">
+                      Mostra/nascondi modificatori
+                      <input type="checkbox">
+                      <i class="fa fa-square-o fa-lg toggle-inactive ml-1" aria-hidden="true"></i>
+                      <i class="fa fa-check-square-o fa-lg toggle-active ml-1" aria-hidden="true"></i>
+                    </span>
                   </div>
-                  <div class="form-group col-md-2">
-                    <label class="col-form-label">Gradi</label>
-                    <input type="text" class="form-control" data-dd-id="gradi">
-                  </div>
+                  <label class="offset-md-3 col-md-2 col-form-label text-right">Grado max:</label>
+                  <input type="text" class="col-md-1 form-control" data-dd-id="grado_max">
+                  <label class="col-md-2 col-form-label text-right">Gradi:</label>
+                  <input type="text" class="col-md-1 form-control" data-dd-id="gradi">
                 </div>
 
 
@@ -1908,7 +1925,7 @@ You should have received a copy of the GNU General Public License
 
 
                 <div data-dd-array="container" class="striped">
-                  <div class="p-2" data-dd-array="master" data-dd-id="abilita">
+                  <div class="p-2 d-none" data-dd-array="master" data-dd-id="abilita">
                     <div class="simulate-alloc-float-right">
                       <div class="simulate-float-right">
                         <button type="button" class="close simulate-va-middle float-none text-danger" data-dd-array="remove" aria-label="Remove">
@@ -1962,45 +1979,43 @@ You should have received a copy of the GNU General Public License
                           <input data-dd-id="totale" type="text" class="form-control form-control-sm">
                         </div>
                       </div>
-                      <div class="extra-mods">
-                        <div class="form-row mt-2">
-                          <div class="col input-group input-group-sm">
-                            <span class="input-group-addon">Raz</span>
-                            <input data-dd-id="razza" type="text" class="form-control form-control-sm">
-                          </div>
-                          <div class="col input-group input-group-sm">
-                            <span class="input-group-addon">Ar&nbsp;1</span>
-                            <input data-dd-id="archetipo[0]" type="text" class="form-control form-control-sm">
-                          </div>
-                          <div class="col input-group input-group-sm">
-                            <span class="input-group-addon">Ar&nbsp;2</span>
-                            <input data-dd-id="archetipo[1]" type="text" class="form-control form-control-sm">
-                          </div>
-                          <div class="col input-group input-group-sm">
-                            <span class="input-group-addon">Sin</span>
-                            <input data-dd-id="sinergia" type="text" class="form-control form-control-sm">
-                          </div>
-                          <div class="col input-group input-group-sm">
-                            <span class="input-group-addon">BSin</span>
-                            <input data-dd-id="b_sinergia" type="text" class="form-control form-control-sm">
-                          </div>
-                          <div class="col input-group input-group-sm">
-                            <span class="input-group-addon">Tal</span>
-                            <input data-dd-id="talento" type="text" class="form-control form-control-sm">
-                          </div>
-                          <div class="col input-group input-group-sm">
-                            <span class="input-group-addon">Ogg</span>
-                            <input data-dd-id="oggetto" type="text" class="form-control form-control-sm">
-                          </div>
-                          <div class="col input-group input-group-sm">
-                            <span class="input-group-addon">VV</span>
-                            <input data-dd-id="vari" type="text" class="form-control form-control-sm">
-                          </div>
+                      <div class="form-row mt-2 extra-mods d-none">
+                        <div class="col input-group input-group-sm">
+                          <span class="input-group-addon">Raz</span>
+                          <input data-dd-id="razza" type="text" class="form-control form-control-sm">
+                        </div>
+                        <div class="col input-group input-group-sm">
+                          <span class="input-group-addon">Ar&nbsp;1</span>
+                          <input data-dd-id="archetipo[0]" type="text" class="form-control form-control-sm">
+                        </div>
+                        <div class="col input-group input-group-sm">
+                          <span class="input-group-addon">Ar&nbsp;2</span>
+                          <input data-dd-id="archetipo[1]" type="text" class="form-control form-control-sm">
+                        </div>
+                        <div class="col input-group input-group-sm">
+                          <span class="input-group-addon">Sin</span>
+                          <input data-dd-id="sinergia" type="text" class="form-control form-control-sm">
+                        </div>
+                        <div class="col input-group input-group-sm">
+                          <span class="input-group-addon">BSin</span>
+                          <input data-dd-id="b_sinergia" type="text" class="form-control form-control-sm">
+                        </div>
+                        <div class="col input-group input-group-sm">
+                          <span class="input-group-addon">Tal</span>
+                          <input data-dd-id="talento" type="text" class="form-control form-control-sm">
+                        </div>
+                        <div class="col input-group input-group-sm">
+                          <span class="input-group-addon">Ogg</span>
+                          <input data-dd-id="oggetto" type="text" class="form-control form-control-sm">
+                        </div>
+                        <div class="col input-group input-group-sm">
+                          <span class="input-group-addon">VV</span>
+                          <input data-dd-id="vari" type="text" class="form-control form-control-sm">
                         </div>
                       </div>
                     </div>
                   </div>
-                  <p class="my-4 text-muted text-center form-text array-placeholder">
+                  <p class="my-2 text-muted text-center form-text array-placeholder">
                     <small>Nessuna.</small>
                   </p>
                   <p class="form-text text-center mb-1">
