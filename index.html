@@ -114,13 +114,13 @@ You should have received a copy of the GNU General Public License
       .btn-custom-checkbox input[type="checkbox"] {
         display: none!important;
       }
-      .btn-custom-checkbox > input[type="checkbox"]:checked ~ .toggle-inactive {
+      .btn-custom-checkbox.active .toggle-inactive {
         display: none!important;
       }
-      .btn-custom-checkbox > input[type="checkbox"]:not(:checked) ~ .toggle-active {
+      .btn-custom-checkbox:not(.active) .toggle-active {
         display: none!important;
       }
-      .btn-custom-checkbox > input[type="checkbox"]:not(:checked) ~ .toggle-inactive {
+      .btn-custom-checkbox:not(.active) ~ .toggle-inactive {
         opacity: 0.5;
       }
       .input-group-sm .dropdown-item {
@@ -1889,24 +1889,28 @@ You should have received a copy of the GNU General Public License
             <div class="collapse show" id="card_abilita">
               <div class="card-body">
 
-                <div class="form-row mb-3">
-                  <div class="col-md-3">
-                    <span tabindex="0" id="toggle_abilities_modifier" class="btn btn-secondary btn-custom-checkbox" data-toggle="buttons">
-                      Mostra/nascondi modificatori
+                <div class="form-row">
+                  <div class="form-group col-md-2">
+                    <div class="text-truncate"><label class="col-form-label">Grado max:</label></div>
+                    <input type="text" class="form-control" data-dd-id="grado_max">
+                  </div>
+                  <div class="form-group col-md-2">
+                    <div class="text-truncate"><label class="col-form-label">Gradi:</label></div>
+                    <input type="text" class="form-control" data-dd-id="gradi">
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label class="col-form-label">Modificatori:</label>
+                    <span tabindex="0" id="toggle_abilities_modifier" class="btn d-block w-100 btn-secondary btn-custom-checkbox" data-toggle="buttons">
+                      <span class="toggle-active">Nascondi</span>
+                      <span class="toggle-inactive">Mostra</span>
                       <input type="checkbox">
-                      <i class="fa fa-square-o fa-lg toggle-inactive ml-1" aria-hidden="true"></i>
-                      <i class="fa fa-check-square-o fa-lg toggle-active ml-1" aria-hidden="true"></i>
                     </span>
                   </div>
-                  <label class="offset-md-3 col-md-2 col-form-label text-right">Grado max:</label>
-                  <input type="text" class="col-md-1 form-control" data-dd-id="grado_max">
-                  <label class="col-md-2 col-form-label text-right">Gradi:</label>
-                  <input type="text" class="col-md-1 form-control" data-dd-id="gradi">
                 </div>
 
 
 
-                <div class="simulate-alloc-float-right">
+                <div class="simulate-alloc-float-right d-none d-md-block">
                   <div class="form-row">
                     <div class="col-8 form-group mb-0">
                       <label class="col-form-label col-form-label-sm">Acquisita · Nome · Di classe</label>
@@ -1934,6 +1938,7 @@ You should have received a copy of the GNU General Public License
                       </div>
                       <div class="form-row">
                         <div class="col-md-8">
+                          <label class="col-form-label col-form-label-sm d-md-none">Acquisita · Nome · Di classe</label>
                           <div class="input-group input-group-sm">
                             <span class="input-group-btn">
                               <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
@@ -1955,6 +1960,7 @@ You should have received a copy of the GNU General Public License
                           </div>
                         </div>
                         <div class="col-md-2">
+                          <label class="col-form-label col-form-label-sm d-md-none">Car chiave · Mod C</label>
                           <div class="input-group input-group-sm">
                             <div class="input-group-btn">
                               <span tabindex="0" class="btn btn-sm btn-addon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -1973,42 +1979,44 @@ You should have received a copy of the GNU General Public License
                           </div>
                         </div>
                         <div class="col-md-1">
+                          <label class="col-form-label col-form-label-sm d-md-none">Gradi</label>
                           <input data-dd-id="gradi" type="text" class="form-control form-control-sm">
                         </div>
                         <div class="col-md-1">
+                          <label class="col-form-label col-form-label-sm d-md-none">Totale</label>
                           <input data-dd-id="totale" type="text" class="form-control form-control-sm">
                         </div>
                       </div>
                       <div class="form-row mt-2 extra-mods d-none">
-                        <div class="col input-group input-group-sm">
+                        <div class="col-md input-group input-group-sm">
                           <span class="input-group-addon">Raz</span>
                           <input data-dd-id="razza" type="text" class="form-control form-control-sm">
                         </div>
-                        <div class="col input-group input-group-sm">
+                        <div class="col-md input-group input-group-sm">
                           <span class="input-group-addon">Ar&nbsp;1</span>
                           <input data-dd-id="archetipo[0]" type="text" class="form-control form-control-sm">
                         </div>
-                        <div class="col input-group input-group-sm">
+                        <div class="col-md input-group input-group-sm">
                           <span class="input-group-addon">Ar&nbsp;2</span>
                           <input data-dd-id="archetipo[1]" type="text" class="form-control form-control-sm">
                         </div>
-                        <div class="col input-group input-group-sm">
+                        <div class="col-md input-group input-group-sm">
                           <span class="input-group-addon">Sin</span>
                           <input data-dd-id="sinergia" type="text" class="form-control form-control-sm">
                         </div>
-                        <div class="col input-group input-group-sm">
+                        <div class="col-md input-group input-group-sm">
                           <span class="input-group-addon">BSin</span>
                           <input data-dd-id="b_sinergia" type="text" class="form-control form-control-sm">
                         </div>
-                        <div class="col input-group input-group-sm">
+                        <div class="col-md input-group input-group-sm">
                           <span class="input-group-addon">Tal</span>
                           <input data-dd-id="talento" type="text" class="form-control form-control-sm">
                         </div>
-                        <div class="col input-group input-group-sm">
+                        <div class="col-md input-group input-group-sm">
                           <span class="input-group-addon">Ogg</span>
                           <input data-dd-id="oggetto" type="text" class="form-control form-control-sm">
                         </div>
-                        <div class="col input-group input-group-sm">
+                        <div class="col-md input-group input-group-sm">
                           <span class="input-group-addon">VV</span>
                           <input data-dd-id="vari" type="text" class="form-control form-control-sm">
                         </div>
