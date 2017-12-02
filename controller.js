@@ -172,6 +172,16 @@ function Controller(dbxAppId) {
         });
     };
 
+    self._setupCustomDropdown = function() {
+        $('.input-group-btn .dropdown-menu .dropdown-item').click(function(event) {
+            event.preventDefault();
+            var obj = $(this);
+            obj.closest('.input-group-btn')
+                .find('input[type="text"]')
+                .val(obj.text());
+        });
+    };
+
     self._setupArrays = function() {
         $('[data-dd-array="append"]').click(function(event) {
             self._arrayAppend(self._resolveTarget(this));
@@ -340,6 +350,7 @@ function Controller(dbxAppId) {
         self._setupWaitingModal();
         self._setupAnimatedChevrons();
         self._setupArrays();
+        self._setupCustomDropdown();
     };
 
     self.updateHier = function() {

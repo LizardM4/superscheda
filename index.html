@@ -126,6 +126,13 @@ You should have received a copy of the GNU General Public License
       .ml-custom {
         margin-left: 1.33%;
       }
+      .dropdown-toggle input[type="text"] {
+        padding: 0;
+        margin: 0;
+        border: none;
+        min-width: unset;
+        width: 2rem;
+      }
     </style>
   </head>
   <body>
@@ -1758,7 +1765,7 @@ You should have received a copy of the GNU General Public License
 
                   <div class="form-row">
                     <label class="col-md-7 col-form-label col-form-label-sm">
-                      Nome/di classe
+                      Nome | di classe
                       <span class="fa-lg"><i class="fa fa-angle-left fa-lg text-muted" aria-hidden="true"></i></span>
                         Mod
                       <span class="fa-lg"><i class="fa fa-angle-right fa-lg text-muted" aria-hidden="true"></i></span>
@@ -1766,7 +1773,7 @@ You should have received a copy of the GNU General Public License
 
                     <div class="form-row col-md-5 m-0 p-0">
                       <label class="col-md-5 col-form-label col-form-label-sm">
-                        Car chiave/Mod C
+                        Car chiave | Mod C
                       </label>
                       <label class="col-md-3 col-form-label col-form-label-sm">
                         Gradi
@@ -1799,7 +1806,7 @@ You should have received a copy of the GNU General Public License
                       <div class="col-md-5 input-group input-group-sm">
                         <div class="input-group-btn input-group-sm">
                           <button type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            For
+                            <input type="text" readonly class="form-control-plaintext text-light" value="For">
                           </button>
                           <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">For</a>
