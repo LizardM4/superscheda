@@ -121,10 +121,10 @@ You should have received a copy of the GNU General Public License
         min-width: 5rem;
       }
       .mr-custom {
-        margin-right: 1.33%;
+        margin-right: 2%;
       }
       .ml-custom {
-        margin-left: 1.33%;
+        margin-left: 2%;
       }
       .dropdown-toggle input[type="text"] {
         padding: 0;
@@ -133,11 +133,37 @@ You should have received a copy of the GNU General Public License
         min-width: unset;
         width: 2rem;
       }
-      .input-group-btn .btn-custom-checkbox {
+      .input-group-btn.show .btn-addon, .input-group-btn .btn-addon:focus {
         z-index: 4;
+      }
+      .input-group-btn .btn-addon, .input-group-btn .btn-addon {
+        z-index: 0;
+      }
+      .input-group-btn .btn-addon:hover:not(:focus), .input-group-btn .btn-addon:hover:not(:focus) {
+        z-index: 0;
       }
       .btn-custom-checkbox i.fa {
         width: 1rem;
+        text-align: left;
+      }
+      .input-group .input-group-btn:first-child .btn-addon:not(.dropdown-toggle) {
+        margin-right: -1px!important;
+      }
+      .input-group .input-group-btn:last-child .btn-addon:not(.dropdown-toggle) {
+        margin-left: -1px!important;
+      }
+      .btn-addon, .btn-addon input {
+        background-color: rgb(233, 236, 239);
+        border-color: rgb(206, 212, 218);
+        color: rgb(73, 80, 87);
+      }
+      .btn-addon:focus {
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+        border-color: rgb(128, 189, 255);
+      }
+      i.fa.fa-copyright {
+        font-size: 1.3rem;
+        vertical-align: -0.1rem;
       }
     </style>
   </head>
@@ -677,16 +703,16 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1 d-none" data-dd-array="master" data-dd-id="competenze">
                         <div class="input-group input-group-sm mb-0 col-11">
                           <span class="input-group-btn">
-                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" autocomplete="off" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </label>
+                            </button>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome">
                         </div>
                         <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top" data-dd-array="remove" aria-label="Remove">
+                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
                             <i class="fa fa-minus-square" aria-hidden="true"></i>
                           </button>
                         </div>
@@ -694,16 +720,16 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="competenze" data-dd-index="0">
                         <div class="input-group input-group-sm mb-0 col-11">
                           <span class="input-group-btn">
-                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" autocomplete="off" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </label>
+                            </button>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Armature leggere">
                         </div>
                         <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top" data-dd-array="remove" aria-label="Remove">
+                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
                             <i class="fa fa-minus-square" aria-hidden="true"></i>
                           </button>
                         </div>
@@ -711,16 +737,16 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="competenze" data-dd-index="1">
                         <div class="input-group input-group-sm mb-0 col-11">
                           <span class="input-group-btn">
-                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" autocomplete="off" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </label>
+                            </button>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Armature medie">
                         </div>
                         <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top" data-dd-array="remove" aria-label="Remove">
+                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
                             <i class="fa fa-minus-square" aria-hidden="true"></i>
                           </button>
                         </div>
@@ -728,16 +754,16 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="competenze" data-dd-index="2">
                         <div class="input-group input-group-sm mb-0 col-11">
                           <span class="input-group-btn">
-                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" autocomplete="off" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </label>
+                            </button>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Armature pesanti">
                         </div>
                         <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top" data-dd-array="remove" aria-label="Remove">
+                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
                             <i class="fa fa-minus-square" aria-hidden="true"></i>
                           </button>
                         </div>
@@ -745,16 +771,16 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="competenze" data-dd-index="3">
                         <div class="input-group input-group-sm mb-0 col-11">
                           <span class="input-group-btn">
-                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" autocomplete="off" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </label>
+                            </button>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Armi semplici">
                         </div>
                         <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top" data-dd-array="remove" aria-label="Remove">
+                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
                             <i class="fa fa-minus-square" aria-hidden="true"></i>
                           </button>
                         </div>
@@ -762,16 +788,16 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="competenze" data-dd-index="4">
                         <div class="input-group input-group-sm mb-0 col-11">
                           <span class="input-group-btn">
-                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" autocomplete="off" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </label>
+                            </button>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Armi da guerra">
                         </div>
                         <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top" data-dd-array="remove" aria-label="Remove">
+                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
                             <i class="fa fa-minus-square" aria-hidden="true"></i>
                           </button>
                         </div>
@@ -779,16 +805,16 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="competenze" data-dd-index="5">
                         <div class="input-group input-group-sm mb-0 col-11">
                           <span class="input-group-btn">
-                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" autocomplete="off" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </label>
+                            </button>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Scudi">
                         </div>
                         <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top" data-dd-array="remove" aria-label="Remove">
+                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
                             <i class="fa fa-minus-square" aria-hidden="true"></i>
                           </button>
                         </div>
@@ -797,7 +823,7 @@ You should have received a copy of the GNU General Public License
                         <small>Incompetente.</small>
                       </p>
                       <p class="form-text text-center">
-                        <button type="button" class="close float-none" data-dd-array="append" aria-label="Append">
+                        <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
                           <i class="fa fa-plus-square" aria-hidden="true"></i>
                         </button>
                       </p>
@@ -815,16 +841,16 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1 d-none" data-dd-array="master" data-dd-id="linguaggi">
                         <div class="input-group input-group-sm mb-0 col-11">
                           <span class="input-group-btn">
-                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" autocomplete="off" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </label>
+                            </button>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome">
                         </div>
                         <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top" data-dd-array="remove" aria-label="Remove">
+                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
                             <i class="fa fa-minus-square" aria-hidden="true"></i>
                           </button>
                         </div>
@@ -833,7 +859,7 @@ You should have received a copy of the GNU General Public License
                         <small>Muto.</small>
                       </p>
                       <p class="form-text text-center">
-                        <button type="button" class="close float-none" data-dd-array="append" aria-label="Append">
+                        <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
                           <i class="fa fa-plus-square" aria-hidden="true"></i>
                         </button>
                       </p>
@@ -845,11 +871,11 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1 d-none" data-dd-array="master" data-dd-id="visione">
                         <div class="input-group input-group-sm mb-0 col-8">
                           <span class="input-group-btn">
-                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" autocomplete="off" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </label>
+                            </button>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome">
                         </div>
@@ -858,7 +884,7 @@ You should have received a copy of the GNU General Public License
                           <span class="input-group-addon">m</span>
                         </div>
                         <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top" data-dd-array="remove" aria-label="Remove">
+                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
                             <i class="fa fa-minus-square" aria-hidden="true"></i>
                           </button>
                         </div>
@@ -866,11 +892,11 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="visione" data-dd-index="0">
                         <div class="input-group input-group-sm mb-0 col-8">
                           <span class="input-group-btn">
-                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" autocomplete="off" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </label>
+                            </button>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Crepuscolare">
                         </div>
@@ -879,7 +905,7 @@ You should have received a copy of the GNU General Public License
                           <span class="input-group-addon">m</span>
                         </div>
                         <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top" data-dd-array="remove" aria-label="Remove">
+                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
                             <i class="fa fa-minus-square" aria-hidden="true"></i>
                           </button>
                         </div>
@@ -887,11 +913,11 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="visione" data-dd-index="1">
                         <div class="input-group input-group-sm mb-0 col-8">
                           <span class="input-group-btn">
-                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" autocomplete="off" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </label>
+                            </button>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Scurovisione">
                         </div>
@@ -900,7 +926,7 @@ You should have received a copy of the GNU General Public License
                           <span class="input-group-addon">m</span>
                         </div>
                         <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top" data-dd-array="remove" aria-label="Remove">
+                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
                             <i class="fa fa-minus-square" aria-hidden="true"></i>
                           </button>
                         </div>
@@ -908,11 +934,11 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="visione" data-dd-index="2">
                         <div class="input-group input-group-sm mb-0 col-8">
                           <span class="input-group-btn">
-                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" autocomplete="off" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </label>
+                            </button>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Visione del Vero">
                         </div>
@@ -921,7 +947,7 @@ You should have received a copy of the GNU General Public License
                           <span class="input-group-addon">m</span>
                         </div>
                         <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top" data-dd-array="remove" aria-label="Remove">
+                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
                             <i class="fa fa-minus-square" aria-hidden="true"></i>
                           </button>
                         </div>
@@ -929,11 +955,11 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="visione" data-dd-index="3">
                         <div class="input-group input-group-sm mb-0 col-8">
                           <span class="input-group-btn">
-                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                            <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                               <input type="checkbox" autocomplete="off" data-dd-id="attivo">
                               <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </label>
+                            </button>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Vista cieca">
                         </div>
@@ -942,7 +968,7 @@ You should have received a copy of the GNU General Public License
                           <span class="input-group-addon">m</span>
                         </div>
                         <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top" data-dd-array="remove" aria-label="Remove">
+                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
                             <i class="fa fa-minus-square" aria-hidden="true"></i>
                           </button>
                         </div>
@@ -951,7 +977,7 @@ You should have received a copy of the GNU General Public License
                         <small>Visione normale.</small>
                       </p>
                       <p class="form-text text-center">
-                        <button type="button" class="close float-none" data-dd-array="append" aria-label="Append">
+                        <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
                           <i class="fa fa-plus-square" aria-hidden="true"></i>
                         </button>
                       </p>
@@ -1275,7 +1301,7 @@ You should have received a copy of the GNU General Public License
                 Elenco attacchi
                 <span class="close">
                   <span class="text-muted font-weight-light" data-dd-array="count" data-target="#array_attacchi">0</span>
-                  <i class="fa fa-plus-circle" data-dd-array="append" data-target="#array_attacchi" aria-label="Add" aria-hidden="true"></i>
+                  <i class="fa fa-plus-circle text-success" data-dd-array="append" data-target="#array_attacchi" aria-label="Add" aria-hidden="true"></i>
                 </span>
               </h4>
             </div>
@@ -1284,7 +1310,7 @@ You should have received a copy of the GNU General Public License
                 <div class="card d-none" data-dd-array="master" data-dd-id="attacchi">
                   <div class="card-body">
                     <h5 class="card-title">Attacco
-                      <button type="button" class="close" data-dd-array="remove" aria-label="Remove">
+                      <button type="button" class="close text-danger" data-dd-array="remove" aria-label="Remove">
                         <i class="fa fa-minus-circle" aria-hidden="true"></i>
                       </button>
                     </h5>
@@ -1467,7 +1493,7 @@ You should have received a copy of the GNU General Public License
                               <input type="text" class="form-control form-control-sm" data-dd-id="nome">
                             </div>
                             <div class="form-group mb-0 text-center col-1">
-                              <button type="button" class="close float-none align-text-top" data-dd-array="remove" aria-label="Remove">
+                              <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
                                 <i class="fa fa-minus-square" aria-hidden="true"></i>
                               </button>
                             </div>
@@ -1476,7 +1502,7 @@ You should have received a copy of the GNU General Public License
                             <small>Nessun modificatore talenti.</small>
                           </p>
                           <p class="form-text text-center">
-                            <button type="button" class="close float-none" data-dd-array="append" aria-label="Append">
+                            <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
                               <i class="fa fa-plus-square" aria-hidden="true"></i>
                             </button>
                           </p>
@@ -1585,7 +1611,7 @@ You should have received a copy of the GNU General Public License
                               <input type="text" class="form-control form-control-sm" data-dd-id="nome">
                             </div>
                             <div class="form-group mb-0 text-center col-1">
-                              <button type="button" class="close float-none align-text-top" data-dd-array="remove" aria-label="Remove">
+                              <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
                                 <i class="fa fa-minus-square" aria-hidden="true"></i>
                               </button>
                             </div>
@@ -1594,7 +1620,7 @@ You should have received a copy of the GNU General Public License
                             <small>Nessun modificatore talenti.</small>
                           </p>
                           <p class="form-text text-center">
-                            <button type="button" class="close float-none" data-dd-array="append" aria-label="Append">
+                            <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
                               <i class="fa fa-plus-square" aria-hidden="true"></i>
                             </button>
                           </p>
@@ -1672,7 +1698,7 @@ You should have received a copy of the GNU General Public License
                           <input type="text" class="form-control form-control-sm" data-dd-id="riferimento">
                         </div>
                         <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top" data-dd-array="remove" aria-label="Remove">
+                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
                             <i class="fa fa-minus-square" aria-hidden="true"></i>
                           </button>
                         </div>
@@ -1681,7 +1707,7 @@ You should have received a copy of the GNU General Public License
                         <small>Nessuno.</small>
                       </p>
                       <p class="form-text text-center mb-1">
-                        <button type="button" class="close float-none" data-dd-array="append" aria-label="Append">
+                        <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
                           <i class="fa fa-plus-square" aria-hidden="true"></i>
                         </button>
                       </p>
@@ -1712,7 +1738,7 @@ You should have received a copy of the GNU General Public License
                           <input type="text" class="form-control form-control-sm" data-dd-id="riferimento">
                         </div>
                         <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top" data-dd-array="remove" aria-label="Remove">
+                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
                             <i class="fa fa-minus-square" aria-hidden="true"></i>
                           </button>
                         </div>
@@ -1721,7 +1747,7 @@ You should have received a copy of the GNU General Public License
                         <small>Nessuno.</small>
                       </p>
                       <p class="form-text text-center mb-1">
-                        <button type="button" class="close float-none" data-dd-array="append" aria-label="Append">
+                        <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
                           <i class="fa fa-plus-square" aria-hidden="true"></i>
                         </button>
                       </p>
@@ -1752,7 +1778,7 @@ You should have received a copy of the GNU General Public License
                           <input type="text" class="form-control form-control-sm" data-dd-id="riferimento">
                         </div>
                         <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top" data-dd-array="remove" aria-label="Remove">
+                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
                             <i class="fa fa-minus-square" aria-hidden="true"></i>
                           </button>
                         </div>
@@ -1761,7 +1787,7 @@ You should have received a copy of the GNU General Public License
                         <small>Nessuno.</small>
                       </p>
                       <p class="form-text text-center mb-1">
-                        <button type="button" class="close float-none" data-dd-array="append" aria-label="Append">
+                        <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
                           <i class="fa fa-plus-square" aria-hidden="true"></i>
                         </button>
                       </p>
@@ -1799,7 +1825,7 @@ You should have received a copy of the GNU General Public License
                 Abilità
                 <span class="close">
                   <span class="text-muted font-weight-light" data-dd-array="count" data-target="#array_attacchi">0</span>
-                  <i class="fa fa-plus-circle" data-dd-array="append" data-target="#array_attacchi" aria-label="Add" aria-hidden="true"></i>
+                  <i class="fa fa-plus-circle text-success" data-dd-array="append" data-target="#array_attacchi" aria-label="Add" aria-hidden="true"></i>
                 </span>
               </h4>
             </div>
@@ -1823,7 +1849,7 @@ You should have received a copy of the GNU General Public License
 
                   <div class="form-row">
                     <label class="col-md-7 col-form-label col-form-label-sm">
-                      Nome | di classe
+                      Acquisita · Nome · Di classe
                       <span class="fa-lg"><i class="fa fa-angle-left fa-lg text-muted" aria-hidden="true"></i></span>
                         Mod
                       <span class="fa-lg"><i class="fa fa-angle-right fa-lg text-muted" aria-hidden="true"></i></span>
@@ -1831,7 +1857,7 @@ You should have received a copy of the GNU General Public License
 
                     <div class="form-row col-md-5 m-0 p-0">
                       <label class="col-md-5 col-form-label col-form-label-sm">
-                        Car chiave | Mod C
+                        Car chiave · Mod C
                       </label>
                       <label class="col-md-3 col-form-label col-form-label-sm">
                         Gradi
@@ -1849,13 +1875,22 @@ You should have received a copy of the GNU General Public License
 
                   <div class="form-row">
                     <div class="col-md-7 input-group input-group-sm">
+                      <span class="input-group-btn">
+                        <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                          <input type="checkbox" autocomplete="off" data-dd-id="attivo">
+                          <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
+                          <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
+                        </button>
+                      </span>
                       <input type="text" class="form-control form-control-sm">
                       <span class="input-group-btn">
-                        <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                        <button class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
                           <input type="checkbox" autocomplete="off">
-                          <img src="no_cls.svg" alt="Non di classe" class="toggle-inactive">
-                          <img src="cls.svg" alt="Di classe" class="toggle-active">
-                        </label>
+                          <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
+                          <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
+                          <i class="fa fa-copyright toggle-active" aria-hidden="true"></i>
+                          <i class="fa fa-copyright toggle-inactive" aria-hidden="true"></i>
+                        </button>
                       </span>
                     </div>
 
@@ -1863,8 +1898,8 @@ You should have received a copy of the GNU General Public License
 
                       <div class="col-md-5 input-group input-group-sm">
                         <div class="input-group-btn input-group-sm">
-                          <button type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <input type="text" readonly class="form-control-plaintext text-light" value="For">
+                          <button type="button" class="btn btn-sm btn-addon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <input type="text" readonly class="form-control-plaintext" value="For">
                           </button>
                           <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">For</a>
@@ -1889,7 +1924,7 @@ You should have received a copy of the GNU General Public License
 
                       <div class="col-md-1 text-right">
                         <!-- <button type="button" class="btn btn-sm btn-danger w-100">Elimina</button> -->
-                        <button type="button" class="close float-none align-text-top" data-dd-array="remove" aria-label="Remove">
+                        <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
                           <i class="fa fa-minus-square" aria-hidden="true"></i>
                         </button>
                       </div>
@@ -1899,7 +1934,7 @@ You should have received a copy of the GNU General Public License
 
 
                   <div class="extra-mods">
-                    <div class="form-row mt-1">
+                    <div class="form-row mt-2">
                       <i class="fa fa-angle-left fa-2x mr-2 ml-custom text-muted" aria-hidden="true"></i>
                       <div class="col input-group input-group-sm">
                         <span class="input-group-addon">Raz</span>
@@ -1935,7 +1970,7 @@ You should have received a copy of the GNU General Public License
                       </div>
                       <i class="fa fa-angle-right fa-2x mr-custom ml-2 text-muted" aria-hidden="true"></i>
                     </div>
-                    <hr class="my-1">
+                    <hr class="my-2">
                   </div>
 
 
@@ -2133,27 +2168,27 @@ You should have received a copy of the GNU General Public License
               <div class="card-body">
                 <div class="form-row">
                   <div class="form-group col-md-3">
-                    <button id="tbox_highlight_missing_id" class="btn btn-secondary w-100" type="button">Highlight missing dd-id</button>
+                    <button id="tbox_highlight_missing_id" class="btn btn-addon w-100" type="button">Highlight missing dd-id</button>
                   </div>
                   <div class="form-group col-md-3">
-                    <button id="tbox_show_hpath" class="btn btn-secondary w-100" type="button">Show get_hier_path</button>
+                    <button id="tbox_show_hpath" class="btn btn-addon w-100" type="button">Show get_hier_path</button>
                   </div>
                   <div class="form-group col-md-3">
-                    <button id="tbox_load_repr" class="btn btn-secondary w-100" type="button">Load representation</button>
+                    <button id="tbox_load_repr" class="btn btn-addon w-100" type="button">Load representation</button>
                   </div>
                   <div class="form-group col-md-3">
-                    <button id="tbox_dump_repr" class="btn btn-secondary w-100" type="button">Dump representation</button>
+                    <button id="tbox_dump_repr" class="btn btn-addon w-100" type="button">Dump representation</button>
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-3">
-                    <button id="tbox_test_wait" class="btn btn-secondary w-100" type="button" data-toggle="modal" data-target="#waiting">Test waiting</button>
+                    <button id="tbox_test_wait" class="btn btn-addon w-100" type="button" data-toggle="modal" data-target="#waiting">Test waiting</button>
                   </div>
                   <div class="form-group col-md-3">
-                    <button id="tbox_test_alert" class="btn btn-secondary w-100" type="button">Test alert</button>
+                    <button id="tbox_test_alert" class="btn btn-addon w-100" type="button">Test alert</button>
                   </div>
                   <div class="form-group col-md-3">
-                    <button id="tbox_find_duplicates" class="btn btn-secondary w-100" type="button">Find duplicates</button>
+                    <button id="tbox_find_duplicates" class="btn btn-addon w-100" type="button">Find duplicates</button>
                   </div>
                 </div>
                 <div class="form-row">
