@@ -373,6 +373,15 @@ function Controller(dbxAppId) {
             var ctrl = ctrls.filter('[data-dd-path="' + path + '"]');
             if (ctrl.attr('type') === 'checkbox') {
                 ctrl.prop('checked', flat_data[path]);
+                // Make sure to handle also custom checkboxes
+                var label = ctrl.closest('.btn-custom-checkbox');
+                if (label.length > 0) {
+                    if (flat_data[path]) {
+                        label.addClass('active');
+                    } else {
+                        label.removeClass('active');
+                    }
+                }
             } else {
                 ctrl.val(flat_data[path]);
             }

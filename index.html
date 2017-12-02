@@ -133,6 +133,12 @@ You should have received a copy of the GNU General Public License
         min-width: unset;
         width: 2rem;
       }
+      .input-group-btn .btn-custom-checkbox {
+        z-index: 4;
+      }
+      .btn-custom-checkbox i.fa {
+        width: 1rem;
+      }
     </style>
   </head>
   <body>
@@ -670,8 +676,12 @@ You should have received a copy of the GNU General Public License
                     <div data-dd-array="container">
                       <div class="form-row mb-1 d-none" data-dd-array="master" data-dd-id="competenze">
                         <div class="input-group input-group-sm mb-0 col-11">
-                          <span class="input-group-addon">
-                            <input type="checkbox" data-dd-id="attivo">
+                          <span class="input-group-btn">
+                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                              <input type="checkbox" autocomplete="off" data-dd-id="attivo">
+                              <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
+                              <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
+                            </label>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome">
                         </div>
@@ -683,8 +693,12 @@ You should have received a copy of the GNU General Public License
                       </div>
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="competenze" data-dd-index="0">
                         <div class="input-group input-group-sm mb-0 col-11">
-                          <span class="input-group-addon">
-                            <input type="checkbox" data-dd-id="attivo">
+                          <span class="input-group-btn">
+                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                              <input type="checkbox" autocomplete="off" data-dd-id="attivo">
+                              <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
+                              <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
+                            </label>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Armature leggere">
                         </div>
@@ -696,8 +710,12 @@ You should have received a copy of the GNU General Public License
                       </div>
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="competenze" data-dd-index="1">
                         <div class="input-group input-group-sm mb-0 col-11">
-                          <span class="input-group-addon">
-                            <input type="checkbox" data-dd-id="attivo">
+                          <span class="input-group-btn">
+                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                              <input type="checkbox" autocomplete="off" data-dd-id="attivo">
+                              <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
+                              <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
+                            </label>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Armature medie">
                         </div>
@@ -709,8 +727,12 @@ You should have received a copy of the GNU General Public License
                       </div>
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="competenze" data-dd-index="2">
                         <div class="input-group input-group-sm mb-0 col-11">
-                          <span class="input-group-addon">
-                            <input type="checkbox" data-dd-id="attivo">
+                          <span class="input-group-btn">
+                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                              <input type="checkbox" autocomplete="off" data-dd-id="attivo">
+                              <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
+                              <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
+                            </label>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Armature pesanti">
                         </div>
@@ -722,8 +744,12 @@ You should have received a copy of the GNU General Public License
                       </div>
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="competenze" data-dd-index="3">
                         <div class="input-group input-group-sm mb-0 col-11">
-                          <span class="input-group-addon">
-                            <input type="checkbox" data-dd-id="attivo">
+                          <span class="input-group-btn">
+                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                              <input type="checkbox" autocomplete="off" data-dd-id="attivo">
+                              <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
+                              <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
+                            </label>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Armi semplici">
                         </div>
@@ -735,8 +761,12 @@ You should have received a copy of the GNU General Public License
                       </div>
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="competenze" data-dd-index="4">
                         <div class="input-group input-group-sm mb-0 col-11">
-                          <span class="input-group-addon">
-                            <input type="checkbox" data-dd-id="attivo">
+                          <span class="input-group-btn">
+                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                              <input type="checkbox" autocomplete="off" data-dd-id="attivo">
+                              <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
+                              <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
+                            </label>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Armi da guerra">
                         </div>
@@ -748,8 +778,12 @@ You should have received a copy of the GNU General Public License
                       </div>
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="competenze" data-dd-index="5">
                         <div class="input-group input-group-sm mb-0 col-11">
-                          <span class="input-group-addon">
-                            <input type="checkbox" data-dd-id="attivo">
+                          <span class="input-group-btn">
+                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                              <input type="checkbox" autocomplete="off" data-dd-id="attivo">
+                              <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
+                              <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
+                            </label>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Scudi">
                         </div>
@@ -780,8 +814,12 @@ You should have received a copy of the GNU General Public License
                     <div data-dd-array="container">
                       <div class="form-row mb-1 d-none" data-dd-array="master" data-dd-id="linguaggi">
                         <div class="input-group input-group-sm mb-0 col-11">
-                          <span class="input-group-addon">
-                            <input type="checkbox" data-dd-id="attivo">
+                          <span class="input-group-btn">
+                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                              <input type="checkbox" autocomplete="off" data-dd-id="attivo">
+                              <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
+                              <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
+                            </label>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome">
                         </div>
@@ -806,8 +844,12 @@ You should have received a copy of the GNU General Public License
                     <div data-dd-array="container">
                       <div class="form-row mb-1 d-none" data-dd-array="master" data-dd-id="visione">
                         <div class="input-group input-group-sm mb-0 col-8">
-                          <span class="input-group-addon">
-                            <input type="checkbox" data-dd-id="attivo">
+                          <span class="input-group-btn">
+                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                              <input type="checkbox" autocomplete="off" data-dd-id="attivo">
+                              <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
+                              <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
+                            </label>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome">
                         </div>
@@ -823,8 +865,12 @@ You should have received a copy of the GNU General Public License
                       </div>
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="visione" data-dd-index="0">
                         <div class="input-group input-group-sm mb-0 col-8">
-                          <span class="input-group-addon">
-                            <input type="checkbox" data-dd-id="attivo">
+                          <span class="input-group-btn">
+                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                              <input type="checkbox" autocomplete="off" data-dd-id="attivo">
+                              <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
+                              <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
+                            </label>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Crepuscolare">
                         </div>
@@ -840,8 +886,12 @@ You should have received a copy of the GNU General Public License
                       </div>
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="visione" data-dd-index="1">
                         <div class="input-group input-group-sm mb-0 col-8">
-                          <span class="input-group-addon">
-                            <input type="checkbox" data-dd-id="attivo">
+                          <span class="input-group-btn">
+                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                              <input type="checkbox" autocomplete="off" data-dd-id="attivo">
+                              <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
+                              <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
+                            </label>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Scurovisione">
                         </div>
@@ -857,8 +907,12 @@ You should have received a copy of the GNU General Public License
                       </div>
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="visione" data-dd-index="2">
                         <div class="input-group input-group-sm mb-0 col-8">
-                          <span class="input-group-addon">
-                            <input type="checkbox" data-dd-id="attivo">
+                          <span class="input-group-btn">
+                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                              <input type="checkbox" autocomplete="off" data-dd-id="attivo">
+                              <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
+                              <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
+                            </label>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Visione del Vero">
                         </div>
@@ -874,8 +928,12 @@ You should have received a copy of the GNU General Public License
                       </div>
                       <div class="form-row mb-1" data-dd-array="item" data-dd-id="visione" data-dd-index="3">
                         <div class="input-group input-group-sm mb-0 col-8">
-                          <span class="input-group-addon">
-                            <input type="checkbox" data-dd-id="attivo">
+                          <span class="input-group-btn">
+                            <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                              <input type="checkbox" autocomplete="off" data-dd-id="attivo">
+                              <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
+                              <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
+                            </label>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome" value="Vista cieca">
                         </div>
