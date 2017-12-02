@@ -97,7 +97,35 @@ You should have received a copy of the GNU General Public License
     </script>
     <style>
       *[data-dd-array="item"] ~ .array-placeholder { display: none!important; }
-      button.btn[data-toggle="button"]:not(.active) i.fa { opacity: 0.5; }
+      .btn-custom-checkbox > img { width: 1.3em; }
+      .btn-custom-checkbox input[type="checkbox"] {
+        display: none!important;
+      }
+      .btn-custom-checkbox > input[type="checkbox"]:checked ~ .toggle-inactive {
+        display: none!important;
+      }
+      .btn-custom-checkbox > input[type="checkbox"]:not(:checked) ~ .toggle-active {
+        display: none!important;
+      }
+      .btn-custom-checkbox > input[type="checkbox"]:not(:checked) ~ .toggle-inactive {
+        opacity: 0.5;
+      }
+      .input-group-sm .dropdown-item {
+        font-size: .875rem;
+        line-height: 1.5;
+        padding: .25rem 1rem;
+      }
+      .input-group-sm .dropdown-menu {
+        padding-top: .25rem;
+        padding-bottom: .25rem;
+        min-width: 5rem;
+      }
+      .mr-custom {
+        margin-right: 1.33%;
+      }
+      .ml-custom {
+        margin-left: 1.33%;
+      }
     </style>
   </head>
   <body>
@@ -1724,87 +1752,128 @@ You should have received a copy of the GNU General Public License
                   </div>
                 </div>
 
-                <div class="card" data-dd-id="abilita">
-                  <div class="card-body">
-                    <h5 class="card-title">Abilità
-                      <button type="button" class="close" data-dd-array="remove" aria-label="Remove">
-                        <i class="fa fa-minus-circle" aria-hidden="true"></i>
-                      </button></h5>
-                    <div class="form-row">
-                      <div class="form-group mb-1 col-md-8">
-                        <label class="col-form-label">Nome</label>
-                        <input type="text" class="form-control" data-dd-id="nome">
-                      </div>
-                      <div class="form-group mb-1 col-md-2">
-                        <label class="col-form-label">Mod C</label>
-                        <div class="input-group">
-                          <div class="input-group-btn">
-                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              For
-                            </button>
-                            <div class="dropdown-menu">
-                              <a class="dropdown-item" href="#">For</a>
-                              <a class="dropdown-item" href="#">Des</a>
-                              <a class="dropdown-item" href="#">Cos</a>
-                              <a class="dropdown-item" href="#">Int</a>
-                              <a class="dropdown-item" href="#">Sag</a>
-                              <a class="dropdown-item" href="#">Car</a>
-                            </div>
-                          </div>
-                          <input type="text" class="form-control" data-dd-id="mod_caratteristica">
-                        </div>
-                      </div>
-                      <div class="form-group mb-1 col-md-2">
-                        <label class="col-form-label">Gradi</label>
-                        <div class="input-group">
-                          <span class="input-group-btn">
-                            <button class="btn btn-secondary" type="button" data-toggle="button" aria-pressed="false" autocomplete="off">
-                              <span class="fa-lg align-text-top px-2"><i class="fa fa-copyright fa-lg" aria-hidden="true"></i></span>
-                            </button>
-                          </span>
-                          <input type="text" class="form-control" data-dd-id="gradi">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-row">
-                      <div class="form-row col">
-                        <div class="form-group mb-1 col-md-3">
-                          <label class="col-form-label">Razza</label>
-                          <input type="text" class="form-control" data-dd-id="razza">
-                        </div>
-                        <div class="form-group mb-1 col-md-3">
-                          <label class="col-form-label">Arch&nbsp;1</label>
-                          <input type="text" class="form-control" data-dd-id="archetipo[0]">
-                        </div>
-                        <div class="form-group mb-1 col-md-3">
-                          <label class="col-form-label">Arch&nbsp;2</label>
-                          <input type="text" class="form-control" data-dd-id="archetipo[1]">
-                        </div>
-                        <div class="form-group mb-1 col-md-3">
-                          <label class="col-form-label">B&nbsp;Sin</label>
-                          <input type="text" class="form-control" data-dd-id="b_sinergia">
-                        </div>
-                      </div>
-                      <div class="form-row col">
-                        <div class="form-group mb-1 col-md-3">
-                          <label class="col-form-label">Tal</label>
-                          <input type="text" class="form-control" data-dd-id="talento">
-                        </div>
-                        <div class="form-group mb-1 col-md-3">
-                          <label class="col-form-label">Ogg</label>
-                          <input type="text" class="form-control" data-dd-id="oggetto">
-                        </div>
-                        <div class="form-group mb-1 col-md-3">
-                          <label class="col-form-label">VV</label>
-                          <input type="text" class="form-control" data-dd-id="vari">
-                        </div>
-                        <div class="form-group mb-1 col-md-3">
-                          <label class="col-form-label">Tot</label>
-                          <input type="text" class="form-control" data-dd-id="totale">
-                        </div>
-                      </div>
+
+
+                <div class="p-2 m-1">
+
+                  <div class="form-row">
+                    <label class="col-md-7 col-form-label col-form-label-sm">
+                      Nome/di classe
+                      <span class="fa-lg"><i class="fa fa-angle-left fa-lg text-muted" aria-hidden="true"></i></span>
+                        Mod
+                      <span class="fa-lg"><i class="fa fa-angle-right fa-lg text-muted" aria-hidden="true"></i></span>
+                    </label>
+
+                    <div class="form-row col-md-5 m-0 p-0">
+                      <label class="col-md-5 col-form-label col-form-label-sm">
+                        Car chiave/Mod C
+                      </label>
+                      <label class="col-md-3 col-form-label col-form-label-sm">
+                        Gradi
+                      </label>
+                      <label class="col-md-3 col-form-label col-form-label-sm">
+                        Totale
+                      </label>
                     </div>
                   </div>
+                </div>
+
+
+
+                <div>
+
+                  <div class="form-row">
+                    <div class="col-md-7 input-group input-group-sm">
+                      <input type="text" class="form-control form-control-sm">
+                      <span class="input-group-btn">
+                        <label class="btn btn-secondary btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
+                          <input type="checkbox" autocomplete="off">
+                          <img src="no_cls.svg" alt="Non di classe" class="toggle-inactive">
+                          <img src="cls.svg" alt="Di classe" class="toggle-active">
+                        </label>
+                      </span>
+                    </div>
+
+                    <div class="form-row col-md-5 m-0 p-0">
+
+                      <div class="col-md-5 input-group input-group-sm">
+                        <div class="input-group-btn input-group-sm">
+                          <button type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            For
+                          </button>
+                          <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">For</a>
+                            <a class="dropdown-item" href="#">Des</a>
+                            <a class="dropdown-item" href="#">Cos</a>
+                            <a class="dropdown-item" href="#">Int</a>
+                            <a class="dropdown-item" href="#">Sag</a>
+                            <a class="dropdown-item" href="#">Car</a>
+                          </div>
+                        </div>
+                        <input type="text" class="form-control form-control-sm">
+                      </div>
+
+
+                      <div class="col-md-3">
+                        <input type="text" class="form-control form-control-sm">
+                      </div>
+
+                      <div class="col-md-3">
+                        <input type="text" class="form-control form-control-sm">
+                      </div>
+
+                      <div class="col-md-1 text-right">
+                        <!-- <button type="button" class="btn btn-sm btn-danger w-100">Elimina</button> -->
+                        <button type="button" class="close float-none align-text-top" data-dd-array="remove" aria-label="Remove">
+                          <i class="fa fa-minus-square" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </div>
+
+                  </div>
+
+
+                  <div class="extra-mods">
+                    <div class="form-row mt-1">
+                      <i class="fa fa-angle-left fa-2x mr-2 ml-custom text-muted" aria-hidden="true"></i>
+                      <div class="col input-group input-group-sm">
+                        <span class="input-group-addon">Raz</span>
+                        <input type="text" class="form-control form-control-sm">
+                      </div>
+                      <div class="col input-group input-group-sm">
+                        <span class="input-group-addon">Ar&nbsp;1</span>
+                        <input type="text" class="form-control form-control-sm">
+                      </div>
+                      <div class="col input-group input-group-sm">
+                        <span class="input-group-addon">Ar&nbsp;2</span>
+                        <input type="text" class="form-control form-control-sm">
+                      </div>
+                      <div class="col input-group input-group-sm">
+                        <span class="input-group-addon">Sin</span>
+                        <input type="text" class="form-control form-control-sm">
+                      </div>
+                      <div class="col input-group input-group-sm">
+                        <span class="input-group-addon">BSin</span>
+                        <input type="text" class="form-control form-control-sm">
+                      </div>
+                      <div class="col input-group input-group-sm">
+                        <span class="input-group-addon">Tal</span>
+                        <input type="text" class="form-control form-control-sm">
+                      </div>
+                      <div class="col input-group input-group-sm">
+                        <span class="input-group-addon">Ogg</span>
+                        <input type="text" class="form-control form-control-sm">
+                      </div>
+                      <div class="col input-group input-group-sm">
+                        <span class="input-group-addon">VV</span>
+                        <input type="text" class="form-control form-control-sm">
+                      </div>
+                      <i class="fa fa-angle-right fa-2x mr-custom ml-2 text-muted" aria-hidden="true"></i>
+                    </div>
+                    <hr class="my-1">
+                  </div>
+
+
                 </div>
 
               </div>
