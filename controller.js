@@ -100,7 +100,7 @@ function Controller(dbxAppId) {
             if (save_to_form[0].checkValidity() === true) {
                 self._modalSaveTo.modal('hide');
                 self.toggleWaiting(true);
-                self.save(save_to_form.find('input').val(), function(res) { self.toggleWaiting(false, res); });
+                self.saveDB(save_to_form.find('input').val(), function(res) { self.toggleWaiting(false, res); });
             }
             save_to_form.addClass('was-validated');
         });
@@ -166,7 +166,7 @@ function Controller(dbxAppId) {
             var event_fn = function(event2) {
                 self._modalLoadFrom.modal('hide');
                 self.toggleWaiting(true);
-                self.load($(this).text().trim(), function(res) { self.toggleWaiting(false, res); });
+                self.loadDB($(this).text().trim(), function(res) { self.toggleWaiting(false, res); });
             };
             self._populateFileList(load_from_list, event_fn);
         });
@@ -448,7 +448,7 @@ function Controller(dbxAppId) {
         }
     }
 
-    self.save = function(name, post_action=null) {
+    self.saveDB = function(name, post_action=null) {
         self.updateHier();
         self.dropbox.filesUpload({
             path: '/' + name,
@@ -470,7 +470,22 @@ function Controller(dbxAppId) {
             });
     };
 
-    self.load = function(name, post_action=null) {
+    self.loadRemote = function(name, post_action=null) {
+        $.getJSON(name, function(json_data) {
+            self.data.load(json_data);
+            self.updateForm();
+            if (post_action) {
+                post_action(true);
+            }
+        }).fail(function(jqxhr, textStatus, error) {
+            self.notify('danger', 'Error ' + error + ': ' + textStatus + '.');
+            if (post_action) {
+                post_action(false);
+            }
+        });
+    };
+
+    self.loadDB = function(name, post_action=null) {
         self.dropbox.filesDownload({path: '/' + name})
             .then(function (response) {
                 var blob = response.fileBlob;

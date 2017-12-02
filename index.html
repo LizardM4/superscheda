@@ -70,6 +70,13 @@ You should have received a copy of the GNU General Public License
           });
         });
 
+        $('#load_default').click(function() {
+          DD.toggleWaiting(true);
+          DD.loadRemote('default.json', function(res) { self.toggleWaiting(false, res); });
+        });
+
+
+
 
 
 
@@ -241,6 +248,7 @@ You should have received a copy of the GNU General Public License
           <button class="btn btn-outline-primary mr-1 d-none" disabled type="button" data-toggle="modal" data-target="#auth_dbx">Accedi a <i class="fa fa-dropbox" aria-hidden="true"></i></button>
           <button class="btn btn-outline-primary mr-1" disabled type="button" data-toggle="modal" data-target="#load_from"><i class="fa fa-folder-open-o" aria-hidden="true"></i></button>
           <button class="btn btn-outline-primary mr-1" disabled type="button" data-toggle="modal" data-target="#save_to"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+          <button class="btn btn-outline-primary mr-1" type="button" id="load_default"><i class="fa fa-file-text-o" aria-hidden="true"></i></button>
         </div>
       </div>
 
@@ -787,108 +795,6 @@ You should have received a copy of the GNU General Public License
                           </button>
                         </div>
                       </div>
-                      <div class="form-row mb-1" data-dd-array="item" data-dd-id="competenze" data-dd-index="0">
-                        <div class="input-group input-group-sm mb-0 col-11">
-                          <span class="input-group-btn">
-                            <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
-                              <input type="checkbox" data-dd-id="attivo">
-                              <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
-                              <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </span>
-                          </span>
-                          <input type="text" class="form-control" data-dd-id="nome" value="Armature leggere">
-                        </div>
-                        <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
-                            <i class="fa fa-minus-square" aria-hidden="true"></i>
-                          </button>
-                        </div>
-                      </div>
-                      <div class="form-row mb-1" data-dd-array="item" data-dd-id="competenze" data-dd-index="1">
-                        <div class="input-group input-group-sm mb-0 col-11">
-                          <span class="input-group-btn">
-                            <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
-                              <input type="checkbox" data-dd-id="attivo">
-                              <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
-                              <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </span>
-                          </span>
-                          <input type="text" class="form-control" data-dd-id="nome" value="Armature medie">
-                        </div>
-                        <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
-                            <i class="fa fa-minus-square" aria-hidden="true"></i>
-                          </button>
-                        </div>
-                      </div>
-                      <div class="form-row mb-1" data-dd-array="item" data-dd-id="competenze" data-dd-index="2">
-                        <div class="input-group input-group-sm mb-0 col-11">
-                          <span class="input-group-btn">
-                            <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
-                              <input type="checkbox" data-dd-id="attivo">
-                              <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
-                              <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </span>
-                          </span>
-                          <input type="text" class="form-control" data-dd-id="nome" value="Armature pesanti">
-                        </div>
-                        <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
-                            <i class="fa fa-minus-square" aria-hidden="true"></i>
-                          </button>
-                        </div>
-                      </div>
-                      <div class="form-row mb-1" data-dd-array="item" data-dd-id="competenze" data-dd-index="3">
-                        <div class="input-group input-group-sm mb-0 col-11">
-                          <span class="input-group-btn">
-                            <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
-                              <input type="checkbox" data-dd-id="attivo">
-                              <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
-                              <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </span>
-                          </span>
-                          <input type="text" class="form-control" data-dd-id="nome" value="Armi semplici">
-                        </div>
-                        <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
-                            <i class="fa fa-minus-square" aria-hidden="true"></i>
-                          </button>
-                        </div>
-                      </div>
-                      <div class="form-row mb-1" data-dd-array="item" data-dd-id="competenze" data-dd-index="4">
-                        <div class="input-group input-group-sm mb-0 col-11">
-                          <span class="input-group-btn">
-                            <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
-                              <input type="checkbox" data-dd-id="attivo">
-                              <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
-                              <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </span>
-                          </span>
-                          <input type="text" class="form-control" data-dd-id="nome" value="Armi da guerra">
-                        </div>
-                        <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
-                            <i class="fa fa-minus-square" aria-hidden="true"></i>
-                          </button>
-                        </div>
-                      </div>
-                      <div class="form-row mb-1" data-dd-array="item" data-dd-id="competenze" data-dd-index="5">
-                        <div class="input-group input-group-sm mb-0 col-11">
-                          <span class="input-group-btn">
-                            <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
-                              <input type="checkbox" data-dd-id="attivo">
-                              <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
-                              <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </span>
-                          </span>
-                          <input type="text" class="form-control" data-dd-id="nome" value="Scudi">
-                        </div>
-                        <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
-                            <i class="fa fa-minus-square" aria-hidden="true"></i>
-                          </button>
-                        </div>
-                      </div>
                       <p class="mb-2 text-muted text-center form-text array-placeholder">
                         <small>Incompetente.</small>
                       </p>
@@ -961,90 +867,6 @@ You should have received a copy of the GNU General Public License
                             </span>
                           </span>
                           <input type="text" class="form-control" data-dd-id="nome">
-                        </div>
-                        <div class="input-group input-group-sm mb-0 col-3">
-                          <input type="text" class="form-control" data-dd-id="distanza">
-                          <span class="input-group-addon">m</span>
-                        </div>
-                        <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
-                            <i class="fa fa-minus-square" aria-hidden="true"></i>
-                          </button>
-                        </div>
-                      </div>
-                      <div class="form-row mb-1" data-dd-array="item" data-dd-id="visione" data-dd-index="0">
-                        <div class="input-group input-group-sm mb-0 col-8">
-                          <span class="input-group-btn">
-                            <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
-                              <input type="checkbox" data-dd-id="attivo">
-                              <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
-                              <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </span>
-                          </span>
-                          <input type="text" class="form-control" data-dd-id="nome" value="Crepuscolare">
-                        </div>
-                        <div class="input-group input-group-sm mb-0 col-3">
-                          <input type="text" class="form-control" data-dd-id="distanza">
-                          <span class="input-group-addon">m</span>
-                        </div>
-                        <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
-                            <i class="fa fa-minus-square" aria-hidden="true"></i>
-                          </button>
-                        </div>
-                      </div>
-                      <div class="form-row mb-1" data-dd-array="item" data-dd-id="visione" data-dd-index="1">
-                        <div class="input-group input-group-sm mb-0 col-8">
-                          <span class="input-group-btn">
-                            <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
-                              <input type="checkbox" data-dd-id="attivo">
-                              <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
-                              <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </span>
-                          </span>
-                          <input type="text" class="form-control" data-dd-id="nome" value="Scurovisione">
-                        </div>
-                        <div class="input-group input-group-sm mb-0 col-3">
-                          <input type="text" class="form-control" data-dd-id="distanza">
-                          <span class="input-group-addon">m</span>
-                        </div>
-                        <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
-                            <i class="fa fa-minus-square" aria-hidden="true"></i>
-                          </button>
-                        </div>
-                      </div>
-                      <div class="form-row mb-1" data-dd-array="item" data-dd-id="visione" data-dd-index="2">
-                        <div class="input-group input-group-sm mb-0 col-8">
-                          <span class="input-group-btn">
-                            <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
-                              <input type="checkbox" data-dd-id="attivo">
-                              <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
-                              <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </span>
-                          </span>
-                          <input type="text" class="form-control" data-dd-id="nome" value="Visione del Vero">
-                        </div>
-                        <div class="input-group input-group-sm mb-0 col-3">
-                          <input type="text" class="form-control" data-dd-id="distanza">
-                          <span class="input-group-addon">m</span>
-                        </div>
-                        <div class="form-group mb-0 text-center col-1">
-                          <button type="button" class="close float-none align-text-top text-danger" data-dd-array="remove" aria-label="Remove">
-                            <i class="fa fa-minus-square" aria-hidden="true"></i>
-                          </button>
-                        </div>
-                      </div>
-                      <div class="form-row mb-1" data-dd-array="item" data-dd-id="visione" data-dd-index="3">
-                        <div class="input-group input-group-sm mb-0 col-8">
-                          <span class="input-group-btn">
-                            <span tabindex="0" class="btn btn-addon btn-sm m-0 btn-custom-checkbox" data-toggle="buttons">
-                              <input type="checkbox" data-dd-id="attivo">
-                              <i class="fa fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
-                              <i class="fa fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
-                            </span>
-                          </span>
-                          <input type="text" class="form-control" data-dd-id="nome" value="Vista cieca">
                         </div>
                         <div class="input-group input-group-sm mb-0 col-3">
                           <input type="text" class="form-control" data-dd-id="distanza">
