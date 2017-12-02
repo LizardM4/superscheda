@@ -198,9 +198,12 @@ You should have received a copy of the GNU General Public License
         font-size: 1.3rem;
         vertical-align: -0.15rem;
       }
+
+      /* Border on the right only for non-last element */
       .separatable:not(:last-of-type) {
         border-right: 1px solid rgb(233, 236, 239);
       }
+      /* Make a 2rem space on the right for a vertically centered item, as if it were a float */
       .simulate-alloc-float-right {
         position: relative;
         padding-right: 2rem!important;
@@ -217,6 +220,7 @@ You should have received a copy of the GNU General Public License
         top: 50%;
         transform: translateY(-50%);
       }
+      /* Make a dd-array container having striped elements like a table */
       .striped[data-dd-array="container"] > *[data-dd-array="item"]:nth-of-type(odd) {
         background-color: rgba(0, 0, 0, .05);
       }
