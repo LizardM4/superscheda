@@ -472,7 +472,7 @@ function Controller(dbxAppId) {
 
     self.loadRemote = function(name, post_action=null) {
         $.getJSON(name, function(json_data) {
-            self.data.load(json_data);
+            self.data.obj = json_data;
             self.updateForm();
             if (post_action) {
                 post_action(true);

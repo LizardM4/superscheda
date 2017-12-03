@@ -72,7 +72,7 @@ You should have received a copy of the GNU General Public License
 
         $('#load_default').click(function() {
           DD.toggleWaiting(true);
-          DD.loadRemote('default.json', function(res) { self.toggleWaiting(false, res); });
+          DD.loadRemote('default.json', function(res) { DD.toggleWaiting(false, res); });
         });
 
 
