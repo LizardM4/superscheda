@@ -64,12 +64,12 @@ function Controller(dbxAppId) {
         if ('access_token' in parms) {
             self.dropbox = new Dropbox({accessToken: parms['access_token']});
             // Enable the open and save button
-            $('button[data-target="#load_from"]').prop('disabled', false);
-            $('button[data-target="#save_to"]').prop('disabled', false);
+            $('*[data-target="#load_from"]').parent().removeClass('d-none');
+            $('*[data-target="#save_to"]').parent().removeClass('d-none');
         } else {
             self.dropbox = new Dropbox({clientId: self.appId});
             // Enable the button for the authentication
-            $('button[data-target="#auth_dbx"]').prop('disabled', false).removeClass('d-none');
+            $('*[data-target="#auth_dbx"]').parent().removeClass('d-none');
             // Generate  the authentication url
             var url = null;
             if (window.location.hostname == 'localhost') {
