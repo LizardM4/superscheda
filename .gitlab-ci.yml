@@ -1,7 +1,7 @@
 pages:
   stage: deploy
   before_script:
-    - sed -e "s/%REV/${CI_COMMIT_SHA:1:7}/g" -i "" index.html
+    - sed -e "s/%REV/${CI_COMMIT_SHA:0:7}/g" -i index.html
   script:
     - mkdir .public
     - cp -r * .public
