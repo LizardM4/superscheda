@@ -347,14 +347,19 @@ function Controller(dbxAppId) {
     };
 
 
-    self.notify = function(cls, text) {
-        var $div = $('<div class="alert alert-dismissible sticky-top fade show" role="alert">');
+    self.notify = function(cls, text, auto_dismiss=-1) {
+        var $div = $('<div class="alert alert-dismissible sticky-top fade show" role="alert"></div>');
         $div.addClass('alert-' + cls);
         $div.text(text);
         $('<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
             '<span aria-hidden="true">&times;</span>' +
           '</button>').appendTo($div);
-        $div.insertAfter('h1');
+        $div.insertAfter('nav');
+        if (auto_dismiss > 0) {
+            setTimeout(function() {
+                $div.alert('close');
+            }, auto_dismiss);
+        }
         return $div;
     };
 
@@ -456,7 +461,7 @@ function Controller(dbxAppId) {
             contents: self.data.dump()
         })
             .then(function(response) {
-                self.notify('success', 'Salvato su \'' + name +'\'.');
+                self.notify('success', 'Salvato su \'' + name +'\'.', 5000);
                 if (post_action) {
                     post_action(true);
                 }
