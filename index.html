@@ -51,14 +51,10 @@ You should have received a copy of the GNU General Public License
             t_inactive.addClass('d-none');
             t_active.removeClass('d-none');
             $('.extra-mods').removeClass('d-none');
-            $('#array_abilita').addClass('striped');
-            $('#array_abilita > *[data-dd-array]').addClass('pb-1').addClass('pr-1');
           } else {
             t_inactive.removeClass('d-none');
             t_active.addClass('d-none');
             $('.extra-mods').addClass('d-none');
-            $('#array_abilita').removeClass('striped');
-            $('#array_abilita > *[data-dd-array]').removeClass('pb-1').removeClass('pr-1');
           }
         });
 
@@ -1046,57 +1042,67 @@ You should have received a copy of the GNU General Public License
                   </tbody>
                 </table>
                 <h6 class="mt-3">Oggetti protettivi</h6>
-                <div class="form-row pr-custom">
-                  <div class="col">
-                    <label class="col-form-label col-form-label-sm">Oggetto</label>
-                  </div>
-                  <div class="col-2">
-                    <label class="col-form-label col-form-label-sm">Tipo</label>
-                  </div>
-                  <div class="col-1">
-                    <label class="col-form-label col-form-label-sm">Bonus&nbsp;CA</label>
-                  </div>
-                  <div class="col-1">
-                    <label class="col-form-label col-form-label-sm">Des&nbsp;max</label>
-                  </div>
-                  <div class="col-1">
-                    <label class="col-form-label col-form-label-sm">Penalità</label>
-                  </div>
-                  <div class="col-1">
-                    <label class="col-form-label col-form-label-sm">F.&nbsp;Incant</label>
-                  </div>
-                  <div class="col-1">
-                    <label class="col-form-label col-form-label-sm">Res</label>
-                  </div>
-                  <div class="col-1">
-                    <label class="col-form-label col-form-label-sm">Durezza</label>
+                <div class="d-none d-md-block">
+                  <div class="form-row pr-custom">
+                    <div class="col">
+                      <label class="col-form-label col-form-label-sm">Oggetto</label>
+                    </div>
+                    <div class="col-2">
+                      <label class="col-form-label col-form-label-sm">Tipo</label>
+                    </div>
+                    <div class="col-1">
+                      <label class="col-form-label col-form-label-sm">Bonus&nbsp;CA</label>
+                    </div>
+                    <div class="col-1">
+                      <label class="col-form-label col-form-label-sm">Des&nbsp;max</label>
+                    </div>
+                    <div class="col-1">
+                      <label class="col-form-label col-form-label-sm">Penalità</label>
+                    </div>
+                    <div class="col-1">
+                      <label class="col-form-label col-form-label-sm">F.&nbsp;Incant</label>
+                    </div>
+                    <div class="col-1">
+                      <label class="col-form-label col-form-label-sm">Res</label>
+                    </div>
+                    <div class="col-1">
+                      <label class="col-form-label col-form-label-sm">Durezza</label>
+                    </div>
                   </div>
                 </div>
                 <div data-dd-array="container">
                   <div class="form-row mb-1 d-none" data-dd-array="master" data-dd-id="ogg_protettivo">
                     <div class="col form-row">
-                      <div class="col">
+                      <div class="col-md col-8">
+                        <label class="col-form-label col-form-label-sm d-md-none">Oggetto</label>
                         <input type="text" class="form-control form-control-sm" data-dd-id="oggetto">
                       </div>
-                      <div class="col-2">
+                      <div class="col-md-2 col-4">
+                        <label class="col-form-label col-form-label-sm d-md-none">Tipo</label>
                         <input type="text" class="form-control form-control-sm" data-dd-id="tipo">
                       </div>
-                      <div class="col-1">
+                      <div class="col-md-1 col-2">
+                        <label class="col-form-label col-form-label-sm d-md-none">Bonus&nbsp;CA</label>
                         <input type="text" class="form-control form-control-sm" data-dd-id="bonus_ca">
                       </div>
-                      <div class="col-1">
+                      <div class="col-md-1 col-2">
+                        <label class="col-form-label col-form-label-sm d-md-none">Des&nbsp;max</label>
                         <input type="text" class="form-control form-control-sm" data-dd-id="des_max">
                       </div>
-                      <div class="col-1">
+                      <div class="col-md-1 col-2">
+                        <label class="col-form-label col-form-label-sm d-md-none">Penalità</label>
                         <input type="text" class="form-control form-control-sm" data-dd-id="penalita">
                       </div>
-                      <div class="col-1 ">
+                      <div class="col-md-1 col-2">
+                        <label class="col-form-label col-form-label-sm d-md-none">F.&nbsp;Incant</label>
                         <input type="text" class="form-control form-control-sm" data-dd-id="f_incant">
                       </div>
-                      <div class="col-1">
+                      <div class="col-md-1 col-2">
+                        <label class="col-form-label col-form-label-sm d-md-none">Res</label>
                         <input type="text" class="form-control form-control-sm" data-dd-id="resistenza">
                       </div>
-                      <div class="col-1 ">
+                      <div class="col-md-1 col-2">
+                        <label class="col-form-label col-form-label-sm d-md-none">Durezza</label>
                         <input type="text" class="form-control form-control-sm" data-dd-id="durezza">
                       </div>
                     </div>
@@ -1850,7 +1856,7 @@ You should have received a copy of the GNU General Public License
                   </div>
                 </div>
 
-
+                <h6 class="mt-3">Elenco abilità</h6>
 
                 <div class="d-none d-md-block">
                   <div class="form-row pr-custom">
@@ -1896,7 +1902,7 @@ You should have received a copy of the GNU General Public License
                             </span>
                           </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-2 col-6">
                           <label class="col-form-label col-form-label-sm d-md-none">Car chiave · Mod C</label>
                           <div class="input-group input-group-sm">
                             <div class="input-group-btn">
@@ -1915,40 +1921,48 @@ You should have received a copy of the GNU General Public License
                             <input data-dd-id="mod_c" type="text" class="form-control form-control-sm">
                           </div>
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-md-1 col-3">
                           <label class="col-form-label col-form-label-sm d-md-none">Gradi</label>
                           <input data-dd-id="gradi" type="text" class="form-control form-control-sm">
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-md-1 col-3">
                           <label class="col-form-label col-form-label-sm d-md-none">Totale</label>
                           <input data-dd-id="totale" type="text" class="form-control form-control-sm">
                         </div>
                       </div>
                       <div class="form-row extra-mods d-none">
-                        <label class="col-md py-0 col-form-label col-form-label-sm">Razza
+                        <div class="col-md col-3">
+                          <label class="py-md-0 col-form-label col-form-label-sm">Razza</label>
                           <input data-dd-id="razza" type="text" class="form-control form-control-sm">
-                        </label>
-                        <label class="col-md py-0 col-form-label col-form-label-sm">Arch 1
+                        </div>
+                        <div class="col-md col-3">
+                          <label class="py-md-0 col-form-label col-form-label-sm">Arch 1</label>
                           <input data-dd-id="archetipo[0]" type="text" class="form-control form-control-sm">
-                        </label>
-                        <label class="col-md py-0 col-form-label col-form-label-sm">Arch 2
+                        </div>
+                        <div class="col-md col-3">
+                          <label class="py-md-0 col-form-label col-form-label-sm">Arch 2</label>
                           <input data-dd-id="archetipo[1]" type="text" class="form-control form-control-sm">
-                        </label>
-                        <label class="col-md py-0 col-form-label col-form-label-sm">Sin
+                        </div>
+                        <div class="col-md col-3">
+                          <label class="py-md-0 col-form-label col-form-label-sm">Sin</label>
                           <input data-dd-id="sinergia" type="text" class="form-control form-control-sm">
-                        </label>
-                        <label class="col-md py-0 col-form-label col-form-label-sm">B Sin
+                        </div>
+                        <div class="col-md col-3">
+                          <label class="py-md-0 col-form-label col-form-label-sm">B Sin</label>
                           <input data-dd-id="b_sinergia" type="text" class="form-control form-control-sm">
-                        </label>
-                        <label class="col-md py-0 col-form-label col-form-label-sm">Tal
+                        </div>
+                        <div class="col-md col-3">
+                          <label class="py-md-0 col-form-label col-form-label-sm">Tal</label>
                           <input data-dd-id="talento" type="text" class="form-control form-control-sm">
-                        </label>
-                        <label class="col-md py-0 col-form-label col-form-label-sm">Ogg
+                        </div>
+                        <div class="col-md col-3">
+                          <label class="py-md-0 col-form-label col-form-label-sm">Ogg</label>
                           <input data-dd-id="oggetto" type="text" class="form-control form-control-sm">
-                        </label>
-                        <label class="col-md py-0 col-form-label col-form-label-sm">VV
+                        </div>
+                        <div class="col-md col-3">
+                          <label class="py-md-0 col-form-label col-form-label-sm">VV</label>
                           <input data-dd-id="vari" type="text" class="form-control form-control-sm">
-                        </label>
+                        </div>
                       </div>
                     </div>
                     <div class="col-auto form-row align-items-center justify-content-center">
@@ -2066,14 +2080,16 @@ You should have received a copy of the GNU General Public License
                       <td><input type="text" class="form-control form-control-sm text-right" data-dd-id="bonus[9]"></td>
                     </tr>
                   </tbody>
-
                 </table>
+
+                <h6 class="mt-3">Elenco incantesimi</h6>
+
                 <div class="d-none d-md-block">
                   <div class="form-row pr-custom">
                     <div class="col">
                       <label class="col-form-label col-form-label-sm">Incantesimo</label>
                     </div>
-                    <div class="col-2 text-truncate">
+                    <div class="col-2 text-truncate ">
                       <label class="col-form-label col-form-label-sm">Dominio/Scuola</label>
                     </div>
                     <div class="col-1">
@@ -2093,27 +2109,27 @@ You should have received a copy of the GNU General Public License
                 <div data-dd-array="container">
                   <div class="form-row mb-1 d-none" data-dd-array="master" data-dd-id="incantesimi">
                     <div class="col form-row">
-                      <div class="col-md">
+                      <div class="col-md col-8">
                         <label class="col-form-label col-form-label-sm d-md-none">Incantesimo</label>
                         <input type="text" class="form-control form-control-sm" data-dd-id="incantesimo">
                       </div>
-                      <div class="col-md-2">
+                      <div class="col-md-2 col-4">
                         <label class="col-form-label col-form-label-sm d-md-none">Dominio/Scuola</label>
                         <input type="text" class="form-control form-control-sm" data-dd-id="dominio_scuola">
                       </div>
-                      <div class="col-md-1">
+                      <div class="col-md-1 col-3">
                         <label class="col-form-label col-form-label-sm d-md-none">Liv</label>
                         <input type="text" class="form-control form-control-sm" data-dd-id="liv">
                       </div>
-                      <div class="col-md-1">
+                      <div class="col-md-1 col-3">
                         <label class="col-form-label col-form-label-sm d-md-none">Rif</label>
                         <input type="text" class="form-control form-control-sm" data-dd-id="rif">
                       </div>
-                      <div class="col-md-1">
+                      <div class="col-md-1 col-3">
                         <label class="col-form-label col-form-label-sm d-md-none">Preparati</label>
                         <input type="text" class="form-control form-control-sm" data-dd-id="preparati">
                       </div>
-                      <div class="col-md-1 ">
+                      <div class="col-md-1 col-3">
                         <label class="col-form-label col-form-label-sm d-md-none">Usati</label>
                         <input type="text" class="form-control form-control-sm" data-dd-id="usati">
                       </div>
