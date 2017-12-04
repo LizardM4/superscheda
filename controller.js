@@ -60,9 +60,17 @@ function Controller(dbxAppId) {
     };
 
     self._setupDropbox = function() {
-        parms = parseQueryString();
-        if ('access_token' in parms) {
-            self.dropbox = new Dropbox({accessToken: parms['access_token']});
+        // Try to get the access token from the local storage
+        var access_token = window.localStorage.getItem('access_token');
+        if (!access_token) {
+            var parms = parseQueryString();
+            if ('access_token' in parms) {
+                access_token = parms['access_token'];
+                window.localStorage.setItem('access_token', access_token);
+            }
+        }
+        if (access_token) {
+            self.dropbox = new Dropbox({accessToken: access_token});
             // Enable the open and save button
             $('*[data-target="#load_from"]').parent().removeClass('d-none');
             $('*[data-target="#save_to"]').parent().removeClass('d-none');
