@@ -24,9 +24,9 @@ function Controller(dbxAppId) {
 
     self._getHierPath = function(obj) {
         obj = $(obj);
-        var path = obj.data('dd-id');
-        if (obj.data('dd-index') != null) {
-            path += '[' + obj.data('dd-index') + ']'
+        var path = obj.attr('data-dd-id');
+        if (obj.attr('data-dd-index') != null) {
+            path += '[' + obj.attr('data-dd-index') + ']'
         }
         // Up one step
         obj = obj.parent();
@@ -41,8 +41,8 @@ function Controller(dbxAppId) {
 
     self._resolveTarget = function(obj) {
         obj = $(obj);
-        if (obj.data('target')) {
-            return $(obj.data('target'));
+        if (obj.attr('data-target')) {
+            return $(obj.attr('data-target'));
         }
         return obj;
     };
@@ -208,7 +208,10 @@ function Controller(dbxAppId) {
         items.sort(key_fn);
         for (var i = 0; i < items.length; ++i) {
             var item = $(items[i]);
-            item.attr('data-dd-index', i.toString());
+            if (item.attr('data-dd-index') != i.toString()) {
+                item.attr('data-dd-index', i.toString());
+                self._setupDDPaths(item);
+            }
             if (i > 0) {
                 item.insertAfter(items[i - 1]);
             }
@@ -271,7 +274,7 @@ function Controller(dbxAppId) {
         }
         var find_target = function(count_obj) {
             var target = self._resolveTarget(count_obj);
-            if (target.data('dd-array') !== 'container') {
+            if (target.attr('data-dd-array') !== 'container') {
                 target = target.closest('[data-dd-array="container"]');
             }
             return target;
@@ -381,9 +384,9 @@ function Controller(dbxAppId) {
         self._allControls().each(function (idx, obj) {
             obj = $(obj);
             if (obj.attr('type') === 'checkbox') {
-                self.data.set(obj.data('dd-path'), obj.is(':checked'));
+                self.data.set(obj.attr('data-dd-path'), obj.is(':checked'));
             } else {
-                self.data.set(obj.data('dd-path'), obj.val());
+                self.data.set(obj.attr('data-dd-path'), obj.val());
             }
         });
         self._truncateAllHierArrays();
