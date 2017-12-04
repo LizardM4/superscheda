@@ -447,7 +447,7 @@
             "vari": ""
         },
         {
-            "acquisita": false,
+            "acquisita": true,
             "nome": "Artigianato ()",
             "di_classe": false,
             "chiave": "Int",
@@ -466,7 +466,7 @@
             "vari": ""
         },
         {
-            "acquisita": false,
+            "acquisita": true,
             "nome": "Artista della fuga",
             "di_classe": false,
             "chiave": "Des",
@@ -485,7 +485,7 @@
             "vari": ""
         },
         {
-            "acquisita": false,
+            "acquisita": true,
             "nome": "Ascoltare",
             "di_classe": false,
             "chiave": "Sag",
@@ -504,7 +504,7 @@
             "vari": ""
         },
         {
-            "acquisita": false,
+            "acquisita": true,
             "nome": "Camuffare",
             "di_classe": false,
             "chiave": "Car",
@@ -523,7 +523,7 @@
             "vari": ""
         },
         {
-            "acquisita": false,
+            "acquisita": true,
             "nome": "Cavalcare",
             "di_classe": false,
             "chiave": "Des",
@@ -542,7 +542,7 @@
             "vari": ""
         },
         {
-            "acquisita": false,
+            "acquisita": true,
             "nome": "Cercare",
             "di_classe": false,
             "chiave": "Int",
@@ -561,7 +561,7 @@
             "vari": ""
         },
         {
-            "acquisita": false,
+            "acquisita": true,
             "nome": "Concentrazione",
             "di_classe": false,
             "chiave": "Cos",
@@ -618,7 +618,7 @@
             "vari": ""
         },
         {
-            "acquisita": false,
+            "acquisita": true,
             "nome": "Diplomazia",
             "di_classe": false,
             "chiave": "Car",
@@ -656,7 +656,7 @@
             "vari": ""
         },
         {
-            "acquisita": false,
+            "acquisita": true,
             "nome": "Equilibrio",
             "di_classe": false,
             "chiave": "Des",
@@ -675,7 +675,7 @@
             "vari": ""
         },
         {
-            "acquisita": false,
+            "acquisita": true,
             "nome": "Falsificare",
             "di_classe": false,
             "chiave": "Int",
@@ -694,7 +694,7 @@
             "vari": ""
         },
         {
-            "acquisita": false,
+            "acquisita": true,
             "nome": "Guarire",
             "di_classe": false,
             "chiave": "Sag",
@@ -713,7 +713,7 @@
             "vari": ""
         },
         {
-            "acquisita": false,
+            "acquisita": true,
             "nome": "Intimidire",
             "di_classe": false,
             "chiave": "Car",
@@ -732,7 +732,7 @@
             "vari": ""
         },
         {
-            "acquisita": false,
+            "acquisita": true,
             "nome": "Intrattenere ()",
             "di_classe": false,
             "chiave": "Car",
@@ -751,7 +751,7 @@
             "vari": ""
         },
         {
-            "acquisita": false,
+            "acquisita": true,
             "nome": "Muoversi silenziosamente",
             "di_classe": false,
             "chiave": "Des",
@@ -770,7 +770,7 @@
             "vari": ""
         },
         {
-            "acquisita": false,
+            "acquisita": true,
             "nome": "Nascondersi",
             "di_classe": false,
             "chiave": "Des",
@@ -789,7 +789,7 @@
             "vari": ""
         },
         {
-            "acquisita": false,
+            "acquisita": true,
             "nome": "Nuotare",
             "di_classe": false,
             "chiave": "For",
@@ -808,7 +808,7 @@
             "vari": ""
         },
         {
-            "acquisita": false,
+            "acquisita": true,
             "nome": "Osservare",
             "di_classe": false,
             "chiave": "Sag",
@@ -827,7 +827,7 @@
             "vari": ""
         },
         {
-            "acquisita": false,
+            "acquisita": true,
             "nome": "Percepire intenzioni",
             "di_classe": false,
             "chiave": "Sag",
@@ -865,7 +865,7 @@
             "vari": ""
         },
         {
-            "acquisita": false,
+            "acquisita": true,
             "nome": "Raccogliere informazioni",
             "di_classe": false,
             "chiave": "Car",
@@ -884,7 +884,7 @@
             "vari": ""
         },
         {
-            "acquisita": false,
+            "acquisita": true,
             "nome": "Raggirare",
             "di_classe": false,
             "chiave": "Car",
@@ -922,7 +922,7 @@
             "vari": ""
         },
         {
-            "acquisita": false,
+            "acquisita": true,
             "nome": "Saltare",
             "di_classe": false,
             "chiave": "For",
@@ -960,7 +960,7 @@
             "vari": ""
         },
         {
-            "acquisita": false,
+            "acquisita": true,
             "nome": "Scalare",
             "di_classe": false,
             "chiave": "For",
@@ -998,7 +998,7 @@
             "vari": ""
         },
         {
-            "acquisita": false,
+            "acquisita": true,
             "nome": "Sopravvivenza",
             "di_classe": false,
             "chiave": "Sag",
@@ -1017,7 +1017,7 @@
             "vari": ""
         },
         {
-            "acquisita": false,
+            "acquisita": true,
             "nome": "Utilizzare corde",
             "di_classe": false,
             "chiave": "Des",
@@ -1055,7 +1055,7 @@
             "vari": ""
         },
         {
-            "acquisita": false,
+            "acquisita": true,
             "nome": "Valutare",
             "di_classe": false,
             "chiave": "Int",
@@ -1096,10 +1096,12 @@
     "attacchi": [],
     "talenti": [],
     "skill_tricks": {
-        "skill_tricks": []
+        "skill_tricks": [],
+        "length": 0
     },
     "privilegi": {
-        "privilegi": []
+        "privilegi": [],
+        "length": 0
     },
     "stat_incantesimi": {
         "conosciuti": [
