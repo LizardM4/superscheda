@@ -94,7 +94,6 @@ function Controller(dbxAppId) {
         var save_to_file = save_to_form.find('input');
 
         save_to_form.on('submit', function (event) {
-            // TODO this is not correct
             event.preventDefault();
             event.stopPropagation();
             if (save_to_form[0].checkValidity() === true) {
@@ -107,6 +106,8 @@ function Controller(dbxAppId) {
 
         self._modalSaveTo.on('show.bs.modal', function (event) {
             var event_fn = function(event2) {
+                event2.preventDefault();
+                event2.stopPropagation();
                 save_to_file.val($(this).text().trim()).change();
             };
             save_to_form[0].reset();
@@ -164,6 +165,8 @@ function Controller(dbxAppId) {
 
         self._modalLoadFrom.on('show.bs.modal', function (event) {
             var event_fn = function(event2) {
+                event2.preventDefault();
+                event2.stopPropagation();
                 self._modalLoadFrom.modal('hide');
                 self.toggleWaiting(true);
                 self.loadDB($(this).text().trim(), function(res) { self.toggleWaiting(false, res); });
