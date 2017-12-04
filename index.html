@@ -478,7 +478,10 @@ You should have received a copy of the GNU General Public License
                       </div>
                       <div class="col">
                         <label class="col-form-label">Altezza</label>
-                        <input type="text" class="form-control" data-dd-id="altezza">
+                        <div class="input-group">
+                          <input type="text" data-dd-id="altezza" class="text-right form-control">
+                          <span class="input-group-addon">m</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -486,7 +489,10 @@ You should have received a copy of the GNU General Public License
                     <div class="form-row">
                       <div class="col">
                         <label class="col-form-label">Peso</label>
-                        <input type="text" class="form-control" data-dd-id="peso">
+                        <div class="input-group">
+                          <input type="text" class="form-control text-right" data-dd-id="peso">
+                          <span class="input-group-addon">kg</span>
+                        </div>
                       </div>
                       <div class="col">
                         <label class="col-form-label">Occhi</label>
@@ -896,17 +902,17 @@ You should have received a copy of the GNU General Public License
                   <div class="col-md-4">
                     <h6>Visione</h6>
                     <div class="form-row pr-custom">
-                      <div class="col-7 text-truncate">
+                      <div class="col-8 text-truncate">
                         <label class="col-form-label col-form-label-sm">Acquisita · Nome</label>
                       </div>
-                      <div class="col-5 text-truncate">
+                      <div class="col-4 text-truncate">
                         <label class="col-form-label col-form-label-sm">Raggio</label>
                       </div>
                     </div>
                     <div data-dd-array="container">
                       <div class="form-row pb-1 d-none" data-dd-array="master" data-dd-id="visione">
                         <div class="col form-row">
-                          <div class="input-group input-group-sm col-7">
+                          <div class="input-group input-group-sm col-8">
                             <span class="input-group-btn">
                               <span tabindex="0" class="btn btn-addon btn-sm btn-custom-checkbox" data-toggle="buttons">
                                 <input type="checkbox" data-dd-id="attivo">
@@ -916,9 +922,8 @@ You should have received a copy of the GNU General Public License
                             </span>
                             <input type="text" class="form-control" data-dd-id="nome">
                           </div>
-                          <div class="input-group input-group-sm col-5">
-                            <input type="text" class="form-control" data-dd-id="distanza">
-                            <span class="input-group-addon">m</span>
+                          <div class="col-4">
+                            <input type="text" class="form-control form-control-sm" data-dd-id="distanza">
                           </div>
                         </div>
                         <div class="col-auto form-row align-items-center justify-content-center">
