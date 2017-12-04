@@ -51,13 +51,9 @@ function Controller(dbxAppId) {
         return $('input[data-dd-path], select[data-dd-path], textarea[data-dd-path]');
     };
 
-    self._setupDDPaths = function(objs=null) {
-        if (objs) {
-            objs = $(objs).find('input[data-dd-id], select[data-dd-id], textarea[data-dd-id]');
-        } else {
-            objs = $.find('input[data-dd-id], select[data-dd-id], textarea[data-dd-id]');
-        }
-        objs.not('[data-dd-array="master"] *')
+    self._setupDDPaths = function(objs=$('body')) {
+        $(objs).find('input[data-dd-id], select[data-dd-id], textarea[data-dd-id]')
+            .not('[data-dd-array="master"] *')
             .each(function (idx, obj) {
                 $(obj).attr('data-dd-path', self._getHierPath(obj));
             });
