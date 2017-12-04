@@ -1100,5 +1100,59 @@
     },
     "privilegi": {
         "privilegi": []
-    }
+    },
+    "stat_incantesimi": {
+        "conosciuti": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "cd_salvezza": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "al_giorno": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "bonus": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ]
+    },
+    "ogg_protettivo": [],
+    "incantesimi": [],
+    "equipaggiamento": [],
+    "denaro_preziosi": []
 }
