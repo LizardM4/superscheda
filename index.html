@@ -51,10 +51,12 @@ You should have received a copy of the GNU General Public License
             t_inactive.addClass('d-none');
             t_active.removeClass('d-none');
             $('.extra-mods').removeClass('d-none');
+            $('#array_abilita').addClass('always-stripe');
           } else {
             t_inactive.removeClass('d-none');
             t_active.addClass('d-none');
             $('.extra-mods').addClass('d-none');
+            $('#array_abilita').removeClass('always-stripe');
           }
         });
 
@@ -131,6 +133,8 @@ You should have received a copy of the GNU General Public License
     </script>
     <style>
       *[data-dd-array="item"] ~ .array-placeholder { display: none!important; }
+
+
       .input-group-btn .btn.btn-addon.btn-custom-checkbox {
         margin: 0;
         padding-left: 0.2rem;
@@ -197,30 +201,55 @@ You should have received a copy of the GNU General Public License
         box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
         border-color: rgb(128, 189, 255);
       }
+
       i.fa.fa-copyright {
         font-size: 1.3rem;
         vertical-align: -0.15rem;
-      }
-
-      /* Border on the right only for non-last element */
-      .separatable:not(:last-of-type) {
-        border-right: 1px solid rgb(233, 236, 239);
       }
 
       .pr-custom {
         padding-right: 1.25rem;
       }
 
-      /* Make a dd-array container having striped elements like a table */
-      .striped[data-dd-array="container"] > *[data-dd-array="item"]:nth-of-type(odd) {
+      @media (max-width: 768px) {
+        /* Make a dd-array container having striped elements like a table */
+        .striped {
+          border-top: 1px solid #e9ecef;
+          padding-left: 0.3rem;
+          padding-right: 0.3rem;
+        }
+        .striped:nth-of-type(odd) {
+          background-color: rgba(0, 0, 0, .05);
+        }
+        .striped:last-of-type {
+          border-bottom: 1px solid #e9ecef;
+        }
+      }
+
+      .always-stripe .striped {
+        border-top: 1px solid #e9ecef;
+        padding-left: 0.3rem;
+        padding-right: 0.3rem;
+      }
+      .always-stripe .striped:nth-of-type(odd) {
         background-color: rgba(0, 0, 0, .05);
       }
-      .striped[data-dd-array="container"] > *[data-dd-array="item"] {
-        border-top: 1px solid #e9ecef;
-      }
-      .striped[data-dd-array="container"] > *[data-dd-array="item"]:last-of-type {
+      .always-stripe .striped:last-of-type {
         border-bottom: 1px solid #e9ecef;
       }
+
+      @media (min-width: 768px) {
+        /* Border on the right only for non-last element */
+        .separatable:not(:last-of-type) {
+          border-right: 1px solid rgb(233, 236, 239);
+        }
+
+        .always-stripe .pt-1-if-striped {
+          padding-top: 0.4rem;
+        }
+      }
+
+
       .navbar .form-inline .btn {
         min-width: 2rem;
       }
@@ -789,7 +818,7 @@ You should have received a copy of the GNU General Public License
                       </div>
                     </div>
                     <div data-dd-array="container">
-                      <div class="form-row mb-1 d-none" data-dd-array="master" data-dd-id="competenze">
+                      <div class="form-row pb-1 d-none" data-dd-array="master" data-dd-id="competenze">
                         <div class="input-group input-group-sm col">
                           <span class="input-group-btn">
                             <span tabindex="0" class="btn btn-addon btn-sm btn-custom-checkbox" data-toggle="buttons">
@@ -832,7 +861,7 @@ You should have received a copy of the GNU General Public License
                       </div>
                     </div>
                     <div data-dd-array="container">
-                      <div class="form-row mb-1 d-none" data-dd-array="master" data-dd-id="linguaggi">
+                      <div class="form-row pb-1 d-none" data-dd-array="master" data-dd-id="linguaggi">
                         <div class="input-group input-group-sm col">
                           <span class="input-group-btn">
                             <span tabindex="0" class="btn btn-addon btn-sm btn-custom-checkbox" data-toggle="buttons">
@@ -870,7 +899,7 @@ You should have received a copy of the GNU General Public License
                       </div>
                     </div>
                     <div data-dd-array="container">
-                      <div class="form-row mb-1 d-none" data-dd-array="master" data-dd-id="visione">
+                      <div class="form-row pb-1 d-none" data-dd-array="master" data-dd-id="visione">
                         <div class="col form-row">
                           <div class="input-group input-group-sm col-8">
                             <span class="input-group-btn">
@@ -1071,7 +1100,7 @@ You should have received a copy of the GNU General Public License
                   </div>
                 </div>
                 <div data-dd-array="container">
-                  <div class="form-row mb-1 d-none" data-dd-array="master" data-dd-id="ogg_protettivo">
+                  <div class="form-row pb-1 d-none striped" data-dd-array="master" data-dd-id="ogg_protettivo">
                     <div class="col form-row">
                       <div class="col-md col-8">
                         <label class="col-form-label col-form-label-sm d-md-none">Oggetto</label>
@@ -1485,7 +1514,7 @@ You should have received a copy of the GNU General Public License
                           </div>
                         </div>
                         <div data-dd-array="container">
-                          <div class="form-row mb-1 d-none" data-dd-array="master" data-dd-id="mod_talenti">
+                          <div class="form-row pb-1 d-none" data-dd-array="master" data-dd-id="mod_talenti">
                             <div class="col-2">
                               <input type="text" class="form-control form-control-sm" data-dd-id="mod">
                             </div>
@@ -1603,7 +1632,7 @@ You should have received a copy of the GNU General Public License
                           </div>
                         </div>
                         <div data-dd-array="container">
-                          <div class="form-row mb-1 d-none" data-dd-array="master" data-dd-id="mod_talenti">
+                          <div class="form-row pb-1 d-none" data-dd-array="master" data-dd-id="mod_talenti">
                             <div class="col-2">
                               <input type="text" class="form-control form-control-sm" data-dd-id="mod">
                             </div>
@@ -1687,7 +1716,7 @@ You should have received a copy of the GNU General Public License
                       </div>
                     </div>
                     <div data-dd-array="container">
-                      <div class="form-row mb-1 d-none" data-dd-array="master" data-dd-id="talenti">
+                      <div class="form-row pb-1 d-none" data-dd-array="master" data-dd-id="talenti">
                         <div class="col form-row">
                           <div class="col-8">
                             <input type="text" class="form-control form-control-sm" data-dd-id="nome">
@@ -1729,7 +1758,7 @@ You should have received a copy of the GNU General Public License
                       </div>
                     </div>
                     <div data-dd-array="container">
-                      <div class="form-row mb-1 d-none" data-dd-array="master" data-dd-id="skill_tricks">
+                      <div class="form-row pb-1 d-none" data-dd-array="master" data-dd-id="skill_tricks">
                         <div class="col form-row">
                           <div class="col-8">
                             <input type="text" class="form-control form-control-sm" data-dd-id="nome">
@@ -1771,7 +1800,7 @@ You should have received a copy of the GNU General Public License
                       </div>
                     </div>
                     <div data-dd-array="container">
-                      <div class="form-row mb-1 d-none" data-dd-array="master" data-dd-id="privilegi">
+                      <div class="form-row pb-1 d-none" data-dd-array="master" data-dd-id="privilegi">
                         <div class="col form-row">
                           <div class="col-8">
                             <input type="text" class="form-control form-control-sm" data-dd-id="nome">
@@ -1877,8 +1906,8 @@ You should have received a copy of the GNU General Public License
 
 
                 <div data-dd-array="container" id="array_abilita">
-                  <div class="mb-1 d-none form-row position-relative" data-dd-array="master" data-dd-id="abilita">
-                    <div class="col">
+                  <div class="d-none form-row pb-1 striped position-relative" data-dd-array="master" data-dd-id="abilita">
+                    <div class="col pt-1-if-striped">
                       <div class="form-row">
                         <div class="col-md-8">
                           <label class="col-form-label col-form-label-sm d-md-none">Acquisita · Nome · Di classe</label>
@@ -1930,7 +1959,7 @@ You should have received a copy of the GNU General Public License
                           <input data-dd-id="totale" type="text" class="form-control form-control-sm">
                         </div>
                       </div>
-                      <div class="form-row extra-mods mb-1 d-none">
+                      <div class="form-row pb-1 extra-mods d-none">
                         <div class="col-md col-3">
                           <label class="py-md-0 col-form-label col-form-label-sm">Razza</label>
                           <input data-dd-id="razza" type="text" class="form-control form-control-sm">
@@ -2107,7 +2136,7 @@ You should have received a copy of the GNU General Public License
                   </div>
                 </div>
                 <div data-dd-array="container">
-                  <div class="form-row mb-1 d-none" data-dd-array="master" data-dd-id="incantesimi">
+                  <div class="form-row pb-1 d-none striped" data-dd-array="master" data-dd-id="incantesimi">
                     <div class="col form-row">
                       <div class="col-md col-8">
                         <label class="col-form-label col-form-label-sm d-md-none">Incantesimo</label>
@@ -2288,7 +2317,7 @@ You should have received a copy of the GNU General Public License
                   </div>
                 </div>
                 <div data-dd-array="container">
-                  <div class="form-row mb-1 d-none" data-dd-array="master" data-dd-id="equipaggiamento">
+                  <div class="form-row pb-1 d-none" data-dd-array="master" data-dd-id="equipaggiamento">
                     <div class="col">
                       <input type="text" class="form-control form-control-sm" data-dd-id="oggetto">
                     </div>
@@ -2348,7 +2377,7 @@ You should have received a copy of the GNU General Public License
                   </div>
                 </div>
                 <div data-dd-array="container">
-                  <div class="form-row mb-1 d-none" data-dd-array="master" data-dd-id="denaro_preziosi">
+                  <div class="form-row pb-1 d-none" data-dd-array="master" data-dd-id="denaro_preziosi">
                     <div class="col-2">
                       <input type="text" class="form-control form-control-sm" data-dd-id="quantita">
                     </div>
