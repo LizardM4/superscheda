@@ -258,9 +258,23 @@ You should have received a copy of the GNU General Public License
         min-width: 3rem;
       }
 
+      .hidden-anchor {
+        /* Place any such object in a way that when scrolling to it, it scrolls right below navbar */
+        display: block;
+        position: relative;
+        top: -3.6rem;
+        visibility: hidden;
+      }
+
+      .sticky-toc {
+        position: sticky!important;
+        top: 4rem;
+        max-height: calc(100vh - 4rem);
+      }
+
     </style>
   </head>
-  <body>
+  <body data-spy="scroll" data-target="#nav_toc" data-offset="0" id="sec_zero">
     <nav class="navbar navbar-expand-md sticky-top navbar-light bg-light">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#superscheda_navbar" aria-controls="superscheda_navbar" aria-expanded="false" aria-label="Toggle navigation">
         <i class="fa fa-bars" aria-hidden="true"></i>
@@ -376,27 +390,51 @@ You should have received a copy of the GNU General Public License
         </div>
       </div>
     </div>
-    <div class="container">
 
 
-
-
+    <div class="container-fluid">
       <div class="row">
-        <div class="col-md-12" role="tablist">
+        <nav class="col-2 sticky-toc" id="nav_toc">
+          <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+              <a class="nav-link text-truncate" href="#sec_zero">Base</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-truncate" href="#sec_caratteristiche">Caratteristiche</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-truncate" href="#sec_tiri_salvezza">Tiri salvezza</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-truncate" href="#sec_competenze">Competenze, linguaggi e visione</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-truncate" href="#sec_stat_attacco">Dado vita, armatura e statistiche attacco</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-truncate" href="#sec_attacchi">Elenco attacchi</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-truncate" href="#sec_talenti_skills">Talenti, skill tricks, privilegi di classe</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-truncate" href="#sec_abilita">Abilità</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-truncate" href="#sec_incantesimi">Incantesimi</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-truncate" href="#sec_spostamento">Equipaggiamento, peso, spostamento</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-truncate" href="#sec_debug">Debug features</a>
+            </li>
+          </ul>
+        </nav>
 
+        <main class="col" role="tablist">
 
-
-
-
-
-
-
-
-
-
-
-
-          <div class="card">
+          <div class="card my-1">
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_base" aria-expanded="true" aria-controls="card_base">
               <h5 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
@@ -548,7 +586,8 @@ You should have received a copy of the GNU General Public License
 
 
 
-          <div class="card">
+          <div class="card my-1">
+            <span class="hidden-anchor" id="sec_caratteristiche"></span>
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_caratteristiche" aria-expanded="true" aria-controls="card_caratteristiche">
               <h5 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
@@ -679,7 +718,8 @@ You should have received a copy of the GNU General Public License
 
 
 
-          <div class="card">
+          <div class="card my-1">
+            <span class="hidden-anchor" id="sec_tiri_salvezza"></span>
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_tiri_salvezza" aria-expanded="true" aria-controls="card_tiri_salvezza">
               <h5 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
@@ -809,7 +849,8 @@ You should have received a copy of the GNU General Public License
 
 
 
-          <div class="card">
+          <div class="card my-1">
+            <span class="hidden-anchor" id="sec_competenze"></span>
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_competenze" aria-expanded="true" aria-controls="card_competenze">
               <h5 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
@@ -965,7 +1006,8 @@ You should have received a copy of the GNU General Public License
 
 
 
-          <div class="card">
+          <div class="card my-1">
+            <span class="hidden-anchor" id="sec_stat_attacco"></span>
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_stat_attacco" aria-expanded="true" aria-controls="card_stat_attacco">
               <h5 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
@@ -1331,7 +1373,8 @@ You should have received a copy of the GNU General Public License
 
 
 
-          <div class="card">
+          <div class="card my-1">
+            <span class="hidden-anchor" id="sec_attacchi"></span>
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_attacchi" aria-expanded="true" aria-controls="card_attacchi">
               <h5 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
@@ -1700,7 +1743,8 @@ You should have received a copy of the GNU General Public License
 
 
 
-          <div class="card">
+          <div class="card my-1">
+            <span class="hidden-anchor" id="sec_talenti_skills"></span>
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_talenti_skills" aria-expanded="true" aria-controls="card_talenti_skills">
               <h5 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
@@ -1861,7 +1905,8 @@ You should have received a copy of the GNU General Public License
 
 
 
-          <div class="card">
+          <div class="card my-1">
+            <span class="hidden-anchor" id="sec_abilita"></span>
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_abilita" aria-expanded="true" aria-controls="card_abilita">
               <h5 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
@@ -2039,7 +2084,8 @@ You should have received a copy of the GNU General Public License
 
 
 
-          <div class="card">
+          <div class="card my-1">
+            <span class="hidden-anchor" id="sec_incantesimi"></span>
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_incantesimi" aria-expanded="true" aria-controls="card_incantesimi">
               <h5 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
@@ -2204,7 +2250,8 @@ You should have received a copy of the GNU General Public License
 
 
 
-          <div class="card">
+          <div class="card my-1">
+            <span class="hidden-anchor" id="sec_spostamento"></span>
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_spostamento" aria-expanded="true" aria-controls="card_spostamento">
               <h5 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
@@ -2433,7 +2480,8 @@ You should have received a copy of the GNU General Public License
 
 
           <div class="card mt-5 mb-3">
-            <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_debug_features" aria-expanded="false" aria-controls="card_debug_features">
+            <span class="hidden-anchor" id="sec_debug"></span>
+            <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_debug" aria-expanded="false" aria-controls="card_debug">
               <h5 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
                   <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
@@ -2441,7 +2489,7 @@ You should have received a copy of the GNU General Public License
                 Debug features
               </h5>
             </div>
-            <div id="card_debug_features" class="collapse">
+            <div id="card_debug" class="collapse">
               <div class="card-body">
                 <div class="form-row">
                   <div class="col-md-3">
@@ -2485,8 +2533,11 @@ You should have received a copy of the GNU General Public License
 
 
 
-        </div>
+        </main>
+
+
       </div>
     </div>
+
   </body>
 </html>
