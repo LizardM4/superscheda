@@ -262,7 +262,7 @@ You should have received a copy of the GNU General Public License
         /* Place any such object in a way that when scrolling to it, it scrolls right below navbar */
         display: block;
         position: relative;
-        top: -3.6rem;
+        top: -3.5rem;
         visibility: hidden;
       }
 
@@ -394,7 +394,7 @@ You should have received a copy of the GNU General Public License
 
     <div class="container-fluid">
       <div class="row">
-        <nav class="col-2 sticky-toc" id="nav_toc">
+        <nav class="col-md-2 sticky-toc small" id="nav_toc">
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
               <a class="nav-link text-truncate" href="#sec_zero">Base</a>
@@ -407,9 +407,34 @@ You should have received a copy of the GNU General Public License
             </li>
             <li class="nav-item">
               <a class="nav-link text-truncate" href="#sec_competenze">Competenze, linguaggi e visione</a>
+              <ul class="nav nav-pills pl-2 flex-column">
+                <li class="nav-item">
+                  <a class="nav-link text-truncate" href="#sec_note">Note</a>
+                </li>
+              </ul>
             </li>
             <li class="nav-item">
               <a class="nav-link text-truncate" href="#sec_stat_attacco">Dado vita, armatura e statistiche attacco</a>
+              <ul class="nav nav-pills pl-2 flex-column">
+                <li class="nav-item">
+                  <a class="nav-link text-truncate" href="#sec_dado_vita">Dado vita</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-truncate" href="#sec_armatura">Armatura</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-truncate" href="#sec_ogg_protettivi">Oggetti protettivi</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-truncate" href="#sec_bab">Bonus attacco base, Iniziativa</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-truncate" href="#sec_punti_ferita">PF, RI, RD</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-truncate" href="#sec_lotta">Lotta, opportunità</a>
+                </li>
+              </ul>
             </li>
             <li class="nav-item">
               <a class="nav-link text-truncate" href="#sec_attacchi">Elenco attacchi</a>
@@ -422,9 +447,28 @@ You should have received a copy of the GNU General Public License
             </li>
             <li class="nav-item">
               <a class="nav-link text-truncate" href="#sec_incantesimi">Incantesimi</a>
+              <ul class="nav nav-pills pl-2 flex-column">
+                <li class="nav-item">
+                  <a class="nav-link text-truncate" href="#sec_elenco_incantesimi">Elenco</a>
+                </li>
+              </ul>
             </li>
             <li class="nav-item">
               <a class="nav-link text-truncate" href="#sec_spostamento">Equipaggiamento, peso, spostamento</a>
+              <ul class="nav nav-pills pl-2 flex-column">
+                <li class="nav-item">
+                  <a class="nav-link text-truncate" href="#sec_carico">Carico</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-truncate" href="#sec_velocita">Velocità</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-truncate" href="#sec_equip">Equipaggiamento trasportato</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-truncate" href="#sec_denaro">Denaro e preziosi</a>
+                </li>
+              </ul>
             </li>
             <li class="nav-item">
               <a class="nav-link text-truncate" href="#sec_debug">Debug features</a>
@@ -432,7 +476,7 @@ You should have received a copy of the GNU General Public License
           </ul>
         </nav>
 
-        <main class="col" role="tablist">
+        <main class="col-md-10" role="tablist">
 
           <div class="card my-1">
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_base" aria-expanded="true" aria-controls="card_base">
@@ -984,6 +1028,7 @@ You should have received a copy of the GNU General Public License
                     </div>
                   </div>
                 </div>
+                <span class="hidden-anchor" id="sec_note"></span>
                 <h6>Note</h6>
                 <textarea data-dd-id="note" class="form-control"></textarea>
               </div>
@@ -1018,6 +1063,7 @@ You should have received a copy of the GNU General Public License
             </div>
             <div class="collapse show" id="card_stat_attacco">
               <div class="card-body">
+                <span class="hidden-anchor" id="sec_dado_vita"></span>
                 <h6>Dado vita</h6>
                 <table class="table table-striped table-sm table-responsive" data-dd-id="dado_vita">
                   <thead>
@@ -1051,6 +1097,7 @@ You should have received a copy of the GNU General Public License
                     </tr>
                   </tbody>
                 </table>
+                <span class="hidden-anchor" id="sec_armatura"></span>
                 <h6 class="mt-3">Armatura</h6>
                 <table class="table table-striped table-sm table-responsive">
                   <thead>
@@ -1122,6 +1169,7 @@ You should have received a copy of the GNU General Public License
                     </tr>
                   </tbody>
                 </table>
+                <span class="hidden-anchor" id="sec_ogg_protettivi"></span>
                 <h6 class="mt-3">Oggetti protettivi</h6>
                 <div class="d-none d-md-block">
                   <div class="form-row pr-custom">
@@ -1205,6 +1253,7 @@ You should have received a copy of the GNU General Public License
 
                 <div class="row mt-md-3">
                   <div class="col-md-6 separatable">
+                    <span class="hidden-anchor" id="sec_bab"></span>
                     <h6>Bonus attacco base</h6>
                     <table class="table table-striped table-sm table-responsive" data-dd-id="bonus_att_base">
                       <thead>
@@ -1230,6 +1279,7 @@ You should have received a copy of the GNU General Public License
                     </table>
                   </div>
                   <div class="col-md-6">
+                    <span class="hidden-anchor" id="sec_iniziativa"></span>
                     <h6>Iniziativa</h6>
                     <table class="table table-striped table-sm table-responsive" data-dd-id="iniziativa">
                       <thead>
@@ -1256,6 +1306,7 @@ You should have received a copy of the GNU General Public License
 
                 <div class="row mt-md-3">
                   <div class="col-md-3 separatable">
+                    <span class="hidden-anchor" id="sec_punti_ferita"></span>
                     <h6>Punti ferita</h6>
                     <table class="table table-striped table-sm table-responsive" data-dd-id="punti_ferita">
                       <thead>
@@ -1273,6 +1324,7 @@ You should have received a copy of the GNU General Public License
                     </table>
                   </div>
                   <div class="col-md-3 separatable">
+                    <span class="hidden-anchor" id="sec_res_incant"></span>
                     <h6 class="text-truncate">Res. Incantesimi</h6>
                     <table class="table table-striped table-sm table-responsive" data-dd-id="resistenza_incantesimi">
                       <thead>
@@ -1290,6 +1342,7 @@ You should have received a copy of the GNU General Public License
                     </table>
                   </div>
                   <div class="col-md-6">
+                    <span class="hidden-anchor" id="sec_res_danno"></span>
                     <h6>Resistenza danno</h6>
                     <table class="table table-striped table-sm table-responsive" data-dd-id="resistenza_danno">
                       <thead>
@@ -1316,6 +1369,7 @@ You should have received a copy of the GNU General Public License
 
                 <div class="row mt-md-3">
                   <div class="col-md-9 separatable">
+                    <span class="hidden-anchor" id="sec_lotta"></span>
                     <h6>Lotta</h6>
                     <table class="table table-striped table-sm table-responsive mb-0" data-dd-id="lotta">
                       <thead>
@@ -1345,6 +1399,7 @@ You should have received a copy of the GNU General Public License
                     </table>
                   </div>
                   <div class="col-md-3">
+                    <span class="hidden-anchor" id="sec_att_opportunita"></span>
                     <h6 class="text-truncate mt-3 mt-md-0">Att. di opportunità</h6>
                     <div>
                       <label class="col-form-label col-form-label-sm">Totale</label>
@@ -2167,6 +2222,7 @@ You should have received a copy of the GNU General Public License
                   </tbody>
                 </table>
 
+                <span class="hidden-anchor" id="sec_elenco_incantesimi"></span>
                 <h6 class="mt-3">Elenco incantesimi</h6>
 
                 <div class="d-none d-md-block">
@@ -2262,6 +2318,7 @@ You should have received a copy of the GNU General Public License
             </div>
             <div class="collapse show" id="card_spostamento">
               <div class="card-body">
+                <span class="hidden-anchor" id="sec_carico"></span>
                 <h6>Carico</h6>
                 <div class="form-row" data-dd-id="carico">
                   <div class="col-md-2 col-4">
@@ -2311,6 +2368,7 @@ You should have received a copy of the GNU General Public License
                   </div>
                 </div>
 
+                <span class="hidden-anchor" id="sec_velocita"></span>
                 <h6 class="mt-3 mt-md-0">Velocità</h6>
                 <div class="form-row" data-dd-id="velocita">
                   <div class="col-md-2 col-4">
@@ -2358,6 +2416,7 @@ You should have received a copy of the GNU General Public License
                 </div>
 
 
+                <span class="hidden-anchor" id="sec_equip"></span>
                 <h6 class="mt-3">Equipaggiamento trasportato</h6>
 
 
@@ -2421,7 +2480,7 @@ You should have received a copy of the GNU General Public License
                   </div>
                 </div>
 
-
+                <span class="hidden-anchor" id="sec_denaro"></span>
                 <h6 class="mt-3">Denaro e preziosi</h6>
 
 
