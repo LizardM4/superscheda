@@ -270,6 +270,11 @@ You should have received a copy of the GNU General Public License
         position: sticky!important;
         top: 4rem;
         max-height: calc(100vh - 4rem);
+        padding-left: 0;
+      }
+
+      .nav-toc .nav-link {
+        padding: .2rem .5rem;
       }
 
     </style>
@@ -394,8 +399,8 @@ You should have received a copy of the GNU General Public License
 
     <div class="container-fluid">
       <div class="row">
-        <nav class="col-md-2 sticky-toc small" id="nav_toc">
-          <ul class="nav nav-pills flex-column">
+        <nav class="col-md-2 col-lg-3 sticky-toc small order-2 d-none d-md-block" id="nav_toc">
+          <ul class="nav nav-toc nav-pills flex-column">
             <li class="nav-item">
               <a class="nav-link text-truncate" href="#sec_zero">Base</a>
             </li>
@@ -407,7 +412,7 @@ You should have received a copy of the GNU General Public License
             </li>
             <li class="nav-item">
               <a class="nav-link text-truncate" href="#sec_competenze">Competenze, linguaggi e visione</a>
-              <ul class="nav nav-pills pl-2 flex-column">
+              <ul class="nav nav-toc nav-pills pl-2 flex-column">
                 <li class="nav-item">
                   <a class="nav-link text-truncate" href="#sec_note">Note</a>
                 </li>
@@ -415,7 +420,7 @@ You should have received a copy of the GNU General Public License
             </li>
             <li class="nav-item">
               <a class="nav-link text-truncate" href="#sec_stat_attacco">Dado vita, armatura e statistiche attacco</a>
-              <ul class="nav nav-pills pl-2 flex-column">
+              <ul class="nav nav-toc nav-pills pl-2 flex-column">
                 <li class="nav-item">
                   <a class="nav-link text-truncate" href="#sec_dado_vita">Dado vita</a>
                 </li>
@@ -447,7 +452,7 @@ You should have received a copy of the GNU General Public License
             </li>
             <li class="nav-item">
               <a class="nav-link text-truncate" href="#sec_incantesimi">Incantesimi</a>
-              <ul class="nav nav-pills pl-2 flex-column">
+              <ul class="nav nav-toc nav-pills pl-2 flex-column">
                 <li class="nav-item">
                   <a class="nav-link text-truncate" href="#sec_elenco_incantesimi">Elenco</a>
                 </li>
@@ -455,7 +460,7 @@ You should have received a copy of the GNU General Public License
             </li>
             <li class="nav-item">
               <a class="nav-link text-truncate" href="#sec_spostamento">Equipaggiamento, peso, spostamento</a>
-              <ul class="nav nav-pills pl-2 flex-column">
+              <ul class="nav nav-toc nav-pills pl-2 flex-column">
                 <li class="nav-item">
                   <a class="nav-link text-truncate" href="#sec_carico">Carico</a>
                 </li>
@@ -476,7 +481,7 @@ You should have received a copy of the GNU General Public License
           </ul>
         </nav>
 
-        <main class="col-md-10" role="tablist">
+        <main class="col col-md-10 col-lg-9 order-1" role="tablist">
 
           <div class="card my-1">
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_base" aria-expanded="true" aria-controls="card_base">
