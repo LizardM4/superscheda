@@ -279,9 +279,9 @@ You should have received a copy of the GNU General Public License
 
     </style>
   </head>
-  <body data-spy="scroll" data-target="#nav_toc" data-offset="0" id="sec_zero">
-    <nav class="navbar navbar-expand-md sticky-top navbar-light bg-light">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#superscheda_navbar" aria-controls="superscheda_navbar" aria-expanded="false" aria-label="Toggle navigation">
+  <body data-spy="scroll" data-target=".dd-nav-toc">
+    <nav class="navbar sticky-top navbar-light bg-light">
+      <button class="btn btn-outline-secondary d-md-none" type="button" data-toggle="dropdown" aria-expanded="false" aria-label="Toggle toc">
         <i class="fa fa-bars" aria-hidden="true"></i>
       </button>
       <a href="#" class="navbar-brand">
@@ -289,29 +289,52 @@ You should have received a copy of the GNU General Public License
         Scheda D&amp;D 3.5
         <span class="badge badge-primary">Beta</span>
       </a>
-      <div class="collapse navbar-collapse" id="superscheda_navbar">
-        <ul class="navbar-nav">
-          <li class="nav-item mx-3 d-none d-md-block"></li>
-          <li class="nav-item">
-            <a class="nav-link" target="_blank" href="https://gitlab.com/5p4k/superscheda/commit/%REV">Rev %REV</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" target="_blank" href="https://gitlab.com/5p4k/superscheda"><i class="fa fa-fw fa-gitlab" aria-hidden="true"></i> Repo</a>
-          </li>
-          <li class="nav-item mx-3 d-none d-md-block"></li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" id="load_default"><i class="fa fa-fw fa-file-text-o" aria-hidden="true"></i> Nuovo</a>
-          </li>
-          <li class="nav-item d-none">
-            <a class="nav-link" href="#" data-toggle="modal" data-target="#auth_dbx"><i class="fa fa-fw fa-dropbox" aria-hidden="true"></i> Accedi</a>
-          </li>
-          <li class="nav-item d-none">
-            <a class="nav-link" href="#" data-toggle="modal" data-target="#load_from"><i class="fa fa-fw fa-folder-open-o" aria-hidden="true"></i> Apri</a>
-          </li>
-          <li class="nav-item d-none">
-            <a class="nav-link" href="#" data-toggle="modal" data-target="#save_to"><i class="fa fa-fw fa-floppy-o" aria-hidden="true"></i> Salva</a>
-          </li>
-        </ul>
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link" target="_blank" href="https://gitlab.com/5p4k/superscheda/commit/%REV">Rev %REV</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-sm mr-1 btn-outline-primary nav-link px-2" href="#" id="load_default"><i class="fa fa-lg fa-fw fa-file-text-o" aria-hidden="true"></i></a>
+        </li>
+        <li class="nav-item d-none">
+          <a class="btn btn-sm mr-1 btn-outline-primary nav-link px-2" href="#" data-toggle="modal" data-target="#auth_dbx"><i class="fa fa-lg fa-fw fa-dropbox" aria-hidden="true"></i></a>
+        </li>
+        <li class="nav-item d-none">
+          <a class="btn btn-sm mr-1 btn-outline-primary nav-link px-2" href="#" data-toggle="modal" data-target="#load_from"><i class="fa fa-lg fa-fw fa-folder-open-o" aria-hidden="true"></i></a>
+        </li>
+        <li class="nav-item d-none">
+          <a class="btn btn-sm mr-1 btn-outline-primary nav-link px-2" href="#" data-toggle="modal" data-target="#save_to"><i class="fa fa-lg fa-fw fa-floppy-o" aria-hidden="true"></i></a>
+        </li>
+      </ul>
+      <div class="dropdown-menu dd-nav-toc d-md-none">
+        <a class="dropdown-item disabled" target="_blank" href="https://gitlab.com/5p4k/superscheda/commit/%REV">Rev %REV</a>
+        <a class="dropdown-item" href="#sec_base">Base</a>
+        <a class="dropdown-item" href="#sec_caratteristiche">Caratteristiche</a>
+        <a class="dropdown-item" href="#sec_tiri_salvezza">Tiri salvezza</a>
+        <a class="dropdown-item" href="#sec_competenze">Competenze, linguaggi e visione</a>
+          <a class="dropdown-item pl-5" href="#sec_note">Note</a>
+        <a class="dropdown-item" href="#sec_stat_attacco">Dado vita, armatura e statistiche attacco</a>
+          <a class="dropdown-item pl-5" href="#sec_dado_vita">Dado vita</a>
+          <a class="dropdown-item pl-5" href="#sec_armatura">Armatura</a>
+          <a class="dropdown-item pl-5" href="#sec_ogg_protettivi">Oggetti protettivi</a>
+          <a class="dropdown-item pl-5" href="#sec_bab">Bonus attacco base</a>
+          <a class="dropdown-item pl-5" href="#sec_iniziativa">Iniziativa</a>
+          <a class="dropdown-item pl-5" href="#sec_punti_ferita">Punti ferita</a>
+          <a class="dropdown-item pl-5" href="#sec_res_incant">Res. incantesimi</a>
+          <a class="dropdown-item pl-5" href="#sec_res_danno">Res. danno</a>
+          <a class="dropdown-item pl-5" href="#sec_lotta">Lotta</a>
+          <a class="dropdown-item pl-5" href="#sec_att_opportunita">Opportunità</a>
+        <a class="dropdown-item" href="#sec_attacchi">Elenco attacchi</a>
+        <a class="dropdown-item" href="#sec_talenti_skills">Talenti, skill tricks, privilegi di classe</a>
+        <a class="dropdown-item" href="#sec_abilita">Abilità</a>
+        <a class="dropdown-item" href="#sec_incantesimi">Incantesimi</a>
+          <a class="dropdown-item pl-5" href="#sec_elenco_incantesimi">Elenco</a>
+        <a class="dropdown-item" href="#sec_spostamento">Equipaggiamento, peso, spostamento</a>
+          <a class="dropdown-item pl-5" href="#sec_carico">Carico</a>
+          <a class="dropdown-item pl-5" href="#sec_velocita">Velocità</a>
+          <a class="dropdown-item pl-5" href="#sec_equip">Equipaggiamento trasportato</a>
+          <a class="dropdown-item pl-5" href="#sec_denaro">Denaro e preziosi</a>
+        <a class="dropdown-item" href="#sec_debug">Debug features</a>
       </div>
     </nav>
 
@@ -399,10 +422,10 @@ You should have received a copy of the GNU General Public License
 
     <div class="container-fluid">
       <div class="row">
-        <nav class="col-md-2 col-lg-3 sticky-toc small order-2 d-none d-md-block" id="nav_toc">
+        <nav class="col-md-2 col-lg-3 sticky-toc small order-2 d-none d-md-block dd-nav-toc">
           <ul class="nav nav-toc nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link text-truncate" href="#sec_zero">Base</a>
+              <a class="nav-link text-truncate" href="#sec_base">Base</a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-truncate" href="#sec_caratteristiche">Caratteristiche</a>
@@ -484,6 +507,7 @@ You should have received a copy of the GNU General Public License
         <main class="col col-md-10 col-lg-9 order-1" role="tablist">
 
           <div class="card my-1">
+            <span class="hidden-anchor" id="sec_base"></span>
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_base" aria-expanded="true" aria-controls="card_base">
               <h5 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
