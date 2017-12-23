@@ -277,6 +277,16 @@ You should have received a copy of the GNU General Public License
         padding: .2rem .5rem;
       }
 
+      .dd-toc-wrapper {
+        overflow-y: scroll;
+        max-height: calc(100vh - 4rem);
+      }
+
+      .dd-toc-small-wrapper {
+        overflow-y: scroll;
+        max-height: calc(100vh - 5rem);
+      }
+
     </style>
   </head>
   <body data-spy="scroll" data-target=".dd-nav-toc">
@@ -307,34 +317,36 @@ You should have received a copy of the GNU General Public License
         </li>
       </ul>
       <div class="dropdown-menu dd-nav-toc d-md-none">
-        <a class="dropdown-item disabled" target="_blank" href="https://gitlab.com/5p4k/superscheda/commit/%REV">Rev %REV</a>
-        <a class="dropdown-item" href="#sec_base">Base</a>
-        <a class="dropdown-item" href="#sec_caratteristiche">Caratteristiche</a>
-        <a class="dropdown-item" href="#sec_tiri_salvezza">Tiri salvezza</a>
-        <a class="dropdown-item" href="#sec_competenze">Competenze, linguaggi e visione</a>
-          <a class="dropdown-item pl-5" href="#sec_note">Note</a>
-        <a class="dropdown-item" href="#sec_stat_attacco">Dado vita, armatura e statistiche attacco</a>
-          <a class="dropdown-item pl-5" href="#sec_dado_vita">Dado vita</a>
-          <a class="dropdown-item pl-5" href="#sec_armatura">Armatura</a>
-          <a class="dropdown-item pl-5" href="#sec_ogg_protettivi">Oggetti protettivi</a>
-          <a class="dropdown-item pl-5" href="#sec_bab">Bonus attacco base</a>
-          <a class="dropdown-item pl-5" href="#sec_iniziativa">Iniziativa</a>
-          <a class="dropdown-item pl-5" href="#sec_punti_ferita">Punti ferita</a>
-          <a class="dropdown-item pl-5" href="#sec_res_incant">Res. incantesimi</a>
-          <a class="dropdown-item pl-5" href="#sec_res_danno">Res. danno</a>
-          <a class="dropdown-item pl-5" href="#sec_lotta">Lotta</a>
-          <a class="dropdown-item pl-5" href="#sec_att_opportunita">Opportunità</a>
-        <a class="dropdown-item" href="#sec_attacchi">Elenco attacchi</a>
-        <a class="dropdown-item" href="#sec_talenti_skills">Talenti, skill tricks, privilegi di classe</a>
-        <a class="dropdown-item" href="#sec_abilita">Abilità</a>
-        <a class="dropdown-item" href="#sec_incantesimi">Incantesimi</a>
-          <a class="dropdown-item pl-5" href="#sec_elenco_incantesimi">Elenco</a>
-        <a class="dropdown-item" href="#sec_spostamento">Equipaggiamento, peso, spostamento</a>
-          <a class="dropdown-item pl-5" href="#sec_carico">Carico</a>
-          <a class="dropdown-item pl-5" href="#sec_velocita">Velocità</a>
-          <a class="dropdown-item pl-5" href="#sec_equip">Equipaggiamento trasportato</a>
-          <a class="dropdown-item pl-5" href="#sec_denaro">Denaro e preziosi</a>
-        <a class="dropdown-item" href="#sec_debug">Debug features</a>
+        <div class="dd-toc-small-wrapper">
+          <a class="dropdown-item disabled" target="_blank" href="https://gitlab.com/5p4k/superscheda/commit/%REV">Rev %REV</a>
+          <a class="dropdown-item" href="#sec_base">Base</a>
+          <a class="dropdown-item" href="#sec_caratteristiche">Caratteristiche</a>
+          <a class="dropdown-item" href="#sec_tiri_salvezza">Tiri salvezza</a>
+          <a class="dropdown-item" href="#sec_competenze">Competenze, linguaggi e visione</a>
+            <a class="dropdown-item pl-5" href="#sec_note">Note</a>
+          <a class="dropdown-item" href="#sec_stat_attacco">Dado vita, armatura e statistiche attacco</a>
+            <a class="dropdown-item pl-5" href="#sec_dado_vita">Dado vita</a>
+            <a class="dropdown-item pl-5" href="#sec_armatura">Armatura</a>
+            <a class="dropdown-item pl-5" href="#sec_ogg_protettivi">Oggetti protettivi</a>
+            <a class="dropdown-item pl-5" href="#sec_bab">Bonus attacco base</a>
+            <a class="dropdown-item pl-5" href="#sec_iniziativa">Iniziativa</a>
+            <a class="dropdown-item pl-5" href="#sec_punti_ferita">Punti ferita</a>
+            <a class="dropdown-item pl-5" href="#sec_res_incant">Res. incantesimi</a>
+            <a class="dropdown-item pl-5" href="#sec_res_danno">Res. danno</a>
+            <a class="dropdown-item pl-5" href="#sec_lotta">Lotta</a>
+            <a class="dropdown-item pl-5" href="#sec_att_opportunita">Opportunità</a>
+          <a class="dropdown-item" href="#sec_attacchi">Elenco attacchi</a>
+          <a class="dropdown-item" href="#sec_talenti_skills">Talenti, skill tricks, privilegi di classe</a>
+          <a class="dropdown-item" href="#sec_abilita">Abilità</a>
+          <a class="dropdown-item" href="#sec_incantesimi">Incantesimi</a>
+            <a class="dropdown-item pl-5" href="#sec_elenco_incantesimi">Elenco</a>
+          <a class="dropdown-item" href="#sec_spostamento">Equipaggiamento, peso, spostamento</a>
+            <a class="dropdown-item pl-5" href="#sec_carico">Carico</a>
+            <a class="dropdown-item pl-5" href="#sec_velocita">Velocità</a>
+            <a class="dropdown-item pl-5" href="#sec_equip">Equipaggiamento trasportato</a>
+            <a class="dropdown-item pl-5" href="#sec_denaro">Denaro e preziosi</a>
+          <a class="dropdown-item" href="#sec_debug">Debug features</a>
+        </div>
       </div>
     </nav>
 
@@ -423,85 +435,87 @@ You should have received a copy of the GNU General Public License
     <div class="container-fluid">
       <div class="row">
         <nav class="col-md-2 col-lg-3 sticky-toc small order-2 d-none d-md-block dd-nav-toc">
-          <ul class="nav nav-toc nav-pills flex-column">
-            <li class="nav-item">
-              <a class="nav-link text-truncate" href="#sec_base">Base</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-truncate" href="#sec_caratteristiche">Caratteristiche</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-truncate" href="#sec_tiri_salvezza">Tiri salvezza</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-truncate" href="#sec_competenze">Competenze, linguaggi e visione</a>
-              <ul class="nav nav-toc nav-pills pl-2 flex-column">
-                <li class="nav-item">
-                  <a class="nav-link text-truncate" href="#sec_note">Note</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-truncate" href="#sec_stat_attacco">Dado vita, armatura e statistiche attacco</a>
-              <ul class="nav nav-toc nav-pills pl-2 flex-column">
-                <li class="nav-item">
-                  <a class="nav-link text-truncate" href="#sec_dado_vita">Dado vita</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link text-truncate" href="#sec_armatura">Armatura</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link text-truncate" href="#sec_ogg_protettivi">Oggetti protettivi</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link text-truncate" href="#sec_bab">Bonus attacco base, Iniziativa</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link text-truncate" href="#sec_punti_ferita">PF, RI, RD</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link text-truncate" href="#sec_lotta">Lotta, opportunità</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-truncate" href="#sec_attacchi">Elenco attacchi</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-truncate" href="#sec_talenti_skills">Talenti, skill tricks, privilegi di classe</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-truncate" href="#sec_abilita">Abilità</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-truncate" href="#sec_incantesimi">Incantesimi</a>
-              <ul class="nav nav-toc nav-pills pl-2 flex-column">
-                <li class="nav-item">
-                  <a class="nav-link text-truncate" href="#sec_elenco_incantesimi">Elenco</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-truncate" href="#sec_spostamento">Equipaggiamento, peso, spostamento</a>
-              <ul class="nav nav-toc nav-pills pl-2 flex-column">
-                <li class="nav-item">
-                  <a class="nav-link text-truncate" href="#sec_carico">Carico</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link text-truncate" href="#sec_velocita">Velocità</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link text-truncate" href="#sec_equip">Equipaggiamento trasportato</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link text-truncate" href="#sec_denaro">Denaro e preziosi</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-truncate" href="#sec_debug">Debug features</a>
-            </li>
-          </ul>
+          <div class="dd-toc-wrapper">
+            <ul class="nav nav-toc nav-pills flex-column">
+              <li class="nav-item">
+                <a class="nav-link text-truncate" href="#sec_base">Base</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-truncate" href="#sec_caratteristiche">Caratteristiche</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-truncate" href="#sec_tiri_salvezza">Tiri salvezza</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-truncate" href="#sec_competenze">Competenze, linguaggi e visione</a>
+                <ul class="nav nav-toc nav-pills pl-2 flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link text-truncate" href="#sec_note">Note</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-truncate" href="#sec_stat_attacco">Dado vita, armatura e statistiche attacco</a>
+                <ul class="nav nav-toc nav-pills pl-2 flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link text-truncate" href="#sec_dado_vita">Dado vita</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-truncate" href="#sec_armatura">Armatura</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-truncate" href="#sec_ogg_protettivi">Oggetti protettivi</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-truncate" href="#sec_bab">Bonus attacco base, Iniziativa</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-truncate" href="#sec_punti_ferita">PF, RI, RD</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-truncate" href="#sec_lotta">Lotta, opportunità</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-truncate" href="#sec_attacchi">Elenco attacchi</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-truncate" href="#sec_talenti_skills">Talenti, skill tricks, privilegi di classe</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-truncate" href="#sec_abilita">Abilità</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-truncate" href="#sec_incantesimi">Incantesimi</a>
+                <ul class="nav nav-toc nav-pills pl-2 flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link text-truncate" href="#sec_elenco_incantesimi">Elenco</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-truncate" href="#sec_spostamento">Equipaggiamento, peso, spostamento</a>
+                <ul class="nav nav-toc nav-pills pl-2 flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link text-truncate" href="#sec_carico">Carico</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-truncate" href="#sec_velocita">Velocità</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-truncate" href="#sec_equip">Equipaggiamento trasportato</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-truncate" href="#sec_denaro">Denaro e preziosi</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-truncate" href="#sec_debug">Debug features</a>
+              </li>
+            </ul>
+          </div>
         </nav>
 
         <main class="col col-md-10 col-lg-9 order-1" role="tablist">
@@ -903,7 +917,6 @@ You should have received a copy of the GNU General Public License
               </div>
             </div>
           </div>
-
 
 
 
