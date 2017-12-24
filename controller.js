@@ -61,13 +61,21 @@ function Controller(dbxAppId) {
 
     self._setupDropbox = function() {
         // Try to get the access token from the local storage
-        var access_token = window.localStorage.getItem('access_token');
-        if (!access_token) {
-            var parms = parseQueryString();
-            if ('access_token' in parms) {
-                access_token = parms['access_token'];
-                window.localStorage.setItem('access_token', access_token);
+        var access_token = null;
+        try {
+            var access_token = window.localStorage.getItem('access_token');
+            if (!access_token) {
+                var parms = parseQueryString();
+                if ('access_token' in parms) {
+                    access_token = parms['access_token'];
+                    window.localStorage.setItem('access_token', access_token);
+                }
             }
+        } catch (e) {
+            self.notify('warning', 'Il tuo browser non supporta (o ha disabilitato) ' +
+                'il local storage. Senza di esso non è possibile salvare alcun ' +
+                'dato in locale. In particolare, dovrai loggarti volta per volta ' +
+                'su Dropbox.');
         }
         if (access_token) {
             self.dropbox = new Dropbox({accessToken: access_token});
@@ -368,7 +376,7 @@ function Controller(dbxAppId) {
         $('<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
             '<span aria-hidden="true">&times;</span>' +
           '</button>').appendTo($div);
-        $div.insertAfter('nav');
+        $div.insertAfter('nav.navbar');
         if (auto_dismiss > 0) {
             setTimeout(function() {
                 $div.alert('close');
