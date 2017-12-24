@@ -287,6 +287,21 @@ You should have received a copy of the GNU General Public License
         max-height: calc(100vh - 5rem);
       }
 
+
+      @media (max-width: 768px) {
+        .forkme-ribbon .forkme-ribbon-background {
+          width: 3.5rem;
+          height: 3.5rem;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .forkme-ribbon .forkme-ribbon-background {
+          width: 5.6rem;
+          height: 5.6rem;
+        }
+      }
+
       .forkme-ribbon .forkme-ribbon-background, .forkme-ribbon .forkme-ribbon-text {
         position: fixed;
         bottom: 0;
@@ -294,8 +309,6 @@ You should have received a copy of the GNU General Public License
         z-index: 10;
       }
       .forkme-ribbon .forkme-ribbon-background {
-        width: 5.8rem;
-        height: 5.8rem;
         background: linear-gradient(90deg, #28a745, #1e7e34);
         transform: skewX(-45deg);
         transform-origin: 0% 100%;
@@ -476,9 +489,12 @@ You should have received a copy of the GNU General Public License
     <div class="forkme-ribbon">
       <a href="https://gitlab.com/5p4k/superscheda" target="_blank">
         <div class="forkme-ribbon-background"></div>
-        <div class="forkme-ribbon-text small">
-            Fork me on<br>
-            <i class="fa fa-gitlab fa-2x" aria-hidden="true"></i>
+        <div class="forkme-ribbon-text pb-sm-2 pb-xs-2">
+            <span class="d-none d-md-inline-block small">
+              Fork me on<br>
+              <i class="fa fa-gitlab fa-2x" aria-hidden="true"></i>
+            </span>
+            <i class="d-md-none fa fa-gitlab fa-lg" aria-hidden="true"></i>
         </div>
       </a>
     </div>
