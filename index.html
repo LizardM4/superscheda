@@ -287,6 +287,38 @@ You should have received a copy of the GNU General Public License
         max-height: calc(100vh - 5rem);
       }
 
+      .forkme-ribbon .forkme-ribbon-background, .forkme-ribbon .forkme-ribbon-text {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        z-index: 10;
+      }
+      .forkme-ribbon .forkme-ribbon-background {
+        width: 5.8rem;
+        height: 5.8rem;
+        background: linear-gradient(90deg, #28a745, #1e7e34);
+        transform: skewX(-45deg);
+        transform-origin: 0% 100%;
+        box-shadow: -0.1rem 0 1rem rgba(0, 0, 0, 0.4);
+      }
+      .forkme-ribbon .forkme-ribbon-text {
+        transform: translate(50%, 0%) rotate(-45deg);
+        transform-origin: 50% 100%;
+        text-align: center;
+        border-top-style: dashed;
+        border-top-width: thin;
+        border-top-color: #f8f9fa;
+        padding-right: 10rem;
+        padding-left: 10rem;
+        padding-top: .15rem;
+        padding-bottom: 0.7rem;
+        color: #f8f9fa;
+        box-shadow: 0 0.1rem 0.2rem 0.1rem rgba(0, 0, 0, 0.5);
+        text-shadow: 0.05rem -0.05rem rgba(0, 0, 0, 0.3);
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
     </style>
   </head>
   <body data-spy="scroll" data-target=".dd-nav-toc">
@@ -315,6 +347,10 @@ You should have received a copy of the GNU General Public License
           <a class="btn btn-sm mr-1 btn-outline-primary nav-link px-2" href="#" data-toggle="modal" data-target="#save_to"><i class="fa fa-lg fa-fw fa-floppy-o" aria-hidden="true"></i></a>
         </li>
       </ul>
+
+
+
+
       <div class="dropdown-menu dd-nav-toc d-md-none">
         <div class="dd-toc-small-wrapper">
           <a class="dropdown-item" href="#sec_base">Base</a>
@@ -346,7 +382,11 @@ You should have received a copy of the GNU General Public License
           <a class="dropdown-item" href="#sec_debug">Debug features</a>
         </div>
       </div>
+
+
     </nav>
+
+
 
 
     <div class="modal fade" tabindex="-1" role="dialog" id="save_to" aria-labelledby="save_to_title" aria-hidden="true">
@@ -381,6 +421,11 @@ You should have received a copy of the GNU General Public License
       </div>
     </div>
 
+
+
+
+
+
     <div class="modal fade" tabindex="-1" role="dialog" id="auth_dbx" aria-labelledby="auth_dbx_title" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -404,6 +449,11 @@ You should have received a copy of the GNU General Public License
       </div>
     </div>
 
+
+
+
+
+
     <div class="modal fade" tabindex="-1" role="dialog" id="load_from" aria-labelledby="load_from_title" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -421,6 +471,19 @@ You should have received a copy of the GNU General Public License
       </div>
     </div>
 
+
+
+    <div class="forkme-ribbon">
+      <a href="https://gitlab.com/5p4k/superscheda" target="_blank">
+        <div class="forkme-ribbon-background"></div>
+        <div class="forkme-ribbon-text small">
+            Fork me on<br>
+            <i class="fa fa-gitlab fa-2x" aria-hidden="true"></i>
+        </div>
+      </a>
+    </div>
+
+
     <div class="modal fade" tabindex="-1" role="dialog" id="waiting" aria-hidden="true" data-backdrop="static" data-keyboard="false">
       <div class="my-0 h-100 d-flex align-items-center justify-content-center">
         <div class="modal-dialog text-light" role="document">
@@ -430,8 +493,17 @@ You should have received a copy of the GNU General Public License
     </div>
 
 
+
+
+
+
     <div class="container-fluid">
       <div class="row">
+
+
+
+
+
         <nav class="col-md-2 col-lg-3 sticky-toc small order-2 d-none d-md-block dd-nav-toc">
           <div class="dd-toc-wrapper">
             <ul class="nav nav-toc nav-pills flex-column">
@@ -515,6 +587,13 @@ You should have received a copy of the GNU General Public License
             </ul>
           </div>
         </nav>
+
+
+
+
+
+
+
 
         <main class="col col-md-10 col-lg-9 order-1" role="tablist">
 
