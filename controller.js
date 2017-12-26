@@ -115,7 +115,8 @@ function Controller(dbxAppId) {
             if (save_to_form[0].checkValidity() === true) {
                 self._modalSaveTo.modal('hide');
                 self.toggleWaiting(true);
-                self.saveDB(save_to_form.find('input').val(), function(res) { self.toggleWaiting(false, res); });
+                var full_file_path = self._navGetPath(save_to_list) + save_to_form.find('input').val();
+                self.saveDB(full_file_path, function(res) { self.toggleWaiting(false, res); });
             }
             save_to_form.addClass('was-validated');
         });
@@ -185,6 +186,7 @@ function Controller(dbxAppId) {
                 event2.stopPropagation();
                 self._modalLoadFrom.modal('hide');
                 self.toggleWaiting(true);
+                var full_file_path = self._navGetPath(load_from_list) + $(this).attr('data-name');
                 self.loadDB($(this).text().trim(), function(res) { self.toggleWaiting(false, res); });
             };
             self._navSetPath(load_from_list, '/', event_fn);
@@ -476,6 +478,10 @@ function Controller(dbxAppId) {
         }
     };
 
+    self._navGetPath = function(obj) {
+        return $(obj).find('.dropbox-nav').find('ol').attr('data-dirname');
+    }
+
     self._navSetPath = function(obj, path, file_click_event) {
         var nav = $(obj).find('.dropbox-nav').find('ol');
         var pieces = null;
@@ -490,6 +496,7 @@ function Controller(dbxAppId) {
             pieces = path.split('/');
             chain_path = path + '/';
         }
+        nav.attr('data-dirname', chain_path);
         var items = nav.children('.breadcrumb-item');
         for (var i = 0; i < items.length || i < pieces.length; ++i) {
             if (i >= pieces.length) {
@@ -510,7 +517,8 @@ function Controller(dbxAppId) {
                     .appendTo(item)
                     .click(function (evt) {
                         evt.preventDefault();
-                        self._navSetPath(obj, subpath);
+                        evt.stopPropagation();
+                        self._navSetPath(obj, subpath, file_click_event);
                     });
             } else {
                 item.addClass('active').attr('aria-current', 'page');
@@ -523,7 +531,8 @@ function Controller(dbxAppId) {
         }
         var folder_click_event = function(evt) {
             evt.preventDefault();
-            self._navSetPath(obj, chain_path + $(evt.target).data('name'));
+            evt.stopPropagation();
+            self._navSetPath(obj, chain_path + $(this).attr('data-name'), file_click_event);
         };
         self._populateFileList($(obj).find('.dropbox-file-list'), path, file_click_event, folder_click_event);
     }
