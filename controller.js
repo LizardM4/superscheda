@@ -105,7 +105,7 @@ function Controller(dbxAppId) {
 
     self._setupSaveToModal = function() {
         self._modalSaveTo = $('#save_to');
-        var save_to_list = self._modalSaveTo.find('.dropbox-file-list');
+        var save_to_list = self._modalSaveTo.find('.dropbox-explorer');
         var save_to_form = self._modalSaveTo.find('form');
         var save_to_file = save_to_form.find('input');
 
@@ -128,7 +128,7 @@ function Controller(dbxAppId) {
             };
             save_to_form[0].reset();
             save_to_form.removeClass('was-validated');
-            self._populateFileList(save_to_list, event_fn);
+            self._navSetPath(save_to_list, '/', event_fn);
         });
     };
 
@@ -177,7 +177,7 @@ function Controller(dbxAppId) {
 
     self._setupLoadFromModal = function() {
         self._modalLoadFrom = $('#load_from');
-        var load_from_list = self._modalLoadFrom.find('.dropbox-file-list');
+        var load_from_list = self._modalLoadFrom.find('.dropbox-explorer');
 
         self._modalLoadFrom.on('show.bs.modal', function (event) {
             var event_fn = function(event2) {
@@ -187,7 +187,7 @@ function Controller(dbxAppId) {
                 self.toggleWaiting(true);
                 self.loadDB($(this).text().trim(), function(res) { self.toggleWaiting(false, res); });
             };
-            self._populateFileList(load_from_list, event_fn);
+            self._navSetPath(load_from_list, '/', event_fn);
         });
     };
 
@@ -431,28 +431,121 @@ function Controller(dbxAppId) {
         }
     };
 
-    self._populateFileList = function(obj, file_click_event) {
-        obj = $(obj);
+    self._populateFileListWithResponse = function(obj, response, file_click_event, folder_click_event) {
+        // Sort the entries folders first
+        var compare = function(l, r) {
+            var lexic_first_comp = l['.tag'].localeCompare(r['.tag']);
+            // FOlder must go before FIle
+            if (lexic_first_comp < 0) {
+                return 1;
+            } else if (lexic_first_comp > 0) {
+                return -1;
+            } else {
+                return l['name'].localeCompare(r['name'])
+            }
+        };
+        // Clear the container
         obj.empty();
-        $('<p class="text-center"><i class="fa fa-refresh fa-spin fa-3x"></i></p>').appendTo(obj);
-        self.dropbox.filesListFolder({path: ''})
-            .then(function(response) {
-                obj.empty();
-                var $ul = $('<ul class="list-unstyled ml-1"></ul>');
-                for (var i = 0; i < response.entries.length; ++i) {
-                var name = response.entries[i].name;
+        response.entries.sort(compare);
+        for (var i = 0; i < response.entries.length; ++i) {
+            var name = response.entries[i]['name'];
+            var tag = response.entries[i]['.tag']
+            if (tag == 'file') {
                 $('<a href="#"></a>')
                     .text(' ' + name)
+                    .attr('data-name', name)
                     .prepend($('<i class="fa fa-file" aria-hidden="true"></i>'))
                     .click(file_click_event)
-                    .appendTo($('<li></li>').appendTo($ul));
-                }
-                $ul.appendTo(obj);
+                    .appendTo(
+                        $('<li></li>')
+                        .addClass('dropbox-' + tag)
+                        .appendTo(obj)
+                    );
+            } else if (tag == 'folder') {
+                $('<a href="#"></a>')
+                    .text(' ' + name)
+                    .attr('data-name', name)
+                    .prepend($('<i class="fa fa-folder" aria-hidden="true"></i>'))
+                    .click(folder_click_event)
+                    .appendTo(
+                        $('<li></li>')
+                        .addClass('dropbox-' + tag)
+                        .appendTo(obj)
+                    );
+            }
+        }
+    };
+
+    self._navSetPath = function(obj, path, file_click_event) {
+        var nav = $(obj).find('.dropbox-nav').find('ol');
+        var pieces = null;
+        var chain_path = null;
+        if (path == '/') {
+            pieces = [''];
+            chain_path = '/';
+        } else {
+            if (path[path.length - 1] == '/') {
+                path = path.slice(0, path.length - 1);
+            }
+            pieces = path.split('/');
+            chain_path = path + '/';
+        }
+        var items = nav.children('.breadcrumb-item');
+        for (var i = 0; i < items.length || i < pieces.length; ++i) {
+            if (i >= pieces.length) {
+                $(items[i]).remove();
+                continue;
+            }
+            var item = null;
+            if (i >= items.length) {
+                item = $('<li></li>').addClass('breadcrumb-item').appendTo(nav);
+            } else {
+                item = $(items[i])
+                item.empty();
+            }
+            if (i < pieces.length - 1) {
+                item.removeClass('active').removeAttr('aria-current');
+                var subpath = '/' + pieces.slice(0, i).join('/');
+                item = $('<a href="#"></a>')
+                    .appendTo(item)
+                    .click(function (evt) {
+                        evt.preventDefault();
+                        self._navSetPath(obj, subpath);
+                    });
+            } else {
+                item.addClass('active').attr('aria-current', 'page');
+            }
+            if (pieces[i] == '') {
+                $('<i class="fa fa-dropbox" aria-hidden="true"></i>').appendTo(item);
+            } else {
+                item.text(pieces[i]);
+            }
+        }
+        var folder_click_event = function(evt) {
+            evt.preventDefault();
+            self._navSetPath(obj, chain_path + $(evt.target).data('name'));
+        };
+        self._populateFileList($(obj).find('.dropbox-file-list'), path, file_click_event, folder_click_event);
+    }
+
+    self._populateFileList = function(obj, path, file_click_event, folder_click_event) {
+        obj = $(obj);
+        obj.empty()
+        var spinner = $('<p class="text-center"><i class="fa fa-refresh fa-spin fa-3x"></i></p>')
+            .insertAfter(obj);
+        if (path.length > 0 && path[path.length - 1] == '/') {
+            path = path.slice(0, path.length -1);
+        }
+        self.dropbox.filesListFolder({path: path})
+            .then(function(response) {
+                spinner.remove();
+                self._populateFileListWithResponse(obj, response, file_click_event, folder_click_event);
             })
             .catch(function(error) {
+                spinner.remove();
                 console.log(error);
                 $('<p class="text-danger">Impossibile caricare la lista di file.</p>')
-                    .appendTo(obj);
+                    .insertBefore(obj);
             });
     };
 
