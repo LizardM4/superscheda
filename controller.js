@@ -208,7 +208,7 @@ function Controller(dbxAppId) {
             var i = $(obj);
             var button = i.parents('button');
             var card = button.parents('div.card');
-            card.on('hide.bs.collapse', function(event) {
+            card.on('hide.bs.collapse', function() {
                 button.prop('disabled', true);
                 i.animateRotate(180, {
                     complete: function() {
@@ -219,7 +219,7 @@ function Controller(dbxAppId) {
                     }
                 });
             });
-            card.on('show.bs.collapse', function(event) {
+            card.on('show.bs.collapse', function() {
                 button.prop('disabled', true);
                 i.animateRotate(180, {
                     complete: function() {
@@ -236,7 +236,7 @@ function Controller(dbxAppId) {
     self._setupWaitingModal = function() {
         self._modalWaiting = $('#waiting');
 
-        self._modalWaiting.on('hidden.bs.modal', function (event) {
+        self._modalWaiting.on('hidden.bs.modal', function () {
             // Reset the content
             var dialog = self._modalWaiting.find('div.modal-dialog');
             dialog.empty();
@@ -244,20 +244,24 @@ function Controller(dbxAppId) {
         });
     };
 
-    self._setupAttackNameUpdate = function() {
-        $('#array_attacchi *[data-dd-array="master"] input.dd-title').change(function(evt) {
-            var obj = $(this);
-            var txt = obj.val().trim();
-            if (txt.length == 0) {
-                txt = 'Attacco';
-            }
-            obj.closest('*[data-dd-array]').find('.dd-title:not(input)').text(txt);
+    self._setupDynamicTitles = function() {
+        $('*[data-dd-array="master"] input.dd-dyn-title').each(function(idx, obj) {
+            obj = $(obj);
+            var default_txt = obj.closest('*[data-dd-array]').find('.dd-dyn-title:not(input)').text();
+            $(obj).change(function(evt) {
+                var target = $(this);
+                var txt = target.val().trim();
+                if (txt.length == 0) {
+                    txt = default_txt;
+                }
+                target.closest('*[data-dd-array]').find('.dd-dyn-title:not(input)').text(txt);
+            });
         });
     }
 
     self._setupCustomDropdown = function() {
-        $('.input-group-btn .dropdown-menu .dropdown-item').click(function(event) {
-            event.preventDefault();
+        $('.input-group-btn .dropdown-menu .dropdown-item').click(function(evt) {
+            evt.preventDefault();
             var obj = $(this);
             obj.closest('.input-group-btn')
                 .find('input[type="text"]')
@@ -266,13 +270,13 @@ function Controller(dbxAppId) {
     };
 
     self._setupArrays = function() {
-        $('[data-dd-array="append"]').click(function(event) {
+        $('[data-dd-array="append"]').click(function(evt) {
             self._arrayAppend(self._resolveTarget(this));
-            event.stopPropagation();
+            evt.stopPropagation();
         });
-        $('[data-dd-array="remove"]').click(function(event) {
+        $('[data-dd-array="remove"]').click(function(evt) {
             self._arrayRemove(self._resolveTarget(this));
-            event.stopPropagation();
+            evt.stopPropagation();
         });
         $('[data-dd-array="master"]').addClass('d-none');
     }
@@ -456,7 +460,7 @@ function Controller(dbxAppId) {
         self._setupLoadFromModal();
         self._setupWaitingModal();
         self._setupAnimatedChevrons();
-        self._setupAttackNameUpdate();
+        self._setupDynamicTitles();
         self._setupArrays();
         self._setupCustomDropdown();
     };
@@ -492,6 +496,10 @@ function Controller(dbxAppId) {
                 }
             } else {
                 ctrl.val(flat_data[path]);
+            }
+            if (ctrl.is('.dd-dyn-title')) {
+                // Trigger a change event because this manages a dynamic title.
+                ctrl.change();
             }
         }
     };
