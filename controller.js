@@ -125,6 +125,10 @@ function Controller(dbxAppId) {
                 self.toggleWaiting(true);
                 var full_file_path = self._navGetPath(save_to_list) + save_to_form.find('input').val();
                 self.saveDB(full_file_path, function(res) { self.toggleWaiting(false, res); });
+                // Manually copy the path on the load dialog
+                self._modalLoadFrom
+                    .find('.dropbox-explorer .dropbox-nav ol')
+                    .attr('data-dirname', self._navGetPath(save_to_list));
             }
             save_to_form.addClass('was-validated');
         });
@@ -137,9 +141,8 @@ function Controller(dbxAppId) {
             var event_fn = function(event2) {
                 event2.preventDefault();
                 event2.stopPropagation();
-                save_to_file.val($(this).text().trim()).change();
+                save_to_file.val($(this).attr('data-name')).change();
             };
-            save_to_form[0].reset();
             save_to_form.removeClass('was-validated');
             self._navSetPath(save_to_list, self._navGetPath(save_to_list), event_fn);
             download_btt.attr('href', 'data:application/json;charset=utf-8,' +
@@ -202,6 +205,11 @@ function Controller(dbxAppId) {
                 self.toggleWaiting(true);
                 var full_file_path = self._navGetPath(load_from_list) + $(this).attr('data-name');
                 self.loadDB(full_file_path, function(res) { self.toggleWaiting(false, res); });
+                // Manually copy the path on the save dialog
+                self._modalSaveTo
+                    .find('.dropbox-explorer .dropbox-nav ol')
+                    .attr('data-dirname', self._navGetPath(load_from_list));
+                self._modalSaveTo.find('input').val($(this).attr('data-name')).change();
             };
             self._navSetPath(load_from_list, self._navGetPath(load_from_list), event_fn);
         });
