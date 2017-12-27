@@ -62,13 +62,20 @@ function Controller(dbxAppId) {
     self._setupDropbox = function() {
         // Try to get the access token from the local storage
         var access_token = null;
+        var app_id = null;
         try {
             var access_token = window.localStorage.getItem('access_token');
-            if (!access_token) {
+            // Use the app id for versioning; forget the token if needed
+            var app_id = window.localStorage.getItem('app_id');
+            if (!access_token || !app_id || app_id != self.appId) {
+                access_token = null;
+                app_id = null;
                 var parms = parseQueryString();
                 if ('access_token' in parms) {
                     access_token = parms['access_token'];
+                    app_id = self.appId;
                     window.localStorage.setItem('access_token', access_token);
+                    window.localStorage.setItem('app_id', app_id);
                 }
             }
         } catch (e) {
@@ -549,7 +556,11 @@ function Controller(dbxAppId) {
         var err_evt = function(error) {
             spinner.remove();
                 console.log(error);
-                $('<p class="text-danger">Impossibile caricare la lista di file.</p>')
+                $('<p></p>')
+                    .addClass('text-danger')
+                    .addClass('text-center')
+                    .addClass('my-1')
+                    .text('Impossibile caricare la lista di file.')
                     .insertBefore(obj);
         };
         var response_evt = function(response) {
