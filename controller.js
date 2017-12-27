@@ -433,7 +433,7 @@ function Controller(dbxAppId) {
         }
     };
 
-    self._populateFileListWithResponse = function(obj, response, file_click_event, folder_click_event) {
+    self._populateFileListWithEntries = function(obj, entries, file_click_event, folder_click_event) {
         // Sort the entries folders first
         var compare = function(l, r) {
             var lexic_first_comp = l['.tag'].localeCompare(r['.tag']);
@@ -448,10 +448,10 @@ function Controller(dbxAppId) {
         };
         // Clear the container
         obj.empty();
-        response.entries.sort(compare);
-        for (var i = 0; i < response.entries.length; ++i) {
-            var name = response.entries[i]['name'];
-            var tag = response.entries[i]['.tag']
+        entries.sort(compare);
+        for (var i = 0; i < entries.length; ++i) {
+            var name = entries[i]['name'];
+            var tag = entries[i]['.tag']
             if (tag == 'file') {
                 $('<a href="#"></a>')
                     .text(' ' + name)
@@ -545,17 +545,33 @@ function Controller(dbxAppId) {
         if (path.length > 0 && path[path.length - 1] == '/') {
             path = path.slice(0, path.length -1);
         }
-        self.dropbox.filesListFolder({path: path})
-            .then(function(response) {
-                spinner.remove();
-                self._populateFileListWithResponse(obj, response, file_click_event, folder_click_event);
-            })
-            .catch(function(error) {
-                spinner.remove();
+        var entries = [];
+        var err_evt = function(error) {
+            spinner.remove();
                 console.log(error);
                 $('<p class="text-danger">Impossibile caricare la lista di file.</p>')
                     .insertBefore(obj);
-            });
+        };
+        var response_evt = function(response) {
+            Array.prototype.push.apply(entries, response.entries);
+            if (response.has_more) {
+                self.dropbox.filesListFolderContinue(response.cursor)
+                    .then(response_evt)
+                    .catch(err_evt);
+            } else {
+                spinner.remove();
+                self._populateFileListWithEntries(obj, entries, file_click_event, folder_click_event);
+            }
+        };
+        self.dropbox.filesListFolder({
+            path: path,
+            include_deleted: false,
+            include_media_info: false,
+            recursive: false,
+            include_mounted_folders: true
+        })
+        .then(response_evt)
+        .catch(err_evt);
     };
 
     self.toggleWaiting = function(on_off, success=null) {
