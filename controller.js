@@ -115,6 +115,7 @@ function Controller(dbxAppId) {
         var save_to_list = self._modalSaveTo.find('.dropbox-explorer');
         var save_to_form = self._modalSaveTo.find('form');
         var save_to_file = save_to_form.find('input');
+        var download_btt = self._modalSaveTo.find('a.btn[download]');
 
         save_to_form.on('submit', function (event) {
             event.preventDefault();
@@ -128,6 +129,10 @@ function Controller(dbxAppId) {
             save_to_form.addClass('was-validated');
         });
 
+        save_to_file.change(function() {
+            download_btt.attr('download', save_to_file.val());
+        });
+
         self._modalSaveTo.on('show.bs.modal', function (event) {
             var event_fn = function(event2) {
                 event2.preventDefault();
@@ -137,6 +142,8 @@ function Controller(dbxAppId) {
             save_to_form[0].reset();
             save_to_form.removeClass('was-validated');
             self._navSetPath(save_to_list, self._navGetPath(save_to_list), event_fn);
+            download_btt.attr('href', 'data:application/json;charset=utf-8,' +
+                encodeURIComponent(self.data.dump()));
         });
     };
 
