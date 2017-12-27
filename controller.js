@@ -22,6 +22,12 @@ function Controller(dbxAppId) {
     self.data = new Hier();
     self.dropbox = null;
 
+    self._saveModal = null;
+    self._saveExplorer = null;
+
+    self._loadModal = null;
+    self._loadExplorer = null;
+
     self._getHierPath = function(obj) {
         obj = $(obj);
         var path = obj.attr('data-dd-id');
@@ -110,43 +116,89 @@ function Controller(dbxAppId) {
         }
     };
 
-    self._setupSaveToModal = function() {
-        self._modalSaveTo = $('#save_to');
-        var save_to_list = self._modalSaveTo.find('.dropbox-explorer');
-        var save_to_form = self._modalSaveTo.find('form');
-        var save_to_file = save_to_form.find('input');
-        var download_btt = self._modalSaveTo.find('a.btn[download]');
+    self._setupSaveModal = function() {
+        self._saveModal = $('#save_to');
 
-        save_to_form.on('submit', function (event) {
-            event.preventDefault();
-            event.stopPropagation();
-            if (save_to_form[0].checkValidity() === true) {
-                self._modalSaveTo.modal('hide');
-                self.toggleWaiting(true);
-                var full_file_path = self._navGetPath(save_to_list) + save_to_form.find('input').val();
-                self.saveDB(full_file_path, function(res) { self.toggleWaiting(false, res); });
-                // Manually copy the path on the load dialog
-                self._modalLoadFrom
-                    .find('.dropbox-explorer .dropbox-nav ol')
-                    .attr('data-dirname', self._navGetPath(save_to_list));
+        var save_form = self._saveModal.find('form');
+        var file_name_input = save_form.find('input');
+        var dl_btn = self._saveModal.find('a.btn[download]');
+
+        // Setup dropbox explorer
+        self._saveExplorer = new Explorer(
+            self.dropbox,
+            self._saveModal.find('.dropbox-explorer'),
+            function(evt) {
+                // Change the control value
+                evt.preventDefault();
+                evt.stopPropagation();
+                file_name_input.val($(this).attr('data-file')).change();
+            },
+            function(tag, name) {
+                // Only folders and json files
+                return tag == 'folder' || name.endsWith('.json');
             }
-            save_to_form.addClass('was-validated');
+        );
+
+        // Make sure that on submit, we intercept the event and call the propert function
+        save_form.on('submit', function (evt) {
+            evt.preventDefault();
+            evt.stopPropagation();
+            if (save_form[0].checkValidity() === true) {
+                self._saveModal.modal('hide');
+                self.toggleWaiting(true);
+
+                var path = combine(self._saveExplorer.pwd(), file_name_input.val(), true);
+                self.saveDB(path, function(res) { self.toggleWaiting(false, res); });
+
+                // Manually copy the path on the load dialog
+                self._loadExplorer.chdir(self._saveExplorer.pwd(), false);
+            }
+            save_form.addClass('was-validated');
         });
 
-        save_to_file.change(function() {
-            download_btt.attr('download', save_to_file.val());
+        // Make sure that the proposed name for download is something sensitive
+        file_name_input.change(function() {
+            dl_btn.attr('download', file_name_input.val());
         });
 
-        self._modalSaveTo.on('show.bs.modal', function (event) {
-            var event_fn = function(event2) {
-                event2.preventDefault();
-                event2.stopPropagation();
-                save_to_file.val($(this).attr('data-name')).change();
-            };
-            save_to_form.removeClass('was-validated');
-            self._navSetPath(save_to_list, self._navGetPath(save_to_list), event_fn);
-            download_btt.attr('href', 'data:application/json;charset=utf-8,' +
+        // When we open the modal, update everything that is needed
+        self._saveModal.on('show.bs.modal', function () {
+            save_form.removeClass('was-validated');
+            self._saveExplorer.refresh();
+            dl_btn.attr('href', 'data:application/json;charset=utf-8,' +
                 encodeURIComponent(self.data.dump()));
+        });
+    };
+
+    self._setupLoadFromModal = function() {
+        self._loadModal = $('#load_from');
+
+        // Setup dropbox explorer
+        self._loadExplorer = new Explorer(
+            self.dropbox,
+            self._loadModal.find('.dropbox-explorer'),
+            function(evt) {
+                // Change the control value
+                evt.preventDefault();
+                evt.stopPropagation();
+                self._loadModal.modal('hide');
+                self.toggleWaiting(true);
+                var file = $(this).attr('data-file');
+                var path = combine(self._loadExplorer.pwd(), file, true);
+                self.loadDB(path, function(res) { self.toggleWaiting(false, res); });
+                // Manually copy the path on the save dialog
+                self._saveExplorer.chdir(self._loadExplorer.pwd(), false);
+                // And also suggest the name
+                self._saveModal.find('input').val(file).change();
+            },
+            function(tag, name) {
+                // Only folders and json files
+                return tag == 'folder' || name.endsWith('.json');
+            }
+        );
+
+        self._loadModal.on('show.bs.modal', function () {
+            self._loadExplorer.refresh();
         });
     };
 
@@ -193,27 +245,6 @@ function Controller(dbxAppId) {
     };
 
 
-    self._setupLoadFromModal = function() {
-        self._modalLoadFrom = $('#load_from');
-        var load_from_list = self._modalLoadFrom.find('.dropbox-explorer');
-
-        self._modalLoadFrom.on('show.bs.modal', function (event) {
-            var event_fn = function(event2) {
-                event2.preventDefault();
-                event2.stopPropagation();
-                self._modalLoadFrom.modal('hide');
-                self.toggleWaiting(true);
-                var full_file_path = self._navGetPath(load_from_list) + $(this).attr('data-name');
-                self.loadDB(full_file_path, function(res) { self.toggleWaiting(false, res); });
-                // Manually copy the path on the save dialog
-                self._modalSaveTo
-                    .find('.dropbox-explorer .dropbox-nav ol')
-                    .attr('data-dirname', self._navGetPath(load_from_list));
-                self._modalSaveTo.find('input').val($(this).attr('data-name')).change();
-            };
-            self._navSetPath(load_from_list, self._navGetPath(load_from_list), event_fn);
-        });
-    };
 
     self._setupCustomDropdown = function() {
         $('.input-group-btn .dropdown-menu .dropdown-item').click(function(event) {
@@ -412,7 +443,7 @@ function Controller(dbxAppId) {
     self.setup = function() {
         self._setupDDPaths();
         self._setupDropbox();
-        self._setupSaveToModal();
+        self._setupSaveModal();
         self._setupLoadFromModal();
         self._setupWaitingModal();
         self._setupAnimatedChevrons();
@@ -453,155 +484,6 @@ function Controller(dbxAppId) {
                 ctrl.val(flat_data[path]);
             }
         }
-    };
-
-    self._populateFileListWithEntries = function(obj, entries, file_click_event, folder_click_event) {
-        // Sort the entries folders first
-        var compare = function(l, r) {
-            var lexic_first_comp = l['.tag'].localeCompare(r['.tag']);
-            // FOlder must go before FIle
-            if (lexic_first_comp < 0) {
-                return 1;
-            } else if (lexic_first_comp > 0) {
-                return -1;
-            } else {
-                return l['name'].localeCompare(r['name'])
-            }
-        };
-        // Clear the container
-        obj.empty();
-        entries.sort(compare);
-        for (var i = 0; i < entries.length; ++i) {
-            var name = entries[i]['name'];
-            var tag = entries[i]['.tag']
-            if (tag == 'file') {
-                // Filter out those that do not end in json.
-                if (!name.endsWith('.json')) {
-                    continue;
-                }
-                $('<a href="#"></a>')
-                    .text(' ' + name)
-                    .attr('data-name', name)
-                    .prepend($('<i class="fa fa-file" aria-hidden="true"></i>'))
-                    .click(file_click_event)
-                    .appendTo(
-                        $('<li></li>')
-                        .addClass('dropbox-' + tag)
-                        .appendTo(obj)
-                    );
-            } else if (tag == 'folder') {
-                $('<a href="#"></a>')
-                    .text(' ' + name)
-                    .attr('data-name', name)
-                    .prepend($('<i class="fa fa-folder" aria-hidden="true"></i>'))
-                    .click(folder_click_event)
-                    .appendTo(
-                        $('<li></li>')
-                        .addClass('dropbox-' + tag)
-                        .appendTo(obj)
-                    );
-            }
-        }
-    };
-
-    self._navGetPath = function(obj) {
-        return $(obj).find('.dropbox-nav').find('ol').attr('data-dirname');
-    }
-
-    self._navSetPath = function(obj, path, file_click_event) {
-        var nav = $(obj).find('.dropbox-nav').find('ol');
-        var pieces = null;
-        var chain_path = null;
-        if (path == '/') {
-            pieces = [''];
-            chain_path = '/';
-        } else {
-            while (path.endsWith('/')) {
-                path = path.slice(0, path.length - 1);
-            }
-            pieces = path.split('/');
-            chain_path = path + '/';
-        }
-        nav.attr('data-dirname', chain_path);
-        var items = nav.children('.breadcrumb-item');
-        for (var i = 0; i < items.length || i < pieces.length; ++i) {
-            if (i >= pieces.length) {
-                $(items[i]).remove();
-                continue;
-            }
-            var item = null;
-            if (i >= items.length) {
-                item = $('<li></li>').addClass('breadcrumb-item').appendTo(nav);
-            } else {
-                item = $(items[i])
-                item.empty();
-            }
-            if (i < pieces.length - 1) {
-                item.removeClass('active').removeAttr('aria-current');
-                var subpath = '/' + pieces.slice(0, i).join('/');
-                item = $('<a href="#"></a>')
-                    .appendTo(item)
-                    .click(function (evt) {
-                        evt.preventDefault();
-                        evt.stopPropagation();
-                        self._navSetPath(obj, subpath, file_click_event);
-                    });
-            } else {
-                item.addClass('active').attr('aria-current', 'page');
-            }
-            if (pieces[i] == '') {
-                $('<i class="fa fa-dropbox" aria-hidden="true"></i>').appendTo(item);
-            } else {
-                item.text(pieces[i]);
-            }
-        }
-        var folder_click_event = function(evt) {
-            evt.preventDefault();
-            evt.stopPropagation();
-            self._navSetPath(obj, chain_path + $(this).attr('data-name'), file_click_event);
-        };
-        self._populateFileList($(obj).find('.dropbox-file-list'), path, file_click_event, folder_click_event);
-    }
-
-    self._populateFileList = function(obj, path, file_click_event, folder_click_event) {
-        obj = $(obj);
-        obj.empty()
-        var spinner = $('<p class="text-center my-5"><i class="fa fa-refresh fa-spin fa-3x"></i></p>')
-            .insertAfter(obj);
-        if (path.length > 0 && path[path.length - 1] == '/') {
-            path = path.slice(0, path.length -1);
-        }
-        var entries = [];
-        var err_evt = function(error) {
-            spinner.remove();
-                console.log(error);
-                $('<p></p>')
-                    .addClass('text-danger')
-                    .addClass('text-center')
-                    .addClass('my-1')
-                    .text('Impossibile caricare la lista di file.')
-                    .insertBefore(obj);
-        };
-        var response_evt = function(response) {
-            Array.prototype.push.apply(entries, response.entries);
-            if (response.has_more) {
-                self.dropbox.filesListFolderContinue(response.cursor)
-                    .then(response_evt)
-                    .catch(err_evt);
-            } else {
-                spinner.remove();
-                self._populateFileListWithEntries(obj, entries, file_click_event, folder_click_event);
-            }
-        };
-        self.dropbox.filesListFolder({
-            path: path,
-            include_deleted: false,
-            include_media_info: false,
-            recursive: false,
-            include_mounted_folders: true
-        })
-        .then(response_evt)
-        .catch(err_evt);
     };
 
     self.toggleWaiting = function(on_off, success=null) {

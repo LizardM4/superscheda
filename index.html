@@ -54,6 +54,7 @@ You should have received a copy of the GNU General Public License
     <!-- ****** faviconit.com favicons ****** -->
 
     <script src="tree.js"></script>
+    <script src="dbxexplorer.js"></script>
     <script src="controller.js"></script>
     <style>
       #tbox_txt { font-family: monospace; }
@@ -413,7 +414,7 @@ You should have received a copy of the GNU General Public License
         margin-top: 0.2rem;
       }
 
-      .dropbox-file-list-container {
+      .dropbox-file-list {
         overflow-y: scroll;
         max-height: calc(50vh);
       }
@@ -500,16 +501,19 @@ You should have received a copy of the GNU General Public License
           <form novalidate>
             <div class="modal-body">
               <div class="dropbox-explorer">
-                <nav aria-label="breadcrumb" role="navigation" class="dropbox-nav">
-                  <ol class="breadcrumb p-2 mb-2  " data-dirname="/">
+                <nav aria-label="breadcrumb" role="navigation" class="dropbox-nav" data-path="/">
+                  <ol class="breadcrumb p-2 mb-2">
                     <li class="breadcrumb-item active" aria-current="page">
                       <i class="fa fa-dropbox" aria-hidden="true"></i>
                     </li>
                   </ol>
                 </nav>
-                <div class="dropbox-file-list-container border border-secondary rounded bg-light mb-2">
-                  <ul class="dropbox-file-list list-unstyled mx-2 my-1"></ul>
-                </div>
+                <div class="dropbox-alert alert alert-danger d-none" role="alert"></div>
+                <p class="dropbox-spinner d-none text-center my-5">
+                  <i class="fa fa-refresh fa-spin fa-3x"></i>
+                </p>
+                <ul class="dropbox-file-list list-unstyled px-2 mt-1 mb-2 border border-secondary rounded bg-light">
+                </ul>
               </div>
               <div class="row">
                 <label class="col-sm-2 col-form-label">File: </label>
@@ -576,16 +580,19 @@ You should have received a copy of the GNU General Public License
             </button>
           </div>
           <div class="modal-body dropbox-explorer">
-            <nav aria-label="breadcrumb" role="navigation" class="dropbox-nav">
-              <ol class="breadcrumb p-2 mb-2  " data-dirname="/">
+            <nav aria-label="breadcrumb" role="navigation" class="dropbox-nav" data-path="/">
+              <ol class="breadcrumb p-2 mb-2">
                 <li class="breadcrumb-item active" aria-current="page">
                   <i class="fa fa-dropbox" aria-hidden="true"></i>
                 </li>
               </ol>
             </nav>
-            <div class="dropbox-file-list-container border border-secondary rounded bg-light">
-              <ul class="dropbox-file-list list-unstyled mx-2 my-1"></ul>
-            </div>
+            <div class="dropbox-alert alert alert-danger d-none" role="alert"></div>
+            <p class="dropbox-spinner d-none text-center my-5">
+              <i class="fa fa-refresh fa-spin fa-3x"></i>
+            </p>
+            <ul class="dropbox-file-list list-unstyled px-2 my-1 border border-secondary rounded bg-light">
+            </ul>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
