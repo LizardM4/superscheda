@@ -244,7 +244,16 @@ function Controller(dbxAppId) {
         });
     };
 
-
+    self._setupAttackNameUpdate = function() {
+        $('#array_attacchi *[data-dd-array="master"] input.dd-title').change(function(evt) {
+            var obj = $(this);
+            var txt = obj.val().trim();
+            if (txt.length == 0) {
+                txt = 'Attacco';
+            }
+            obj.closest('*[data-dd-array]').find('.dd-title:not(input)').text(txt);
+        });
+    }
 
     self._setupCustomDropdown = function() {
         $('.input-group-btn .dropdown-menu .dropdown-item').click(function(event) {
@@ -447,6 +456,7 @@ function Controller(dbxAppId) {
         self._setupLoadFromModal();
         self._setupWaitingModal();
         self._setupAnimatedChevrons();
+        self._setupAttackNameUpdate();
         self._setupArrays();
         self._setupCustomDropdown();
     };

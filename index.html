@@ -207,6 +207,11 @@ You should have received a copy of the GNU General Public License
         }
       }
 
+      /*Custom spacing between attack cards*/
+      #array_attacchi *[data-dd-array="item"] + *[data-dd-array="item"] {
+        margin-top: 0.3rem;
+      }
+
       /* CUSTOM CHECKBOXES -----------------------------------------------------------------------*/
 
       /*Clear spacing around custom checkboxes, such as the ones in the abilities*/
@@ -1699,7 +1704,7 @@ You should have received a copy of the GNU General Public License
               <div class="card-body" data-dd-array="container" id="array_attacchi">
                 <div class="card d-none" data-dd-array="master" data-dd-id="attacchi" role="tab">
                   <div class="card-body">
-                    <h6 class="card-title">Attacco
+                    <h6 class="card-title"><span class="dd-title">Attacco</span>
                       <button type="button" class="close text-danger" data-dd-array="remove" aria-label="Remove">
                         <i class="fa fa-minus-circle" aria-hidden="true"></i>
                       </button>
@@ -1707,7 +1712,7 @@ You should have received a copy of the GNU General Public License
                     <div class="form-row">
                       <div class="col-md-8 col-12">
                         <label class="col-form-label">Nome/descrizione</label>
-                        <input type="text" class="form-control" data-dd-id="nome">
+                        <input type="text" class="form-control dd-title" data-dd-id="nome">
                       </div>
                       <div class="col-md-2 col-6">
                         <label class="col-form-label">Tipo</label>
