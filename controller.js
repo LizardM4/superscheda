@@ -467,6 +467,10 @@ function Controller(dbxAppId) {
             var name = entries[i]['name'];
             var tag = entries[i]['.tag']
             if (tag == 'file') {
+                // Filter out those that do not end in json.
+                if (!name.endsWith('.json')) {
+                    continue;
+                }
                 $('<a href="#"></a>')
                     .text(' ' + name)
                     .attr('data-name', name)
@@ -504,7 +508,7 @@ function Controller(dbxAppId) {
             pieces = [''];
             chain_path = '/';
         } else {
-            if (path[path.length - 1] == '/') {
+            while (path.endsWith('/')) {
                 path = path.slice(0, path.length - 1);
             }
             pieces = path.split('/');
@@ -554,7 +558,7 @@ function Controller(dbxAppId) {
     self._populateFileList = function(obj, path, file_click_event, folder_click_event) {
         obj = $(obj);
         obj.empty()
-        var spinner = $('<p class="text-center"><i class="fa fa-refresh fa-spin fa-3x"></i></p>')
+        var spinner = $('<p class="text-center my-5"><i class="fa fa-refresh fa-spin fa-3x"></i></p>')
             .insertAfter(obj);
         if (path.length > 0 && path[path.length - 1] == '/') {
             path = path.slice(0, path.length -1);
