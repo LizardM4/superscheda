@@ -129,7 +129,7 @@ function Controller(dbxAppId) {
             };
             save_to_form[0].reset();
             save_to_form.removeClass('was-validated');
-            self._navSetPath(save_to_list, '/', event_fn);
+            self._navSetPath(save_to_list, self._navGetPath(save_to_list), event_fn);
         });
     };
 
@@ -187,9 +187,9 @@ function Controller(dbxAppId) {
                 self._modalLoadFrom.modal('hide');
                 self.toggleWaiting(true);
                 var full_file_path = self._navGetPath(load_from_list) + $(this).attr('data-name');
-                self.loadDB($(this).text().trim(), function(res) { self.toggleWaiting(false, res); });
+                self.loadDB(full_file_path, function(res) { self.toggleWaiting(false, res); });
             };
-            self._navSetPath(load_from_list, '/', event_fn);
+            self._navSetPath(load_from_list, self._navGetPath(load_from_list), event_fn);
         });
     };
 
@@ -577,15 +577,15 @@ function Controller(dbxAppId) {
         }
     }
 
-    self.saveDB = function(name, post_action=null) {
+    self.saveDB = function(path, post_action=null) {
         self.updateHier();
         self.dropbox.filesUpload({
-            path: '/' + name,
+            path: path,
             mode: 'overwrite',
             contents: self.data.dump()
         })
             .then(function(response) {
-                self.notify('success', 'Salvato su \'' + name +'\'.', 5000);
+                self.notify('success', 'Salvato su \'' + path +'\'.', 5000);
                 if (post_action) {
                     post_action(true);
                 }
@@ -614,8 +614,8 @@ function Controller(dbxAppId) {
         });
     };
 
-    self.loadDB = function(name, post_action=null) {
-        self.dropbox.filesDownload({path: '/' + name})
+    self.loadDB = function(path, post_action=null) {
+        self.dropbox.filesDownload({path: path})
             .then(function (response) {
                 var blob = response.fileBlob;
                 var reader = new FileReader();
