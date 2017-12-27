@@ -413,6 +413,11 @@ You should have received a copy of the GNU General Public License
         margin-top: 0.2rem;
       }
 
+      .dropbox-file-list-container {
+        overflow-y: scroll;
+        max-height: calc(50vh);
+      }
+
     </style>
   </head>
   <body data-spy="scroll" data-target=".dd-nav-toc">
@@ -494,6 +499,19 @@ You should have received a copy of the GNU General Public License
           </div>
           <form novalidate>
             <div class="modal-body">
+              <div class="dropbox-explorer">
+                <nav aria-label="breadcrumb" role="navigation" class="dropbox-nav">
+                  <ol class="breadcrumb p-2 mb-2  " data-dirname="/">
+                    <li class="breadcrumb-item active" aria-current="page">
+                      <i class="fa fa-dropbox" aria-hidden="true"></i>
+                    </li>
+                  </ol>
+                </nav>
+                <div class="dropbox-file-list-container border border-secondary rounded bg-light">
+                  <ul class="dropbox-file-list list-unstyled mx-2 my-1"></ul>
+                </div>
+              </div>
+              <hr>
               <div class="row">
                 <label class="col-sm-2 col-form-label">File: </label>
                 <div class="col-sm-10">
@@ -503,16 +521,6 @@ You should have received a copy of the GNU General Public License
                   </div>
                 </div>
               </div>
-              <hr>
-              <div class="dropbox-explorer">
-                <nav aria-label="breadcrumb" role="navigation" class="dropbox-nav">
-                  <ol class="breadcrumb p-2 mb-2  " data-dirname="/">
-                    <li class="breadcrumb-item active" aria-current="page">
-                      <i class="fa fa-dropbox" aria-hidden="true"></i>
-                    </li>
-                  </ol>
-                </nav>
-                <ul class="dropbox-file-list list-unstyled ml-1"></ux>2              </div>
             </div>
             <div class="modal-footer">
               <button type="submit" class="btn btn-primary">Salva</button>
@@ -573,8 +581,9 @@ You should have received a copy of the GNU General Public License
                 </li>
               </ol>
             </nav>
-            <ul class="list-unstyled dropbox-file-list mx-2">
-            </ul>
+            <div class="dropbox-file-list-container border border-secondary rounded bg-light">
+              <ul class="dropbox-file-list list-unstyled mx-2 my-1"></ul>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
