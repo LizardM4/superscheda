@@ -1,3 +1,20 @@
+// Superscheda
+// Copyright (C) 2017  Pietro Saccardi
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//
+
 function DDArray(container) {
     var self = this;
 
@@ -158,18 +175,7 @@ function _resolve_target(obj, type) {
     }
 };
 
-function setup_dd_arrays(custom_events={}) {
+function initDDArrays(custom_events={}) {
     $('[data-dd-array="master"]').addClass('d-none');
     _recursive_setup($('body'), custom_events);
-    // $('[data-dd-array="append"]').click(function(evt) {
-    //     var container = _resolve_target(this, 'container');
-    //     container.data('dd-array-controller').append();
-    //     evt.stopPropagation();
-    // });
-    // $('[data-dd-array="remove"]').click(function(evt) {
-    //     var item = _resolve_target(this, 'item');
-    //     var container = item.closest('[data-dd-array="container"]');
-    //     container.data('dd-array-controller').remove(item);
-    //     evt.stopPropagation();
-    // });
 }

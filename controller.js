@@ -270,102 +270,11 @@ function Controller(dbxAppId) {
     };
 
     self._setupArrays = function() {
-        setup_dd_arrays({
+        initDDArrays({
             insertion: function(evt, item) { self._setupDDPaths(item); },
             reindex: function(evt, item, old_idx, new_idx) { self._setupDDPaths(item); }
         });
     }
-
-    self._arrayAppend = function(any_obj_in_array) {
-        self._arrayResize(any_obj_in_array, 1, true);
-    }
-
-
-    self.arraySort = function(container, key_fn) {
-        container = $(container);
-        var items = container.children('[data-dd-array="item"]');
-        items.sort(key_fn);
-        for (var i = 0; i < items.length; ++i) {
-            var item = $(items[i]);
-            if (item.attr('data-dd-index') != i.toString()) {
-                item.attr('data-dd-index', i.toString());
-                self._setupDDPaths(item);
-            }
-            if (i > 0) {
-                item.insertAfter(items[i - 1]);
-            }
-        }
-    };
-
-
-    self._arrayRemove = function(any_obj_in_item) {
-        var item = $(any_obj_in_item).closest('[data-dd-array="item"]');
-        var container = item.closest('[data-dd-array="container"]')
-        item.remove();
-        self._arrayReindex(container);
-        self._arrayUpdateCount(container);
-    }
-
-    self._arrayResize = function(any_obj_in_array, size, relative=false) {
-        var container = $(any_obj_in_array).closest('[data-dd-array="container"]');
-        var items = container.children('[data-dd-array="item"]');
-        if (relative) {
-            size = items.length + size;
-        }
-        if (items.length < size) {
-            var master = container.children('[data-dd-array="master"]');
-            var insertion_point = items.length > 0 ? items.last() : master;
-            for (var i = 0; i < size - items.length; ++i) {
-                // Clone the master, but copy the events too (add/remove buttons)
-                var new_item = master.clone(true);
-                new_item.removeClass('d-none')
-                    .attr('data-dd-array', 'item')
-                    .attr('data-dd-index', items.length + i)
-                    .insertAfter(insertion_point);
-                insertion_point = new_item;
-                self._setupDDPaths(new_item);
-            }
-        } else if (items.length > size) {
-            // No need for reindexing
-            items.each(function (idx, obj) {
-                if (idx >= size) {
-                    $(obj).remove();
-                }
-            });
-        } else {
-            return;
-        }
-        self._arrayUpdateCount(container);
-    }
-
-    self._arrayReindex = function(any_obj_in_array) {
-        var container = $(any_obj_in_array).closest('[data-dd-array="container"]');
-        var items = container.children('[data-dd-array="item"]');
-        items.each(function (idx, item) {
-            $(item).attr('data-dd-index', idx.toString());
-        });
-    }
-
-    self._arrayUpdateCount = function(any_obj_in_array, count=null) {
-        var container = $(any_obj_in_array).closest('[data-dd-array="container"]');
-        if (count == null) {
-            count = container.children('[data-dd-array="item"]').length;
-        }
-        var find_target = function(count_obj) {
-            var target = self._resolveTarget(count_obj);
-            if (target.attr('data-dd-array') !== 'container') {
-                target = target.closest('[data-dd-array="container"]');
-            }
-            return target;
-        };
-        $('[data-dd-array="count"]').each(function (idx, obj) {
-            obj = $(obj);
-            var target = find_target(obj);
-            if (target[0] === container[0]) {
-                obj.text(count.toString());
-            }
-        });
-    };
 
     self._resizeAllFormArrays = function() {
         var array_sizes = self.data.getArraySizes();
@@ -376,7 +285,10 @@ function Controller(dbxAppId) {
             // Is this a dynamic array?
             var arr = self.find(array_path + '[-1]');
             if (arr != null && arr.length > 0) {
-                self._arrayResize(arr, array_size);
+                // Arr points at the master
+                arr.closest('[data-dd-array="container"]')
+                   .data('dd-array-controller')
+                   .resize(array_size);
             }
         }
     }
