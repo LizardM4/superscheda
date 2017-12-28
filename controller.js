@@ -270,15 +270,7 @@ function Controller(dbxAppId) {
     };
 
     self._setupArrays = function() {
-        $('[data-dd-array="append"]').click(function(evt) {
-            self._arrayAppend(self._resolveTarget(this));
-            evt.stopPropagation();
-        });
-        $('[data-dd-array="remove"]').click(function(evt) {
-            self._arrayRemove(self._resolveTarget(this));
-            evt.stopPropagation();
-        });
-        $('[data-dd-array="master"]').addClass('d-none');
+        setup_dd_arrays({insertion: function(evt, item) { self._setupDDPaths(item); }});
     }
 
     self._arrayAppend = function(any_obj_in_array) {
