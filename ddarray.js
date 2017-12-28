@@ -107,13 +107,17 @@ function DDArray(container) {
 };
 
 
+var firstLevFilter = function(parent) {
+    return function(idx, obj) {
+        return $(obj).parentsUntil($(parent), '[data-dd-array="container"]').length == 0;
+    }
+}
+
 function _first_level_objs(parent, type='container') {
     parent = $(parent);
     return parent
         .find('[data-dd-array="' + type + '"]')
-        .filter(function (idx, obj) {
-            return $(obj).parentsUntil(parent, '[data-dd-array="container"]').length == 0;
-        });
+        .filter(firstLevFilter(parent));
 }
 
 function _clear_nested_arrays(parent) {

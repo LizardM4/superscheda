@@ -245,19 +245,36 @@ function Controller(dbxAppId) {
     };
 
     self._setupDynamicTitles = function() {
-        $('*[data-dd-array="master"] input.dd-dyn-title').each(function(idx, obj) {
-            obj = $(obj);
-            var default_txt = obj.closest('*[data-dd-array]').find('.dd-dyn-title:not(input)').text();
-            $(obj).change(function(evt) {
-                var target = $(this);
-                var txt = target.val().trim();
-                if (txt.length == 0) {
-                    txt = default_txt;
-                }
-                target.closest('*[data-dd-array]').find('.dd-dyn-title:not(input)').text(txt);
+        $('[data-dd-array="master"]').each(function(idx, master) {
+            master = $(master);
+            var input = master.find('input.dd-dyn-title')
+                .filter(firstLevFilter(master));
+            if (input.length == 0) {
+                return;
+            }
+            // Ok, set up an event on this container
+            var container = master.closest('[data-dd-array="container"]');
+            container.on('ddarray.insertion', function(evt, inserted_item) {
+                var item_input = inserted_item.find('input.dd-dyn-title')
+                    .filter(firstLevFilter(inserted_item));
+                item_input.change(function() {
+                    var new_title = $(this).val().trim();
+                    // Bubble an event up!!
+                    container.trigger('ddarray.title', [inserted_item, new_title]);
+                });
             });
         });
-    }
+    };
+
+    self._setupAttackTOC = function() {
+        $('#array_attacchi').on('ddarray.title', function(evt, item, title) {
+            evt.stopPropagation();
+            if (title.length == 0) {
+                title = 'Attacco';
+            }
+            item.find('span.dd-dyn-title').text(title);
+        });
+    };
 
     self._setupCustomDropdown = function() {
         $('.input-group-btn .dropdown-menu .dropdown-item').click(function(evt) {
@@ -367,8 +384,9 @@ function Controller(dbxAppId) {
         self._setupLoadFromModal();
         self._setupWaitingModal();
         self._setupAnimatedChevrons();
-        self._setupDynamicTitles();
         self._setupArrays();
+        self._setupDynamicTitles();
+        self._setupAttackTOC();
         self._setupCustomDropdown();
     };
 
