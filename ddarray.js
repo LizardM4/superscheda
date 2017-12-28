@@ -116,15 +116,26 @@ function _recursive_setup(parent, custom_events) {
         var dd_arr = new DDArray(obj);
 
         obj.data('dd-array-controller', dd_arr);
-        obj.on('ddarray.insertion', function(idx, inserted_item) {
+        obj.on('ddarray.insertion', function(evt, inserted_item) {
             inserted_item = $(inserted_item);
             _recursive_setup(inserted_item, custom_events);
             _first_level_objs(inserted_item, 'remove').click(function() {
                 dd_arr.remove(inserted_item);
             });
+            // It is important to stop propagation or the event will
+            // bubble up to the parent
+            evt.stopPropagation();
         });
-        obj.on('ddarray.removal', function(idx, item_to_remove) {
+        obj.on('ddarray.removal', function(evt, item_to_remove) {
             _clear_nested_arrays($(item_to_remove));
+            // It is important to stop propagation or the event will
+            // bubble up to the parent
+            evt.stopPropagation();
+        });
+        obj.on('ddarray.reindex', function(evt) {
+            // It is important to stop propagation or the event will
+            // bubble up to the parent
+            evt.stopPropagation();
         });
         // Custom events
         for (k in custom_events) {
