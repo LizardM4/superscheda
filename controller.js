@@ -270,7 +270,10 @@ function Controller(dbxAppId) {
     };
 
     self._setupArrays = function() {
-        setup_dd_arrays({insertion: function(evt, item) { self._setupDDPaths(item); }});
+        setup_dd_arrays({
+            insertion: function(evt, item) { self._setupDDPaths(item); },
+            reindex: function(evt, item, old_idx, new_idx) { self._setupDDPaths(item); }
+        });
     }
 
     self._arrayAppend = function(any_obj_in_array) {

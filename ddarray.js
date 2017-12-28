@@ -90,17 +90,17 @@ function DDArray(container) {
 };
 
 
-function _first_level_arrays(parent) {
+function _first_level_objs(parent, type='container') {
     parent = $(parent);
     return parent
-        .find('[data-dd-array="container"]')
+        .find('[data-dd-array="' + type + '"]')
         .filter(function (idx, obj) {
             return $(obj).parentsUntil(parent, '[data-dd-array="container"]').length == 0;
         });
 }
 
 function _clear_nested_arrays(parent) {
-    _first_level_arrays(parent).each(function (idx, obj) {
+    _first_level_objs(parent, 'container').each(function (idx, obj) {
         obj = $(obj);
         var controller = obj.data('dd-array-controller');
         controller.clear();
@@ -109,13 +109,19 @@ function _clear_nested_arrays(parent) {
 }
 
 function _recursive_setup(parent, custom_events) {
-    _first_level_arrays(parent).each(function (idx, obj) {
+    _first_level_objs(parent, 'container').each(function (idx, obj) {
         // This is a first level container
         obj = $(obj);
 
-        obj.data('dd-array-controller', new DDArray(obj));
+        var dd_arr = new DDArray(obj);
+
+        obj.data('dd-array-controller', dd_arr);
         obj.on('ddarray.insertion', function(idx, inserted_item) {
-            _recursive_setup($(inserted_item), custom_events);
+            inserted_item = $(inserted_item);
+            _recursive_setup(inserted_item, custom_events);
+            _first_level_objs(inserted_item, 'remove').click(function() {
+                dd_arr.remove(inserted_item);
+            });
         });
         obj.on('ddarray.removal', function(idx, item_to_remove) {
             _clear_nested_arrays($(item_to_remove));
@@ -124,6 +130,10 @@ function _recursive_setup(parent, custom_events) {
         for (k in custom_events) {
             obj.on('ddarray.' + k, custom_events[k]);
         }
+        // Adders and remover
+        _first_level_objs(obj, 'append').click(function() {
+            dd_arr.append();
+        });
     });
 }
 
@@ -140,15 +150,15 @@ function _resolve_target(obj, type) {
 function setup_dd_arrays(custom_events={}) {
     $('[data-dd-array="master"]').addClass('d-none');
     _recursive_setup($('body'), custom_events);
-    $('[data-dd-array="append"]').click(function(evt) {
-        var container = _resolve_target(this, 'container');
-        container.data('dd-array-controller').append();
-        evt.stopPropagation();
-    });
-    $('[data-dd-array="remove"]').click(function(evt) {
-        var item = _resolve_target(this, 'item');
-        var container = item.closest('[data-dd-array="container"]');
-        container.data('dd-array-controller').remove(item);
-        evt.stopPropagation();
-    });
+    // $('[data-dd-array="append"]').click(function(evt) {
+    //     var container = _resolve_target(this, 'container');
+    //     container.data('dd-array-controller').append();
+    //     evt.stopPropagation();
+    // });
+    // $('[data-dd-array="remove"]').click(function(evt) {
+    //     var item = _resolve_target(this, 'item');
+    //     var container = item.closest('[data-dd-array="container"]');
+    //     container.data('dd-array-controller').remove(item);
+    //     evt.stopPropagation();
+    // });
 }
