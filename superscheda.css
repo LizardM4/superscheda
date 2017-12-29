@@ -1,0 +1,305 @@
+/*
+ Superscheda
+ Copyright (C) 2017  Pietro Saccardi
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+
+/* ARRAY-RELATED ---------------------------------------------------------------------------*/
+
+/*Automatically hide all placeholders in the arrays if there is an item
+next to them*/
+*[data-dd-array="item"] ~ .array-placeholder { display: none!important; }
+
+/*Adds a little bit of spacing on the right of a row. Used for the inline arrays that have a
+table-like header: this makes sure that the last label on the right aligns correctly with the
+last column on the right (spacing rules for controls and labels are different.)*/
+.pr-custom {
+  padding-right: 1.25rem;
+}
+
+/*An array container is difficult to scroll through in XS and SM sizes, so make it always
+striped is marked as such. For normal devices, make it striped only if marked with always
+striped.*/
+@media (max-width: 767px) {
+  .striped {
+    border-top: 1px solid #e9ecef;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+  }
+  .striped:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, .05);
+  }
+  .striped:last-of-type {
+    border-bottom: 1px solid #e9ecef;
+  }
+}
+
+.always-stripe .striped {
+  border-top: 1px solid #e9ecef;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+}
+.always-stripe .striped:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, .05);
+}
+.always-stripe .striped:last-of-type {
+  border-bottom: 1px solid #e9ecef;
+}
+
+@media (min-width: 768px) {
+  /*Also set up a pt class that depends on striping, useful for giving better layout*/
+  .always-stripe .pt-1-if-striped {
+    padding-top: 0.4rem;
+  }
+}
+
+/*Custom spacing between attack cards*/
+#array_attacchi *[data-dd-array="item"] + *[data-dd-array="item"] {
+  margin-top: 0.3rem;
+}
+
+/* CUSTOM CHECKBOXES -----------------------------------------------------------------------*/
+
+/*Clear spacing around custom checkboxes, such as the ones in the abilities*/
+.input-group-btn .btn.btn-addon.btn-custom-checkbox {
+  margin: 0;
+  padding-left: 0.2rem;
+  padding-right: 0.2rem;
+}
+/*Hide the original checkbox; we will check it through the label*/
+.btn-custom-checkbox input[type="checkbox"] {
+  display: none!important;
+}
+/*Hide the (un)checked-only text*/
+.btn-custom-checkbox.active .toggle-inactive {
+  display: none!important;
+}
+.btn-custom-checkbox:not(.active) .toggle-active {
+  display: none!important;
+}
+/*Unchecked text has lower opacity*/
+.btn-custom-checkbox:not(.active) .toggle-inactive {
+  opacity: 0.5;
+}
+
+/* INPUT GROUP DROPDOWN --------------------------------------------------------------------*/
+
+/*Patch the dropdown buttons in the input group to look like some simple input group span*/
+.input-group-sm .dropdown-item {
+  font-size: .875rem;
+  line-height: 1.5;
+  padding: .25rem 1rem;
+}
+/*Reduce the spacing a little bit in the dropdown menu*/
+.input-group-sm .dropdown-menu {
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  min-width: 5rem;
+}
+/*Place textbox and make it look like a label; the items of the dropdown will fill the value
+of this. This has two advantages: first we may make it readwrite, and this gives us a combo
+box, otherwise we would need to set the value of an input or fetch the text of a span.*/
+.dropdown-toggle input[type="text"] {
+  padding: 0;
+  margin: 0;
+  border: none;
+  min-width: unset;
+  width: 1.8rem;
+  background: none;
+}
+/*This patches the visualization order for not having one control shadow the other when
+focused.*/
+.input-group-btn.show .btn-addon, .input-group-btn .btn-addon:focus {
+  z-index: 4;
+}
+.input-group-btn .btn-addon, .input-group-btn .btn-addon {
+  z-index: 0;
+}
+.input-group-btn .btn-addon:hover:not(:focus), .input-group-btn .btn-addon:hover:not(:focus) {
+  z-index: 0;
+}
+/*Patch the colors to make them look like a normal label or an active txtbox*/
+.btn-addon:hover {
+  color: #000;
+  background-color: #dae0e5;
+}
+.dropdown-toggle:hover input[type="text"] {
+  color: #000;
+}
+.btn-addon, .btn-addon input {
+  background-color: rgb(233, 236, 239);
+  border-color: rgb(206, 212, 218);
+  color: rgb(73, 80, 87);
+}
+.btn-addon:focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+  border-color: rgb(128, 189, 255);
+}
+/*This little trick makes two adjacent L/R borders overlap, in such a way that they look like
+a single separating border. When one control is lifted above the other, the effect is not
+disrupted.*/
+.input-group .input-group-btn:first-child .btn-addon:not(.dropdown-toggle) {
+  margin-right: -1px!important;
+}
+.input-group .input-group-btn:last-child .btn-addon:not(.dropdown-toggle) {
+  margin-left: -1px!important;
+}
+
+/* LAYOUT ----------------------------------------------------------------------------------*/
+
+/*Separatable columns have a separator only in sizes >= md*/
+@media (min-width: 768px) {
+  /* Border on the right only for non-last element */
+  .separatable:not(:last-of-type) {
+    border-right: 1px solid rgb(233, 236, 239);
+  }
+}
+
+/*Fix for scrollspy with a sticky top navbar. Lifts the anchor point up by the amount of the
+navbar.*/
+.hidden-anchor {
+  display: block;
+  position: relative;
+  top: -3.5rem;
+  visibility: hidden;
+}
+
+/* TOC -------------------------------------------------------------------------------------*/
+
+/*Sticky TOC, but right below the navbar*/
+.sticky-toc {
+  position: sticky!important;
+  top: 4rem;
+  max-height: calc(100vh - 4rem);
+  padding-left: 0;
+}
+
+/*Scrollable wrapper for the big, column-like TOC*/
+.toc-wrapper {
+  overflow-y: scroll;
+  max-height: calc(100vh - 4rem);
+}
+
+/*Scrollable wrapper for the dropdown menu*/
+.toc-small-wrapper {
+  overflow-y: scroll;
+  max-height: calc(100vh - 5rem);
+}
+
+/*Manually set the padding of the nav links in the TOC (slightly smaller)*/
+.nav-toc .nav-link {
+  padding: .2rem .5rem;
+}
+
+
+/* MISCELLANEOUS ---------------------------------------------------------------------------*/
+
+/*Patch size and position of the CC marker that represents whether an ability is class or
+crossed class ability*/
+i.fa.fa-copyright {
+  font-size: 1.3rem;
+  vertical-align: -0.15rem;
+}
+
+/*Tables cannot shrink controls arbitrarily; all inputs must be this size at least*/
+.table.table-sm.table-responsive tbody td input[type="text"] {
+  min-width: 3rem;
+}
+
+#main_nav {
+  box-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.2);
+}
+
+.btn-dbx-login {
+  cursor: default;
+}
+
+nav#main_nav .nav-item .btn:not([disabled]) {
+  cursor: pointer;
+}
+
+
+/* FORK ME RIBBON --------------------------------------------------------------------------*/
+
+
+/*Set the size of the ribbon, on small and big devices.*/
+@media (max-width: 767px) {
+  .forkme-ribbon .forkme-ribbon-background {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .forkme-ribbon .forkme-ribbon-background {
+    width: 5.6rem;
+    height: 5.6rem;
+  }
+}
+
+/*Fix the position and the z-index of all the components of the ribbon*/
+.forkme-ribbon .forkme-ribbon-background, .forkme-ribbon .forkme-ribbon-text {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+}
+
+/*The background is a skewed linear gradient; need to set the right origin.*/
+.forkme-ribbon .forkme-ribbon-background {
+  background: linear-gradient(90deg, #28a745, #1e7e34);
+  transform: skewX(-45deg);
+  transform-origin: 0% 100%;
+  box-shadow: -0.1rem 0 1rem rgba(0, 0, 0, 0.4);
+}
+
+/*The foreground has a top, dashed border, a box and text shadow and is rotated by 45 deg.*/
+.forkme-ribbon .forkme-ribbon-text {
+  transform: translate(50%, 0%) rotate(-45deg);
+  transform-origin: 50% 100%;
+  text-align: center;
+  border-top-style: dashed;
+  border-top-width: thin;
+  border-top-color: #f8f9fa;
+  padding-right: 10rem;
+  padding-left: 10rem;
+  padding-top: .15rem;
+  padding-bottom: 0.7rem;
+  color: #f8f9fa;
+  box-shadow: 0 0.1rem 0.2rem 0.1rem rgba(0, 0, 0, 0.5);
+  text-shadow: 0.05rem -0.05rem rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* DROPBOX ---------------------------------------------------------------------------------*/
+
+.dropbox-folder + .dropbox-file {
+  margin-top: 0.2rem;
+}
+
+.dropbox-file-list {
+  overflow-y: scroll;
+  max-height: calc(50vh);
+}
+
+body.has-dbx .d-none-w-dbx {
+  display: none!important;
+}
+
+body:not(.has-dbx) .d-none-wo-dbx {
+  display: none!important;
+}

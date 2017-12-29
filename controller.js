@@ -647,3 +647,28 @@ function parseQueryString() {
     }
     return url_params;
 }
+
+function _find_duplicates() {
+  var all_dd_paths = [];
+  var duplicates = [];
+  $('[data-dd-path]').each(function(idx, obj) {
+    all_dd_paths.push($(obj).data('dd-path'));
+  });
+  all_dd_paths.sort();
+  for (var i = 1; i < all_dd_paths.length; ++i) {
+    if (all_dd_paths[i - 1] == all_dd_paths[i]) {
+      if (duplicates.length == 0 || duplicates[duplicates.length - 1] != all_dd_paths[i]) {
+        duplicates.push(all_dd_paths[i]);
+      }
+    }
+  }
+  if (duplicates.length == 0) {
+    DD.notify('success',
+      'There are ' + all_dd_paths.length.toString() + ' identified unique controls. No duplicates.');
+  } else {
+    $('<pre></pre>').text(duplicates.join('\n')).appendTo(
+      DD.notify('danger',
+      'There are ' + all_dd_paths.length.toString() + ' identified controls, ' + duplicates.length.toString() + ' of them are duplicated.')
+    );
+  }
+}
