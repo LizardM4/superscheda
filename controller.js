@@ -21,7 +21,7 @@ function Controller(dbxAppId) {
     self.appId = dbxAppId;
     self.data = new Hier();
     self.dropbox = null;
-    self.localStorageOn = true;
+    self.hasLocalStorage = true;
 
     self._saveModal = null;
     self._saveExplorer = null;
@@ -86,7 +86,7 @@ function Controller(dbxAppId) {
                 'dato in locale. In particolare, dovrai loggarti volta per volta ' +
                 'su Dropbox.');
             $('#no_local_storage_warning').removeClass('d-none');
-            self.localStorageOn = false;
+            self.hasLocalStorage = false;
         }
         if (access_token) {
             self.dropbox = new Dropbox({accessToken: access_token});
@@ -102,7 +102,8 @@ function Controller(dbxAppId) {
     self._setHasDropbox = function(has_dbx) {
         if (has_dbx) {
             $('body').addClass('has-dbx');
-            if (self.localStorageOn) {
+            $('#btn_logout').prop('disabled', false);
+            if (self.hasLocalStorage) {
                 // Save the access token
                 window.localStorage.setItem('access_token', self.dropbox.getAccessToken());
                 window.localStorage.setItem('app_id', self.appId);
@@ -110,7 +111,7 @@ function Controller(dbxAppId) {
             self._setupSaveModal();
             self._setupLoadModal();
         } else {
-            if (self.localStorageOn) {
+            if (self.hasLocalStorage) {
                 // Forget the access token if any
                 window.localStorage.removeItem('access_token');
                 // Make sure we autosave before leaving this page
@@ -135,25 +136,19 @@ function Controller(dbxAppId) {
             $('#auth_dbx').modal('show');
         }
         // No matter what, enable the buttons
-        $('nav#main_nav button[disabled]').prop('disabled', false);
+        $('nav#main_nav button[disabled]').not('#btn_logout').prop('disabled', false);
     };
 
     self.autosave = function() {
         // Save everything before changing window
-        if (self.localStorageOn) {
+        if (self.hasLocalStorage) {
             self.updateHier();
             window.localStorage.setItem('_autosave', self.data.dump());
         }
     };
 
-    self.clearAutosave = function() {
-        if (self.localStorageOn) {
-            window.localStorage.removeItem('_autosave');
-        }
-    };
-
     self.loadAutosave = function() {
-        if (self.localStorageOn) {
+        if (self.hasLocalStorage) {
             // Check if there is anything to load
             var to_load = window.localStorage.getItem('_autosave');
             if (to_load && to_load.length > 0) {
@@ -164,6 +159,29 @@ function Controller(dbxAppId) {
         }
     };
 
+    self._setupLogoutButton = function() {
+        $('#btn_logout').click(function() {
+            self.dropbox.authTokenRevoke();
+            self.autosave();
+            if (window.hasLocalStorage) {
+                window.localStorage.removeItem('access_token');
+            }
+            // Clear access token parms
+            window.location.hash = '';
+            window.location.reload(true);
+        });
+    };
+
+    self._setupAutosave = function() {
+        if (self.hasLocalStorage) {
+            $(window).bind('unload', function() {
+                self.autosave();
+            });
+        }
+        var autosave_interval = 1000 * 60;
+        setInterval(function() { self.autosave(); }, autosave_interval);
+    };
+
     self._setupDlButton = function() {
         self._saveModal.on('show.bs.modal', function () {
             self.updateHier();
@@ -172,7 +190,7 @@ function Controller(dbxAppId) {
                     encodeURIComponent(self.data.dump()));
         });
         self._saveModal.find('a.btn[download]').click(function() {
-            self.clearAutosave();
+            self.autosave();
         });
     }
 
@@ -464,6 +482,7 @@ function Controller(dbxAppId) {
         self._saveModal = $('#save_to');
         self._loadModal = $('#load_from');
         self._getTokenAndTestLS();
+        // ^ will call _setupLoadModal and _setupSaveModal
         self._setupWaitingModal();
         self._setupAnimatedChevrons();
         self._setupDDPaths();
@@ -472,6 +491,8 @@ function Controller(dbxAppId) {
         self._setupAttackTOC();
         self._setupCustomDropdown();
         self._setupDlButton();
+        self._setupLogoutButton();
+        self._setupAutosave();
         self.loadAutosave();
     };
 
@@ -542,7 +563,7 @@ function Controller(dbxAppId) {
         })
             .then(function(response) {
                 self.notify('success', 'Salvato su \'' + path +'\'.', 5000);
-                self.clearAutosave();
+                self.autosave();
                 if (post_action) {
                     post_action(true);
                 }
@@ -560,7 +581,7 @@ function Controller(dbxAppId) {
         $.getJSON(name, function(json_data) {
             self.data.obj = json_data;
             self.updateForm();
-            self.clearAutosave();
+            self.autosave();
             if (post_action) {
                 post_action(true);
             }
@@ -580,7 +601,7 @@ function Controller(dbxAppId) {
                 reader.addEventListener('loadend', function() {
                     self.data.load(reader.result);
                     self.updateForm();
-                    self.clearAutosave();
+                    self.autosave();
                     if (post_action) {
                         post_action(true);
                     }

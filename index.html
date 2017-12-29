@@ -474,7 +474,7 @@ You should have received a copy of the GNU General Public License
         cursor: default;
       }
 
-      nav#main_nav .nav-item .btn.btn-outline-primary {
+      nav#main_nav .nav-item .btn:not([disabled]) {
         cursor: pointer;
       }
     </style>
@@ -504,6 +504,11 @@ You should have received a copy of the GNU General Public License
         </li>
         <li class="nav-item">
           <button disabled class="btn btn-sm mr-1 btn-outline-primary p-2" data-toggle="modal" data-target="#save_to"><i class="fa fa-lg fa-fw fa-floppy-o" aria-hidden="true"></i></a>
+        </li>
+        <li class="nav-item">
+          <button disabled id="btn_logout" class="btn btn-sm mr-1 btn-outline-danger p-2">
+            <i class="fa fa-lg fa-fw fa-sign-out" aria-hidden="true"></i>
+          </button>
         </li>
       </ul>
 
