@@ -67,6 +67,7 @@ You should have received a copy of the GNU General Public License
 
         DD.setup();
 
+        // Event for activating/deactivating the details of the abilities
         $('#toggle_abilities_modifier').click(function() {
           var obj = $(this);
           var t_active = obj.find('.toggle-active');
@@ -85,6 +86,7 @@ You should have received a copy of the GNU General Public License
           }
         });
 
+        // Event for sorting abilities by name
         $('#sort_abilities').click(function() {
           var compare = function(x, y) {
             return $(x).find('input[data-dd-id="nome"]').val().localeCompare(
@@ -94,12 +96,39 @@ You should have received a copy of the GNU General Public License
           $('#array_abilita').data('dd-array-controller').sort(compare);
         });
 
+        // Event for loading a new item
         $('#load_default').click(function(evt) {
+          // That's an 'a', so we need to prevent jumping to href="#"
           evt.preventDefault();
           evt.stopPropagation();
           DD.toggleWaiting(true);
           DD.loadRemote('default.json', function(res) { DD.toggleWaiting(false, res); });
         });
+
+        // Toggle the dd-nav-toc class that drives the toc; having multiple TOCs
+        // causes some not to trigger, so we toggle between one and the other.
+        $(window).resize(function() {
+            if ($(window).width() >= 768) {
+              if (!$('#toc_md').is('.dd-nav-toc')) {
+                $('#toc_md').addClass('dd-nav-toc');
+                $('#toc_sm').removeClass('dd-nav-toc');
+                // You need both these for scrollspy to refresh properly
+                $('body').scrollspy('refresh');
+                $(window).scroll();
+              }
+            } else {
+              if (!$('#toc_sm').is('.dd-nav-toc')) {
+                $('#toc_md').removeClass('dd-nav-toc');
+                $('#toc_sm').addClass('dd-nav-toc');
+                // You need both these for scrollspy to refresh properly
+                $('body').scrollspy('refresh');
+                $(window).scroll();
+              }
+            }
+        });
+
+        // Activate the TOCs
+        $(window).resize();
 
 
 
@@ -178,7 +207,7 @@ You should have received a copy of the GNU General Public License
       /*An array container is difficult to scroll through in XS and SM sizes, so make it always
       striped is marked as such. For normal devices, make it striped only if marked with always
       striped.*/
-      @media (max-width: 768px) {
+      @media (max-width: 767px) {
         .striped {
           border-top: 1px solid #e9ecef;
           padding-left: 0.3rem;
@@ -368,7 +397,7 @@ You should have received a copy of the GNU General Public License
 
 
       /*Set the size of the ribbon, on small and big devices.*/
-      @media (max-width: 768px) {
+      @media (max-width: 767px) {
         .forkme-ribbon .forkme-ribbon-background {
           width: 3.5rem;
           height: 3.5rem;
@@ -460,12 +489,15 @@ You should have received a copy of the GNU General Public License
 
 
 
-      <div class="dropdown-menu dd-nav-toc d-md-none">
+      <div class="dropdown-menu d-md-none" id="toc_sm">
         <div class="toc-small-wrapper">
           <a class="dropdown-item" href="#sec_base">Base</a>
           <a class="dropdown-item" href="#sec_caratteristiche">Caratteristiche</a>
           <a class="dropdown-item" href="#sec_tiri_salvezza">Tiri salvezza</a>
-          <a class="dropdown-item" href="#sec_competenze">Competenze, linguaggi e visione</a>
+          <a class="dropdown-item" href="#sec_comp_ling_vis">Competenze, linguaggi e visione</a>
+            <a class="dropdown-item pl-5" href="#sec_comp">Competenze</a>
+            <a class="dropdown-item pl-5" href="#sec_ling">Linguaggi</a>
+            <a class="dropdown-item pl-5" href="#sec_vis">Visione</a>
             <a class="dropdown-item pl-5" href="#sec_note">Note</a>
           <a class="dropdown-item" href="#sec_stat_attacco">Dado vita, armatura e statistiche attacco</a>
             <a class="dropdown-item pl-5" href="#sec_dado_vita">Dado vita</a>
@@ -483,6 +515,9 @@ You should have received a copy of the GNU General Public License
             <span class="d-none" data-dd-array="master"><a class="dropdown-item pl-5" href="#">Attacco</a></span>
           </div>
           <a class="dropdown-item" href="#sec_talenti_skills">Talenti, skill tricks, privilegi di classe</a>
+            <a class="dropdown-item pl-5" href="#sec_talenti">Talenti</a>
+            <a class="dropdown-item pl-5" href="#sec_skills">Skill tricks</a>
+            <a class="dropdown-item pl-5" href="#sec_privilegi">Privilegi di classe</a>
           <a class="dropdown-item" href="#sec_abilita">Abilità</a>
           <a class="dropdown-item" href="#sec_incantesimi">Incantesimi</a>
             <a class="dropdown-item pl-5" href="#sec_elenco_incantesimi">Elenco</a>
@@ -649,7 +684,7 @@ You should have received a copy of the GNU General Public License
 
 
 
-        <nav class="col-md-2 col-lg-3 sticky-toc small order-2 d-none d-md-block dd-nav-toc">
+        <nav class="col-md-2 col-lg-3 sticky-toc small order-2 d-none d-md-block" id="toc_md">
           <div class="toc-wrapper">
             <ul class="nav nav-toc nav-pills flex-column">
               <li class="nav-item">
@@ -662,7 +697,7 @@ You should have received a copy of the GNU General Public License
                 <a class="nav-link text-truncate" href="#sec_tiri_salvezza">Tiri salvezza</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link text-truncate" href="#sec_competenze">Competenze, linguaggi e visione</a>
+                <a class="nav-link text-truncate" href="#sec_comp_ling_vis">Competenze, linguaggi e visione</a>
                 <ul class="nav nav-toc nav-pills pl-2 flex-column">
                   <li class="nav-item">
                     <a class="nav-link text-truncate" href="#sec_note">Note</a>
@@ -682,14 +717,13 @@ You should have received a copy of the GNU General Public License
                     <a class="nav-link text-truncate" href="#sec_ogg_protettivi">Oggetti protettivi</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link text-truncate" href="#sec_bab">Bonus attacco base, Iniziativa</a>
+                    <a class="nav-link text-truncate" href="#sec_bab_iniziativa">Bonus attacco base, Iniziativa</a>
                   </li>
                   <li class="nav-item">
-                    <!-- TODO Scrollspy does not trigger on this -->
-                    <a class="nav-link text-truncate" href="#sec_punti_ferita">PF, RI, RD</a>
+                    <a class="nav-link text-truncate" href="#sec_pf_rd_ri">PF, RI, RD</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link text-truncate" href="#sec_lotta">Lotta, opportunità</a>
+                    <a class="nav-link text-truncate" href="#sec_lotta_opportunita">Lotta, opportunità</a>
                   </li>
                 </ul>
               </li>
@@ -1165,7 +1199,7 @@ You should have received a copy of the GNU General Public License
 
 
           <div class="card my-1" role="tab">
-            <span class="hidden-anchor" id="sec_competenze"></span>
+            <span class="hidden-anchor" id="sec_comp_ling_vis"></span>
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_competenze" aria-expanded="true" aria-controls="card_competenze">
               <h5 class="mb-0 text-truncate">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
@@ -1178,6 +1212,7 @@ You should have received a copy of the GNU General Public License
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-4 separatable">
+                    <span class="hidden-anchor d-md-none" id="sec_comp"></span>
                     <h6 class="text-truncate">Competenze in armi e armature</h6>
                     <div class="form-row">
                       <div class="col text-truncate">
@@ -1213,6 +1248,7 @@ You should have received a copy of the GNU General Public License
                     </div>
                   </div>
                   <div class="col-md-4 separatable">
+                    <span class="hidden-anchor d-md-none" id="sec_ling"></span>
                     <h6 class="text-truncate">Linguaggi</h6>
                     <div class="form-row">
                       <div class="col text-truncate">
@@ -1256,6 +1292,7 @@ You should have received a copy of the GNU General Public License
                     </div>
                   </div>
                   <div class="col-md-4">
+                    <span class="hidden-anchor d-md-none" id="sec_vis"></span>
                     <h6>Visione</h6>
                     <div class="form-row pr-custom">
                       <div class="col-8 text-truncate">
@@ -1523,8 +1560,9 @@ You should have received a copy of the GNU General Public License
                 </div>
 
                 <div class="row mt-md-3">
+                  <span class="hidden-anchor d-none d-md-block" id="sec_bab_iniziativa"></span>
                   <div class="col-md-6 separatable">
-                    <span class="hidden-anchor" id="sec_bab"></span>
+                    <span class="hidden-anchor d-md-none" id="sec_bab"></span>
                     <h6>Bonus attacco base</h6>
                     <table class="table table-striped table-sm table-responsive" data-dd-id="bonus_att_base">
                       <thead>
@@ -1550,7 +1588,7 @@ You should have received a copy of the GNU General Public License
                     </table>
                   </div>
                   <div class="col-md-6">
-                    <span class="hidden-anchor" id="sec_iniziativa"></span>
+                    <span class="hidden-anchor d-md-none" id="sec_iniziativa"></span>
                     <h6>Iniziativa</h6>
                     <table class="table table-striped table-sm table-responsive" data-dd-id="iniziativa">
                       <thead>
@@ -1576,8 +1614,9 @@ You should have received a copy of the GNU General Public License
                 </div>
 
                 <div class="row mt-md-3">
+                  <span class="hidden-anchor d-none d-md-block" id="sec_pf_rd_ri"></span>
                   <div class="col-md-3 separatable">
-                    <span class="hidden-anchor" id="sec_punti_ferita"></span>
+                    <span class="hidden-anchor d-md-none" id="sec_punti_ferita"></span>
                     <h6>Punti ferita</h6>
                     <table class="table table-striped table-sm table-responsive" data-dd-id="punti_ferita">
                       <thead>
@@ -1595,7 +1634,7 @@ You should have received a copy of the GNU General Public License
                     </table>
                   </div>
                   <div class="col-md-3 separatable">
-                    <span class="hidden-anchor" id="sec_res_incant"></span>
+                    <span class="hidden-anchor d-md-none" id="sec_res_incant"></span>
                     <h6 class="text-truncate">Res. Incantesimi</h6>
                     <table class="table table-striped table-sm table-responsive" data-dd-id="resistenza_incantesimi">
                       <thead>
@@ -1613,7 +1652,7 @@ You should have received a copy of the GNU General Public License
                     </table>
                   </div>
                   <div class="col-md-6">
-                    <span class="hidden-anchor" id="sec_res_danno"></span>
+                    <span class="hidden-anchor d-md-none" id="sec_res_danno"></span>
                     <h6>Resistenza danno</h6>
                     <table class="table table-striped table-sm table-responsive" data-dd-id="resistenza_danno">
                       <thead>
@@ -1639,8 +1678,9 @@ You should have received a copy of the GNU General Public License
                 </div>
 
                 <div class="row mt-md-3">
+                  <span class="hidden-anchor d-none d-md-block" id="sec_lotta_opportunita"></span>
                   <div class="col-md-9 separatable">
-                    <span class="hidden-anchor" id="sec_lotta"></span>
+                    <span class="hidden-anchor d-md-none" id="sec_lotta"></span>
                     <h6>Lotta</h6>
                     <table class="table table-striped table-sm table-responsive mb-0" data-dd-id="lotta">
                       <thead>
@@ -1670,7 +1710,7 @@ You should have received a copy of the GNU General Public License
                     </table>
                   </div>
                   <div class="col-md-3">
-                    <span class="hidden-anchor" id="sec_att_opportunita"></span>
+                    <span class="hidden-anchor d-md-none" id="sec_att_opportunita"></span>
                     <h6 class="text-truncate mt-3 mt-md-0">Att. di opportunità</h6>
                     <div>
                       <label class="col-form-label col-form-label-sm">Totale</label>
@@ -2086,6 +2126,7 @@ You should have received a copy of the GNU General Public License
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-4 separatable">
+                    <span class="hidden-anchor d-md-none" id="sec_talenti"></span>
                     <h6 class="text-truncate">Talenti e difetti, maneuvers, stances</h6>
                     <div class="form-row pr-custom">
                       <div class="col-6">
@@ -2128,6 +2169,7 @@ You should have received a copy of the GNU General Public License
                     </div>
                   </div>
                   <div class="col-md-4 separatable">
+                    <span class="hidden-anchor d-md-none" id="sec_skills"></span>
                     <h6>Skill tricks</h6>
                     <div class="form-row pr-custom">
                       <div class="col-8">
@@ -2170,6 +2212,7 @@ You should have received a copy of the GNU General Public License
                     </div>
                   </div>
                   <div class="col-md-4">
+                    <span class="hidden-anchor d-md-none" id="sec_privilegi"></span>
                     <h6 class="text-truncate">Privilegi di classe, capacità speciali</h6>
                     <div class="form-row pr-custom">
                       <div class="col-6">
