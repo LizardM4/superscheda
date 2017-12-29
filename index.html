@@ -476,6 +476,9 @@ You should have received a copy of the GNU General Public License
             <a class="dropdown-item pl-5" href="#sec_lotta">Lotta</a>
             <a class="dropdown-item pl-5" href="#sec_att_opportunita">Opportunità</a>
           <a class="dropdown-item" href="#sec_attacchi">Elenco attacchi</a>
+          <div id="toc_attacchi_sm" data-dd-array="container">
+            <span class="d-none" data-dd-array="master"><a class="dropdown-item pl-5" href="#">Attacco</a></span>
+          </div>
           <a class="dropdown-item" href="#sec_talenti_skills">Talenti, skill tricks, privilegi di classe</a>
           <a class="dropdown-item" href="#sec_abilita">Abilità</a>
           <a class="dropdown-item" href="#sec_incantesimi">Incantesimi</a>
@@ -679,6 +682,7 @@ You should have received a copy of the GNU General Public License
                     <a class="nav-link text-truncate" href="#sec_bab">Bonus attacco base, Iniziativa</a>
                   </li>
                   <li class="nav-item">
+                    <!-- TODO Scrollspy does not trigger on this -->
                     <a class="nav-link text-truncate" href="#sec_punti_ferita">PF, RI, RD</a>
                   </li>
                   <li class="nav-item">
@@ -688,6 +692,11 @@ You should have received a copy of the GNU General Public License
               </li>
               <li class="nav-item">
                 <a class="nav-link text-truncate" href="#sec_attacchi">Elenco attacchi</a>
+                <ul id="toc_attacchi_md" class="nav nav-toc nav-pills pl-2 flex-column" data-dd-array="container">
+                  <li class="nav-item d-none" data-dd-array="master">
+                    <a class="nav-link text-truncate" href="#">Attacco</a>
+                  </li>
+                </ul>
               </li>
               <li class="nav-item">
                 <a class="nav-link text-truncate" href="#sec_talenti_skills">Talenti, skill tricks, privilegi di classe</a>
@@ -1702,8 +1711,7 @@ You should have received a copy of the GNU General Public License
                 <div class="card d-none" data-dd-array="master" data-dd-id="attacchi" role="tab">
                   <div class="card-body">
                     <h6 class="card-title">
-                      <!-- TODO this id is duplicated and it needs to be updated automatically -->
-                      <span class="hidden-anchor" id="sec_attacchi"></span>
+                      <span class="hidden-anchor"></span>
                       <span class="dd-dyn-title">Attacco</span>
                       <button type="button" class="close text-danger" data-dd-array="remove" aria-label="Remove">
                         <i class="fa fa-minus-square" aria-hidden="true"></i>

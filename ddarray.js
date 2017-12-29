@@ -33,6 +33,10 @@ function DDArray(container) {
         self.resize(0);
     }
 
+    self.get = function(idx) {
+        return self.container.children('[data-dd-array="item"][data-dd-index="' + idx.toString() + '"]');
+    }
+
     self.resize = function(size, relative=false) {
         var items = self._getItems();
         if (relative) {
@@ -59,6 +63,7 @@ function DDArray(container) {
             .attr('data-dd-index', items.length)
             .insertAfter(insertion_point);
         self.container.trigger('ddarray.insertion', [new_item]);
+        return new_item;
     }
 
     self.remove = function(item) {

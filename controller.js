@@ -267,13 +267,43 @@ function Controller(dbxAppId) {
     };
 
     self._setupAttackTOC = function() {
-        $('#array_attacchi').on('ddarray.title', function(evt, item, title) {
+        var toc_sm = $('#toc_attacchi_sm').data('dd-array-controller');
+        var toc_md = $('#toc_attacchi_md').data('dd-array-controller');
+        $('#array_attacchi')
+            .on('ddarray.title', function(evt, item, title) {
+                evt.stopPropagation();
+                if (title.length == 0) {
+                    title = 'Attacco';
+                }
+                item.find('span.dd-dyn-title').text(title);
+                // Update the tocs too
+                var idx = Number.parseInt(item.attr('data-dd-index'));
+                toc_sm.get(idx).find('a').text(title);
+                toc_md.get(idx).find('a').text(title);
+            })
+            .on('ddarray.insertion', function(evt, item) {
+                evt.stopPropagation();
+                var idx = Number.parseInt(item.attr('data-dd-index'));
+                item.find('.hidden-anchor').attr('id', 'att_' + idx.toString());
+                toc_sm.append().find('a').attr('href', '#att_' + idx.toString());
+                toc_md.append().find('a').attr('href', '#att_' + idx.toString());
+            })
+            .on('ddarray.removal', function(evt, item) {
+                evt.stopPropagation();
+                var idx = Number.parseInt(item.attr('data-dd-index'));
+                toc_sm.remove(toc_sm.get(idx));
+                toc_md.remove(toc_md.get(idx));
+            })
+            .on('ddarray.reindex', function(evt, item, prev_idx, new_idx) {
+                evt.stopPropagation();
+                item.find('.hidden-anchor').attr('id', 'att_' + new_idx.toString());
+            });
+        var on_reindex = function(evt, item, prev_idx, new_idx) {
             evt.stopPropagation();
-            if (title.length == 0) {
-                title = 'Attacco';
-            }
-            item.find('span.dd-dyn-title').text(title);
-        });
+            item.find('a').attr('href', '#att_' + new_idx.toString());
+        };
+        toc_sm.container.on('ddarray.reindex', on_reindex);
+        toc_md.container.on('ddarray.reindex', on_reindex);
     };
 
     self._setupCustomDropdown = function() {
