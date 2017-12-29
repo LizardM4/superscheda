@@ -461,6 +461,22 @@ You should have received a copy of the GNU General Public License
         max-height: calc(50vh);
       }
 
+
+      body.has-dbx .d-none-w-dbx {
+        display: none!important;
+      }
+
+      body:not(.has-dbx) .d-none-wo-dbx {
+        display: none!important;
+      }
+
+      .btn-dbx-login {
+        cursor: default;
+      }
+
+      nav#main_nav .nav-item .btn.btn-outline-primary {
+        cursor: pointer;
+      }
     </style>
   </head>
   <body data-spy="scroll" data-target=".dd-nav-toc">
@@ -477,16 +493,17 @@ You should have received a copy of the GNU General Public License
           <a class="nav-link" target="_blank" href="https://gitlab.com/5p4k/superscheda/commit/%REV"><span class="badge badge-primary">β<span class="d-none d-md-inline-block"> %REV</span></span></a>
         </li>
         <li class="nav-item">
-          <a class="btn btn-sm mr-1 btn-outline-primary nav-link px-2" href="#" id="load_default"><i class="fa fa-lg fa-fw fa-file-text-o" aria-hidden="true"></i></a>
+          <button class="btn btn-sm mr-1 btn-outline-primary p-2" id="load_default">
+            <i class="fa fa-lg fa-fw fa-file-text-o" aria-hidden="true"></i>
+          </button>
         </li>
-        <li class="nav-item d-none">
-          <a class="btn btn-sm mr-1 btn-outline-primary nav-link px-2" href="#" data-toggle="modal" data-target="#auth_dbx"><i class="fa fa-lg fa-fw fa-dropbox" aria-hidden="true"></i></a>
+        <li class="nav-item">
+          <button disabled class="btn btn-sm mr-1 btn-outline-primary p-2" data-toggle="modal" data-target="#load_from">
+            <i class="fa fa-lg fa-fw fa-folder-open-o" aria-hidden="true"></i>
+          </button>
         </li>
-        <li class="nav-item d-none">
-          <a class="btn btn-sm mr-1 btn-outline-primary nav-link px-2" href="#" data-toggle="modal" data-target="#load_from"><i class="fa fa-lg fa-fw fa-folder-open-o" aria-hidden="true"></i></a>
-        </li>
-        <li class="nav-item d-none">
-          <a class="btn btn-sm mr-1 btn-outline-primary nav-link px-2" href="#" data-toggle="modal" data-target="#save_to"><i class="fa fa-lg fa-fw fa-floppy-o" aria-hidden="true"></i></a>
+        <li class="nav-item">
+          <button disabled class="btn btn-sm mr-1 btn-outline-primary p-2" data-toggle="modal" data-target="#save_to"><i class="fa fa-lg fa-fw fa-floppy-o" aria-hidden="true"></i></a>
         </li>
       </ul>
 
@@ -551,7 +568,13 @@ You should have received a copy of the GNU General Public License
           </div>
           <form novalidate>
             <div class="modal-body">
-              <div class="dropbox-explorer">
+              <p class="alert alert-warning d-none d-none-w-dbx" id="no_local_storage_warning">
+                Scarica adesso il tuo personaggio per non perdere le modifiche (local storage non è disponibile)!
+              </p>
+              <p class="d-none-w-dbx">
+                Superscheda usa Dropbox per salvare e caricare i contenuti (ad una pagina web è vietato accedere ai contenuti locali del tuo computer).
+              </p>
+              <div class="dropbox-explorer d-none-wo-dbx">
                 <nav aria-label="breadcrumb" class="dropbox-nav" data-path="/">
                   <ol class="breadcrumb p-2 mb-2">
                     <li class="breadcrumb-item active" aria-current="page">
@@ -566,7 +589,7 @@ You should have received a copy of the GNU General Public License
                 <ul class="dropbox-file-list list-unstyled px-2 mt-1 mb-2 border border-secondary rounded bg-light">
                 </ul>
               </div>
-              <div class="row">
+              <div class="row d-none-wo-dbx">
                 <label class="col-sm-2 col-form-label">File: </label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control" placeholder="file.json" required pattern=".+\.json">
@@ -580,7 +603,10 @@ You should have received a copy of the GNU General Public License
               <a class="btn btn-outline-secondary mr-auto" href="data:application/json;charset=utf-8,%7B%7D" download="personaggio.json">
                 <i class="fa fa-download" aria-hidden="true"></i> Scarica
               </a>
-              <button type="submit" class="btn btn-primary">Salva</button>
+              <a class="btn btn-primary btn-dbx-login d-none-w-dbx" href="#">
+                Accedi a <i class="fa fa-dropbox" aria-hidden="true"></i>
+              </a>
+              <button type="submit" class="btn btn-primary d-none-wo-dbx">Salva</button>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
             </div>
           </form>
@@ -605,12 +631,14 @@ You should have received a copy of the GNU General Public License
           <div class="modal-body">
             <p>
               Superscheda usa Dropbox per salvare e caricare i contenuti.
-              Puoi usare la pagina anche senza accedere a Dropbox, ma non potrai salvare le modifiche.
+              Puoi usare la pagina anche senza accedere a Dropbox, ma non potrai caricare file locali.
             </p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Ignora</button>
-            <a href="#" class="btn btn-primary">Accedi a Dropbox</a>
+            <a class="btn btn-primary btn-dbx-login d-none-w-dbx" href="#">
+              Accedi a <i class="fa fa-dropbox" aria-hidden="true"></i>
+            </a>
           </div>
         </div>
       </div>
@@ -630,22 +658,30 @@ You should have received a copy of the GNU General Public License
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body dropbox-explorer">
-            <nav aria-label="breadcrumb" class="dropbox-nav" data-path="/">
-              <ol class="breadcrumb p-2 mb-2">
-                <li class="breadcrumb-item active" aria-current="page">
-                  <i class="fa fa-dropbox" aria-hidden="true"></i>
-                </li>
-              </ol>
-            </nav>
-            <div class="dropbox-alert alert alert-danger d-none" role="alert"></div>
-            <p class="dropbox-spinner d-none text-center my-5">
-              <i class="fa fa-refresh fa-spin fa-3x"></i>
+          <div class="modal-body">
+            <p class="d-none-w-dbx">
+              Superscheda usa Dropbox per salvare e caricare i contenuti (ad una pagina web è vietato accedere ai contenuti locali del tuo computer).
             </p>
-            <ul class="dropbox-file-list list-unstyled px-2 my-1 border border-secondary rounded bg-light">
-            </ul>
+            <div class="dropbox-explorer d-none-wo-dbx">
+              <nav aria-label="breadcrumb" class="dropbox-nav" data-path="/">
+                <ol class="breadcrumb p-2 mb-2">
+                  <li class="breadcrumb-item active" aria-current="page">
+                    <i class="fa fa-dropbox" aria-hidden="true"></i>
+                  </li>
+                </ol>
+              </nav>
+              <div class="dropbox-alert alert alert-danger d-none" role="alert"></div>
+              <p class="dropbox-spinner d-none text-center my-5">
+                <i class="fa fa-refresh fa-spin fa-3x"></i>
+              </p>
+              <ul class="dropbox-file-list list-unstyled px-2 my-1 border border-secondary rounded bg-light">
+              </ul>
+            </div>
           </div>
           <div class="modal-footer">
+            <a class="btn btn-primary btn-dbx-login d-none-w-dbx" href="#">
+              Accedi a <i class="fa fa-dropbox" aria-hidden="true"></i>
+            </a>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
           </div>
         </div>

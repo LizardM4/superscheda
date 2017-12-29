@@ -21,6 +21,7 @@ function Controller(dbxAppId) {
     self.appId = dbxAppId;
     self.data = new Hier();
     self.dropbox = null;
+    self.localStorageOn = true;
 
     self._saveModal = null;
     self._saveExplorer = null;
@@ -65,23 +66,18 @@ function Controller(dbxAppId) {
             });
     };
 
-    self._setupDropbox = function() {
+    self._getTokenAndTestLS = function() {
         // Try to get the access token from the local storage
         var access_token = null;
-        var app_id = null;
         try {
-            var access_token = window.localStorage.getItem('access_token');
+            access_token = window.localStorage.getItem('access_token');
             // Use the app id for versioning; forget the token if needed
             var app_id = window.localStorage.getItem('app_id');
             if (!access_token || !app_id || app_id != self.appId) {
                 access_token = null;
-                app_id = null;
                 var parms = parseQueryString();
                 if ('access_token' in parms) {
                     access_token = parms['access_token'];
-                    app_id = self.appId;
-                    window.localStorage.setItem('access_token', access_token);
-                    window.localStorage.setItem('app_id', app_id);
                 }
             }
         } catch (e) {
@@ -89,16 +85,41 @@ function Controller(dbxAppId) {
                 'il local storage. Senza di esso non è possibile salvare alcun ' +
                 'dato in locale. In particolare, dovrai loggarti volta per volta ' +
                 'su Dropbox.');
+            $('#no_local_storage_warning').removeClass('d-none');
+            self.localStorageOn = false;
         }
         if (access_token) {
             self.dropbox = new Dropbox({accessToken: access_token});
-            // Enable the open and save button
-            $('*[data-target="#load_from"]').parent().removeClass('d-none');
-            $('*[data-target="#save_to"]').parent().removeClass('d-none');
+            // Test if this dropbox works
+            self.dropbox.usersGetCurrentAccount()
+                .then(function() { self._setHasDropbox(true); })
+                .catch(function() { self._setHasDropbox(false); });
         } else {
+            self._setHasDropbox(false);
+        }
+    };
+
+    self._setHasDropbox = function(has_dbx) {
+        if (has_dbx) {
+            $('body').addClass('has-dbx');
+            if (self.localStorageOn) {
+                // Save the access token
+                window.localStorage.setItem('access_token', self.dropbox.getAccessToken());
+                window.localStorage.setItem('app_id', self.appId);
+            }
+            self._setupSaveModal();
+            self._setupLoadModal();
+        } else {
+            if (self.localStorageOn) {
+                // Forget the access token if any
+                window.localStorage.removeItem('access_token');
+                // Make sure we autosave before leaving this page
+                $('.btn-dbx-login').click(function() {
+                    self.autosave();
+                });
+            }
+            // Fall back on a client-id base dbx
             self.dropbox = new Dropbox({clientId: self.appId});
-            // Enable the button for the authentication
-            $('*[data-target="#auth_dbx"]').parent().removeClass('d-none');
             // Generate  the authentication url
             var url = null;
             if (window.location.hostname == 'localhost') {
@@ -109,19 +130,55 @@ function Controller(dbxAppId) {
                 url = 'https://' + location.hostname + (location.port ? ':' + location.port : '')
                 url += location.pathname + (location.search ? location.search : '')
             }
-            $('#auth_dbx a').attr('href', self.dropbox.getAuthenticationUrl(url));
-            $(function() {
-                $('#auth_dbx').modal('show');
-            });
+            $('.btn-dbx-login').attr('href', self.dropbox.getAuthenticationUrl(url));
+            // Display the login dialog
+            $('#auth_dbx').modal('show');
+        }
+        // No matter what, enable the buttons
+        $('nav#main_nav button[disabled]').prop('disabled', false);
+    };
+
+    self.autosave = function() {
+        // Save everything before changing window
+        if (self.localStorageOn) {
+            self.updateHier();
+            window.localStorage.setItem('_autosave', self.data.dump());
         }
     };
 
-    self._setupSaveModal = function() {
-        self._saveModal = $('#save_to');
+    self.clearAutosave = function() {
+        if (self.localStorageOn) {
+            window.localStorage.removeItem('_autosave');
+        }
+    };
 
+    self.loadAutosave = function() {
+        if (self.localStorageOn) {
+            // Check if there is anything to load
+            var to_load = window.localStorage.getItem('_autosave');
+            if (to_load && to_load.length > 0) {
+                window.localStorage.removeItem('_autosave');
+                self.data.load(to_load);
+                self.updateForm();
+            }
+        }
+    };
+
+    self._setupDlButton = function() {
+        self._saveModal.on('show.bs.modal', function () {
+            self.updateHier();
+            self._saveModal.find('a.btn[download]')
+                .attr('href', 'data:application/json;charset=utf-8,' +
+                    encodeURIComponent(self.data.dump()));
+        });
+        self._saveModal.find('a.btn[download]').click(function() {
+            self.clearAutosave();
+        });
+    }
+
+    self._setupSaveModal = function() {
         var save_form = self._saveModal.find('form');
         var file_name_input = save_form.find('input');
-        var dl_btn = self._saveModal.find('a.btn[download]');
 
         // Setup dropbox explorer
         self._saveExplorer = new Explorer(
@@ -158,21 +215,17 @@ function Controller(dbxAppId) {
 
         // Make sure that the proposed name for download is something sensitive
         file_name_input.change(function() {
-            dl_btn.attr('download', file_name_input.val());
+            self._saveModal.find('a[download]').attr('download', file_name_input.val());
         });
 
         // When we open the modal, update everything that is needed
         self._saveModal.on('show.bs.modal', function () {
             save_form.removeClass('was-validated');
             self._saveExplorer.refresh();
-            dl_btn.attr('href', 'data:application/json;charset=utf-8,' +
-                encodeURIComponent(self.data.dump()));
         });
     };
 
-    self._setupLoadFromModal = function() {
-        self._loadModal = $('#load_from');
-
+    self._setupLoadModal = function() {
         // Setup dropbox explorer
         self._loadExplorer = new Explorer(
             self.dropbox,
@@ -245,7 +298,7 @@ function Controller(dbxAppId) {
     };
 
     self._setupDynamicTitles = function() {
-        $('[data-dd-array="master"]').each(function(idx, master) {
+        $('[data-dd-id][data-dd-array="master"]').each(function(idx, master) {
             master = $(master);
             var input = master.find('input.dd-dyn-title')
                 .filter(firstLevFilter(master));
@@ -341,7 +394,7 @@ function Controller(dbxAppId) {
     }
 
     self._truncateAllHierArrays = function() {
-        $('[data-dd-array="master"]').each(function (idx, obj) {
+        $('[data-dd-id][data-dd-array="master"]').each(function (idx, obj) {
             var n_children = $(obj).siblings('[data-dd-array="item"]').length;
             var path = self._getHierPath(obj);
             var item = self.data.get(path);
@@ -408,16 +461,18 @@ function Controller(dbxAppId) {
     };
 
     self.setup = function() {
-        self._setupDDPaths();
-        self._setupDropbox();
-        self._setupSaveModal();
-        self._setupLoadFromModal();
+        self._saveModal = $('#save_to');
+        self._loadModal = $('#load_from');
+        self._getTokenAndTestLS();
         self._setupWaitingModal();
         self._setupAnimatedChevrons();
+        self._setupDDPaths();
         self._setupArrays();
         self._setupDynamicTitles();
         self._setupAttackTOC();
         self._setupCustomDropdown();
+        self._setupDlButton();
+        self.loadAutosave();
     };
 
     self.updateHier = function() {
@@ -487,6 +542,7 @@ function Controller(dbxAppId) {
         })
             .then(function(response) {
                 self.notify('success', 'Salvato su \'' + path +'\'.', 5000);
+                self.clearAutosave();
                 if (post_action) {
                     post_action(true);
                 }
@@ -504,6 +560,7 @@ function Controller(dbxAppId) {
         $.getJSON(name, function(json_data) {
             self.data.obj = json_data;
             self.updateForm();
+            self.clearAutosave();
             if (post_action) {
                 post_action(true);
             }
@@ -523,6 +580,7 @@ function Controller(dbxAppId) {
                 reader.addEventListener('loadend', function() {
                     self.data.load(reader.result);
                     self.updateForm();
+                    self.clearAutosave();
                     if (post_action) {
                         post_action(true);
                     }
