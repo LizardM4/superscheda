@@ -79,8 +79,8 @@ function DDArray(container) {
             item = $(item);
             var prev_idx = Number.parseInt(item.attr('data-dd-index'));
             if (prev_idx != idx) {
-                self.container.trigger('ddarray.reindex', [item, prev_idx, idx]);
                 item.attr('data-dd-index', idx.toString());
+                self.container.trigger('ddarray.reindex', [item, prev_idx, idx]);
             }
         });
     }
@@ -91,9 +91,9 @@ function DDArray(container) {
         for (var i = 0; i < items.length; ++i) {
             var item = $(items[i]);
             var prev_idx = Number.parseInt(item.attr('data-dd-index'));
-            if (prev_idx != idx) {
-                self.container.trigger('ddarray.reindex', [item, prev_idx, idx]);
-                item.attr('data-dd-index', idx.toString());
+            if (prev_idx != i) {
+                item.attr('data-dd-index', i.toString());
+                self.container.trigger('ddarray.reindex', [item, prev_idx, i]);
             }
             if (i > 0) {
                 item.insertAfter(items[i - 1]);

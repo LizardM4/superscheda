@@ -86,11 +86,12 @@ You should have received a copy of the GNU General Public License
         });
 
         $('#sort_abilities').click(function() {
-          DD.arraySort($('#array_abilita'), function(x, y) {
+          var compare = function(x, y) {
             return $(x).find('input[data-dd-id="nome"]').val().localeCompare(
               $(y).find('input[data-dd-id="nome"]').val()
             );
-          });
+          };
+          $('#array_abilita').data('dd-array-controller').sort(compare);
         });
 
         $('#load_default').click(function() {
