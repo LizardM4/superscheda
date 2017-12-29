@@ -94,7 +94,9 @@ You should have received a copy of the GNU General Public License
           $('#array_abilita').data('dd-array-controller').sort(compare);
         });
 
-        $('#load_default').click(function() {
+        $('#load_default').click(function(evt) {
+          evt.preventDefault();
+          evt.stopPropagation();
           DD.toggleWaiting(true);
           DD.loadRemote('default.json', function(res) { DD.toggleWaiting(false, res); });
         });
