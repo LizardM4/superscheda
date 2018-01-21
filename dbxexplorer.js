@@ -23,7 +23,7 @@ Requires a minimum seup as follows:
   <nav class="dropbox-nav" data-path="/">
     <ol class="breadcrumb">
       <li class="breadcrumb-item active" aria-current="page">
-        <i class="fa fa-dropbox" aria-hidden="true"></i>
+        <i class="fab fa-dropbox" aria-hidden="true"></i>
       </li>
     </ol>
   </nav>
@@ -109,7 +109,7 @@ function Explorer(dbx, explorer, file_click_evt, entry_filter=null) {
             }
             if (pieces[i] == '') {
                 // Use a dropbox icon
-                $('<i class="fa fa-dropbox" aria-hidden="true"></i>').appendTo(item);
+                $('<i class="fab fa-dropbox" aria-hidden="true"></i>').appendTo(item);
             } else {
                 // Set the text instead
                 item.text(pieces[i]);
@@ -161,7 +161,7 @@ function Explorer(dbx, explorer, file_click_evt, entry_filter=null) {
                 $('<a href="#"></a>')
                     .text(' ' + name)
                     .attr('data-file', name)
-                    .prepend($('<i class="fa fa-file" aria-hidden="true"></i>'))
+                    .prepend($('<i class="far fa-file" aria-hidden="true"></i>'))
                     .click(self._file_evt)
                     .appendTo(
                         $('<li></li>')
@@ -172,7 +172,7 @@ function Explorer(dbx, explorer, file_click_evt, entry_filter=null) {
                 $('<a href="#"></a>')
                     .text(' ' + name)
                     .attr('data-file', name)
-                    .prepend($('<i class="fa fa-folder" aria-hidden="true"></i>'))
+                    .prepend($('<i class="far fa-folder" aria-hidden="true"></i>'))
                     .click(function(evt) {
                         evt.preventDefault();
                         evt.stopPropagation();

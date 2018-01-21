@@ -54,7 +54,7 @@ You should have received a copy of the GNU General Public License
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <!-- Fontawesome 4 follows -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
 
     <!-- Dropbox APIs -->
     <script src="https://unpkg.com/dropbox/dist/Dropbox-sdk.min.js"></script>
@@ -148,7 +148,7 @@ You should have received a copy of the GNU General Public License
   <body data-spy="scroll" data-target=".dd-nav-toc">
     <nav class="navbar sticky-top navbar-light bg-light" id="main_nav">
       <button class="btn btn-outline-secondary d-md-none" type="button" data-toggle="dropdown" aria-expanded="false" aria-label="Toggle toc">
-        <i class="fa fa-bars" aria-hidden="true"></i>
+        <i class="fas fa-bars" aria-hidden="true"></i>
       </button>
       <a href="#" class="navbar-brand py-0">
         <img src="superscheda.svg" alt="Scheda D&amp;D 3.5" style="height: 2.3rem;" class="align-middle">
@@ -160,20 +160,20 @@ You should have received a copy of the GNU General Public License
         </li>
         <li class="nav-item">
           <button class="btn btn-sm mr-1 btn-outline-primary p-2" id="load_default">
-            <i class="fa fa-file-text-o fa-fw fa-lg" aria-hidden="true"></i>
+            <i class="fas fa-file-alt fa-fw fa-lg" aria-hidden="true"></i>
           </button>
         </li>
         <li class="nav-item">
           <button disabled class="btn btn-sm mr-1 btn-outline-primary p-2" data-toggle="modal" data-target="#load_from">
-            <i class="fa fa-folder-open-o fa-fw fa-lg" aria-hidden="true"></i>
+            <i class="fas fa-folder-open fa-fw fa-lg" aria-hidden="true"></i>
           </button>
         </li>
         <li class="nav-item">
-          <button disabled class="btn btn-sm mr-1 btn-outline-primary p-2" data-toggle="modal" data-target="#save_to"><i class="fa fa-floppy-o fa-fw fa-lg" aria-hidden="true"></i></button>
+          <button disabled class="btn btn-sm mr-1 btn-outline-primary p-2" data-toggle="modal" data-target="#save_to"><i class="fas fa-save fa-fw fa-lg" aria-hidden="true"></i></button>
         </li>
         <li class="nav-item">
           <button disabled id="btn_logout" class="btn btn-sm mr-1 btn-outline-danger p-2">
-            <i class="fa fa-sign-out fa-fw fa-lg" aria-hidden="true"></i>
+            <i class="fas fa-sign-out-alt fa-fw fa-lg" aria-hidden="true"></i>
           </button>
         </li>
       </ul>
@@ -231,7 +231,7 @@ You should have received a copy of the GNU General Public License
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="save_to_title">Salva su <i class="fa fa-dropbox" aria-hidden="true"></i></h5>
+            <h5 class="modal-title" id="save_to_title">Salva su <i class="fab fa-dropbox" aria-hidden="true"></i></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -248,13 +248,13 @@ You should have received a copy of the GNU General Public License
                 <nav aria-label="breadcrumb" class="dropbox-nav" data-path="/">
                   <ol class="breadcrumb p-2 mb-2">
                     <li class="breadcrumb-item active" aria-current="page">
-                      <i class="fa fa-dropbox" aria-hidden="true"></i>
+                      <i class="fab fa-dropbox" aria-hidden="true"></i>
                     </li>
                   </ol>
                 </nav>
                 <div class="dropbox-alert alert alert-danger d-none" role="alert"></div>
                 <p class="dropbox-spinner d-none text-center my-5">
-                  <i class="fa fa-refresh fa-spin fa-3x"></i>
+                  <i class="fas fa-sync-alt fa-spin fa-3x"></i>
                 </p>
                 <ul class="dropbox-file-list list-unstyled px-2 mt-1 mb-2 border border-secondary rounded bg-light">
                 </ul>
@@ -271,10 +271,10 @@ You should have received a copy of the GNU General Public License
             </div>
             <div class="modal-footer">
               <a class="btn btn-outline-secondary mr-auto" href="data:application/json;charset=utf-8,%7B%7D" download="personaggio.json">
-                <i class="fa fa-download" aria-hidden="true"></i> Scarica
+                <i class="fas fa-download" aria-hidden="true"></i> Scarica
               </a>
               <a class="btn btn-primary btn-dbx-login d-none-w-dbx" href="#">
-                Accedi a <i class="fa fa-dropbox" aria-hidden="true"></i>
+                Accedi a <i class="fab fa-dropbox" aria-hidden="true"></i>
               </a>
               <button type="submit" class="btn btn-primary d-none-wo-dbx">Salva</button>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
@@ -293,7 +293,7 @@ You should have received a copy of the GNU General Public License
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="auth_dbx_title"><i class="fa fa-dropbox" aria-hidden="true"></i> Accesso a Dropbox</h5>
+            <h5 class="modal-title" id="auth_dbx_title"><i class="fab fa-dropbox" aria-hidden="true"></i> Accesso a Dropbox</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -307,7 +307,7 @@ You should have received a copy of the GNU General Public License
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Ignora</button>
             <a class="btn btn-primary btn-dbx-login d-none-w-dbx" href="#">
-              Accedi a <i class="fa fa-dropbox" aria-hidden="true"></i>
+              Accedi a <i class="fab fa-dropbox" aria-hidden="true"></i>
             </a>
           </div>
         </div>
@@ -323,7 +323,7 @@ You should have received a copy of the GNU General Public License
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="load_from_title">Carica da <i class="fa fa-dropbox" aria-hidden="true"></i></h5>
+            <h5 class="modal-title" id="load_from_title">Carica da <i class="fab fa-dropbox" aria-hidden="true"></i></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -336,13 +336,13 @@ You should have received a copy of the GNU General Public License
               <nav aria-label="breadcrumb" class="dropbox-nav" data-path="/">
                 <ol class="breadcrumb p-2 mb-2">
                   <li class="breadcrumb-item active" aria-current="page">
-                    <i class="fa fa-dropbox" aria-hidden="true"></i>
+                    <i class="fab fa-dropbox" aria-hidden="true"></i>
                   </li>
                 </ol>
               </nav>
               <div class="dropbox-alert alert alert-danger d-none" role="alert"></div>
               <p class="dropbox-spinner d-none text-center my-5">
-                <i class="fa fa-refresh fa-spin fa-3x"></i>
+                <i class="fas fa-sync-alt fa-spin fa-3x"></i>
               </p>
               <ul class="dropbox-file-list list-unstyled px-2 my-1 border border-secondary rounded bg-light">
               </ul>
@@ -350,7 +350,7 @@ You should have received a copy of the GNU General Public License
           </div>
           <div class="modal-footer">
             <a class="btn btn-primary btn-dbx-login d-none-w-dbx" href="#">
-              Accedi a <i class="fa fa-dropbox" aria-hidden="true"></i>
+              Accedi a <i class="fab fa-dropbox" aria-hidden="true"></i>
             </a>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
           </div>
@@ -366,9 +366,9 @@ You should have received a copy of the GNU General Public License
         <div class="forkme-ribbon-text pb-sm-2 pb-xs-2">
             <span class="d-none d-md-inline-block small">
               Fork me on<br>
-              <i class="fa fa-gitlab fa-2x" aria-hidden="true"></i>
+              <i class="fab fa-gitlab fa-2x" aria-hidden="true"></i>
             </span>
-            <i class="d-md-none fa fa-gitlab fa-lg" aria-hidden="true"></i>
+            <i class="d-md-none fab fa-gitlab fa-lg" aria-hidden="true"></i>
         </div>
       </a>
     </div>
@@ -377,7 +377,7 @@ You should have received a copy of the GNU General Public License
     <div class="modal fade" tabindex="-1" role="dialog" id="waiting" aria-hidden="true" data-backdrop="static" data-keyboard="false">
       <div class="my-0 h-100 d-flex align-items-center justify-content-center">
         <div class="modal-dialog text-light" role="document">
-          <i class="fa fa-spinner fa-spin fa-5x"></i>
+          <i class="fas fa-spinner fa-pulse fa-5x"></i>
         </div>
       </div>
     </div>
@@ -495,7 +495,7 @@ You should have received a copy of the GNU General Public License
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_base" aria-expanded="true" aria-controls="card_base">
               <h5 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
-                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                  <i class="fas fa-chevron-circle-up" aria-hidden="true"></i>
                 </button>
                 Base
               </h5>
@@ -652,7 +652,7 @@ You should have received a copy of the GNU General Public License
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_caratteristiche" aria-expanded="true" aria-controls="card_caratteristiche">
               <h5 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
-                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                  <i class="fas fa-chevron-circle-up" aria-hidden="true"></i>
                 </button>
                 Caratteristiche
               </h5>
@@ -784,7 +784,7 @@ You should have received a copy of the GNU General Public License
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_tiri_salvezza" aria-expanded="true" aria-controls="card_tiri_salvezza">
               <h5 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
-                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                  <i class="fas fa-chevron-circle-up" aria-hidden="true"></i>
                 </button>
                 Tiri salvezza
               </h5>
@@ -914,7 +914,7 @@ You should have received a copy of the GNU General Public License
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_competenze" aria-expanded="true" aria-controls="card_competenze">
               <h5 class="mb-0 text-truncate">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
-                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                  <i class="fas fa-chevron-circle-up" aria-hidden="true"></i>
                 </button>
                 Competenze, linguaggi e visione
               </h5>
@@ -936,15 +936,15 @@ You should have received a copy of the GNU General Public License
                           <div class="input-group-prepend btn-group-toggle" data-toggle="buttons">
                             <span class="btn btn-addon btn-custom-checkbox" tabindex="0">
                               <input type="checkbox" data-dd-id="attivo">
-                              <i class="fa fa-square-o fa-fw fa-lg toggle-inactive" aria-hidden="true"></i>
-                              <i class="fa fa-check-square-o fa-fw fa-lg toggle-active" aria-hidden="true"></i>
+                              <i class="far fa-square fa-fw fa-lg toggle-inactive" aria-hidden="true"></i>
+                              <i class="far fa-check-square fa-fw fa-lg toggle-active" aria-hidden="true"></i>
                             </span>
                           </div>
                           <input type="text" class="form-control" data-dd-id="nome">
                         </div>
                         <div class="col-auto form-row align-items-center justify-content-center">
                           <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
-                            <i class="fa fa-minus-square" aria-hidden="true"></i>
+                            <i class="fas fa-minus-square" aria-hidden="true"></i>
                           </button>
                         </div>
                       </div>
@@ -953,7 +953,7 @@ You should have received a copy of the GNU General Public License
                       </p>
                       <p class="form-text text-center">
                         <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
-                          <i class="fa fa-plus-square" aria-hidden="true"></i>
+                          <i class="fas fa-plus-square" aria-hidden="true"></i>
                         </button>
                       </p>
                     </div>
@@ -980,15 +980,15 @@ You should have received a copy of the GNU General Public License
                           <div class="input-group-prepend btn-group-toggle" data-toggle="buttons">
                             <span class="btn btn-addon btn-custom-checkbox" tabindex="0">
                               <input type="checkbox" data-dd-id="attivo">
-                              <i class="fa fa-square fa-fw fa-lg toggle-inactive" aria-hidden="true"></i>
-                              <i class="fa fa-check-square-o fa-fw fa-lg toggle-active" aria-hidden="true"></i>
+                              <i class="far fa-square fa-fw fa-lg toggle-inactive" aria-hidden="true"></i>
+                              <i class="far fa-check-square fa-fw fa-lg toggle-active" aria-hidden="true"></i>
                             </span>
                           </div>
                           <input type="text" class="form-control" data-dd-id="nome">
                         </div>
                         <div class="col-auto form-row align-items-center justify-content-center">
                           <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
-                            <i class="fa fa-minus-square" aria-hidden="true"></i>
+                            <i class="fas fa-minus-square" aria-hidden="true"></i>
                           </button>
                         </div>
                       </div>
@@ -997,7 +997,7 @@ You should have received a copy of the GNU General Public License
                       </p>
                       <p class="form-text text-center">
                         <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
-                          <i class="fa fa-plus-square" aria-hidden="true"></i>
+                          <i class="fas fa-plus-square" aria-hidden="true"></i>
                         </button>
                       </p>
                     </div>
@@ -1020,8 +1020,8 @@ You should have received a copy of the GNU General Public License
                             <div class="input-group-prepend btn-group-toggle" data-toggle="buttons">
                               <span class="btn btn-addon btn-custom-checkbox" tabindex="0">
                                 <input type="checkbox" data-dd-id="attivo">
-                                <i class="fa fa-square fa-fw fa-lg toggle-inactive" aria-hidden="true"></i>
-                                <i class="fa fa-check-square-o fa-fw fa-lg toggle-active" aria-hidden="true"></i>
+                                <i class="far fa-square fa-fw fa-lg toggle-inactive" aria-hidden="true"></i>
+                                <i class="far fa-check-square fa-fw fa-lg toggle-active" aria-hidden="true"></i>
                               </span>
                             </div>
                             <input type="text" class="form-control" data-dd-id="nome">
@@ -1032,7 +1032,7 @@ You should have received a copy of the GNU General Public License
                         </div>
                         <div class="col-auto form-row align-items-center justify-content-center">
                           <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
-                            <i class="fa fa-minus-square" aria-hidden="true"></i>
+                            <i class="fas fa-minus-square" aria-hidden="true"></i>
                           </button>
                         </div>
                       </div>
@@ -1041,7 +1041,7 @@ You should have received a copy of the GNU General Public License
                       </p>
                       <p class="form-text text-center">
                         <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
-                          <i class="fa fa-plus-square" aria-hidden="true"></i>
+                          <i class="fas fa-plus-square" aria-hidden="true"></i>
                         </button>
                       </p>
                     </div>
@@ -1075,7 +1075,7 @@ You should have received a copy of the GNU General Public License
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_stat_attacco" aria-expanded="true" aria-controls="card_stat_attacco">
               <h5 class="mb-0 text-truncate">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
-                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                  <i class="fas fa-chevron-circle-up" aria-hidden="true"></i>
                 </button>
                 Dado vita, armatura e statistiche attacco
               </h5>
@@ -1256,7 +1256,7 @@ You should have received a copy of the GNU General Public License
                     </div>
                     <div class="col-auto form-row align-items-center justify-content-center">
                       <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
-                        <i class="fa fa-minus-square" aria-hidden="true"></i>
+                        <i class="fas fa-minus-square" aria-hidden="true"></i>
                       </button>
                     </div>
                   </div>
@@ -1265,7 +1265,7 @@ You should have received a copy of the GNU General Public License
                   </p>
                   <p class="form-text text-center mb-1">
                     <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
-                      <i class="fa fa-plus-square" aria-hidden="true"></i>
+                      <i class="fas fa-plus-square" aria-hidden="true"></i>
                     </button>
                   </p>
                 </div>
@@ -1455,7 +1455,7 @@ You should have received a copy of the GNU General Public License
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_attacchi" aria-expanded="true" aria-controls="card_attacchi">
               <h5 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
-                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                  <i class="fas fa-chevron-circle-up" aria-hidden="true"></i>
                 </button>
                 Elenco attacchi
               </h5>
@@ -1468,7 +1468,7 @@ You should have received a copy of the GNU General Public License
                       <span class="hidden-anchor"></span>
                       <span class="dd-dyn-title">Attacco</span>
                       <button type="button" class="close text-danger" data-dd-array="remove" aria-label="Remove">
-                        <i class="fa fa-minus-square" aria-hidden="true"></i>
+                        <i class="fas fa-minus-square" aria-hidden="true"></i>
                       </button>
                     </h6>
                     <div class="form-row">
@@ -1651,7 +1651,7 @@ You should have received a copy of the GNU General Public License
                             </div>
                             <div class="col-auto form-row align-items-center justify-content-center">
                               <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
-                                <i class="fa fa-minus-square" aria-hidden="true"></i>
+                                <i class="fas fa-minus-square" aria-hidden="true"></i>
                               </button>
                             </div>
                           </div>
@@ -1660,7 +1660,7 @@ You should have received a copy of the GNU General Public License
                           </p>
                           <p class="form-text text-center">
                             <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
-                              <i class="fa fa-plus-square" aria-hidden="true"></i>
+                              <i class="fas fa-plus-square" aria-hidden="true"></i>
                             </button>
                           </p>
                         </div>
@@ -1769,7 +1769,7 @@ You should have received a copy of the GNU General Public License
                             </div>
                             <div class="col-auto form-row align-items-center justify-content-center">
                               <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
-                                <i class="fa fa-minus-square" aria-hidden="true"></i>
+                                <i class="fas fa-minus-square" aria-hidden="true"></i>
                               </button>
                             </div>
                           </div>
@@ -1778,7 +1778,7 @@ You should have received a copy of the GNU General Public License
                           </p>
                           <p class="form-text text-center">
                             <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
-                              <i class="fa fa-plus-square" aria-hidden="true"></i>
+                              <i class="fas fa-plus-square" aria-hidden="true"></i>
                             </button>
                           </p>
                         </div>
@@ -1795,7 +1795,7 @@ You should have received a copy of the GNU General Public License
                 </p>
                 <p class="form-text text-center">
                   <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
-                    <i class="fa fa-plus-square" aria-hidden="true"></i>
+                    <i class="fas fa-plus-square" aria-hidden="true"></i>
                   </button>
                 </p>
               </div>
@@ -1828,7 +1828,7 @@ You should have received a copy of the GNU General Public License
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_talenti_skills" aria-expanded="true" aria-controls="card_talenti_skills">
               <h5 class="mb-0 text-truncate">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
-                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                  <i class="fas fa-chevron-circle-up" aria-hidden="true"></i>
                 </button>
                 Talenti, skill tricks, privilegi di classe
               </h5>
@@ -1865,7 +1865,7 @@ You should have received a copy of the GNU General Public License
                         </div>
                         <div class="col-auto form-row align-items-center justify-content-center">
                           <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
-                            <i class="fa fa-minus-square" aria-hidden="true"></i>
+                            <i class="fas fa-minus-square" aria-hidden="true"></i>
                           </button>
                         </div>
                       </div>
@@ -1874,7 +1874,7 @@ You should have received a copy of the GNU General Public License
                       </p>
                       <p class="form-text text-center mb-1">
                         <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
-                          <i class="fa fa-plus-square" aria-hidden="true"></i>
+                          <i class="fas fa-plus-square" aria-hidden="true"></i>
                         </button>
                       </p>
                     </div>
@@ -1908,7 +1908,7 @@ You should have received a copy of the GNU General Public License
                         </div>
                         <div class="col-auto form-row align-items-center justify-content-center">
                           <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
-                            <i class="fa fa-minus-square" aria-hidden="true"></i>
+                            <i class="fas fa-minus-square" aria-hidden="true"></i>
                           </button>
                         </div>
                       </div>
@@ -1917,7 +1917,7 @@ You should have received a copy of the GNU General Public License
                       </p>
                       <p class="form-text text-center mb-1">
                         <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
-                          <i class="fa fa-plus-square" aria-hidden="true"></i>
+                          <i class="fas fa-plus-square" aria-hidden="true"></i>
                         </button>
                       </p>
                     </div>
@@ -1951,7 +1951,7 @@ You should have received a copy of the GNU General Public License
                         </div>
                         <div class="col-auto form-row align-items-center justify-content-center">
                           <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
-                            <i class="fa fa-minus-square" aria-hidden="true"></i>
+                            <i class="fas fa-minus-square" aria-hidden="true"></i>
                           </button>
                         </div>
                       </div>
@@ -1960,7 +1960,7 @@ You should have received a copy of the GNU General Public License
                       </p>
                       <p class="form-text text-center mb-1">
                         <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
-                          <i class="fa fa-plus-square" aria-hidden="true"></i>
+                          <i class="fas fa-plus-square" aria-hidden="true"></i>
                         </button>
                       </p>
                     </div>
@@ -1993,7 +1993,7 @@ You should have received a copy of the GNU General Public License
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_abilita" aria-expanded="true" aria-controls="card_abilita">
               <h5 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
-                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                  <i class="fas fa-chevron-circle-up" aria-hidden="true"></i>
                 </button>
                 Abilità
               </h5>
@@ -2053,18 +2053,18 @@ You should have received a copy of the GNU General Public License
                             <div class="input-group-prepend btn-group-toggle" data-toggle="buttons">
                               <span class="btn btn-addon btn-custom-checkbox" tabindex="0">
                                 <input type="checkbox" data-dd-id="acquisita">
-                                <i class="fa fa-square fa-fw fa-lg toggle-inactive" aria-hidden="true"></i>
-                                <i class="fa fa-check-square-o fa-fw fa-lg toggle-active" aria-hidden="true"></i>
+                                <i class="far fa-square fa-fw fa-lg toggle-inactive" aria-hidden="true"></i>
+                                <i class="far fa-check-square fa-fw fa-lg toggle-active" aria-hidden="true"></i>
                               </span>
                             </div>
                             <input data-dd-id="nome" type="text" class="form-control form-control-sm">
                             <div class="input-group-append btn-group-toggle" data-toggle="buttons">
                               <span class="btn btn-addon btn-custom-checkbox" tabindex="0">
                                 <input type="checkbox" data-dd-id="di_classe">
-                                <i class="fa fa-square fa-fw fa-lg toggle-inactive" aria-hidden="true"></i>
-                                <i class="fa fa-check-square-o fa-fw fa-lg toggle-active" aria-hidden="true"></i>
-                                <i class="fa fa-copyright toggle-active" aria-hidden="true"></i>
-                                <i class="fa fa-copyright toggle-inactive" aria-hidden="true"></i>
+                                <i class="far fa-square fa-fw fa-lg toggle-inactive" aria-hidden="true"></i>
+                                <i class="far fa-check-square fa-fw fa-lg toggle-active" aria-hidden="true"></i>
+                                <i class="fas fa-copyright fa-lg toggle-active" aria-hidden="true"></i>
+                                <i class="fas fa-copyright fa-lg toggle-inactive" aria-hidden="true"></i>
                               </span>
                             </div>
                           </div>
@@ -2134,7 +2134,7 @@ You should have received a copy of the GNU General Public License
                     </div>
                     <div class="col-auto form-row align-items-center justify-content-center">
                       <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
-                        <i class="fa fa-minus-square" aria-hidden="true"></i>
+                        <i class="fas fa-minus-square" aria-hidden="true"></i>
                       </button>
                     </div>
                   </div>
@@ -2143,7 +2143,7 @@ You should have received a copy of the GNU General Public License
                   </p>
                   <p class="form-text text-center mb-1">
                     <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
-                      <i class="fa fa-plus-square" aria-hidden="true"></i>
+                      <i class="fas fa-plus-square" aria-hidden="true"></i>
                     </button>
                   </p>
                 </div>
@@ -2172,7 +2172,7 @@ You should have received a copy of the GNU General Public License
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_incantesimi" aria-expanded="true" aria-controls="card_incantesimi">
               <h5 class="mb-0">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
-                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                  <i class="fas fa-chevron-circle-up" aria-hidden="true"></i>
                 </button>
                 Incantesimi
               </h5>
@@ -2305,7 +2305,7 @@ You should have received a copy of the GNU General Public License
                     </div>
                     <div class="col-auto form-row align-items-center justify-content-center">
                       <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
-                        <i class="fa fa-minus-square" aria-hidden="true"></i>
+                        <i class="fas fa-minus-square" aria-hidden="true"></i>
                       </button>
                     </div>
                   </div>
@@ -2314,7 +2314,7 @@ You should have received a copy of the GNU General Public License
                   </p>
                   <p class="form-text text-center mb-1">
                     <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
-                      <i class="fa fa-plus-square" aria-hidden="true"></i>
+                      <i class="fas fa-plus-square" aria-hidden="true"></i>
                     </button>
                   </p>
                 </div>
@@ -2339,7 +2339,7 @@ You should have received a copy of the GNU General Public License
             <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_spostamento" aria-expanded="true" aria-controls="card_spostamento">
               <h5 class="mb-0 text-truncate">
                 <button type="button" class="close float-left mr-3" aria-label="Toggle">
-                  <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+                  <i class="fas fa-chevron-circle-up" aria-hidden="true"></i>
                 </button>
                 Equipaggiamento, peso, spostamento
               </h5>
@@ -2502,7 +2502,7 @@ You should have received a copy of the GNU General Public License
                     </div>
                     <div class="col-auto form-row align-items-center justify-content-center">
                       <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
-                        <i class="fa fa-minus-square" aria-hidden="true"></i>
+                        <i class="fas fa-minus-square" aria-hidden="true"></i>
                       </button>
                     </div>
                   </div>
@@ -2511,7 +2511,7 @@ You should have received a copy of the GNU General Public License
                   </p>
                   <p class="form-text text-center mb-1">
                     <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
-                      <i class="fa fa-plus-square" aria-hidden="true"></i>
+                      <i class="fas fa-plus-square" aria-hidden="true"></i>
                     </button>
                   </p>
                 </div>
@@ -2558,7 +2558,7 @@ You should have received a copy of the GNU General Public License
                     </div>
                     <div class="col-auto form-row align-items-center justify-content-center">
                       <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
-                        <i class="fa fa-minus-square" aria-hidden="true"></i>
+                        <i class="fas fa-minus-square" aria-hidden="true"></i>
                       </button>
                     </div>
                   </div>
@@ -2567,7 +2567,7 @@ You should have received a copy of the GNU General Public License
                   </p>
                   <p class="form-text text-center mb-1">
                     <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
-                      <i class="fa fa-plus-square" aria-hidden="true"></i>
+                      <i class="fas fa-plus-square" aria-hidden="true"></i>
                     </button>
                   </p>
                 </div>

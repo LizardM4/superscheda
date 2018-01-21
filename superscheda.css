@@ -200,13 +200,6 @@ navbar.*/
 
 /* MISCELLANEOUS ---------------------------------------------------------------------------*/
 
-/*Patch size and position of the CC marker that represents whether an ability is class or
-crossed class ability*/
-i.fa.fa-copyright {
-  font-size: 1.3rem;
-  vertical-align: -0.15rem;
-}
-
 /*Tables cannot shrink controls arbitrarily; all inputs must be this size at least*/
 .table.table-sm.table-responsive tbody td input[type="text"] {
   min-width: 3rem;

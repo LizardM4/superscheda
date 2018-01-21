@@ -275,7 +275,7 @@ function Controller(dbxAppId) {
 
     self._setupAnimatedChevrons = function() {
         // Find all the chevron buttons
-        $('div.card div.card-header button.close i.fa').each(function (idx, obj) {
+        $('div.card div.card-header button.close i.fas').each(function (idx, obj) {
             var i = $(obj);
             var button = i.parents('button');
             var card = button.parents('div.card');
@@ -311,7 +311,7 @@ function Controller(dbxAppId) {
             // Reset the content
             var dialog = self._modalWaiting.find('div.modal-dialog');
             dialog.empty();
-            $('<i class="fa fa-spinner fa-spin fa-5x"></i>').appendTo(dialog);
+            $('<i class="fas fa-spinner fa-pulse fa-5x"></i>').appendTo(dialog);
         });
     };
 
@@ -551,9 +551,9 @@ function Controller(dbxAppId) {
             var dialog = self._modalWaiting.find('div.modal-dialog');
             dialog.empty();
             if (success) {
-                $('<i class="fa fa-check fa-5x"></i>').appendTo(dialog);
+                $('<i class="fas fa-check fa-5x"></i>').appendTo(dialog);
             } else {
-                $('<i class="fa fa-times fa-5x"></i>').appendTo(dialog);
+                $('<i class="fas fa-times fa-5x"></i>').appendTo(dialog);
             }
             setTimeout(function() {
                 self._modalWaiting.modal('hide');
