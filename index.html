@@ -49,9 +49,9 @@ You should have received a copy of the GNU General Public License
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
     <!-- Then comes bootstrap, with popper and its own minified files -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <!-- Fontawesome 4 follows -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -575,7 +575,9 @@ You should have received a copy of the GNU General Public License
                         <label class="col-form-label">Altezza</label>
                         <div class="input-group">
                           <input type="text" data-dd-id="altezza" class="text-right form-control">
-                          <span class="input-group-addon">m</span>
+                          <div class="input-group-append">
+                            <span class="input-group-text">m</span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -586,7 +588,9 @@ You should have received a copy of the GNU General Public License
                         <label class="col-form-label">Peso</label>
                         <div class="input-group">
                           <input type="text" class="form-control text-right" data-dd-id="peso">
-                          <span class="input-group-addon">kg</span>
+                          <div class="input-group-append">
+                            <span class="input-group-text">kg</span>
+                          </div>
                         </div>
                       </div>
                       <div class="col">
@@ -929,13 +933,13 @@ You should have received a copy of the GNU General Public License
                     <div data-dd-array="container">
                       <div class="form-row pb-1 d-none" data-dd-array="master" data-dd-id="competenze">
                         <div class="input-group input-group-sm col">
-                          <span class="input-group-btn">
-                            <span tabindex="0" class="btn btn-addon btn-sm btn-custom-checkbox" data-toggle="buttons">
+                          <div class="input-group-prepend btn-group-toggle" data-toggle="buttons">
+                            <span class="btn btn-addon btn-custom-checkbox" tabindex="0">
                               <input type="checkbox" data-dd-id="attivo">
                               <i class="fa fa-fw fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-fw fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
                             </span>
-                          </span>
+                          </div>
                           <input type="text" class="form-control" data-dd-id="nome">
                         </div>
                         <div class="col-auto form-row align-items-center justify-content-center">
@@ -973,13 +977,13 @@ You should have received a copy of the GNU General Public License
                     <div data-dd-array="container">
                       <div class="form-row pb-1 d-none" data-dd-array="master" data-dd-id="linguaggi">
                         <div class="input-group input-group-sm col">
-                          <span class="input-group-btn">
-                            <span tabindex="0" class="btn btn-addon btn-sm btn-custom-checkbox" data-toggle="buttons">
+                          <div class="input-group-prepend btn-group-toggle" data-toggle="buttons">
+                            <span class="btn btn-addon btn-custom-checkbox" tabindex="0">
                               <input type="checkbox" data-dd-id="attivo">
                               <i class="fa fa-fw fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                               <i class="fa fa-fw fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
                             </span>
-                          </span>
+                          </div>
                           <input type="text" class="form-control" data-dd-id="nome">
                         </div>
                         <div class="col-auto form-row align-items-center justify-content-center">
@@ -1013,13 +1017,13 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row pb-1 d-none" data-dd-array="master" data-dd-id="visione">
                         <div class="col form-row">
                           <div class="input-group input-group-sm col-8">
-                            <span class="input-group-btn">
-                              <span tabindex="0" class="btn btn-addon btn-sm btn-custom-checkbox" data-toggle="buttons">
+                            <div class="input-group-prepend btn-group-toggle" data-toggle="buttons">
+                              <span class="btn btn-addon btn-custom-checkbox" tabindex="0">
                                 <input type="checkbox" data-dd-id="attivo">
                                 <i class="fa fa-fw fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                                 <i class="fa fa-fw fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
                               </span>
-                            </span>
+                            </div>
                             <input type="text" class="form-control" data-dd-id="nome">
                           </div>
                           <div class="col-4">
@@ -2046,29 +2050,29 @@ You should have received a copy of the GNU General Public License
                         <div class="col-md-8">
                           <label class="col-form-label col-form-label-sm d-md-none">Acquisita · Nome · Di classe</label>
                           <div class="input-group input-group-sm">
-                            <span class="input-group-btn">
-                              <span tabindex="0" class="btn btn-addon btn-sm btn-custom-checkbox" data-toggle="buttons">
+                            <div class="input-group-prepend btn-group-toggle" data-toggle="buttons">
+                              <span class="btn btn-addon btn-custom-checkbox" tabindex="0">
                                 <input type="checkbox" data-dd-id="acquisita">
                                 <i class="fa fa-fw fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                                 <i class="fa fa-fw fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
                               </span>
-                            </span>
+                            </div>
                             <input data-dd-id="nome" type="text" class="form-control form-control-sm">
-                            <span class="input-group-btn">
-                              <span tabindex="0" class="btn btn-addon btn-sm btn-custom-checkbox" data-toggle="buttons">
-                                <input data-dd-id="di_classe" type="checkbox">
+                            <div class="input-group-append btn-group-toggle" data-toggle="buttons">
+                              <span class="btn btn-addon btn-custom-checkbox" tabindex="0">
+                                <input type="checkbox" data-dd-id="di_classe">
                                 <i class="fa fa-fw fa-square-o fa-lg toggle-inactive" aria-hidden="true"></i>
                                 <i class="fa fa-fw fa-check-square-o fa-lg toggle-active" aria-hidden="true"></i>
                                 <i class="fa fa-copyright toggle-active" aria-hidden="true"></i>
                                 <i class="fa fa-copyright toggle-inactive" aria-hidden="true"></i>
                               </span>
-                            </span>
+                            </div>
                           </div>
                         </div>
                         <div class="col-md-2 col-6">
                           <label class="col-form-label col-form-label-sm d-md-none">Car chiave · Mod C</label>
                           <div class="input-group input-group-sm">
-                            <div class="input-group-btn">
+                            <div class="input-group-prepend">
                               <span tabindex="0" class="btn btn-sm btn-addon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
                                 <input data-dd-id="chiave" type="text" readonly class="form-control-plaintext" value="For">
                               </span>
@@ -2349,28 +2353,36 @@ You should have received a copy of the GNU General Public License
                     <label class="col-form-label">Leggero</label>
                     <div class="input-group">
                       <input type="text" data-dd-id="leggero" class="text-right form-control">
-                      <span class="input-group-addon">kg</span>
+                      <div class="input-group-append">
+                        <span class="input-group-text">kg</span>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-2 col-4">
                     <label class="col-form-label">Medio</label>
                     <div class="input-group">
                       <input type="text" data-dd-id="medio" class="text-right form-control">
-                      <span class="input-group-addon">kg</span>
+                      <div class="input-group-append">
+                        <span class="input-group-text">kg</span>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-2 col-4">
                     <label class="col-form-label">Pesante</label>
                     <div class="input-group">
                       <input type="text" data-dd-id="pesante" class="text-right form-control">
-                      <span class="input-group-addon">kg</span>
+                      <div class="input-group-append">
+                        <span class="input-group-text">kg</span>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-2 col-4 text-truncate">
                     <label class="col-form-label">Soll. sopra la testa</label>
                     <div class="input-group">
                       <input type="text" data-dd-id="sopra_testa" class="text-right form-control" aria-describedby="aiuto_sopra_testa">
-                      <span class="input-group-addon">kg</span>
+                      <div class="input-group-append">
+                        <span class="input-group-text">kg</span>
+                      </div>
                     </div>
                     <span id="aiuto_sopra_testa" class="help-block form-text text-right text-muted">(c. max)</span>
                   </div>
@@ -2378,7 +2390,9 @@ You should have received a copy of the GNU General Public License
                     <label class="col-form-label">Soll. dal terreno</label>
                     <div class="input-group">
                       <input type="text" data-dd-id="dal_terreno" class="text-right form-control" aria-describedby="aiuto_dal_terreno">
-                      <span class="input-group-addon">kg</span>
+                      <div class="input-group-append">
+                        <span class="input-group-text">kg</span>
+                      </div>
                     </div>
                     <span id="aiuto_dal_terreno" class="help-block form-text text-right text-muted">(c. max ×2)</span>
                   </div>
@@ -2386,7 +2400,9 @@ You should have received a copy of the GNU General Public License
                     <label class="col-form-label">Sping. o trasc.</label>
                     <div class="input-group">
                       <input type="text" data-dd-id="sping_trasc" class="text-right form-control" aria-describedby="aiuto_spingere_trascinare">
-                      <span class="input-group-addon">kg</span>
+                      <div class="input-group-append">
+                        <span class="input-group-text">kg</span>
+                      </div>
                     </div>
                     <span id="aiuto_spingere_trascinare" class="help-block form-text text-right text-muted">(c. max ×5)</span>
                   </div>
@@ -2399,42 +2415,54 @@ You should have received a copy of the GNU General Public License
                     <label class="col-form-label">Base</label>
                     <div class="input-group">
                       <input type="text" data-dd-id="base" class="text-right form-control">
-                      <span class="input-group-addon">m</span>
+                      <div class="input-group-append">
+                        <span class="input-group-text">m</span>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-2 col-4">
                     <label class="col-form-label">Armatura</label>
                     <div class="input-group">
                       <input type="text" data-dd-id="armatura" class="text-right form-control">
-                      <span class="input-group-addon">m</span>
+                      <div class="input-group-append">
+                        <span class="input-group-text">m</span>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-2 col-4">
                     <label class="col-form-label">Correre</label>
                     <div class="input-group">
                       <input type="text" data-dd-id="correre" class="text-right form-control">
-                      <span class="input-group-addon">m</span>
+                      <div class="input-group-append">
+                        <span class="input-group-text">m</span>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-2 col-4">
                     <label class="col-form-label">Nuotare</label>
                     <div class="input-group">
                       <input type="text" data-dd-id="nuotare" class="text-right form-control">
-                      <span class="input-group-addon">m</span>
+                      <div class="input-group-append">
+                        <span class="input-group-text">m</span>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-2 col-4">
                     <label class="col-form-label">Scalare</label>
                     <div class="input-group">
                       <input type="text" data-dd-id="scalare" class="text-right form-control">
-                      <span class="input-group-addon">m</span>
+                      <div class="input-group-append">
+                        <span class="input-group-text">m</span>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-2 col-4">
                     <label class="col-form-label">Volare</label>
                     <div class="input-group">
                       <input type="text" data-dd-id="volare" class="text-right form-control">
-                      <span class="input-group-addon">m</span>
+                      <div class="input-group-append">
+                        <span class="input-group-text">m</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -2467,7 +2495,9 @@ You should have received a copy of the GNU General Public License
                     <div class="col-3 col-md-2">
                       <div class="input-group input-group-sm">
                         <input type="text" data-dd-id="peso" class="text-right form-control form-control-sm">
-                        <span class="input-group-addon">kg</span>
+                        <div class="input-group-append">
+                          <span class="input-group-text">kg</span>
+                        </div>
                       </div>
                     </div>
                     <div class="col-auto form-row align-items-center justify-content-center">
@@ -2491,7 +2521,9 @@ You should have received a copy of the GNU General Public License
                     <div class="text-truncate"><label class="col-form-label">Totale peso trasportato</label></div>
                     <div class="input-group">
                       <input type="text" data-dd-id="peso_tot" class="text-right form-control">
-                      <span class="input-group-addon">kg</span>
+                      <div class="input-group-append">
+                        <span class="input-group-text">kg</span>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-4 col-6">

@@ -74,10 +74,11 @@ striped.*/
 /* CUSTOM CHECKBOXES -----------------------------------------------------------------------*/
 
 /*Clear spacing around custom checkboxes, such as the ones in the abilities*/
-.input-group-btn .btn.btn-addon.btn-custom-checkbox {
+.input-group-prepend .btn.btn-addon.btn-custom-checkbox,
+.input-group-append .btn.btn-addon.btn-custom-checkbox {
   margin: 0;
-  padding-left: 0.2rem;
-  padding-right: 0.2rem;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
 }
 /*Hide the original checkbox; we will check it through the label*/
 .btn-custom-checkbox input[type="checkbox"] {
@@ -113,23 +114,13 @@ striped.*/
 of this. This has two advantages: first we may make it readwrite, and this gives us a combo
 box, otherwise we would need to set the value of an input or fetch the text of a span.*/
 .dropdown-toggle input[type="text"] {
+  display: inline-block;
   padding: 0;
   margin: 0;
   border: none;
   min-width: unset;
   width: 1.8rem;
   background: none;
-}
-/*This patches the visualization order for not having one control shadow the other when
-focused.*/
-.input-group-btn.show .btn-addon, .input-group-btn .btn-addon:focus {
-  z-index: 4;
-}
-.input-group-btn .btn-addon, .input-group-btn .btn-addon {
-  z-index: 0;
-}
-.input-group-btn .btn-addon:hover:not(:focus), .input-group-btn .btn-addon:hover:not(:focus) {
-  z-index: 0;
 }
 /*Patch the colors to make them look like a normal label or an active txtbox*/
 .btn-addon:hover {
@@ -151,10 +142,12 @@ focused.*/
 /*This little trick makes two adjacent L/R borders overlap, in such a way that they look like
 a single separating border. When one control is lifted above the other, the effect is not
 disrupted.*/
-.input-group .input-group-btn:first-child .btn-addon:not(.dropdown-toggle) {
+.input-group .input-group-prepend:first-child .btn-addon:not(.dropdown-toggle),
+.input-group .input-group-append:first-child .btn-addon:not(.dropdown-toggle) {
   margin-right: -1px!important;
 }
-.input-group .input-group-btn:last-child .btn-addon:not(.dropdown-toggle) {
+.input-group .input-group-prepend:last-child .btn-addon:not(.dropdown-toggle),
+.input-group .input-group-append:last-child .btn-addon:not(.dropdown-toggle) {
   margin-left: -1px!important;
 }
 

@@ -378,10 +378,17 @@ function Controller(dbxAppId) {
     };
 
     self._setupCustomDropdown = function() {
-        $('.input-group-btn .dropdown-menu .dropdown-item').click(function(evt) {
+        $('.input-group-prepend .dropdown-menu .dropdown-item').click(function(evt) {
             evt.preventDefault();
             var obj = $(this);
-            obj.closest('.input-group-btn')
+            obj.closest('.input-group-prepend')
+                .find('input[type="text"]')
+                .val(obj.text());
+        });
+        $('.input-group-append .dropdown-menu .dropdown-item').click(function(evt) {
+            evt.preventDefault();
+            var obj = $(this);
+            obj.closest('.input-group-append')
                 .find('input[type="text"]')
                 .val(obj.text());
         });
