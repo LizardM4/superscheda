@@ -232,7 +232,7 @@ You should have received a copy of the GNU General Public License
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="save_to_title">Salva su <i class="fab fa-dropbox" aria-hidden="true"></i></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -289,12 +289,49 @@ You should have received a copy of the GNU General Public License
 
 
 
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="cookie_explain" aria-labelledby="cookie_explain_title" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="cookie_explain_title"><i class="fas fa-shield-alt" aria-hidden="true"></i> Utilizzo del local storage</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Superscheda usa il <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API" target="_blank">local storage</a> (una tecnologia analoga ai cookie) per salvare:
+            <ol>
+              <li>il tuo access token di Dropbox, per non doverti autenticare ad ogni sessione;</li>
+              <li>la versione di Superscheda, per risolvere potenziali incompatibilità tra file salvati tra più versioni;</li>
+              <li>una copia della scheda, aggiornata ogni minuto, come salvataggio automatico dei contenuti.</li>
+            </ol>
+            Nella maggior parte dei browser, disattivare i cookie disattiva anche il local storage.
+            Puoi usare Superscheda anche senza local storage ma:
+            <ol>
+              <li>dovrai autenticarti su Dropbox ogni volta;</li>
+              <li>abbandonare la pagina ti farà perdere i dati (questo vale anche durante l'autenticazione su Dropbox: autenticati <em>prima</em> di inserire informazioni);</li>
+              <li>non ci sarà salvataggio automatico.</li>
+            </ol>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
     <div class="modal fade" tabindex="-1" role="dialog" id="auth_dbx" aria-labelledby="auth_dbx_title" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="auth_dbx_title"><i class="fab fa-dropbox" aria-hidden="true"></i> Accesso a Dropbox</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -324,7 +361,7 @@ You should have received a copy of the GNU General Public License
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="load_from_title">Carica da <i class="fab fa-dropbox" aria-hidden="true"></i></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>

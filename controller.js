@@ -81,10 +81,11 @@ function Controller(dbxAppId) {
                 }
             }
         } catch (e) {
-            self.notify('warning', 'Il tuo browser non supporta (o ha disabilitato) ' +
-                'il local storage. Senza di esso non è possibile salvare alcun ' +
-                'dato in locale. In particolare, dovrai loggarti volta per volta ' +
-                'su Dropbox.');
+            var $alert = $('<a href="#" class="alert-link" data-target="#cookie_explain" data-toggle="modal"></a>')
+            self.notify('warning', $alert);
+            $alert.text('usare superscheda senza cookies')
+                .before('Il local storage è disabilitato (hai disabilitato i cookie?); vedi quali limitazioni ci sono ad ')
+                .after('.');
             $('#no_local_storage_warning').removeClass('d-none');
             self.hasLocalStorage = false;
         }
@@ -471,11 +472,30 @@ function Controller(dbxAppId) {
 
     self.notify = function(cls, text, auto_dismiss=-1) {
         var $div = $('<div class="alert alert-dismissible sticky-top fade show" role="alert"></div>');
+        var icon = null;
+        switch(cls) {
+        case 'success':
+            icon = 'check';
+            break;
+        case 'warning':
+            icon = 'exclamation-triangle';
+            break;
+        case 'danger':
+            icon = 'exclamation-circle';
+            break;
+        }
         $div.addClass('alert-' + cls);
-        $div.text(text);
+        if (text instanceof jQuery) {
+            text.appendTo($div);
+        } else {
+            $div.text(text);
+        }
         $('<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
             '<span aria-hidden="true">&times;</span>' +
           '</button>').appendTo($div);
+        if (icon) {
+            $('<i class="fas fa-pull-left fa-2x"></i>').addClass('fa-' + icon).prependTo($div);
+        }
         $div.insertAfter('nav.navbar');
         if (auto_dismiss > 0) {
             setTimeout(function() {
