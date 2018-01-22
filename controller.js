@@ -66,28 +66,48 @@ function Controller(dbxAppId) {
             });
     };
 
-    self._getTokenAndTestLS = function() {
-        // Try to get the access token from the local storage
-        var access_token = null;
-        try {
-            access_token = window.localStorage.getItem('access_token');
-            // Use the app id for versioning; forget the token if needed
-            var app_id = window.localStorage.getItem('app_id');
-            if (!access_token || !app_id || app_id != self.appId) {
-                access_token = null;
-                var parms = parseQueryString();
-                if ('access_token' in parms) {
-                    access_token = parms['access_token'];
-                }
+    self._initLocalStorage = function () {
+        self.hasLocalStorage = storageAvailable('localStorage');
+        if (self.hasLocalStorage) {
+            // Did we already open this?
+            if (window.localStorage.getItem('acknowledge_cookies') == null) {
+                // No.
+                var $alert = $('<a href="#" class="alert-link" data-target="#cookie_explain" data-toggle="modal"></a>');
+                self.notify('warning', $alert);
+                $alert.text('per cosa')
+                    .before('Questa pagina usa il local storage (vedi ')
+                    .after('). Disattiva i cookie per questa pagina se non lo desideri.');
+                $alert.parents('.alert').on('closed.bs.alert', function() {
+                    window.localStorage.setItem('acknowledge_cookies', true);
+                });
             }
-        } catch (e) {
+        } else {
+            // Toggle the warning in the save dialog
+            $('#no_local_storage_warning').removeClass('d-none');
+            // Print a warning with the limitations
             var $alert = $('<a href="#" class="alert-link" data-target="#cookie_explain" data-toggle="modal"></a>')
             self.notify('warning', $alert);
             $alert.text('usare superscheda senza cookies')
-                .before('Il local storage è disabilitato (hai disabilitato i cookie?); vedi quali limitazioni ci sono ad ')
+                .before('Il local storage è disabilitato; hai disattivato i cookie? Vedi quali limitazioni ci sono ad ')
                 .after('.');
-            $('#no_local_storage_warning').removeClass('d-none');
-            self.hasLocalStorage = false;
+        }
+    }
+
+    self._retrieveAccessToken = function() {
+        // Try to get the access token from the local storage
+        var access_token = null;
+        var app_id = null;
+        if (self.hasLocalStorage) {
+            // Use the app id for versioning; forget the token if needed
+            access_token = window.localStorage.getItem('access_token');
+            app_id = window.localStorage.getItem('app_id');
+        }
+        if (!access_token || app_id != self.appId) {
+            access_token = null;
+            var parms = parseQueryString();
+            if ('access_token' in parms) {
+                access_token = parms['access_token'];
+            }
         }
         if (access_token) {
             self.dropbox = new Dropbox({accessToken: access_token});
@@ -508,7 +528,8 @@ function Controller(dbxAppId) {
     self.setup = function() {
         self._saveModal = $('#save_to');
         self._loadModal = $('#load_from');
-        self._getTokenAndTestLS();
+        self._initLocalStorage();
+        self._retrieveAccessToken();
         // ^ will call _setupLoadModal and _setupSaveModal
         self._setupWaitingModal();
         self._setupAnimatedChevrons();
@@ -698,4 +719,30 @@ function _find_duplicates() {
       'There are ' + all_dd_paths.length.toString() + ' identified controls, ' + duplicates.length.toString() + ' of them are duplicated.')
     );
   }
+}
+
+// https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
+
+function storageAvailable(type) {
+    try {
+        var storage = window[type],
+            x = '__storage_test__';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+    }
+    catch(e) {
+        return e instanceof DOMException && (
+            // everything except Firefox
+            e.code === 22 ||
+            // Firefox
+            e.code === 1014 ||
+            // test name field too, because code might not be present
+            // everything except Firefox
+            e.name === 'QuotaExceededError' ||
+            // Firefox
+            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+            // acknowledge QuotaExceededError only if there's something already stored
+            storage.length !== 0;
+    }
 }
