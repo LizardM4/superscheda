@@ -112,7 +112,7 @@ function Controller(dbxAppId) {
         if (access_token) {
             self.dropbox = new Dropbox.Dropbox({accessToken: access_token});
             // Test if this dropbox works
-            self.dropbox.usersGetCurrentAccount()
+            self.dropbox.usersGetCurrentAccount(null)
                 .then(function() { self._setHasDropbox(true); })
                 .catch(function() { self._setHasDropbox(false); });
         } else {
