@@ -110,7 +110,7 @@ function Controller(dbxAppId) {
             }
         }
         if (access_token) {
-            self.dropbox = new Dropbox({accessToken: access_token});
+            self.dropbox = new Dropbox.Dropbox({accessToken: access_token});
             // Test if this dropbox works
             self.dropbox.usersGetCurrentAccount()
                 .then(function() { self._setHasDropbox(true); })
@@ -141,7 +141,7 @@ function Controller(dbxAppId) {
                 });
             }
             // Fall back on a client-id base dbx
-            self.dropbox = new Dropbox({clientId: self.appId});
+            self.dropbox = new Dropbox.Dropbox({clientId: self.appId});
             // Generate  the authentication url
             var url = null;
             if (window.location.hostname == 'localhost') {
