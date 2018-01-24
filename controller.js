@@ -184,7 +184,7 @@ function Controller(dbxAppId) {
         $('#btn_logout').click(function() {
             self.dropbox.authTokenRevoke();
             self.autosave();
-            if (window.hasLocalStorage) {
+            if (self.hasLocalStorage) {
                 window.localStorage.removeItem('access_token');
             }
             // Clear access token parms
