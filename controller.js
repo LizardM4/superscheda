@@ -358,6 +358,27 @@ function Controller(dbxAppId) {
         });
     };
 
+
+    self.autosort = function(array) {
+        var compare = function(x, y) {
+          return $(x).find('.dd-sort-key[data-dd-id]').val().localeCompare(
+            $(y).find('.dd-sort-key[data-dd-id]').val()
+          );
+        };
+        $(array).data('dd-array-controller').sort(compare);
+    };
+
+    self._setupAutosort = function() {
+        $('.dd-autosort[data-dd-id]').each(function(idx, obj) {
+            obj = $(obj);
+            var container = $(obj).closest('[data-dd-array="container"]');
+            obj.blur(function(evt) {
+                self.autosort(container);
+            });
+        });
+    };
+
+
     self._setupAttackTOC = function() {
         var toc_sm = $('#toc_attacchi_sm').data('dd-array-controller');
         var toc_md = $('#toc_attacchi_md').data('dd-array-controller');
@@ -534,6 +555,7 @@ function Controller(dbxAppId) {
         self._setupWaitingModal();
         self._setupAnimatedChevrons();
         self._setupDDPaths();
+        self._setupAutosort();
         self._setupArrays();
         self._setupDynamicTitles();
         self._setupAttackTOC();
