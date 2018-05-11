@@ -75,6 +75,29 @@ function Hier() {
         return node[lastEntry];
     }
 
+    self.remove = function(path) {
+        if (typeof path == 'string') {
+            path = self.parsePath(path);
+        }
+        var node = self.ensureParentExists(path);
+        var lastEntry = path[path.length - 1];
+        if (lastEntry in node) {
+            delete node[lastEntry];
+        }
+    }
+
+    self.ensure = function(path, value) {
+        if (typeof path == 'string') {
+            path = self.parsePath(path);
+        }
+        var node = self.ensureParentExists(path);
+        var lastEntry = path[path.length - 1];
+        if (!(lastEntry in node)) {
+            node[lastEntry] = value;
+        }
+        return node[lastEntry];
+    }
+
     self.dump = function() {
         return JSON.stringify(self.obj, null, 4);
     }
