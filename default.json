@@ -19,14 +19,14 @@
             ""
         ]
     },
-    "taglia": "",
+    "taglia": "media",
     "altezza": "",
     "peso": "",
     "occhi": "",
     "capelli": "",
     "pelle": "",
     "eta": "",
-    "sesso": "",
+    "sesso": "n",
     "segni_particolari": "",
     "divinita": "",
     "allineamento": "",
@@ -238,61 +238,7 @@
             "tot": ""
         }
     },
-    "competenze": [
-        {
-            "attivo": false,
-            "nome": "Armature leggere"
-        },
-        {
-            "attivo": false,
-            "nome": "Armature medie"
-        },
-        {
-            "attivo": false,
-            "nome": "Armature pesanti"
-        },
-        {
-            "attivo": false,
-            "nome": "Armi semplici"
-        },
-        {
-            "attivo": false,
-            "nome": "Armi da guerra"
-        },
-        {
-            "attivo": false,
-            "nome": "Scudi"
-        }
-    ],
     "sa_leggere": false,
-    "linguaggi": [
-        {
-            "attivo": false,
-            "nome": "Comune"
-        }
-    ],
-    "visione": [
-        {
-            "attivo": false,
-            "nome": "Crepuscolare",
-            "distanza": ""
-        },
-        {
-            "attivo": false,
-            "nome": "Scurovisione",
-            "distanza": ""
-        },
-        {
-            "attivo": false,
-            "nome": "Visione del Vero",
-            "distanza": ""
-        },
-        {
-            "attivo": false,
-            "nome": "Vista cieca",
-            "distanza": ""
-        }
-    ],
     "note": "",
     "dado_vita": {
         "razza": "",
@@ -407,6 +353,133 @@
     "att_opportunita": "",
     "grado_max": "",
     "gradi": "",
+    "stat_incantesimi": {
+        "conosciuti": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "cd_salvezza": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "al_giorno": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "bonus": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ]
+    },
+    "carico": {
+        "leggero": "",
+        "medio": "",
+        "pesante": "",
+        "sopra_testa": "",
+        "dal_terreno": "",
+        "sping_trasc": ""
+    },
+    "velocita": {
+        "base": "",
+        "armatura": "",
+        "correre": "",
+        "nuotare": "",
+        "scalare": "",
+        "volare": ""
+    },
+    "peso_tot": "",
+    "penalita_armatura": "",
+    "penalita_nuotare": "",
+    "competenze": [
+        {
+            "attivo": false,
+            "nome": "Armature leggere"
+        },
+        {
+            "attivo": false,
+            "nome": "Armature medie"
+        },
+        {
+            "attivo": false,
+            "nome": "Armature pesanti"
+        },
+        {
+            "attivo": false,
+            "nome": "Armi semplici"
+        },
+        {
+            "attivo": false,
+            "nome": "Armi da guerra"
+        },
+        {
+            "attivo": false,
+            "nome": "Scudi"
+        }
+    ],
+    "linguaggi": [
+        {
+            "attivo": false,
+            "nome": "Comune"
+        }
+    ],
+    "visione": [
+        {
+            "attivo": false,
+            "nome": "Crepuscolare",
+            "distanza": ""
+        },
+        {
+            "attivo": false,
+            "nome": "Scurovisione",
+            "distanza": ""
+        },
+        {
+            "attivo": false,
+            "nome": "Visione del Vero",
+            "distanza": ""
+        },
+        {
+            "attivo": false,
+            "nome": "Vista cieca",
+            "distanza": ""
+        }
+    ],
+    "ogg_protettivo": [],
+    "attacchi": [],
+    "talenti": [],
+    "privilegi": [],
     "abilita": [
         {
             "acquisita": false,
@@ -1074,86 +1147,6 @@
             "vari": ""
         }
     ],
-    "carico": {
-        "leggero": "",
-        "medio": "",
-        "pesante": "",
-        "sopra_testa": "",
-        "dal_terreno": "",
-        "sping_trasc": ""
-    },
-    "velocita": {
-        "base": "",
-        "armatura": "",
-        "correre": "",
-        "nuotare": "",
-        "scalare": "",
-        "volare": ""
-    },
-    "peso_tot": "",
-    "penalita_armatura": "",
-    "penalita_nuotare": "",
-    "attacchi": [],
-    "talenti": [],
-    "skill_tricks": {
-        "skill_tricks": [],
-        "length": 0
-    },
-    "privilegi": {
-        "privilegi": [],
-        "length": 0
-    },
-    "stat_incantesimi": {
-        "conosciuti": [
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            ""
-        ],
-        "cd_salvezza": [
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            ""
-        ],
-        "al_giorno": [
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            ""
-        ],
-        "bonus": [
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            ""
-        ]
-    },
-    "ogg_protettivo": [],
     "incantesimi": [],
     "equipaggiamento": [],
     "denaro_preziosi": []

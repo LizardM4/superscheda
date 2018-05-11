@@ -111,6 +111,27 @@ function HierVersioning() {
 
 DDver = new HierVersioning()
 
+
+DDver.addPatch('0.0.9', function(h) {
+    var bugfix = function(notAnArray) {
+        var realArray = [];
+        for (var i = 0; i < notAnArray['length']; ++i) {
+            realArray.push(notAnArray[i.toString()]);
+        }
+        return realArray;
+    };
+    var skillTricks = h.get('skill_tricks');
+    if (skillTricks instanceof Object) {
+        console.log('Skill tricks have the bug.');
+        h.set('skill_tricks', bugfix(skillTricks))
+    }
+    var privileges = h.get('privilegi');
+    if (privileges instanceof Object) {
+        console.log('Privileges have the bug.');
+        h.set('privilegi', bugfix(privileges))
+    }
+});
+
 DDver.addPatch('0.1', function(h) {
     console.log('Migrating skill tricks to talents.');
     var skillTricks = h.get('skill_tricks');
