@@ -175,6 +175,7 @@ function Controller(dbxAppId) {
             if (to_load && to_load.length > 0) {
                 window.localStorage.removeItem('_autosave');
                 self.data.load(to_load);
+                self._applyPatchesIfNeeded();
                 self.updateForm();
             }
         }
@@ -647,9 +648,21 @@ function Controller(dbxAppId) {
             });
     };
 
+    self._applyPatchesIfNeeded = function() {
+        if (window.DDver) {
+            if (window.DDver.needsPatch(self.data)) {
+                window.DDver.apply(self.data);
+                console.log('Successfully updated to version', window.DDver.getLatestVersionString());
+            } else {
+                console.log('Up to date with version', window.DDver.getLatestVersionString());
+            }
+        }
+    };
+
     self.loadRemote = function(name, post_action=null) {
         $.getJSON(name, function(json_data) {
             self.data.obj = json_data;
+            self._applyPatchesIfNeeded();
             self.updateForm();
             self.autosave();
             if (post_action) {
@@ -670,6 +683,7 @@ function Controller(dbxAppId) {
                 var reader = new FileReader();
                 reader.addEventListener('loadend', function() {
                     self.data.load(reader.result);
+                    self._applyPatchesIfNeeded();
                     self.updateForm();
                     self.autosave();
                     if (post_action) {
