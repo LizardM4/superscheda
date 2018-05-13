@@ -652,9 +652,9 @@ function Controller(dbxAppId) {
         if (window.DDver) {
             if (window.DDver.needsPatch(self.data)) {
                 window.DDver.apply(self.data);
-                console.log('Successfully updated to version', window.DDver.getLatestVersionString());
+                console.log('Successfully updated to version ' + window.DDver.getLatestVersionString());
             } else {
-                console.log('Up to date with version', window.DDver.getLatestVersionString());
+                console.log('Up to date with version ' + window.DDver.getLatestVersionString());
             }
         }
     };

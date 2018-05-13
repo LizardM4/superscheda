@@ -26,7 +26,7 @@ function parseVersion(str) {
 }
 
 function strVersion(v) {
-    return Array.join(v.map(x => x.toString()), '.');
+    return v.map(x => x.toString()).join('.');
 }
 
 
@@ -137,9 +137,9 @@ DDver.addPatch('0.1', function(h) {
     var skillTricks = h.get('skill_tricks');
     if (skillTricks != null) {
         var talents = h.ensure('talenti');
-        console.log('Got', talents.length, 'talents, appending', skillTricks.length, 'skill tricks.');
+        console.log('Got ' + talents.length.toString() + ' talents, appending ' + skillTricks.length.toString() + ' skill tricks.');
         talents.splice(talents.length, 0, ...skillTricks);
-        console.log('Got now', talents.length, 'talents.');
+        console.log('Got now ' + talents.length + ' talents.');
     }
     h.remove('skill_tricks');
 });
