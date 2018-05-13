@@ -144,3 +144,16 @@ DDver.addPatch('0.1', function(h) {
     h.remove('skill_tricks');
 });
 
+DDver.addPatch('0.1.1', function(h) {
+    for (var i = 0; i < h.get('attacchi').length; i++) {
+        var path_base = 'attacchi[' + i.toString() + '].tiro_colpire.';
+        var wrong_path = path_base + 'chierico_talenti';
+        var right_path = path_base + 'critico_talenti';
+        var critic_talents = h.get(wrong_path);
+        if (critic_talents) {
+            console.log('Migrating "talenti per il chierico" for attack no. ' + i.toString());
+            h.set(right_path, critic_talents);
+        }
+        h.remove(wrong_path);
+    }
+});
