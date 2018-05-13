@@ -357,6 +357,15 @@ function Controller(dbxAppId) {
                 });
             });
         });
+        var originalTitle = document.title;
+        $('#dd-page-title[data-dd-id]').change(function () {
+            var val = $(this).val();
+            if (val.length > 0) {
+                document.title = val + ' - ' + originalTitle;
+            } else {
+                document.title = originalTitle;
+            }
+        });
     };
 
 
