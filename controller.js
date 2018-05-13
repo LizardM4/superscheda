@@ -598,6 +598,7 @@ function Controller(dbxAppId) {
                 }
             } else {
                 ctrl.val(flat_data[path]);
+                ctrl.change();
             }
             if (ctrl.is('.dd-dyn-title')) {
                 // Trigger a change event because this manages a dynamic title.
