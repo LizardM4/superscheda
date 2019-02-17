@@ -44,7 +44,7 @@ function fromNaturalField(rawVal, passthrough) {
     var cast = parseInt(rawVal);
     if (cast != cast) {
         // Nan, casting failed.
-        return passthrough ? rawVal : 0;
+        return passthrough ? rawVal : null;
     }
     return cast;
 }
@@ -79,6 +79,20 @@ jQuery.fn.extend({
                 return $(this).val(arg);
             }
         }
+    },
+    ddMathVal: function (arg) {
+        // If the object has no val, return a placeholder
+        var rawVal = $(this).val()
+        if (typeof rawVal === 'undefined' || rawVal.replace(' ', '') == '') {
+            rawVal = $(this).attr('placeholder');
+        }
+        if ($(this).hasClass('dd-integer-field')) {
+            return fromIntegerField(rawVal, false);
+        } else if ($(this).hasClass('dd-natural-field')) {
+            return fromNaturalField(rawVal, false);
+        } else {
+            return null;
+        }
     }
 });
 
@@ -111,6 +125,46 @@ function Controller(dbxAppId) {
             path = self._getHierPath(obj) + '.' + path;
         }
         return path;
+    };
+
+    self._evalFormula = function(obj) {
+        var args = self._resolveArguments(obj);
+        for (var i = 0; i < args.length; i++) {
+            args[i] = args[i].ddMathVal();
+            if (args[i] == null) {
+                // Nope, we cannot evaluate this function
+                return null
+            }
+        }
+        // All arguments are defined and numerical
+        switch (obj.attr('data-dd-formula')) {
+            case 'sum':
+                return args.reduce((a, b) => a + b, 0);
+                break;
+            default:
+                return null;
+                break;
+        }
+    }
+
+    self._resolveArguments = function(obj) {
+        obj = $(obj);
+        var parent = obj.parents('[data-dd-id]');
+        if (parent.length == 0) {
+            parent = $;
+        } else {
+            parent = $(parent[0]);
+        }
+        var args = obj.attr('data-dd-args');
+        args = args.split(',');
+        controls = []
+        for (var i = 0; i < args.length; i++) {
+            var control = parent.find('[data-dd-id="' + args[i].trim() + '"]');
+            if (control.length > 0) {
+                controls.push(control)
+            }
+        }
+        return controls;
     };
 
     self._resolveTarget = function(obj) {
