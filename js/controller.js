@@ -15,6 +15,73 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+function fromIntegerField(rawVal, passthrough) {
+    return fromNaturalField(rawVal, passthrough);
+}
+
+function toIntegerField(num) {
+    if (num == null) {
+        return '';
+    } else if (typeof num === 'number' && num > 0) {
+        return '+' + num.toString();
+    } else {
+        return num.toString();
+    }
+}
+
+function fromNaturalField(rawVal, passthrough) {
+    if (typeof passthrough === 'undefined') {
+        passthrough = false;
+    }
+    if (rawVal == null) {
+        return passthrough ? null : 0;
+    } else {
+        rawVal = rawVal.replace(' ', '');
+    }
+    if (rawVal == '') {
+        return passthrough ? null : 0;
+    }
+    var cast = parseInt(rawVal);
+    if (cast != cast) {
+        // Nan, casting failed.
+        return passthrough ? rawVal : 0;
+    }
+    return cast;
+}
+
+function toNaturalField(num) {
+    if (num == null) {
+        return '';
+    } else {
+        return num.toString();
+    }
+}
+
+
+jQuery.fn.extend({
+    ddVal: function(arg) {
+        if ($(this).hasClass('dd-integer-field')) {
+            if (typeof arg === 'undefined') {
+                return fromIntegerField($(this).val(), true);
+            } else {
+                return $(this).val(toIntegerField(arg));
+            }
+        } else if ($(this).hasClass('dd-natural-field')) {
+            if (typeof arg === 'undefined') {
+                return fromNaturalField($(this).val(), true);
+            } else {
+                return $(this).val(toNaturalField(arg));
+            }
+        } else {
+            if (typeof arg === 'undefined') {
+                return $(this).val();
+            } else {
+                return $(this).val(arg);
+            }
+        }
+    }
+});
+
 function Controller(dbxAppId) {
     var self = this;
 
@@ -582,7 +649,7 @@ function Controller(dbxAppId) {
             if (obj.attr('type') === 'checkbox') {
                 self.data.set(obj.attr('data-dd-path'), obj.is(':checked'));
             } else {
-                self.data.set(obj.attr('data-dd-path'), obj.val());
+                self.data.set(obj.attr('data-dd-path'), obj.ddVal());
             }
         });
         self._truncateAllHierArrays();
@@ -606,7 +673,7 @@ function Controller(dbxAppId) {
                     }
                 }
             } else {
-                ctrl.val(flat_data[path]);
+                ctrl.ddVal(flat_data[path]);
                 ctrl.change();
             }
             if (ctrl.is('.dd-dyn-title')) {
