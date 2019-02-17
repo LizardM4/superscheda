@@ -59,6 +59,20 @@ function toNaturalField(num) {
 
 
 jQuery.fn.extend({
+    ddSetDefault: function(arg) {
+        if ($(this).hasClass('dd-integer-field')) {
+            $(this).attr('placeholder', toIntegerField(arg));
+        } else if ($(this).hasClass('dd-natural-field')) {
+            $(this).attr('placeholder', toNaturalField(arg));
+        } else {
+            $(this).attr('placeholder', arg.toString());
+        }
+        var rawVal = $(this).val();
+        if (typeof rawVal === 'undefined' || rawVal.trim() == '') {
+            // Trigger a change because the value is represented by the placeholder
+            $(this).change();
+        }
+    },
     ddVal: function(arg) {
         if ($(this).hasClass('dd-integer-field')) {
             if (typeof arg === 'undefined') {
@@ -83,7 +97,7 @@ jQuery.fn.extend({
     ddMathVal: function (arg) {
         // If the object has no val, return a placeholder
         var rawVal = $(this).val()
-        if (typeof rawVal === 'undefined' || rawVal.replace(' ', '') == '') {
+        if (typeof rawVal === 'undefined' || rawVal.trim() == '') {
             rawVal = $(this).attr('placeholder');
         }
         if ($(this).hasClass('dd-integer-field')) {
@@ -458,6 +472,21 @@ function Controller(dbxAppId) {
         });
     };
 
+    self._setupFormulas = function() {
+        $('[data-dd-id][data-dd-formula]').each(function(idx, obj) {
+            obj = $(obj);
+            // Identify the arguments
+            var ctrls = self._resolveArguments(obj);
+            for (var i = ctrls.length - 1; i >= 0; i--) {
+                // Each control on change must trigger the formula update for obj
+                $(ctrls[i]).change(function(evt) {
+                    obj.ddSetDefault(self._evalFormula(obj));
+                });
+            }
+            self._evalFormula(obj);
+        });
+    };
+
     self._setupDynamicTitles = function() {
         $('[data-dd-id][data-dd-array="master"]').each(function(idx, master) {
             master = $(master);
@@ -689,6 +718,7 @@ function Controller(dbxAppId) {
         self._setupAutosort();
         self._setupArrays();
         self._setupDynamicTitles();
+        self._setupFormulas();
         self._setupAttackTOC();
         self._setupCustomDropdown();
         self._setupDlButton();
