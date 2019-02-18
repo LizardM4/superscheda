@@ -443,11 +443,19 @@ function Controller(dbxAppId) {
             return [null, null];
         }
         obj = $(obj);
-        if (arg[0] == '@') {
+        if (arg[0] == '/') {
             // Absolute path
             return [self.findByPath(arg.substring(1)), false];
+        } else if (arg.substring(0, 2) == './') {
+            return [self.findNext(self.findParent(obj), arg.substring(2)), true];
+        } else {
+            // Try number
+            let num = Number(arg);
+            if (num != num) {
+                return [arg, null]
+            }
+            return [num, null];
         }
-        return [self.findNext(self.findParent(obj), arg), true];
     };
 
     self._evalFormula = function(obj) {
@@ -462,13 +470,16 @@ function Controller(dbxAppId) {
         obj = $(obj);
         let args = obj.attr('data-dd-formula').split(' ');
         for (let i = 1; i < args.length; i++) {
-            let [ctrl, ] = self._resolveOneArg(obj, args[i]);
-            if (ctrl == null || ctrl.length == 0) {
-                // Nope, we cannot evaluate this function
-                return null;
+            let [arg, isRelativeCtrl] = self._resolveOneArg(obj, args[i]);
+            if (isRelativeCtrl != null) {
+                if (arg == null || arg.length == 0) {
+                    // Nope, we cannot evaluate this function
+                    return null;
+                }
+                // Replace with actual value
+                arg = arg.ddFormulaVal();
             }
-            // Replace with actual value
-            args[i] = ctrl.ddFormulaVal();
+            args[i] = arg;
         }
         // All arguments are defined and numerical
         switch (args.shift()) {
@@ -478,17 +489,12 @@ function Controller(dbxAppId) {
                 }
                 return args.reduce((a, b) => a + b, 0);
                 break;
-            case 'modifier':
+            case 'mod':
                 if (!ensure_numbers(args)) {
                     return null;
                 }
-                return Math.floor(args.reduce((a, b) => a + b, 0) / 2 - 5);
-                break;
-            case 'sum+10':
-                if (!ensure_numbers(args)) {
-                    return null;
-                }
-                return args.reduce((a, b) => a + b, 10);
+                let div = args.shift();
+                return Math.floor(args.reduce((a, b) => a + b, 0) / div);
                 break;
             case 'ref':
                 return args[0];
@@ -505,14 +511,14 @@ function Controller(dbxAppId) {
             // Identify the arguments
             let args = obj.attr('data-dd-formula').split(' ');
             for (let i = 1; i < args.length; i++) {
-                let [ctrl, relative] = self._resolveOneArg(obj, args[i]);
-                if (ctrl == null || ctrl.length == 0) {
+                let [arg, isRelativeCtrl] = self._resolveOneArg(obj, args[i]);
+                if (isRelativeCtrl == null || arg == null || arg.length == 0) {
                     continue;
                 }
-                if (relative) {
+                if (isRelativeCtrl) {
                     // Lookup the target in a relative fashion
                     let ddId = obj.attr('data-dd-id');
-                    ctrl.change(function(evt) {
+                    arg.change(function(evt) {
                         let relativeTarget = self.findNext(self.findParent(this), ddId);
                         if (relativeTarget != null && relativeTarget.length > 0) {
                             relativeTarget.ddSetDefault(self._evalFormula(relativeTarget));
@@ -520,7 +526,7 @@ function Controller(dbxAppId) {
 
                     });
                 } else {
-                    ctrl.change(function(evt) {
+                    arg.change(function(evt) {
                         obj.ddSetDefault(self._evalFormula(obj));
                     });
                 }

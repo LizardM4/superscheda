@@ -725,10 +725,10 @@ You should have received a copy of the GNU General Public License
                       <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum tiro_base razza archetipo[0] archetipo[1] livello magia varie[0] varie[1]" class="text-right form-control form-control-sm dd-natural-field"></td>
+                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum ./tiro_base ./razza ./archetipo[0] ./archetipo[1] ./livello ./magia ./varie[0] ./varie[1]" class="text-right form-control form-control-sm dd-natural-field"></td>
                       <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm dd-natural-field"></td>
-                      <td><input type="text" data-dd-id="mod_tot" data-dd-formula="modifier tot" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="mod_temp" data-dd-formula="modifier tot temp" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="mod_tot" data-dd-formula="mod 2 -10 ./tot" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="mod_temp" data-dd-formula="mod 2 -10 ./tot ./temp" class="text-right form-control form-control-sm dd-integer-field"></td>
                     </tr>
                     <tr data-dd-id="des">
                       <th scope="row" class="text-right align-middle px-3">Des</th>
@@ -740,10 +740,10 @@ You should have received a copy of the GNU General Public License
                       <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum tiro_base razza archetipo[0] archetipo[1] livello magia varie[0] varie[1]" class="text-right form-control form-control-sm dd-natural-field"></td>
+                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum ./tiro_base ./razza ./archetipo[0] ./archetipo[1] ./livello ./magia ./varie[0] ./varie[1]" class="text-right form-control form-control-sm dd-natural-field"></td>
                       <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm dd-natural-field"></td>
-                      <td><input type="text" data-dd-id="mod_tot" data-dd-formula="modifier tot" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="mod_temp" data-dd-formula="modifier tot temp" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="mod_tot" data-dd-formula="mod 2 -10 ./tot" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="mod_temp" data-dd-formula="mod 2 -10 ./tot ./temp" class="text-right form-control form-control-sm dd-integer-field"></td>
                     </tr>
                     <tr data-dd-id="cos">
                       <th scope="row" class="text-right align-middle px-3">Cos</th>
@@ -755,10 +755,10 @@ You should have received a copy of the GNU General Public License
                       <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum tiro_base razza archetipo[0] archetipo[1] livello magia varie[0] varie[1]" class="text-right form-control form-control-sm dd-natural-field"></td>
+                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum ./tiro_base ./razza ./archetipo[0] ./archetipo[1] ./livello ./magia ./varie[0] ./varie[1]" class="text-right form-control form-control-sm dd-natural-field"></td>
                       <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm dd-natural-field"></td>
-                      <td><input type="text" data-dd-id="mod_tot" data-dd-formula="modifier tot" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="mod_temp" data-dd-formula="modifier tot temp" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="mod_tot" data-dd-formula="mod 2 -10 ./tot" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="mod_temp" data-dd-formula="mod 2 -10 ./tot ./temp" class="text-right form-control form-control-sm dd-integer-field"></td>
                     </tr>
                     <tr data-dd-id="int">
                       <th scope="row" class="text-right align-middle px-3">Int</th>
@@ -770,10 +770,10 @@ You should have received a copy of the GNU General Public License
                       <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum tiro_base razza archetipo[0] archetipo[1] livello magia varie[0] varie[1]" class="text-right form-control form-control-sm dd-natural-field"></td>
+                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum ./tiro_base ./razza ./archetipo[0] ./archetipo[1] ./livello ./magia ./varie[0] ./varie[1]" class="text-right form-control form-control-sm dd-natural-field"></td>
                       <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm dd-natural-field"></td>
-                      <td><input type="text" data-dd-id="mod_tot" data-dd-formula="modifier tot" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="mod_temp" data-dd-formula="modifier tot temp" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="mod_tot" data-dd-formula="mod 2 -10 ./tot" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="mod_temp" data-dd-formula="mod 2 -10 ./tot ./temp" class="text-right form-control form-control-sm dd-integer-field"></td>
                     </tr>
                     <tr data-dd-id="sag">
                       <th scope="row" class="text-right align-middle px-3">Sag</th>
@@ -785,10 +785,10 @@ You should have received a copy of the GNU General Public License
                       <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum tiro_base razza archetipo[0] archetipo[1] livello magia varie[0] varie[1]" class="text-right form-control form-control-sm dd-natural-field"></td>
+                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum ./tiro_base ./razza ./archetipo[0] ./archetipo[1] ./livello ./magia ./varie[0] ./varie[1]" class="text-right form-control form-control-sm dd-natural-field"></td>
                       <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm dd-natural-field"></td>
-                      <td><input type="text" data-dd-id="mod_tot" data-dd-formula="modifier tot" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="mod_temp" data-dd-formula="modifier tot temp" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="mod_tot" data-dd-formula="mod 2 -10 ./tot" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="mod_temp" data-dd-formula="mod 2 -10 ./tot ./temp" class="text-right form-control form-control-sm dd-integer-field"></td>
                     </tr>
                     <tr data-dd-id="car">
                       <th scope="row" class="text-right align-middle px-3">Car</th>
@@ -800,10 +800,10 @@ You should have received a copy of the GNU General Public License
                       <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum tiro_base razza archetipo[0] archetipo[1] livello magia varie[0] varie[1]" class="text-right form-control form-control-sm dd-natural-field"></td>
+                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum ./tiro_base ./razza ./archetipo[0] ./archetipo[1] ./livello ./magia ./varie[0] ./varie[1]" class="text-right form-control form-control-sm dd-natural-field"></td>
                       <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm dd-natural-field"></td>
-                      <td><input type="text" data-dd-id="mod_tot" data-dd-formula="modifier tot" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="mod_temp" data-dd-formula="modifier tot temp" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="mod_tot" data-dd-formula="mod 2 -10 ./tot" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="mod_temp" data-dd-formula="mod 2 -10 ./tot ./temp" class="text-right form-control form-control-sm dd-integer-field"></td>
                     </tr>
                   </tbody>
                 </table>
@@ -847,7 +847,7 @@ You should have received a copy of the GNU General Public License
                   <tbody>
                     <tr data-dd-id="tempra_cos">
                       <th scope="row">Tempra<sup>Cos</sup></th>
-                      <td><input type="text" data-dd-id="mod" data-dd-formula="ref @caratteristiche.cos.mod_temp" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="mod" data-dd-formula="ref /caratteristiche.cos.mod_temp" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="classe" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
@@ -856,11 +856,11 @@ You should have received a copy of the GNU General Public License
                       <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="mod_speciali" class="form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum mod classe razza archetipo[0] archetipo[1] magia varie[0] varie[1] mod_speciali" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum ./mod ./classe ./razza ./archetipo[0] ./archetipo[1] ./magia ./varie[0] ./varie[1] ./mod_speciali" class="text-right form-control form-control-sm dd-integer-field"></td>
                     </tr>
                     <tr data-dd-id="tempra_des">
                       <th scope="row">Tempra<sup>Des</sup></th>
-                      <td><input type="text" data-dd-id="mod" data-dd-formula="ref @caratteristiche.des.mod_temp" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="mod" data-dd-formula="ref /caratteristiche.des.mod_temp" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="classe" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
@@ -869,11 +869,11 @@ You should have received a copy of the GNU General Public License
                       <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="mod_speciali" class="form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum mod classe razza archetipo[0] archetipo[1] magia varie[0] varie[1] mod_speciali" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum ./mod ./classe ./razza ./archetipo[0] ./archetipo[1] ./magia ./varie[0] ./varie[1] ./mod_speciali" class="text-right form-control form-control-sm dd-integer-field"></td>
                     </tr>
                     <tr data-dd-id="riflessi_des">
                       <th scope="row">Riflessi<sup>Des</sup></th>
-                      <td><input type="text" data-dd-id="mod" data-dd-formula="ref @caratteristiche.des.mod_temp" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="mod" data-dd-formula="ref /caratteristiche.des.mod_temp" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="classe" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
@@ -882,11 +882,11 @@ You should have received a copy of the GNU General Public License
                       <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="mod_speciali" class="form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum mod classe razza archetipo[0] archetipo[1] magia varie[0] varie[1] mod_speciali" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum ./mod ./classe ./razza ./archetipo[0] ./archetipo[1] ./magia ./varie[0] ./varie[1] ./mod_speciali" class="text-right form-control form-control-sm dd-integer-field"></td>
                     </tr>
                     <tr data-dd-id="volonta_sag">
                       <th scope="row">Volontà<sup>Sag</sup></th>
-                      <td><input type="text" data-dd-id="mod" data-dd-formula="ref @caratteristiche.sag.mod_temp" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="mod" data-dd-formula="ref /caratteristiche.sag.mod_temp" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="classe" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
@@ -895,11 +895,11 @@ You should have received a copy of the GNU General Public License
                       <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="mod_speciali" class="form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum mod classe razza archetipo[0] archetipo[1] magia varie[0] varie[1] mod_speciali" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum ./mod ./classe ./razza ./archetipo[0] ./archetipo[1] ./magia ./varie[0] ./varie[1] ./mod_speciali" class="text-right form-control form-control-sm dd-integer-field"></td>
                     </tr>
                     <tr data-dd-id="volonta_car">
                       <th scope="row">Volontà<sup>Car</sup></th>
-                      <td><input type="text" data-dd-id="mod" data-dd-formula="ref @caratteristiche.car.mod_temp" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="mod" data-dd-formula="ref /caratteristiche.car.mod_temp" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="classe" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
@@ -908,11 +908,11 @@ You should have received a copy of the GNU General Public License
                       <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="mod_speciali" class="form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum mod classe razza archetipo[0] archetipo[1] magia varie[0] varie[1] mod_speciali" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum ./mod ./classe ./razza ./archetipo[0] ./archetipo[1] ./magia ./varie[0] ./varie[1] ./mod_speciali" class="text-right form-control form-control-sm dd-integer-field"></td>
                     </tr>
                     <tr data-dd-id="volonta_int">
                       <th scope="row">Volontà<sup>Int</sup></th>
-                      <td><input type="text" data-dd-id="mod" data-dd-formula="ref @caratteristiche.int.mod_temp" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="mod" data-dd-formula="ref /caratteristiche.int.mod_temp" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="classe" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="razza" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="archetipo[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
@@ -921,7 +921,7 @@ You should have received a copy of the GNU General Public License
                       <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="mod_speciali" class="form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum mod classe razza archetipo[0] archetipo[1] magia varie[0] varie[1] mod_speciali" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum ./mod ./classe ./razza ./archetipo[0] ./archetipo[1] ./magia ./varie[0] ./varie[1] ./mod_speciali" class="text-right form-control form-control-sm dd-integer-field"></td>
                     </tr>
                   </tbody>
                 </table>
@@ -1180,32 +1180,32 @@ You should have received a copy of the GNU General Public License
                       <td class="text-center text-muted align-middle"><small>10/1d20</small></td>
                       <td><input type="text" data-dd-id="armatura" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="scudo" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="des" data-dd-formula="ref @caratteristiche.des.mod_temp" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="des" data-dd-formula="ref /caratteristiche.des.mod_temp" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="taglia" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="armatura_naturale" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="deviazione" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="cognitivo" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum+10 armatura scudo des taglia armatura_naturale deviazione cognitivo varie[0] varie[1]" class="text-right form-control form-control-sm dd-natural-field"></td>
+                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum 10 ./armatura ./scudo ./des ./taglia ./armatura_naturale ./deviazione ./cognitivo ./varie[0] ./varie[1]" class="text-right form-control form-control-sm dd-natural-field"></td>
                       <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="tot_temp" data-dd-formula="sum tot temp" class="text-right form-control form-control-sm dd-natural-field"></td>
+                      <td><input type="text" data-dd-id="tot_temp" data-dd-formula="sum ./tot ./temp" class="text-right form-control form-control-sm dd-natural-field"></td>
                     </tr>
                     <tr data-dd-id="contatto">
                       <th>Contatto</th>
                       <td class="text-center text-muted align-middle"><small>10/1d20</small></td>
                       <td><input type="text" data-dd-id="armatura" class="text-right form-control form-control-sm dd-integer-field" disabled></td>
                       <td><input type="text" data-dd-id="scudo" class="text-right form-control form-control-sm dd-integer-field" disabled></td>
-                      <td><input type="text" data-dd-id="des" data-dd-formula="ref @caratteristiche.des.mod_temp" class="text-right form-control form-control-sm dd-integer-field"></td>
+                      <td><input type="text" data-dd-id="des" data-dd-formula="ref /caratteristiche.des.mod_temp" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="taglia" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="armatura_naturale" class="text-right form-control form-control-sm dd-integer-field" disabled></td>
                       <td><input type="text" data-dd-id="deviazione" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="cognitivo" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum+10 armatura scudo des taglia armatura_naturale deviazione cognitivo varie[0] varie[1]" class="text-right form-control form-control-sm dd-natural-field"></td>
+                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum 10 ./armatura ./scudo ./des ./taglia ./armatura_naturale ./deviazione ./cognitivo ./varie[0] ./varie[1]" class="text-right form-control form-control-sm dd-natural-field"></td>
                       <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="tot_temp" data-dd-formula="sum tot temp" class="text-right form-control form-control-sm dd-natural-field"></td>
+                      <td><input type="text" data-dd-id="tot_temp" data-dd-formula="sum ./tot ./temp" class="text-right form-control form-control-sm dd-natural-field"></td>
                     </tr>
                     <tr data-dd-id="colto_alla_sprovvista">
                       <th>Colto&nbsp;alla&nbsp;s.</th>
@@ -1219,9 +1219,9 @@ You should have received a copy of the GNU General Public License
                       <td><input type="text" data-dd-id="cognitivo" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum+10 armatura scudo des taglia armatura_naturale deviazione cognitivo varie[0] varie[1]" class="text-right form-control form-control-sm dd-natural-field"></td>
+                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum 10 ./armatura ./scudo ./des ./taglia ./armatura_naturale ./deviazione ./cognitivo ./varie[0] ./varie[1]" class="text-right form-control form-control-sm dd-natural-field"></td>
                       <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="tot_temp" data-dd-formula="sum tot temp" class="text-right form-control form-control-sm dd-natural-field"></td>
+                      <td><input type="text" data-dd-id="tot_temp" data-dd-formula="sum ./tot ./temp" class="text-right form-control form-control-sm dd-natural-field"></td>
                     </tr>
                   </tbody>
                 </table>
@@ -1330,7 +1330,7 @@ You should have received a copy of the GNU General Public License
                         <td><input type="text" data-dd-id="att[2]" class="text-right form-control form-control-sm dd-natural-field"></td>
                         <td><input type="text" data-dd-id="att[3]" class="text-right form-control form-control-sm dd-natural-field"></td>
                         <td><input type="text" data-dd-id="att[4]" class="text-right form-control form-control-sm dd-natural-field"></td>
-                        <td><input type="text" data-dd-id="att_opportunita" data-dd-formula="ref att[0]" class="text-right form-control form-control-sm dd-natural-field" readonly></td>
+                        <td><input type="text" data-dd-id="att_opportunita" data-dd-formula="ref ./att[0]" class="text-right form-control form-control-sm dd-natural-field" readonly></td>
                       </tr>
                      </tbody>
                     </table>
@@ -1350,11 +1350,11 @@ You should have received a copy of the GNU General Public License
                      </thead>
                      <tbody>
                       <tr>
-                        <td><input type="text" data-dd-id="des" data-dd-formula="ref @caratteristiche.des.mod_temp" class="text-right form-control form-control-sm dd-integer-field"></td>
+                        <td><input type="text" data-dd-id="des" data-dd-formula="ref /caratteristiche.des.mod_temp" class="text-right form-control form-control-sm dd-integer-field"></td>
                         <td><input type="text" data-dd-id="talento" class="text-right form-control form-control-sm dd-integer-field"></td>
                         <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
                         <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
-                        <td><input type="text" data-dd-id="tot" data-dd-formula="sum des talento varie[0] varie[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
+                        <td><input type="text" data-dd-id="tot" data-dd-formula="sum ./des ./talento ./varie[0] ./varie[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       </tr>
                      </tbody>
                     </table>
@@ -1445,14 +1445,14 @@ You should have received a copy of the GNU General Public License
                      </thead>
                      <tbody>
                       <tr>
-                        <td><input type="text" data-dd-id="bonus_att_base" data-dd-formula="ref @bonus_att_base.att[0]" class="text-right form-control form-control-sm dd-natural-field"></td>
-                        <td><input type="text" data-dd-id="for" data-dd-formula="ref @caratteristiche.for.mod_temp" class="text-right form-control form-control-sm dd-integer-field"></td>
+                        <td><input type="text" data-dd-id="bonus_att_base" data-dd-formula="ref /bonus_att_base.att[0]" class="text-right form-control form-control-sm dd-natural-field"></td>
+                        <td><input type="text" data-dd-id="for" data-dd-formula="ref /caratteristiche.for.mod_temp" class="text-right form-control form-control-sm dd-integer-field"></td>
                         <td><input type="text" data-dd-id="taglia" class="text-right form-control form-control-sm dd-integer-field"></td>
                         <td><input type="text" data-dd-id="talento" class="text-right form-control form-control-sm dd-integer-field"></td>
                         <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm dd-integer-field"></td>
                         <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
                         <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
-                        <td><input type="text" data-dd-id="tot" data-dd-formula="sum bonus_att_base for taglia talento magia varie[0] varie[1]" class="text-right form-control form-control-sm dd-natural-field"></td>
+                        <td><input type="text" data-dd-id="tot" data-dd-formula="sum ./bonus_att_base ./for ./taglia ./talento ./magia ./varie[0] ./varie[1]" class="text-right form-control form-control-sm dd-natural-field"></td>
                       </tr>
                      </tbody>
                     </table>
