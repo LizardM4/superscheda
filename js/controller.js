@@ -451,6 +451,14 @@ function Controller(dbxAppId) {
     };
 
     self._evalFormula = function(obj) {
+        let ensure_numbers = function(the_args) {
+            for (var i = 0; i < the_args.length; i++) {
+                if (typeof the_args[i] !== 'number') {
+                    return false;
+                }
+            }
+            return true;
+        };
         obj = $(obj);
         let args = obj.attr('data-dd-formula').split(' ');
         for (let i = 1; i < args.length; i++) {
@@ -465,16 +473,25 @@ function Controller(dbxAppId) {
         // All arguments are defined and numerical
         switch (args.shift()) {
             case 'sum':
+                if (!ensure_numbers(args)) {
+                    return null;
+                }
                 return args.reduce((a, b) => a + b, 0);
                 break;
             case 'modifier':
+                if (!ensure_numbers(args)) {
+                    return null;
+                }
                 return Math.floor(args.reduce((a, b) => a + b, 0) / 2 - 5);
+                break;
+            case 'sum+10':
+                if (!ensure_numbers(args)) {
+                    return null;
+                }
+                return args.reduce((a, b) => a + b, 10);
                 break;
             case 'ref':
                 return args[0];
-                break;
-            case 'sum+10':
-                return args.reduce((a, b) => a + b, 10);
                 break;
             default:
                 return null;
