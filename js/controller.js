@@ -473,6 +473,9 @@ function Controller(dbxAppId) {
             case 'ref':
                 return args[0];
                 break;
+            case 'sum+10':
+                return args.reduce((a, b) => a + b, 10);
+                break;
             default:
                 return null;
                 break;

@@ -1187,41 +1187,41 @@ You should have received a copy of the GNU General Public License
                       <td><input type="text" data-dd-id="cognitivo" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="tot" class="text-right form-control form-control-sm dd-natural-field"></td>
+                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum+10 armatura scudo des taglia armatura_naturale deviazione cognitivo varie[0] varie[1]" class="text-right form-control form-control-sm dd-natural-field"></td>
                       <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="tot_temp" class="text-right form-control form-control-sm dd-natural-field"></td>
+                      <td><input type="text" data-dd-id="tot_temp" data-dd-formula="sum tot temp" class="text-right form-control form-control-sm dd-natural-field"></td>
                     </tr>
                     <tr data-dd-id="contatto">
                       <th>Contatto</th>
                       <td class="text-center text-muted align-middle"><small>10/1d20</small></td>
-                      <td><input type="text" data-dd-id="armatura" class="text-right form-control form-control-sm" disabled></td>
-                      <td><input type="text" data-dd-id="scudo" class="text-right form-control form-control-sm" disabled></td>
+                      <td><input type="text" data-dd-id="armatura" class="text-right form-control form-control-sm dd-integer-field" disabled></td>
+                      <td><input type="text" data-dd-id="scudo" class="text-right form-control form-control-sm dd-integer-field" disabled></td>
                       <td><input type="text" data-dd-id="des" data-dd-formula="ref @caratteristiche.des.mod_temp" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="taglia" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="armatura_naturale" class="text-right form-control form-control-sm" disabled></td>
+                      <td><input type="text" data-dd-id="armatura_naturale" class="text-right form-control form-control-sm dd-integer-field" disabled></td>
                       <td><input type="text" data-dd-id="deviazione" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="cognitivo" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="tot" class="text-right form-control form-control-sm dd-natural-field"></td>
+                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum+10 armatura scudo des taglia armatura_naturale deviazione cognitivo varie[0] varie[1]" class="text-right form-control form-control-sm dd-natural-field"></td>
                       <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="tot_temp" class="text-right form-control form-control-sm dd-natural-field"></td>
+                      <td><input type="text" data-dd-id="tot_temp" data-dd-formula="sum tot temp" class="text-right form-control form-control-sm dd-natural-field"></td>
                     </tr>
                     <tr data-dd-id="colto_alla_sprovvista">
                       <th>Colto&nbsp;alla&nbsp;s.</th>
                       <td class="text-center text-muted align-middle"><small>10/1d20</small></td>
                       <td><input type="text" data-dd-id="armatura" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="scudo" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="des" class="text-right form-control form-control-sm" disabled></td>
+                      <td><input type="text" data-dd-id="des" class="text-right form-control form-control-sm dd-integer-field" disabled></td>
                       <td><input type="text" data-dd-id="taglia" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="armatura_naturale" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="deviazione" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="cognitivo" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="tot" class="text-right form-control form-control-sm dd-natural-field"></td>
+                      <td><input type="text" data-dd-id="tot" data-dd-formula="sum+10 armatura scudo des taglia armatura_naturale deviazione cognitivo varie[0] varie[1]" class="text-right form-control form-control-sm dd-natural-field"></td>
                       <td><input type="text" data-dd-id="temp" class="text-right form-control form-control-sm dd-integer-field"></td>
-                      <td><input type="text" data-dd-id="tot_temp" class="text-right form-control form-control-sm dd-natural-field"></td>
+                      <td><input type="text" data-dd-id="tot_temp" data-dd-formula="sum tot temp" class="text-right form-control form-control-sm dd-natural-field"></td>
                     </tr>
                   </tbody>
                 </table>
@@ -1325,12 +1325,12 @@ You should have received a copy of the GNU General Public License
                      </thead>
                      <tbody>
                       <tr>
-                        <td><input type="text" data-dd-id="att[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
-                        <td><input type="text" data-dd-id="att[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
-                        <td><input type="text" data-dd-id="att[2]" class="text-right form-control form-control-sm dd-integer-field"></td>
-                        <td><input type="text" data-dd-id="att[3]" class="text-right form-control form-control-sm dd-integer-field"></td>
-                        <td><input type="text" data-dd-id="att[4]" class="text-right form-control form-control-sm dd-integer-field"></td>
-                        <td><input type="text" class="text-right form-control form-control-sm" readonly value="Att 1"></td>
+                        <td><input type="text" data-dd-id="att[0]" class="text-right form-control form-control-sm dd-natural-field"></td>
+                        <td><input type="text" data-dd-id="att[1]" class="text-right form-control form-control-sm dd-natural-field"></td>
+                        <td><input type="text" data-dd-id="att[2]" class="text-right form-control form-control-sm dd-natural-field"></td>
+                        <td><input type="text" data-dd-id="att[3]" class="text-right form-control form-control-sm dd-natural-field"></td>
+                        <td><input type="text" data-dd-id="att[4]" class="text-right form-control form-control-sm dd-natural-field"></td>
+                        <td><input type="text" data-dd-id="att_opportunita" data-dd-formula="ref att[0]" class="text-right form-control form-control-sm dd-natural-field" readonly></td>
                       </tr>
                      </tbody>
                     </table>
@@ -1350,11 +1350,11 @@ You should have received a copy of the GNU General Public License
                      </thead>
                      <tbody>
                       <tr>
-                        <td><input type="text" data-dd-id="des" class="text-right form-control form-control-sm dd-integer-field"></td>
+                        <td><input type="text" data-dd-id="des" data-dd-formula="ref @caratteristiche.des.mod_temp" class="text-right form-control form-control-sm dd-integer-field"></td>
                         <td><input type="text" data-dd-id="talento" class="text-right form-control form-control-sm dd-integer-field"></td>
                         <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
                         <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
-                        <td><input type="text" data-dd-id="tot" class="text-right form-control form-control-sm dd-integer-field"></td>
+                        <td><input type="text" data-dd-id="tot" data-dd-formula="sum des talento varie[0] varie[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
                       </tr>
                      </tbody>
                     </table>
@@ -1445,14 +1445,14 @@ You should have received a copy of the GNU General Public License
                      </thead>
                      <tbody>
                       <tr>
-                        <td><input type="text" data-dd-id="bonus_att_base" class="text-right form-control form-control-sm"></td>
-                        <td><input type="text" data-dd-id="for" class="text-right form-control form-control-sm dd-integer-field"></td>
+                        <td><input type="text" data-dd-id="bonus_att_base" data-dd-formula="ref @bonus_att_base.att[0]" class="text-right form-control form-control-sm dd-natural-field"></td>
+                        <td><input type="text" data-dd-id="for" data-dd-formula="ref @caratteristiche.for.mod_temp" class="text-right form-control form-control-sm dd-integer-field"></td>
                         <td><input type="text" data-dd-id="taglia" class="text-right form-control form-control-sm dd-integer-field"></td>
                         <td><input type="text" data-dd-id="talento" class="text-right form-control form-control-sm dd-integer-field"></td>
                         <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm dd-integer-field"></td>
                         <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm dd-integer-field"></td>
                         <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm dd-integer-field"></td>
-                        <td><input type="text" data-dd-id="tot" class="text-right form-control form-control-sm dd-integer-field"></td>
+                        <td><input type="text" data-dd-id="tot" data-dd-formula="sum bonus_att_base for taglia talento magia varie[0] varie[1]" class="text-right form-control form-control-sm dd-natural-field"></td>
                       </tr>
                      </tbody>
                     </table>
@@ -1462,7 +1462,7 @@ You should have received a copy of the GNU General Public License
                     <h6 class="text-truncate mt-3 mt-md-0">Att. di opportunità</h6>
                     <div>
                       <label class="col-form-label col-form-label-sm">Totale</label>
-                      <input type="text" data-dd-id="att_opportunita" class="text-right form-control form-control-sm">
+                      <input type="text" data-dd-id="att_opportunita" class="text-right form-control form-control-sm dd-natural-field">
                     </div>
                   </div>
                 </div>
