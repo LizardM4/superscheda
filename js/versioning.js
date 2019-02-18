@@ -157,3 +157,14 @@ DDver.addPatch('0.1.1', function(h) {
         h.remove(wrong_path);
     }
 });
+
+DDver.addPatch('0.1.2', function(h) {
+    $('[data-dd-path][data-dd-formula]').each(function(idx, obj) {
+        obj = $(obj);
+        let ddPath = obj.attr('data-dd-path');
+        if (obj.attr('placeholder') == obj.val()) {
+            console.log('Replacing value for ' + ddPath + ' with precomputed default.');
+            h.set(ddPath, null);
+        }
+    });
+})
