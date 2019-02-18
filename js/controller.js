@@ -60,6 +60,7 @@ function toNaturalField(num) {
 
 jQuery.fn.extend({
     ddSetDefault: function(arg) {
+        let oldPlaceholder = $(this).attr('placeholder');
         if ($(this).hasClass('dd-integer-field')) {
             $(this).attr('placeholder', toIntegerField(arg));
         } else if ($(this).hasClass('dd-natural-field')) {
@@ -70,7 +71,9 @@ jQuery.fn.extend({
         var rawVal = $(this).val();
         if (typeof rawVal === 'undefined' || rawVal.trim() == '') {
             // Trigger a change because the value is represented by the placeholder
-            $(this).change();
+            if (oldPlaceholder != $(this).attr('placeholder')) {
+                $(this).change();
+            }
         }
     },
     ddVal: function(arg) {
@@ -94,18 +97,21 @@ jQuery.fn.extend({
             }
         }
     },
-    ddMathVal: function (arg) {
+    ddFormulaVal: function (arg) {
         // If the object has no val, return a placeholder
         var rawVal = $(this).val()
         if (typeof rawVal === 'undefined' || rawVal.trim() == '') {
             rawVal = $(this).attr('placeholder');
+            if (typeof rawVal === 'undefined') {
+                rawVal = null;
+            }
         }
         if ($(this).hasClass('dd-integer-field')) {
             return fromIntegerField(rawVal, false);
         } else if ($(this).hasClass('dd-natural-field')) {
             return fromNaturalField(rawVal, false);
         } else {
-            return null;
+            return rawVal;
         }
     }
 });
@@ -139,46 +145,6 @@ function Controller(dbxAppId) {
             path = self._getHierPath(obj) + '.' + path;
         }
         return path;
-    };
-
-    self._evalFormula = function(obj) {
-        var args = self._resolveArguments(obj);
-        for (var i = 0; i < args.length; i++) {
-            args[i] = args[i].ddMathVal();
-            if (args[i] == null) {
-                // Nope, we cannot evaluate this function
-                return null
-            }
-        }
-        // All arguments are defined and numerical
-        switch (obj.attr('data-dd-formula')) {
-            case 'sum':
-                return args.reduce((a, b) => a + b, 0);
-                break;
-            default:
-                return null;
-                break;
-        }
-    }
-
-    self._resolveArguments = function(obj) {
-        obj = $(obj);
-        var parent = obj.parents('[data-dd-id]');
-        if (parent.length == 0) {
-            parent = $;
-        } else {
-            parent = $(parent[0]);
-        }
-        var args = obj.attr('data-dd-args');
-        args = args.split(',');
-        controls = []
-        for (var i = 0; i < args.length; i++) {
-            var control = parent.find('[data-dd-id="' + args[i].trim() + '"]');
-            if (control.length > 0) {
-                controls.push(control)
-            }
-        }
-        return controls;
     };
 
     self._resolveTarget = function(obj) {
@@ -472,16 +438,72 @@ function Controller(dbxAppId) {
         });
     };
 
+    self._resolveOneArg = function(obj, arg) {
+        if (arg == '') {
+            return [null, null];
+        }
+        obj = $(obj);
+        if (arg[0] == '@') {
+            // Absolute path
+            return [self.findByPath(arg.substring(1)), false];
+        }
+        return [self.findNext(self.findParent(obj), arg), true];
+    };
+
+    self._evalFormula = function(obj) {
+        obj = $(obj);
+        let args = obj.attr('data-dd-formula').split(' ');
+        for (let i = 1; i < args.length; i++) {
+            let [ctrl, ] = self._resolveOneArg(obj, args[i]);
+            if (ctrl == null || ctrl.length == 0) {
+                // Nope, we cannot evaluate this function
+                return null;
+            }
+            // Replace with actual value
+            args[i] = ctrl.ddFormulaVal();
+        }
+        // All arguments are defined and numerical
+        switch (args.shift()) {
+            case 'sum':
+                return args.reduce((a, b) => a + b, 0);
+                break;
+            case 'modifier':
+                return Math.floor(args.reduce((a, b) => a + b, 0) / 2 - 5);
+                break;
+            case 'ref':
+                return args[0];
+                break;
+            default:
+                return null;
+                break;
+        }
+    };
+
     self._setupFormulas = function() {
         $('[data-dd-id][data-dd-formula]').each(function(idx, obj) {
             obj = $(obj);
             // Identify the arguments
-            var ctrls = self._resolveArguments(obj);
-            for (var i = ctrls.length - 1; i >= 0; i--) {
-                // Each control on change must trigger the formula update for obj
-                $(ctrls[i]).change(function(evt) {
-                    obj.ddSetDefault(self._evalFormula(obj));
-                });
+            let args = obj.attr('data-dd-formula').split(' ');
+            for (let i = 1; i < args.length; i++) {
+                let [ctrl, relative] = self._resolveOneArg(obj, args[i]);
+                if (ctrl == null || ctrl.length == 0) {
+                    continue;
+                }
+                if (relative) {
+                    // Lookup the target in a relative fashion
+                    let ddId = obj.attr('data-dd-id');
+                    ctrl.change(function(evt) {
+                        let relativeTarget = self.findNext(self.findParent(this), ddId);
+                        if (relativeTarget != null && relativeTarget.length > 0) {
+                            relativeTarget.ddSetDefault(self._evalFormula(relativeTarget));
+                        }
+
+                    });
+                } else {
+                    ctrl.change(function(evt) {
+                        obj.ddSetDefault(self._evalFormula(obj));
+                    });
+                }
             }
             self._evalFormula(obj);
         });
@@ -639,6 +661,19 @@ function Controller(dbxAppId) {
             return $(obj).parentsUntil($(parent)).filter('[data-dd-id]').length == 0;
         });
     };
+
+    self.findParent = function(obj) {
+        var parents = $(obj).parents('[data-dd-id], [data-dd-index]');
+        if (parents.length == 0) {
+            return $;
+        } else {
+            return $(parents[0]);
+        }
+    };
+
+    self.findByPath = function (path) {
+        return $('[data-dd-path="' + path + '"');
+    }
 
     self.find = function (path) {
         path = self.data.parsePath(path);
