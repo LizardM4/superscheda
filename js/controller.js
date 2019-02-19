@@ -59,22 +59,22 @@ function toNaturalField(num) {
 
 
 jQuery.fn.extend({
+    ddIsVoid: function () {
+        let val = $(this).val();
+        // Note: val == 0 is a non-void value.
+        return typeof val === 'undefined' || val == null || val.trim() == '';
+    },
     ddSetDefault: function(arg) {
-        let oldPlaceholder = $(this).attr('placeholder');
-        if ($(this).hasClass('dd-integer-field')) {
-            $(this).attr('placeholder', toIntegerField(arg));
-        } else if ($(this).hasClass('dd-natural-field')) {
-            $(this).attr('placeholder', toNaturalField(arg));
+        let obj = $(this);
+        let oldPlaceholder = obj.attr('placeholder');
+        if (obj.hasClass('dd-integer-field')) {
+            obj.attr('placeholder', toIntegerField(arg));
+        } else if (obj.hasClass('dd-natural-field')) {
+            obj.attr('placeholder', toNaturalField(arg));
         } else {
-            $(this).attr('placeholder', arg.toString());
+            obj.attr('placeholder', arg.toString());
         }
-        var rawVal = $(this).val();
-        if (typeof rawVal === 'undefined' || rawVal.trim() == '') {
-            // Trigger a change because the value is represented by the placeholder
-            if (oldPlaceholder != $(this).attr('placeholder')) {
-                $(this).change();
-            }
-        }
+        return oldPlaceholder != obj.attr('placeholder');
     },
     ddVal: function(arg) {
         if ($(this).hasClass('dd-integer-field')) {
@@ -98,17 +98,18 @@ jQuery.fn.extend({
         }
     },
     ddFormulaVal: function (arg) {
+        let obj = $(this);
         // If the object has no val, return a placeholder
-        var rawVal = $(this).val()
+        var rawVal = obj.val()
         if (typeof rawVal === 'undefined' || rawVal.trim() == '') {
-            rawVal = $(this).attr('placeholder');
+            rawVal = obj.attr('placeholder');
             if (typeof rawVal === 'undefined') {
                 rawVal = null;
             }
         }
-        if ($(this).hasClass('dd-integer-field')) {
+        if (obj.hasClass('dd-integer-field')) {
             return fromIntegerField(rawVal, false);
-        } else if ($(this).hasClass('dd-natural-field')) {
+        } else if (obj.hasClass('dd-natural-field')) {
             return fromNaturalField(rawVal, false);
         } else {
             return rawVal;
@@ -438,23 +439,31 @@ function Controller(dbxAppId) {
         });
     };
 
-    self._resolveOneArg = function(obj, arg) {
+    self._inverseResolveArg = function(obj) {
+        obj = $(obj);
+        return self._allControls()
+            .filter('[data-dd-formula~="/' + obj.attr('data-dd-path') + '"]')
+            .add(self.findSiblings(obj)
+                .filter('[data-dd-formula~="./' + obj.attr('data-dd-id') + '"]'));
+    };
+
+    self._resolveArg = function(obj, arg) {
         if (arg == '') {
-            return [null, null];
+            return null;
         }
         obj = $(obj);
         if (arg[0] == '/') {
             // Absolute path
-            return [self.findByPath(arg.substring(1)), false];
+            return self.findByPath(arg.substring(1));
         } else if (arg.substring(0, 2) == './') {
-            return [self.findNext(self.findParent(obj), arg.substring(2)), true];
+            return self.findNext(self.findParent(obj), arg.substring(2));
         } else {
             // Try number
             let num = Number(arg);
             if (num != num) {
-                return [arg, null]
+                return arg;
             }
-            return [num, null];
+            return num;
         }
     };
 
@@ -470,8 +479,8 @@ function Controller(dbxAppId) {
         obj = $(obj);
         let args = obj.attr('data-dd-formula').split(' ');
         for (let i = 1; i < args.length; i++) {
-            let [arg, isRelativeCtrl] = self._resolveOneArg(obj, args[i]);
-            if (isRelativeCtrl != null) {
+            let arg = self._resolveArg(obj, args[i]);
+            if (typeof arg === 'object') {
                 if (arg == null || arg.length == 0) {
                     // Nope, we cannot evaluate this function
                     return null;
@@ -506,32 +515,22 @@ function Controller(dbxAppId) {
     };
 
     self._setupFormulas = function() {
-        $('[data-dd-id][data-dd-formula]').each(function(idx, obj) {
-            obj = $(obj);
-            // Identify the arguments
-            let args = obj.attr('data-dd-formula').split(' ');
-            for (let i = 1; i < args.length; i++) {
-                let [arg, isRelativeCtrl] = self._resolveOneArg(obj, args[i]);
-                if (isRelativeCtrl == null || arg == null || arg.length == 0) {
-                    continue;
-                }
-                if (isRelativeCtrl) {
-                    // Lookup the target in a relative fashion
-                    let ddId = obj.attr('data-dd-id');
-                    arg.change(function(evt) {
-                        let relativeTarget = self.findNext(self.findParent(this), ddId);
-                        if (relativeTarget != null && relativeTarget.length > 0) {
-                            relativeTarget.ddSetDefault(self._evalFormula(relativeTarget));
-                        }
-
-                    });
-                } else {
-                    arg.change(function(evt) {
-                        obj.ddSetDefault(self._evalFormula(obj));
-                    });
-                }
+        self._allControls().change(function (evt) {
+            let ctrl = $(this);
+            // Does this control need to reevaluate its formula?
+            if (ctrl.ddIsVoid() && ctrl.attr('data-dd-formula')) {
+                ctrl.ddSetDefault(self._evalFormula(ctrl));
             }
-            self._evalFormula(obj);
+
+            // Find all controls affected by this
+            self._inverseResolveArg(ctrl).each(function(idx, depCtrl) {
+                // Filter out those that have a value
+                depCtrl = $(depCtrl);
+                if (depCtrl.ddIsVoid()) {
+                    // Trigger a change event, val is null so it will appear as if the control has a new value
+                    depCtrl.change();
+                }
+            });
         });
     };
 
@@ -682,10 +681,19 @@ function Controller(dbxAppId) {
     }
 
     self.findNext = function(parent, dd_id) {
-        return $(parent).find('[data-dd-id="' + dd_id +'"]').filter(function (idx, obj) {
+        return self.findChildren(parent).filter('[data-dd-id="' + dd_id +'"]');
+    };
+
+    self.findChildren = function(parent) {
+        parent = $(parent);
+        return parent.find('[data-dd-id]').filter(function (idx, obj) {
             // Make sure there is nothing in the middle
-            return $(obj).parentsUntil($(parent)).filter('[data-dd-id]').length == 0;
+            return $(obj).parentsUntil(parent).filter('[data-dd-id]').length == 0;
         });
+    };
+
+    self.findSiblings = function(obj) {
+        return self.findChildren(self.findParent(obj)).not(obj);
     };
 
     self.findParent = function(obj) {
