@@ -791,15 +791,15 @@ function Controller(dbxAppId) {
             var array_sizes = self.data.getArraySizes();
             array_sizes.sort(function (a, b) { return a[0].localeCompare(b[0]); });
             for (var i = 0; i < array_sizes.length; ++i) {
-                var array_path = array_sizes[i][0];
-                var array_size = array_sizes[i][1];
+                let arrayPath = array_sizes[i][0];
+                let arraySize = array_sizes[i][1];
                 // Is this a dynamic array?
-                var arr = self.find(array_path + '[-1]');
-                if (arr != null && arr.length > 0) {
+                let arrayMaster = self.findArrayMaster(arrayPath);
+                if (arrayMaster != null && arrayMaster.length > 0) {
                     // Arr points at the master
-                    arr.closest('[data-dd-array="container"]')
-                       .data('ddArrayController')
-                       .resize(array_size);
+                    arrayMaster.closest('[data-dd-array="container"]')
+                        .data('ddArrayController')
+                        .resize(arraySize);
                 }
             }
         });
@@ -849,34 +849,15 @@ function Controller(dbxAppId) {
         return $('[data-dd-path="' + path + '"');
     }
 
-    self.find = function (path) {
-        path = self.data.parsePath(path);
-        obj = $('body');
-        for (var i = 0; i < path.length; ++i) {
-            if (i < path.length - 1 && typeof path[i + 1] === 'number') {
-                // Search first by full name
-                var candidate = self.findNext(obj, path[i] + '[' + path[i + 1].toString() +']');
-                if (candidate.length == 0) {
-                    // Search by id and index. If the index is -1, the master node is meant
-                    candidate = self.findNext(obj, path[i]);
-                    if (path[i + 1] < 0) {
-                        candidate = candidate.filter('[data-dd-array="master"]');
-                    } else {
-                        candidate = candidate.filter('[data-dd-index="' + path[i+ 1].toString() + '"]');
-                    }
-                }
-                // Advance also i by 1
-                ++i;
-                obj = candidate;
-            } else {
-                // Just look up the nextitem
-                obj = self.findNext(obj, path[i]);
-            }
-            if (obj.length == 0) {
-                return null;
-            }
+    self.findArrayMaster = function (path) {
+        // Remove the last path components
+        let pieces = path.split('.');
+        let lastComp = pieces.pop();
+        let parent = $;
+        if (pieces.length > 0) {
+            parent = self.findByPath(pieces.join('.'));
         }
-        return obj;
+        return self.findNext(parent, lastComp).filter('[data-dd-array="master"]');
     };
 
 
