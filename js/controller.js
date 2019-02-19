@@ -306,13 +306,12 @@ function Controller(dbxAppId) {
         self.formulasActive = false;
         console.log('Data loaded.');
         timeIt('Patching and loading data', function() {
+            if (self._needsPatching()) {
+                console.log('Data source needs patching.')
+                self._applyPatches();
+            }
             self.updateForm();
             self.refreshFormulas();
-            if (self._applyPatchesIfNeeded()) {
-                console.log('Data migration completed, copying to form.');
-                self.updateForm();
-                self.refreshFormulas();
-            }
         });
         self.formulasActive = true;
     };
@@ -562,7 +561,7 @@ function Controller(dbxAppId) {
         }
     };
 
-    self.refreshFormulas = function() {
+    self.refreshFormulas = function(onlyVoids=true) {
         let oldActive = self.formulasActive;
         self.formulasActive = false;
         timeIt('Recomputing formulas manually', function() {
@@ -571,7 +570,7 @@ function Controller(dbxAppId) {
             do {
                 levelSet.each(function(idx, obj) {
                     obj = $(obj)
-                     if (obj.attr('data-dd-formula') && obj.ddIsVoid()) {
+                     if (obj.attr('data-dd-formula') && (obj.ddIsVoid() || !onlyVoids)) {
                         obj.ddSetDefault(self._evalFormula(obj));
                     }
                 });
@@ -1016,17 +1015,21 @@ function Controller(dbxAppId) {
             });
     };
 
-    self._applyPatchesIfNeeded = function() {
-        if (window.DDver) {
-            if (window.DDver.needsPatch(self.data)) {
-                window.DDver.apply(self.data);
-                console.log('Successfully updated to version ' + window.DDver.getLatestVersionString());
-                return true;
-            } else {
-                console.log('Up to date with version ' + window.DDver.getLatestVersionString());
-                return false;
-            }
+    self._needsPatching = function() {
+        return window.DDver && window.DDver.needsPatch(self.data);
+    };
+
+    self._applyPatches = function() {
+        if (!self._needsPatching()) {
+            return;
         }
+        console.log('Loading data into form for patching.');
+        self.updateForm();
+        self.refreshFormulas(false);
+        timeIt('Patching', function() {
+            window.DDver.apply(self.data);
+        });
+        console.log('Successfully updated to version ' + window.DDver.getLatestVersionString());
     };
 
     self.loadRemote = function(name, post_action=null) {
