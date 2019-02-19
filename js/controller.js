@@ -916,6 +916,15 @@ function Controller(dbxAppId) {
         return $div;
     };
 
+    self._promptReady = function() {
+        let modal = $('#loading_modal');
+        // https://stackoverflow.com/a/9255507/1749822
+        modal.on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(e) {
+            modal.off(e);
+            modal.remove();
+        }).removeClass('show');
+    };
+
     self.setup = function() {
         self._saveModal = $('#save_to');
         self._loadModal = $('#load_from');
@@ -935,6 +944,7 @@ function Controller(dbxAppId) {
         self._setupLogoutButton();
         self._setupAutosave();
         self.loadAutosave();
+        self._promptReady();
     };
 
     self.updateHier = function() {
