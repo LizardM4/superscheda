@@ -42,10 +42,7 @@ function toIntegerField(num) {
     }
 }
 
-function fromNaturalField(rawVal, passthrough) {
-    if (typeof passthrough === 'undefined') {
-        passthrough = false;
-    }
+function fromNaturalField(rawVal, passthrough=false) {
     if (rawVal == null) {
         return passthrough ? null : 0;
     } else {
