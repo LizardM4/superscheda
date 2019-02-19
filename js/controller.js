@@ -708,7 +708,7 @@ function Controller(dbxAppId) {
             $(y).find('.dd-sort-key[data-dd-id]').val()
           );
         };
-        $(array).data('dd-array-controller').sort(compare);
+        $(array).data('ddArrayController').sort(compare);
     };
 
     self._setupAutosort = function() {
@@ -723,8 +723,8 @@ function Controller(dbxAppId) {
 
 
     self._setupAttackTOC = function() {
-        var toc_sm = $('#toc_attacchi_sm').data('dd-array-controller');
-        var toc_md = $('#toc_attacchi_md').data('dd-array-controller');
+        var toc_sm = $('#toc_attacchi_sm').data('ddArrayController');
+        var toc_md = $('#toc_attacchi_md').data('ddArrayController');
         $('#array_attacchi')
             .on('ddarray.title', function(evt, item, title) {
                 evt.stopPropagation();
@@ -798,7 +798,7 @@ function Controller(dbxAppId) {
                 if (arr != null && arr.length > 0) {
                     // Arr points at the master
                     arr.closest('[data-dd-array="container"]')
-                       .data('dd-array-controller')
+                       .data('ddArrayController')
                        .resize(array_size);
                 }
             }
