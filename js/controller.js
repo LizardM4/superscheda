@@ -19,6 +19,19 @@ function fromIntegerField(rawVal, passthrough) {
     return fromNaturalField(rawVal, passthrough);
 }
 
+var _timeItCnt = 0;
+
+function timeIt(desc, body) {
+    let start = performance.now();
+    _timeItCnt++;
+    console.log('>'.repeat(_timeItCnt) + ' ' + desc + '...');
+    body();
+    let end = performance.now();
+    console.log('>'.repeat(_timeItCnt) + ' ' + desc + ' took ' + (end - start).toString() + 'ms');
+    _timeItCnt--;
+
+}
+
 function toIntegerField(num) {
     if (num == null) {
         return '';
@@ -275,15 +288,16 @@ function Controller(dbxAppId) {
 
     self._postLoadSync = function() {
         self.formulasActive = false;
-        console.log('Data loaded, copying to form.');
-        self.updateForm();
-        self.refreshFormulas();
-        if (self._applyPatchesIfNeeded()) {
-            console.log('Data migration completed, copying to form.');
+        console.log('Data loaded.');
+        timeIt('Patching and loading data', function() {
             self.updateForm();
             self.refreshFormulas();
-        }
-        console.log('Active.');
+            if (self._applyPatchesIfNeeded()) {
+                console.log('Data migration completed, copying to form.');
+                self.updateForm();
+                self.refreshFormulas();
+            }
+        });
         self.formulasActive = true;
     };
 
@@ -293,6 +307,7 @@ function Controller(dbxAppId) {
             var to_load = window.localStorage.getItem('_autosave');
             if (to_load && to_load.length > 0) {
                 window.localStorage.removeItem('_autosave');
+                console.log('Reloading latest save.');
                 self.data.load(to_load);
                 self._postLoadSync();
             }
@@ -534,63 +549,88 @@ function Controller(dbxAppId) {
     self.refreshFormulas = function() {
         let oldActive = self.formulasActive;
         self.formulasActive = false;
-        console.log('Manually recomputing all formulas.');
-        let level = 0;
-        let levelSet = $();
-        do {
-            levelSet.each(function(idx, obj) {
-                obj = $(obj)
-                 if (obj.ddIsVoid()) {
-                    obj.ddSetDefault(self._evalFormula(obj));
-                }
-            });
-            // ----
-            ++level;
-            levelSet = $('[data-dd-depth="' + level.toString() + '"]');
-        } while (levelSet.length > 0);
-        console.log('Formulas recomputed.');
+        timeIt('Recomputing formulas manually', function() {
+            let level = 0;
+            let levelSet = $();
+            do {
+                levelSet.each(function(idx, obj) {
+                    obj = $(obj)
+                     if (obj.ddIsVoid()) {
+                        obj.ddSetDefault(self._evalFormula(obj));
+                    }
+                });
+                // ----
+                ++level;
+                levelSet = $('[data-dd-depth="' + level.toString() + '"]');
+            } while (levelSet.length > 0);
+        });
         self.formulasActive = oldActive;
     };
 
-    self._setupFormulas = function() {
-        // Precache all the dependants
-        let level = 0;
-        let levelSet = $();
-        self._allControls().filter('[data-dd-formula]').each(function (idx, obj) {
-            obj = $(obj);
-            let args = obj.attr('data-dd-formula').split(' ');
-            for (let i = 1; i < args.length; i++) {
-                args[i] = self._resolveArg(obj, args[i]);
-                if (typeof args[i] !== 'object' || args[i] == null || args[i].length == 0) {
-                    continue;
-                }
-                // Register to the list of dependants
-                let dependants = args[i].data('ddSuccessors');
-                if (!dependants) {
-                    args[i].data('ddSuccessors', obj);
-                } else {
-                    args[i].data('ddSuccessors', dependants.add(obj));
-                }
-                if (!args[i].attr('data-dd-formula')) {
-                    levelSet = levelSet.add(args[i]);
-                }
-            }
-            obj.data('ddPredecessors', args);
-        });
-        // Add depth info
-        while (levelSet.length > 0) {
-            let newLevelSet = $();
-            levelSet
-                .attr('data-dd-depth', level)
-                .each(function (idx, obj) {
-                    let dependants = $(obj).data('ddSuccessors');
-                    if (dependants) {
-                        newLevelSet = newLevelSet.add(dependants);
+    self._rebuildDepGraph = function() {
+        timeIt('Rebuilding dep graph', function() {
+            let levelSet = $();
+
+            timeIt('Clearing dep graph', function() {
+                // Clear all the deps. Mark as outdated
+                $('[data-dd-depth]').removeAttr('data-dd-depth').data('ddSuccessorsOutdated', true);
+            });
+
+            timeIt('Building adjacency lists', function() {
+                // Loop and rebuild the dependency graph. Collect level 0
+                self._allControls().filter('[data-dd-formula]').each(function (idx, obj) {
+                    obj = $(obj);
+                    let args = obj.attr('data-dd-formula').split(' ');
+                    for (let i = 1; i < args.length; i++) {
+                        args[i] = self._resolveArg(obj, args[i]);
+                        if (typeof args[i] !== 'object' || args[i] == null || args[i].length == 0) {
+                            continue;
+                        }
+                        // Register to the list of dependants
+                        let dependants = args[i].data('ddSuccessors');
+                        if (!dependants || args[i].data('ddSuccessorsOutdated')) {
+                            args[i].data('ddSuccessorsOutdated', false);
+                            args[i].data('ddSuccessors', obj);
+                        } else {
+                            args[i].data('ddSuccessors', dependants.add(obj));
+                        }
+                        if (!args[i].attr('data-dd-formula')) {
+                            levelSet = levelSet.add(args[i]);
+                        }
                     }
+                    obj.data('ddPredecessors', args);
                 });
-            ++level;
-            levelSet = newLevelSet;
-        }
+            });
+
+            timeIt('Traversing dep graph', function() {
+                // Assign the level and heuristically detect loops
+                let level = 0;
+                while (levelSet.length > 0) {
+                    let newLevelSet = $();
+                    if (level > 10) {
+                        console.log('Maximum formula depth of ' + level.toString() + ' reached!');
+                        levelSet.each(function(idx, obj) {
+                            console.log((idx + 1).toString() + '. ' + $(obj).attr('data-dd-path'));
+                        });
+                        break;
+                    }
+                    levelSet
+                        .attr('data-dd-depth', level)
+                        .each(function (idx, obj) {
+                            let dependants = $(obj).data('ddSuccessors');
+                            if (dependants) {
+                                newLevelSet = newLevelSet.add(dependants);
+                            }
+                        });
+                    ++level;
+                    levelSet = newLevelSet;
+                }
+            });
+        });
+    };
+
+    self._setupFormulas = function() {
+        self._rebuildDepGraph();
         let recomputeAndPropagate = function(ctrl) {
             console.log('Updating ' + ctrl.attr('data-dd-path'));
             // Does this control need to reevaluate its formula?
@@ -732,20 +772,22 @@ function Controller(dbxAppId) {
     }
 
     self._resizeAllFormArrays = function() {
-        var array_sizes = self.data.getArraySizes();
-        array_sizes.sort(function (a, b) { return a[0].localeCompare(b[0]); });
-        for (var i = 0; i < array_sizes.length; ++i) {
-            var array_path = array_sizes[i][0];
-            var array_size = array_sizes[i][1];
-            // Is this a dynamic array?
-            var arr = self.find(array_path + '[-1]');
-            if (arr != null && arr.length > 0) {
-                // Arr points at the master
-                arr.closest('[data-dd-array="container"]')
-                   .data('dd-array-controller')
-                   .resize(array_size);
+        timeIt('Resizing arrays', function() {
+            var array_sizes = self.data.getArraySizes();
+            array_sizes.sort(function (a, b) { return a[0].localeCompare(b[0]); });
+            for (var i = 0; i < array_sizes.length; ++i) {
+                var array_path = array_sizes[i][0];
+                var array_size = array_sizes[i][1];
+                // Is this a dynamic array?
+                var arr = self.find(array_path + '[-1]');
+                if (arr != null && arr.length > 0) {
+                    // Arr points at the master
+                    arr.closest('[data-dd-array="container"]')
+                       .data('dd-array-controller')
+                       .resize(array_size);
+                }
             }
-        }
+        });
     }
 
     self._truncateAllHierArrays = function() {
@@ -893,28 +935,30 @@ function Controller(dbxAppId) {
 
     self.updateForm = function() {
         self._resizeAllFormArrays();
-        var flat_data = self.data.flatten();
-        for (var path in flat_data) {
-            var ctrl = self.findByPath(path);
-            if (ctrl.attr('type') === 'checkbox') {
-                ctrl.prop('checked', flat_data[path]);
-                // Make sure to handle also custom checkboxes
-                var label = ctrl.closest('.btn-custom-checkbox');
-                if (label.length > 0) {
-                    if (flat_data[path]) {
-                        label.addClass('active');
-                    } else {
-                        label.removeClass('active');
+        timeIt('Updating form', function() {
+            var flat_data = self.data.flatten();
+            for (var path in flat_data) {
+                var ctrl = self.findByPath(path);
+                if (ctrl.attr('type') === 'checkbox') {
+                    ctrl.prop('checked', flat_data[path]);
+                    // Make sure to handle also custom checkboxes
+                    var label = ctrl.closest('.btn-custom-checkbox');
+                    if (label.length > 0) {
+                        if (flat_data[path]) {
+                            label.addClass('active');
+                        } else {
+                            label.removeClass('active');
+                        }
                     }
+                } else {
+                    ctrl.ddVal(flat_data[path]);
                 }
-            } else {
-                ctrl.ddVal(flat_data[path]);
+                if (ctrl.is('.dd-dyn-title, [data-dd-depth], #dd-page-title')) {
+                    // Trigger a change event because this manages a dynamic title.
+                    ctrl.change();
+                }
             }
-            if (ctrl.is('.dd-dyn-title, [data-dd-depth], #dd-page-title')) {
-                // Trigger a change event because this manages a dynamic title.
-                ctrl.change();
-            }
-        }
+        });
     };
 
     self.toggleWaiting = function(on_off, success=null) {
@@ -973,6 +1017,7 @@ function Controller(dbxAppId) {
     };
 
     self.loadRemote = function(name, post_action=null) {
+        console.log('Reloading remote file ' + name);
         $.getJSON(name, function(json_data) {
             self.data.obj = json_data;
             self._postLoadSync();
@@ -989,6 +1034,7 @@ function Controller(dbxAppId) {
     };
 
     self.loadDB = function(path, post_action=null) {
+        console.log('Loading Dropbox file ' + path);
         self.dropbox.filesDownload({path: path})
             .then(function (response) {
                 var blob = response.fileBlob;
