@@ -91,23 +91,42 @@ jQuery.fn.extend({
     },
     ddVal: function(arg) {
         let obj = $(this);
-        if (obj.hasClass('dd-integer-field')) {
-            if (typeof arg === 'undefined') {
-                return fromIntegerField(obj.val(), true);
-            } else {
-                return obj.val(toIntegerField(arg));
+        let isCheckbox = (obj.attr('type') === 'checkbox');
+        if (typeof arg === 'undefined') {
+            // Return the value
+            if (isCheckbox) {
+                return obj.is(':checked');
             }
-        } else if (obj.hasClass('dd-natural-field')) {
-            if (typeof arg === 'undefined') {
-                return fromNaturalField(obj.val(), true);
-            } else {
-                return obj.val(toNaturalField(arg));
+            let val = obj.val();
+            if (obj.hasClass('dd-integer-field')) {
+                val = fromIntegerField(val, true);
+            } else if (obj.hasClass('dd-natural-field')) {
+                val = fromNaturalField(val, true);
             }
+            if (typeof val === 'undefined') {
+                val = null;
+            }
+            return val;
         } else {
-            if (typeof arg === 'undefined') {
-                return obj.val();
+            // Set the value
+            if (isCheckbox) {
+                arg = !!arg; // Cast to bool
+                obj.prop('checked', arg);
+                // Make sure to handle also custom checkboxes
+                let label = obj.closest('.btn-custom-checkbox');
+                if (label.length > 0) {
+                    if (arg) {
+                        label.addClass('active');
+                    } else {
+                        label.removeClass('active');
+                    }
+                }
+            } else if (obj.hasClass('dd-integer-field')) {
+                obj.val(toIntegerField(arg));
+            } else if (obj.hasClass('dd-natural-field')) {
+                obj.val(toNaturalField(arg));
             } else {
-                return obj.val(arg);
+                obj.val(arg.toString());
             }
         }
     },
@@ -555,7 +574,7 @@ function Controller(dbxAppId) {
             do {
                 levelSet.each(function(idx, obj) {
                     obj = $(obj)
-                     if (obj.ddIsVoid()) {
+                     if (obj.attr('data-dd-formula') && obj.ddIsVoid()) {
                         obj.ddSetDefault(self._evalFormula(obj));
                     }
                 });
@@ -924,11 +943,7 @@ function Controller(dbxAppId) {
     self.updateHier = function() {
         self._allControls().each(function (idx, obj) {
             obj = $(obj);
-            if (obj.attr('type') === 'checkbox') {
-                self.data.set(obj.attr('data-dd-path'), obj.is(':checked'));
-            } else {
-                self.data.set(obj.attr('data-dd-path'), obj.ddVal());
-            }
+            self.data.set(obj.attr('data-dd-path'), obj.ddVal());
         });
         self._truncateAllHierArrays();
     };
@@ -936,28 +951,19 @@ function Controller(dbxAppId) {
     self.updateForm = function() {
         self._resizeAllFormArrays();
         timeIt('Updating form', function() {
-            var flat_data = self.data.flatten();
-            for (var path in flat_data) {
-                var ctrl = self.findByPath(path);
-                if (ctrl.attr('type') === 'checkbox') {
-                    ctrl.prop('checked', flat_data[path]);
-                    // Make sure to handle also custom checkboxes
-                    var label = ctrl.closest('.btn-custom-checkbox');
-                    if (label.length > 0) {
-                        if (flat_data[path]) {
-                            label.addClass('active');
-                        } else {
-                            label.removeClass('active');
-                        }
-                    }
-                } else {
-                    ctrl.ddVal(flat_data[path]);
+            let flat_data = self.data.flatten();
+            self._allControls().each(function (idx, obj) {
+                obj = $(obj);
+                let val = flat_data[obj.attr('data-dd-path')];
+                if (typeof val === 'undefined') {
+                    val = null;
                 }
-                if (ctrl.is('.dd-dyn-title, [data-dd-depth], #dd-page-title')) {
+                obj.ddVal(val);
+                if (obj.is('.dd-dyn-title, [data-dd-depth], #dd-page-title')) {
                     // Trigger a change event because this manages a dynamic title.
-                    ctrl.change();
+                    obj.change();
                 }
-            }
+            });
         });
     };
 
