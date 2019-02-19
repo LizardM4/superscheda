@@ -77,23 +77,24 @@ jQuery.fn.extend({
         return oldPlaceholder != obj.attr('placeholder');
     },
     ddVal: function(arg) {
-        if ($(this).hasClass('dd-integer-field')) {
+        let obj = $(this);
+        if (obj.hasClass('dd-integer-field')) {
             if (typeof arg === 'undefined') {
-                return fromIntegerField($(this).val(), true);
+                return fromIntegerField(obj.val(), true);
             } else {
-                return $(this).val(toIntegerField(arg));
+                return obj.val(toIntegerField(arg));
             }
-        } else if ($(this).hasClass('dd-natural-field')) {
+        } else if (obj.hasClass('dd-natural-field')) {
             if (typeof arg === 'undefined') {
-                return fromNaturalField($(this).val(), true);
+                return fromNaturalField(obj.val(), true);
             } else {
-                return $(this).val(toNaturalField(arg));
+                return obj.val(toNaturalField(arg));
             }
         } else {
             if (typeof arg === 'undefined') {
-                return $(this).val();
+                return obj.val();
             } else {
-                return $(this).val(arg);
+                return obj.val(arg);
             }
         }
     },
@@ -130,6 +131,8 @@ function Controller(dbxAppId) {
 
     self._loadModal = null;
     self._loadExplorer = null;
+
+    self.formulasActive = false;
 
     self._getHierPath = function(obj) {
         obj = $(obj);
@@ -270,6 +273,20 @@ function Controller(dbxAppId) {
         }
     };
 
+    self._postLoadSync = function() {
+        self.formulasActive = false;
+        console.log('Data loaded, copying to form.');
+        self.updateForm();
+        self.refreshFormulas();
+        if (self._applyPatchesIfNeeded()) {
+            console.log('Data migration completed, copying to form.');
+            self.updateForm();
+            self.refreshFormulas();
+        }
+        console.log('Active.');
+        self.formulasActive = true;
+    };
+
     self.loadAutosave = function() {
         if (self.hasLocalStorage) {
             // Check if there is anything to load
@@ -277,8 +294,7 @@ function Controller(dbxAppId) {
             if (to_load && to_load.length > 0) {
                 window.localStorage.removeItem('_autosave');
                 self.data.load(to_load);
-                self._applyPatchesIfNeeded();
-                self.updateForm();
+                self._postLoadSync();
             }
         }
     };
@@ -477,36 +493,37 @@ function Controller(dbxAppId) {
             return true;
         };
         obj = $(obj);
-        let args = obj.attr('data-dd-formula').split(' ');
-        for (let i = 1; i < args.length; i++) {
-            let arg = self._resolveArg(obj, args[i]);
-            if (typeof arg === 'object') {
-                if (arg == null || arg.length == 0) {
+        let args = obj.data('ddPredecessors');
+        let argValues = [];
+        for (var i = 0; i < args.length; i++) {
+            if (typeof args[i] === 'object') {
+                if (args[i] == null || args[i].length == 0) {
                     // Nope, we cannot evaluate this function
                     return null;
                 }
                 // Replace with actual value
-                arg = arg.ddFormulaVal();
+                argValues[i] = args[i].ddFormulaVal();
+            } else {
+                argValues[i] = args[i];
             }
-            args[i] = arg;
         }
         // All arguments are defined and numerical
-        switch (args.shift()) {
+        switch (argValues.shift()) {
             case 'sum':
-                if (!ensure_numbers(args)) {
+                if (!ensure_numbers(argValues)) {
                     return null;
                 }
-                return args.reduce((a, b) => a + b, 0);
+                return argValues.reduce((a, b) => a + b, 0);
                 break;
             case 'mod':
-                if (!ensure_numbers(args)) {
+                if (!ensure_numbers(argValues)) {
                     return null;
                 }
-                let div = args.shift();
-                return Math.floor(args.reduce((a, b) => a + b, 0) / div);
+                let div = argValues.shift();
+                return Math.floor(argValues.reduce((a, b) => a + b, 0) / div);
                 break;
             case 'ref':
-                return args[0];
+                return argValues[0];
                 break;
             default:
                 return null;
@@ -514,23 +531,87 @@ function Controller(dbxAppId) {
         }
     };
 
+    self.refreshFormulas = function() {
+        let oldActive = self.formulasActive;
+        self.formulasActive = false;
+        console.log('Manually recomputing all formulas.');
+        let level = 0;
+        let levelSet = $();
+        do {
+            levelSet.each(function(idx, obj) {
+                obj = $(obj)
+                 if (obj.ddIsVoid()) {
+                    obj.ddSetDefault(self._evalFormula(obj));
+                }
+            });
+            // ----
+            ++level;
+            levelSet = $('[data-dd-depth="' + level.toString() + '"]');
+        } while (levelSet.length > 0);
+        console.log('Formulas recomputed.');
+        self.formulasActive = oldActive;
+    };
+
     self._setupFormulas = function() {
-        self._allControls().change(function (evt) {
-            let ctrl = $(this);
+        // Precache all the dependants
+        let level = 0;
+        let levelSet = $();
+        self._allControls().filter('[data-dd-formula]').each(function (idx, obj) {
+            obj = $(obj);
+            let args = obj.attr('data-dd-formula').split(' ');
+            for (let i = 1; i < args.length; i++) {
+                args[i] = self._resolveArg(obj, args[i]);
+                if (typeof args[i] !== 'object' || args[i] == null || args[i].length == 0) {
+                    continue;
+                }
+                // Register to the list of dependants
+                let dependants = args[i].data('ddSuccessors');
+                if (!dependants) {
+                    args[i].data('ddSuccessors', obj);
+                } else {
+                    args[i].data('ddSuccessors', dependants.add(obj));
+                }
+                if (!args[i].attr('data-dd-formula')) {
+                    levelSet = levelSet.add(args[i]);
+                }
+            }
+            obj.data('ddPredecessors', args);
+        });
+        // Add depth info
+        while (levelSet.length > 0) {
+            let newLevelSet = $();
+            levelSet
+                .attr('data-dd-depth', level)
+                .each(function (idx, obj) {
+                    let dependants = $(obj).data('ddSuccessors');
+                    if (dependants) {
+                        newLevelSet = newLevelSet.add(dependants);
+                    }
+                });
+            ++level;
+            levelSet = newLevelSet;
+        }
+        let recomputeAndPropagate = function(ctrl) {
+            console.log('Updating ' + ctrl.attr('data-dd-path'));
             // Does this control need to reevaluate its formula?
             if (ctrl.ddIsVoid() && ctrl.attr('data-dd-formula')) {
                 ctrl.ddSetDefault(self._evalFormula(ctrl));
             }
-
-            // Find all controls affected by this
-            self._inverseResolveArg(ctrl).each(function(idx, depCtrl) {
-                // Filter out those that have a value
-                depCtrl = $(depCtrl);
-                if (depCtrl.ddIsVoid()) {
-                    // Trigger a change event, val is null so it will appear as if the control has a new value
-                    depCtrl.change();
-                }
-            });
+            let dependants = ctrl.data('ddSuccessors');
+            if (dependants) {
+                dependants.each(function (idx, depCtrl) {
+                    depCtrl = $(depCtrl);
+                    if (depCtrl.ddIsVoid()) {
+                        // Do not use the event system to save churn an memory
+                        recomputeAndPropagate(depCtrl);
+                    }
+                });
+            }
+        };
+        $('[data-dd-depth]').change(function(e) {
+            if (self.formulasActive) {
+                recomputeAndPropagate($(this));
+            }
         });
     };
 
@@ -811,9 +892,8 @@ function Controller(dbxAppId) {
     self.updateForm = function() {
         self._resizeAllFormArrays();
         var flat_data = self.data.flatten();
-        var ctrls = self._allControls();
         for (var path in flat_data) {
-            var ctrl = ctrls.filter('[data-dd-path="' + path + '"]');
+            var ctrl = self.findByPath(path);
             if (ctrl.attr('type') === 'checkbox') {
                 ctrl.prop('checked', flat_data[path]);
                 // Make sure to handle also custom checkboxes
@@ -827,9 +907,8 @@ function Controller(dbxAppId) {
                 }
             } else {
                 ctrl.ddVal(flat_data[path]);
-                ctrl.change();
             }
-            if (ctrl.is('.dd-dyn-title')) {
+            if (ctrl.is('.dd-dyn-title, [data-dd-depth], #dd-page-title')) {
                 // Trigger a change event because this manages a dynamic title.
                 ctrl.change();
             }
@@ -894,10 +973,7 @@ function Controller(dbxAppId) {
     self.loadRemote = function(name, post_action=null) {
         $.getJSON(name, function(json_data) {
             self.data.obj = json_data;
-            self.updateForm();
-            if (self._applyPatchesIfNeeded()) {
-                self.updateForm();
-            }
+            self._postLoadSync();
             self.autosave();
             if (post_action) {
                 post_action(true);
@@ -917,10 +993,7 @@ function Controller(dbxAppId) {
                 var reader = new FileReader();
                 reader.addEventListener('loadend', function() {
                     self.data.load(reader.result);
-                    self.updateForm();
-                    if (self._applyPatchesIfNeeded()) {
-                        self.updateForm();
-                    }
+                    self._postLoadSync();
                     self.autosave();
                     if (post_action) {
                         post_action(true);
