@@ -762,7 +762,9 @@ function Controller(dbxAppId) {
     }
 
     self.findNext = function(parent, dd_id) {
-        return self.findChildren(parent).filter('[data-dd-id="' + dd_id +'"]');
+        return $(parent).find('[data-dd-id="' + dd_id +'"]').filter(function (idx, obj) {
+            return $(obj).parentsUntil($(parent)).filter('[data-dd-id]').length == 0;
+        });
     };
 
     self.findChildren = function(parent) {
