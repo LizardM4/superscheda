@@ -158,7 +158,7 @@ DDver.addPatch('0.1.1', function(h) {
     }
 });
 
-DDver.addPatch('0.1.2', function(h) {
+DDver.addPatch('0.1.3', function(h) {
     $('[data-dd-path][data-dd-formula]').each(function(idx, obj) {
         obj = $(obj);
         let ddPath = obj.attr('data-dd-path');
