@@ -59,19 +59,19 @@ You should have received a copy of the GNU General Public License
     <script src="static/js/Dropbox-sdk.min.js" integrity="sha384-ZXMvIgCuw8ctP/B4Oq66OVVvzOov8fp/ujZ1C3eNXXy17UPKWPP3EnU1f/N8b0pf"></script>
 
     <!-- Hierarchical object manipulator -->
-    <script src="js/hier.js"></script>
+    <script src="js/hier.js?v=%REV"></script>
     <!-- Dropbox browsing plugin -->
-    <script src="js/dbxexplorer.js"></script>
+    <script src="js/dbxexplorer.js?v=%REV"></script>
     <!-- Interactive, hierarchical arrays on nodes -->
-    <script src="js/ddarray.js"></script>
+    <script src="js/ddarray.js?v=%REV"></script>
     <!-- Version control for data: migrate model -->
-    <script src="js/versioning.js"></script>
+    <script src="js/versioning.js?v=%REV"></script>
 
     <!-- Main controller class, this one really comes last -->
-    <script src="js/controller.js"></script>
+    <script src="js/controller.js?v=%REV"></script>
 
     <!-- Extra custom styles -->
-    <link rel="stylesheet" href="css/superscheda.css">
+    <link rel="stylesheet" href="css/superscheda.css?v=%REV">
 
     <script>
       DD = new Controller('h2jyx20rz9lbwiw');
@@ -2095,7 +2095,7 @@ You should have received a copy of the GNU General Public License
                         </div>
                         <div class="col-md-1 col-3">
                           <label class="col-form-label col-form-label-sm d-md-none">Totale</label>
-                          <input data-dd-id="totale" type="text" class="form-control form-control-sm dd-integer-field">
+                          <input data-dd-id="totale" type="text" data-dd-formula="sum ./mod_c ./gradi ./razza ./archetipo[0] ./archetipo[1] ./b_sinergia ./talento ./oggetto ./vari" class="form-control form-control-sm dd-integer-field">
                         </div>
                       </div>
                       <div class="form-row pb-1 extra-mods d-none">
