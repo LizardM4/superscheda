@@ -20,8 +20,13 @@ function fromIntegerField(rawVal, passthrough) {
 }
 
 var _timeItCnt = 0;
+var _debug = false;
 
 function timeIt(desc, body) {
+    if (!_debug) {
+        body();
+        return;
+    }
     let start = performance.now();
     _timeItCnt++;
     console.log('>'.repeat(_timeItCnt) + ' ' + desc + '...');
