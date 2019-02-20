@@ -123,7 +123,7 @@ jQuery.fn.extend({
             } else if (obj.hasClass('dd-natural-field')) {
                 obj.val(toNaturalField(arg));
             } else {
-                obj.val(arg.toString());
+                obj.val(arg);
             }
         }
     },
@@ -188,8 +188,13 @@ function Controller(dbxAppId) {
         return obj;
     };
 
-    self._allControls = function() {
-        return $('input[data-dd-path], select[data-dd-path], textarea[data-dd-path]');
+    self._allControls = function(parent) {
+        let filter = 'input[data-dd-path], select[data-dd-path], textarea[data-dd-path]';
+        if (typeof parent === 'undefined') {
+            return $(filter);
+        } else {
+            return $(parent).find(filter);
+        }
     };
 
     self._setupDDPaths = function(objs=$('body')) {
@@ -582,18 +587,18 @@ function Controller(dbxAppId) {
         self.formulasActive = oldActive;
     };
 
-    self._rebuildDepGraph = function() {
+    self._rebuildDepGraph = function(ctrls) {
         timeIt('Rebuilding dep graph', function() {
             let levelSet = $();
 
             timeIt('Clearing dep graph', function() {
                 // Clear all the deps. Mark as outdated
-                $('[data-dd-depth]').removeAttr('data-dd-depth').data('ddSuccessorsOutdated', true);
+                ctrls.filter('[data-dd-depth]').removeAttr('data-dd-depth');
             });
 
             timeIt('Building adjacency lists', function() {
                 // Loop and rebuild the dependency graph. Collect level 0
-                self._allControls().filter('[data-dd-formula]').each(function (idx, obj) {
+                ctrls.filter('[data-dd-formula]').each(function (idx, obj) {
                     obj = $(obj);
                     let args = obj.attr('data-dd-formula').split(' ');
                     for (let i = 1; i < args.length; i++) {
@@ -603,8 +608,8 @@ function Controller(dbxAppId) {
                         }
                         // Register to the list of dependants
                         let dependants = args[i].data('ddSuccessors');
-                        if (!dependants || args[i].data('ddSuccessorsOutdated')) {
-                            args[i].data('ddSuccessorsOutdated', false);
+                        if (!dependants || !args[i].attr('data-dd-depth')) {
+                            args[i].attr('data-dd-depth', -1);
                             args[i].data('ddSuccessors', obj);
                         } else {
                             args[i].data('ddSuccessors', dependants.add(obj));
@@ -644,8 +649,9 @@ function Controller(dbxAppId) {
         });
     };
 
-    self._setupFormulas = function() {
-        self._rebuildDepGraph();
+    self._setupFormulas = function(parent) {
+        let ctrls = self._allControls(parent);
+        self._rebuildDepGraph(ctrls);
         let recomputeAndPropagate = function(ctrl) {
             console.log('Updating ' + ctrl.attr('data-dd-path'));
             // Does this control need to reevaluate its formula?
@@ -663,7 +669,7 @@ function Controller(dbxAppId) {
                 });
             }
         };
-        $('[data-dd-depth]').change(function(e) {
+        ctrls.filter('[data-dd-depth]').change(function(e) {
             if (self.formulasActive) {
                 recomputeAndPropagate($(this));
             }
