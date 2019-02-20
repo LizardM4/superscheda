@@ -518,6 +518,37 @@ function Controller(dbxAppId) {
         }
     };
 
+    self._formulaGetCtrls = function(obj) {
+        obj = $(obj);
+        let args = obj.attr('data-dd-formula').split(' ');
+        let ctrls = $();
+        for (let i = 1; i < args.length; i++) {
+            let arg = self._resolveArg(obj, args[i]);
+            if (typeof arg === 'object' && arg != null) {
+                ctrls = ctrls.add(arg);
+            }
+        }
+        return ctrls;
+    };
+
+    self._formulaEvaluateArgs = function(obj) {
+        obj = $(obj);
+        let isNull = function(v) {
+            return typeof v === 'undefined' || (typeof v === 'object' && (v == null || v.length == 0));
+        };
+        let args = obj.attr('data-dd-formula').split(' ');
+        for (let i = 1; i < args.length; i++) {
+            args[i] = self._resolveArg(obj, args[i]);
+            if (typeof args[i] === 'object' && args[i] != null && args[i].length > 0) {
+                args[i] = args[i].ddFormulaVal();
+            }
+            if (isNull(args[i])) {
+                return null;
+            }
+        }
+        return args;
+    };
+
     self._evalFormula = function(obj) {
         let ensure_numbers = function(the_args) {
             for (var i = 0; i < the_args.length; i++) {
@@ -528,37 +559,27 @@ function Controller(dbxAppId) {
             return true;
         };
         obj = $(obj);
-        let args = obj.data('ddPredecessors');
-        let argValues = [];
-        for (var i = 0; i < args.length; i++) {
-            if (typeof args[i] === 'object') {
-                if (args[i] == null || args[i].length == 0) {
-                    // Nope, we cannot evaluate this function
-                    return null;
-                }
-                // Replace with actual value
-                argValues[i] = args[i].ddFormulaVal();
-            } else {
-                argValues[i] = args[i];
-            }
+        let args = self._formulaEvaluateArgs(obj, false, true, false);
+        if (args == null || args.length == 0) {
+            return null;
         }
         // All arguments are defined and numerical
-        switch (argValues.shift()) {
+        switch (args.shift()) {
             case 'sum':
-                if (!ensure_numbers(argValues)) {
+                if (!ensure_numbers(args)) {
                     return null;
                 }
-                return argValues.reduce((a, b) => a + b, 0);
+                return args.reduce((a, b) => a + b, 0);
                 break;
             case 'mod':
-                if (!ensure_numbers(argValues)) {
+                if (!ensure_numbers(args)) {
                     return null;
                 }
-                let div = argValues.shift();
-                return Math.floor(argValues.reduce((a, b) => a + b, 0) / div);
+                let div = args.shift();
+                return Math.floor(args.reduce((a, b) => a + b, 0) / div);
                 break;
             case 'ref':
-                return argValues[0];
+                return args[0];
                 break;
             default:
                 return null;
@@ -569,62 +590,10 @@ function Controller(dbxAppId) {
     self.refreshFormulas = function(onlyVoids=true) {
         let oldActive = self.formulasActive;
         self.formulasActive = false;
-        timeIt('Recomputing formulas manually', function() {
+        timeIt('Recomputing ' + (onlyVoids ? 'void' : 'all') + ' formulas manually', function() {
             let level = 0;
-            let levelSet = $();
-            do {
-                levelSet.each(function(idx, obj) {
-                    obj = $(obj)
-                     if (obj.attr('data-dd-formula') && (obj.ddIsVoid() || !onlyVoids)) {
-                        obj.ddSetDefault(self._evalFormula(obj));
-                    }
-                });
-                // ----
-                ++level;
-                levelSet = $('[data-dd-depth="' + level.toString() + '"]');
-            } while (levelSet.length > 0);
-        });
-        self.formulasActive = oldActive;
-    };
-
-    self._rebuildDepGraph = function(ctrls) {
-        timeIt('Rebuilding dep graph', function() {
-            let levelSet = $();
-
-            timeIt('Clearing dep graph', function() {
-                // Clear all the deps. Mark as outdated
-                ctrls.filter('[data-dd-depth]').removeAttr('data-dd-depth');
-            });
-
-            timeIt('Building adjacency lists', function() {
-                // Loop and rebuild the dependency graph. Collect level 0
-                ctrls.filter('[data-dd-formula]').each(function (idx, obj) {
-                    obj = $(obj);
-                    let args = obj.attr('data-dd-formula').split(' ');
-                    for (let i = 1; i < args.length; i++) {
-                        args[i] = self._resolveArg(obj, args[i]);
-                        if (typeof args[i] !== 'object' || args[i] == null || args[i].length == 0) {
-                            continue;
-                        }
-                        // Register to the list of dependants
-                        let dependants = args[i].data('ddSuccessors');
-                        if (!dependants || !args[i].attr('data-dd-depth')) {
-                            args[i].attr('data-dd-depth', -1);
-                            args[i].data('ddSuccessors', obj);
-                        } else {
-                            args[i].data('ddSuccessors', dependants.add(obj));
-                        }
-                        if (!args[i].attr('data-dd-formula')) {
-                            levelSet = levelSet.add(args[i]);
-                        }
-                    }
-                    obj.data('ddPredecessors', args);
-                });
-            });
-
-            timeIt('Traversing dep graph', function() {
-                // Assign the level and heuristically detect loops
-                let level = 0;
+            timeIt('Partitioning dependency graph into levels', function() {
+                let levelSet = $('.dd-formula-arg:not([data-dd-formula])');
                 while (levelSet.length > 0) {
                     let newLevelSet = $();
                     if (level > 10) {
@@ -634,42 +603,53 @@ function Controller(dbxAppId) {
                         });
                         break;
                     }
-                    levelSet
-                        .attr('data-dd-depth', level)
-                        .each(function (idx, obj) {
-                            let dependants = $(obj).data('ddSuccessors');
-                            if (dependants) {
-                                newLevelSet = newLevelSet.add(dependants);
+                    levelSet.each(function (idx, obj) {
+                            obj = $(obj);
+                            if (!onlyVoids || obj.ddIsVoid()) {
+                                obj.attr('data-dd-depth', level);
+                                newLevelSet = newLevelSet.add(self._inverseResolveArg(obj));
                             }
                         });
                     ++level;
                     levelSet = newLevelSet;
                 }
             });
+            timeIt('Recomputing each level', function() {
+                for (let i = 1; i < level; ++i) {
+                    $('[data-dd-depth="' + i.toString() + '"]').each(function (idx, obj) {
+                        $(obj).ddSetDefault(self._evalFormula(obj));
+                    });
+                }
+                $('[data-dd-depth]').removeAttr('data-dd-depth');
+            });
         });
+        self.formulasActive = oldActive;
     };
 
     self._setupFormulas = function(parent) {
         let ctrls = self._allControls(parent);
-        self._rebuildDepGraph(ctrls);
+        ctrls.filter('[data-dd-formula]').each(function(idx, obj) {
+            // Mark all the arguments
+            self._formulaGetCtrls($(obj), true, false, true).addClass('dd-formula-arg');
+        });
         let recomputeAndPropagate = function(ctrl) {
-            console.log('Updating ' + ctrl.attr('data-dd-path'));
-            // Does this control need to reevaluate its formula?
-            if (ctrl.ddIsVoid() && ctrl.attr('data-dd-formula')) {
-                ctrl.ddSetDefault(self._evalFormula(ctrl));
-            }
-            let dependants = ctrl.data('ddSuccessors');
-            if (dependants) {
-                dependants.each(function (idx, depCtrl) {
-                    depCtrl = $(depCtrl);
-                    if (depCtrl.ddIsVoid()) {
-                        // Do not use the event system to save churn an memory
-                        recomputeAndPropagate(depCtrl);
-                    }
-                });
-            }
+            timeIt('Recomputing ' + ctrl.attr('data-dd-path'), function() {
+                // Does this control need to reevaluate its formula?
+                if (ctrl.ddIsVoid() && ctrl.attr('data-dd-formula')) {
+                    ctrl.ddSetDefault(self._evalFormula(ctrl));
+                }
+                self._inverseResolveArg(ctrl)
+                    .each(function (idx, depCtrl) {
+                        depCtrl = $(depCtrl);
+                        if (depCtrl.ddIsVoid()) {
+                            // Do not use the event system to save churn an memory
+                            recomputeAndPropagate(depCtrl);
+                        }
+                    });
+            });
         };
-        ctrls.filter('[data-dd-depth]').change(function(e) {
+
+        ctrls.filter('.dd-formula-arg').change(function(e) {
             if (self.formulasActive) {
                 recomputeAndPropagate($(this));
             }
@@ -787,7 +767,7 @@ function Controller(dbxAppId) {
 
     self._setupArrays = function() {
         initDDArrays({
-            insertion: function(evt, item) { self._setupDDPaths(item); },
+            insertion: function(evt, item) { self._setupDDPaths(item); self._setupFormulas(item); },
             reindex: function(evt, item, old_idx, new_idx) { self._setupDDPaths(item); }
         });
     }
