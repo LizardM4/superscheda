@@ -837,7 +837,7 @@ function Controller(dbxAppId) {
     };
 
     self.findByPath = function (path) {
-        return $('[data-dd-path="' + path + '"');
+        return $('[data-dd-path="' + path + '"]');
     }
 
     self.findArrayMaster = function (path) {
