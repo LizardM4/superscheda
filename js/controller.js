@@ -526,11 +526,11 @@ function Controller(dbxAppId) {
     self._formulaGetCtrls = function(obj) {
         obj = $(obj);
         let args = obj.attr('data-dd-formula').split(' ');
-        let ctrls = $();
+        let ctrls = [];
         for (let i = 1; i < args.length; i++) {
             let arg = self._resolveArg(obj, args[i]);
             if (typeof arg === 'object' && arg != null) {
-                ctrls = ctrls.add(arg);
+                ctrls.push(arg);
             }
         }
         return ctrls;
@@ -600,7 +600,7 @@ function Controller(dbxAppId) {
             timeIt('Partitioning dependency graph into levels', function() {
                 let levelSet = $('.dd-formula-arg:not([data-dd-formula])');
                 while (levelSet.length > 0) {
-                    let newLevelSet = $();
+                    let newLevelSet = [];
                     if (level > 10) {
                         console.log('Maximum formula depth of ' + level.toString() + ' reached!');
                         levelSet.each(function(idx, obj) {
@@ -608,13 +608,13 @@ function Controller(dbxAppId) {
                         });
                         break;
                     }
-                    levelSet.each(function (idx, obj) {
-                            obj = $(obj);
-                            if (!onlyVoids || obj.ddIsVoid()) {
-                                obj.attr('data-dd-depth', level);
-                                newLevelSet = newLevelSet.add(self._inverseResolveArg(obj));
-                            }
-                        });
+                    for (var i = 0; i < levelSet.length; i++) {
+                        let obj = $(levelSet[i]);
+                        if (!onlyVoids || obj.ddIsVoid()) {
+                            obj.attr('data-dd-depth', level);
+                            newLevelSet.push(...self._inverseResolveArg(obj));
+                        }
+                    }
                     ++level;
                     levelSet = newLevelSet;
                 }
@@ -635,7 +635,10 @@ function Controller(dbxAppId) {
         let ctrls = self._allControls(parent);
         ctrls.filter('[data-dd-formula]').each(function(idx, obj) {
             // Mark all the arguments
-            self._formulaGetCtrls($(obj), true, false, true).addClass('dd-formula-arg');
+            let ctrls = self._formulaGetCtrls($(obj), true, false, true);
+            for (var i = 0; i < ctrls.length; i++) {
+                $(ctrls[i]).addClass('dd-formula-arg');
+            }
         });
         let recomputeAndPropagate = function(ctrl) {
             timeIt('Recomputing ' + ctrl.attr('data-dd-path'), function() {
