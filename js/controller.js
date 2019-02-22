@@ -64,6 +64,16 @@ function fromNaturalField(rawVal, passthrough=false) {
     return cast;
 }
 
+function indexOfMod(mod, fieldNames) {
+    mod = mod.toLowerCase();
+    for (let i = 0; i < fieldNames.length; i++) {
+        if (fieldNames[i].replace('/', '').split('.').indexOf(mod) >= 0) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 function toNaturalField(num) {
     if (num == null) {
         return '';
@@ -576,6 +586,18 @@ function Controller(dbxAppId) {
                 }
                 return args.reduce((a, b) => a + b, 0);
                 break;
+            case 'select_mod':
+                if (args.length < 1) {
+                    return null;
+                }
+                const requestedMod = args.shift();
+                const fieldNames = obj.attr('data-dd-formula').split(' ').slice(2);
+                const idxOfMod = indexOfMod(requestedMod, fieldNames);
+                if (idxOfMod != null) {
+                    return args[idxOfMod];
+                }
+                return null;
+                break;
             case 'mod':
                 if (!ensure_numbers(args)) {
                     return null;
@@ -658,6 +680,9 @@ function Controller(dbxAppId) {
         };
 
         ctrls.filter('.dd-formula-arg').change(function(e) {
+            if ($(this).attr('data-dd-id') == 'chiave') {
+                console.log('Triggered!! ' + $(this).attr('data-dd-path'));
+            }
             if (self.formulasActive) {
                 recomputeAndPropagate($(this));
             }
@@ -762,14 +787,16 @@ function Controller(dbxAppId) {
             var obj = $(this);
             obj.closest('.input-group-prepend')
                 .find('input[type="text"]')
-                .val(obj.text());
+                .val(obj.text())
+                .change();
         });
         $('.input-group-append .dropdown-menu .dropdown-item').click(function(evt) {
             evt.preventDefault();
             var obj = $(this);
             obj.closest('.input-group-append')
                 .find('input[type="text"]')
-                .val(obj.text());
+                .val(obj.text())
+                .change();
         });
     };
 
