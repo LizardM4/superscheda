@@ -215,7 +215,7 @@ function Controller(dbxAppId) {
     self._setupDDPaths = function(objs=$('body')) {
         const matches = $(objs)
             .find('input[data-dd-id], select[data-dd-id], textarea[data-dd-id]')
-            .not('[data-dd-array="master"] *')
+            .not('[data-dd-array="master"] *');
         for (let i = 0; i < matches.length; i++) {
             const match = $(matches[i]);
             match.attr('data-dd-path', self._getHierPath(match));
@@ -634,7 +634,7 @@ function Controller(dbxAppId) {
                         break;
                     }
                     for (let i = 0; i < levelSet.length; i++) {
-                        let obj = $(levelSet[i]);
+                        const obj = $(levelSet[i]);
                         if (!onlyVoids || obj.ddIsVoid()) {
                             obj.attr('data-dd-depth', level);
                             newLevelSet.push(...self._inverseResolveArg(obj));
@@ -665,7 +665,7 @@ function Controller(dbxAppId) {
             // Mark all the arguments
             const argCtrls = self._formulaGetCtrls($(ctrlsWithFormula[i]), true, false, true);
             for (let j = 0; j < argCtrls.length; j++) {
-                $(argCtrls[i]).addClass('dd-formula-arg');
+                $(argCtrls[j]).addClass('dd-formula-arg');
             }
         }
         let recomputeAndPropagate = function(ctrl) {
@@ -820,10 +820,10 @@ function Controller(dbxAppId) {
             var array_sizes = self.data.getArraySizes();
             array_sizes.sort(function (a, b) { return a[0].localeCompare(b[0]); });
             for (let i = 0; i < array_sizes.length; ++i) {
-                let arrayPath = array_sizes[i][0];
-                let arraySize = array_sizes[i][1];
+                const arrayPath = array_sizes[i][0];
+                const arraySize = array_sizes[i][1];
                 // Is this a dynamic array?
-                let arrayMaster = self.findArrayMaster(arrayPath);
+                const arrayMaster = self.findArrayMaster(arrayPath);
                 if (arrayMaster != null && arrayMaster.length > 0) {
                     // Arr points at the master
                     arrayMaster.closest('[data-dd-array="container"]')
@@ -970,7 +970,7 @@ function Controller(dbxAppId) {
     self.updateForm = function() {
         self._resizeAllFormArrays();
         timeIt('Updating form', function() {
-            let flat_data = self.data.flatten();
+            const flat_data = self.data.flatten();
             const matches = self._allControls();
             for (let i = 0; i < matches.length; i++) {
                 const match = $(matches[i]);
@@ -1095,7 +1095,7 @@ $.fn.animateRotate = function(angle, duration, easing, complete) {
     const args = $.speed(duration, easing, complete);
     const step = args.step;
     for (var i = 0; i < this.length; i++) {
-        const e = $(this[i]);
+        const e = this[i];
         args.complete = $.proxy(args.complete, e);
         args.step = function(now) {
             $.style(e, 'transform', 'rotate(' + now + 'deg)');
@@ -1111,7 +1111,7 @@ function parseQueryString() {
     const search = /([^&=]+)=?([^&]*)/g;
     const decode = function (s) { return decodeURIComponent(s.replace(pl, ' ')); };
     const query = window.location.hash.substring(1);
-    const match = null;
+    let match = null;
     const url_params = {};
     while (match = search.exec(query)) {
         url_params[decode(match[1])] = decode(match[2]);
