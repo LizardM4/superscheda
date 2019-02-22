@@ -213,11 +213,13 @@ function Controller(dbxAppId) {
     };
 
     self._setupDDPaths = function(objs=$('body')) {
-        $(objs).find('input[data-dd-id], select[data-dd-id], textarea[data-dd-id]')
+        const matches = $(objs)
+            .find('input[data-dd-id], select[data-dd-id], textarea[data-dd-id]')
             .not('[data-dd-array="master"] *')
-            .each(function (idx, obj) {
-                $(obj).attr('data-dd-path', self._getHierPath(obj));
-            });
+        for (let i = 0; i < matches.length; i++) {
+            const match = $(matches[i]);
+            match.attr('data-dd-path', self._getHierPath(match));
+        }
     };
 
     self._initLocalStorage = function () {
@@ -465,16 +467,17 @@ function Controller(dbxAppId) {
 
     self._setupAnimatedChevrons = function() {
         // Find all the chevron buttons
-        $('div.card div.card-header button.close i.fas').each(function (idx, obj) {
-            var i = $(obj);
-            var button = i.parents('button');
-            var card = button.parents('div.card');
+        const matches = $('div.card div.card-header button.close i.fas');
+        for (let i = 0; i < matches.length; i++) {
+            const match = $(matches[i]);
+            const button = match.parents('button');
+            const card = button.parents('div.card');
             card.on('hide.bs.collapse', function() {
                 button.prop('disabled', true);
-                i.animateRotate(180, {
+                match.animateRotate(180, {
                     complete: function() {
                         button.prop('disabled', false);
-                        i.css('transform', '')
+                        match.css('transform', '')
                             .removeClass('fa-chevron-circle-up')
                             .addClass('fa-chevron-circle-down');
                     }
@@ -482,16 +485,16 @@ function Controller(dbxAppId) {
             });
             card.on('show.bs.collapse', function() {
                 button.prop('disabled', true);
-                i.animateRotate(180, {
+                match.animateRotate(180, {
                     complete: function() {
                         button.prop('disabled', false);
-                        i.css('transform', '')
+                        match.css('transform', '')
                             .removeClass('fa-chevron-circle-down')
                             .addClass('fa-chevron-circle-up');
                     }
                 });
             });
-        });
+        }
     };
 
     self._setupWaitingModal = function() {
@@ -566,7 +569,7 @@ function Controller(dbxAppId) {
 
     self._evalFormula = function(obj) {
         let ensure_numbers = function(the_args) {
-            for (var i = 0; i < the_args.length; i++) {
+            for (let i = 0; i < the_args.length; i++) {
                 if (typeof the_args[i] !== 'number') {
                     return false;
                 }
@@ -625,12 +628,12 @@ function Controller(dbxAppId) {
                     let newLevelSet = [];
                     if (level > 10) {
                         console.log('Maximum formula depth of ' + level.toString() + ' reached!');
-                        levelSet.each(function(idx, obj) {
-                            console.log((idx + 1).toString() + '. ' + $(obj).attr('data-dd-path'));
-                        });
+                        for (let i = 0; i < levelSet.length; i++) {
+                            console.log((i + 1).toString() + '. ' + $(levelSet[i]).attr('data-dd-path'));
+                        }
                         break;
                     }
-                    for (var i = 0; i < levelSet.length; i++) {
+                    for (let i = 0; i < levelSet.length; i++) {
                         let obj = $(levelSet[i]);
                         if (!onlyVoids || obj.ddIsVoid()) {
                             obj.attr('data-dd-depth', level);
@@ -643,9 +646,11 @@ function Controller(dbxAppId) {
             });
             timeIt('Recomputing each level', function() {
                 for (let i = 1; i < level; ++i) {
-                    $('[data-dd-depth="' + i.toString() + '"]').each(function (idx, obj) {
-                        $(obj).ddSetDefault(self._evalFormula(obj));
-                    });
+                    const matches = $('[data-dd-depth="' + i.toString() + '"]');
+                    for (let j = 0; j < matches.length; j++) {
+                        const match = $(matches[j]);
+                        match.ddSetDefault(self._evalFormula(match));
+                    }
                 }
                 $('[data-dd-depth]').removeAttr('data-dd-depth');
             });
@@ -654,28 +659,29 @@ function Controller(dbxAppId) {
     };
 
     self._setupFormulas = function(parent) {
-        let ctrls = self._allControls(parent);
-        ctrls.filter('[data-dd-formula]').each(function(idx, obj) {
+        const ctrls = self._allControls(parent);
+        const ctrlsWithFormula = ctrls.filter('[data-dd-formula]');
+        for (let i = 0; i < ctrlsWithFormula.length; i++) {
             // Mark all the arguments
-            let ctrls = self._formulaGetCtrls($(obj), true, false, true);
-            for (var i = 0; i < ctrls.length; i++) {
-                $(ctrls[i]).addClass('dd-formula-arg');
+            const argCtrls = self._formulaGetCtrls($(ctrlsWithFormula[i]), true, false, true);
+            for (let j = 0; j < argCtrls.length; j++) {
+                $(argCtrls[i]).addClass('dd-formula-arg');
             }
-        });
+        }
         let recomputeAndPropagate = function(ctrl) {
             timeIt('Recomputing ' + ctrl.attr('data-dd-path'), function() {
                 // Does this control need to reevaluate its formula?
                 if (ctrl.ddIsVoid() && ctrl.attr('data-dd-formula')) {
                     ctrl.ddSetDefault(self._evalFormula(ctrl));
                 }
-                self._inverseResolveArg(ctrl)
-                    .each(function (idx, depCtrl) {
-                        depCtrl = $(depCtrl);
-                        if (depCtrl.ddIsVoid()) {
-                            // Do not use the event system to save churn an memory
-                            recomputeAndPropagate(depCtrl);
-                        }
-                    });
+                const matches = self._inverseResolveArg(ctrl);
+                for (let i = 0; i < matches.length; i++) {
+                    const match = $(matches[i]);
+                    if (match.ddIsVoid()) {
+                        // Do not use the event system to save churn an memory
+                        recomputeAndPropagate(match);
+                    }
+                }
             });
         };
 
@@ -690,25 +696,26 @@ function Controller(dbxAppId) {
     };
 
     self._setupDynamicTitles = function() {
-        $('[data-dd-id][data-dd-array="master"]').each(function(idx, master) {
-            master = $(master);
-            var input = master.find('input.dd-dyn-title')
-                .filter(firstLevFilter(master));
+        const matches = $('[data-dd-id][data-dd-array="master"]');
+        for (let i = 0; i < matches.length; i++) {
+            const match = $(matches[i]);
+            const input = match.find('input.dd-dyn-title')
+                .filter(firstLevFilter(match));
             if (input.length == 0) {
                 return;
             }
             // Ok, set up an event on this container
-            var container = master.closest('[data-dd-array="container"]');
+            const container = match.closest('[data-dd-array="container"]');
             container.on('ddarray.insertion', function(evt, inserted_item) {
-                var item_input = inserted_item.find('input.dd-dyn-title')
+                const item_input = inserted_item.find('input.dd-dyn-title')
                     .filter(firstLevFilter(inserted_item));
                 item_input.change(function() {
-                    var new_title = $(this).val().trim();
+                    const new_title = $(this).val().trim();
                     // Bubble an event up!!
                     container.trigger('ddarray.title', [inserted_item, new_title]);
                 });
             });
-        });
+        }
         var originalTitle = document.title;
         $('#dd-page-title[data-dd-id]').change(function () {
             var val = $(this).val();
@@ -731,13 +738,14 @@ function Controller(dbxAppId) {
     };
 
     self._setupAutosort = function() {
-        $('.dd-autosort[data-dd-id]').each(function(idx, obj) {
-            obj = $(obj);
-            var container = $(obj).closest('[data-dd-array="container"]');
-            obj.blur(function(evt) {
+        const matches = $('.dd-autosort[data-dd-id]');
+        for (let i = 0; i < matches.length; i++) {
+            const match = $(matches[i]);
+            const container = match.closest('[data-dd-array="container"]');
+            match.blur(function(evt) {
                 self.autosort(container);
             });
-        });
+        }
     };
 
 
@@ -811,7 +819,7 @@ function Controller(dbxAppId) {
         timeIt('Resizing arrays', function() {
             var array_sizes = self.data.getArraySizes();
             array_sizes.sort(function (a, b) { return a[0].localeCompare(b[0]); });
-            for (var i = 0; i < array_sizes.length; ++i) {
+            for (let i = 0; i < array_sizes.length; ++i) {
                 let arrayPath = array_sizes[i][0];
                 let arraySize = array_sizes[i][1];
                 // Is this a dynamic array?
@@ -827,16 +835,18 @@ function Controller(dbxAppId) {
     }
 
     self._truncateAllHierArrays = function() {
-        $('[data-dd-id][data-dd-array="master"]').each(function (idx, obj) {
-            var n_children = $(obj).siblings('[data-dd-array="item"]').length;
-            var path = self._getHierPath(obj);
-            var item = self.data.get(path);
+        const matches = $('[data-dd-id][data-dd-array="master"]');
+        for (let i = 0; i < matches.length; i++) {
+            const match = $(matches[i]);
+            const n_children = match.siblings('[data-dd-array="item"]').length;
+            const path = self._getHierPath(match);
+            const item = self.data.get(path);
             if (item) {
                 item.length = n_children;
             } else {
                 self.data.set(path, []);
             }
-        });
+        }
     }
 
     self.findNext = function(parent, dd_id) {
@@ -949,10 +959,11 @@ function Controller(dbxAppId) {
     };
 
     self.updateHier = function() {
-        self._allControls().each(function (idx, obj) {
-            obj = $(obj);
-            self.data.set(obj.attr('data-dd-path'), obj.ddVal());
-        });
+        const matches = self._allControls();
+        for (let i = 0; i < matches.length; i++) {
+            const match = $(matches[i]);
+            self.data.set(match.attr('data-dd-path'), match.ddVal());
+        }
         self._truncateAllHierArrays();
     };
 
@@ -960,18 +971,19 @@ function Controller(dbxAppId) {
         self._resizeAllFormArrays();
         timeIt('Updating form', function() {
             let flat_data = self.data.flatten();
-            self._allControls().each(function (idx, obj) {
-                obj = $(obj);
-                let val = flat_data[obj.attr('data-dd-path')];
+            const matches = self._allControls();
+            for (let i = 0; i < matches.length; i++) {
+                const match = $(matches[i]);
+                let val = flat_data[match.attr('data-dd-path')];
                 if (typeof val === 'undefined') {
                     val = null;
                 }
-                obj.ddVal(val);
-                if (obj.is('.dd-dyn-title, [data-dd-depth], #dd-page-title')) {
+                match.ddVal(val);
+                if (match.is('.dd-dyn-title, [data-dd-depth], #dd-page-title')) {
                     // Trigger a change event because this manages a dynamic title.
-                    obj.change();
+                    match.change();
                 }
-            });
+            }
         });
     };
 
@@ -1080,27 +1092,27 @@ function Controller(dbxAppId) {
 
 // https://stackoverflow.com/a/15191130/1749822
 $.fn.animateRotate = function(angle, duration, easing, complete) {
-    var args = $.speed(duration, easing, complete);
-    var step = args.step;
-    return this.each(function(i, e) {
+    const args = $.speed(duration, easing, complete);
+    const step = args.step;
+    for (var i = 0; i < this.length; i++) {
+        const e = $(this[i]);
         args.complete = $.proxy(args.complete, e);
         args.step = function(now) {
             $.style(e, 'transform', 'rotate(' + now + 'deg)');
             if (step) return step.apply(e, arguments);
         };
-
         $({deg: 0}).animate({deg: angle}, args);
-    });
+    }
 };
 
 // https://stackoverflow.com/a/2880929/1749822
 function parseQueryString() {
-    var pl = /\+/g;  // Regex for replacing addition symbol with a space
-    var search = /([^&=]+)=?([^&]*)/g;
-    var decode = function (s) { return decodeURIComponent(s.replace(pl, ' ')); };
-    var query = window.location.hash.substring(1);
-    var match;
-    var url_params = {};
+    const pl = /\+/g;  // Regex for replacing addition symbol with a space
+    const search = /([^&=]+)=?([^&]*)/g;
+    const decode = function (s) { return decodeURIComponent(s.replace(pl, ' ')); };
+    const query = window.location.hash.substring(1);
+    const match = null;
+    const url_params = {};
     while (match = search.exec(query)) {
         url_params[decode(match[1])] = decode(match[2]);
     }
@@ -1108,13 +1120,14 @@ function parseQueryString() {
 }
 
 function _find_duplicates() {
-  var all_dd_paths = [];
-  var duplicates = [];
-  $('[data-dd-path]').each(function(idx, obj) {
-    all_dd_paths.push($(obj).data('dd-path'));
-  });
+  const all_dd_paths = [];
+  const duplicates = [];
+  const matches = $('[data-dd-path]');
+  for (let i = 0; i < matches.length; i++) {
+      all_dd_paths.push($(matches[i]).attr('data-dd-path'));
+  }
   all_dd_paths.sort();
-  for (var i = 1; i < all_dd_paths.length; ++i) {
+  for (let i = 1; i < all_dd_paths.length; ++i) {
     if (all_dd_paths[i - 1] == all_dd_paths[i]) {
       if (duplicates.length == 0 || duplicates[duplicates.length - 1] != all_dd_paths[i]) {
         duplicates.push(all_dd_paths[i]);
