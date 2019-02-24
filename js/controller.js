@@ -203,13 +203,13 @@ function Controller(dbxAppId) {
         return obj;
     };
 
-    self._allControls = function(parent) {
-        const filter = 'input[data-dd-path], select[data-dd-path], textarea[data-dd-path]';
-        if (typeof parent === 'undefined') {
-            return $(filter);
-        } else {
-            return $(parent).find(filter);
+    self._allControls = function(parent=$, extraFilter='') {
+        const selectors = ['input[data-dd-path]', 'select[data-dd-path]', 'textarea[data-dd-path]'];
+        for (var i = 0; i < selectors.length; i++) {
+            selectors[i] += extraFilter;
         }
+        const filter = selectors.join(', ');
+        return $(parent).find(filter);
     };
 
     self._setupDDPaths = function(objs=$('body')) {
@@ -510,10 +510,9 @@ function Controller(dbxAppId) {
 
     self._inverseResolveArg = function(obj) {
         obj = $(obj);
-        return self._allControls()
-            .filter('[data-dd-formula~="/' + obj.attr('data-dd-path') + '"]')
-            .add(self.findSiblings(obj)
-                .filter('[data-dd-formula~="./' + obj.attr('data-dd-id') + '"]'));
+        const absFilter = '[data-dd-formula~="/' + obj.attr('data-dd-path') + '"]';
+        const relFilter = '[data-dd-formula~="./' + obj.attr('data-dd-id') + '"]';
+        return self._allControls($, absFilter).add(self.findSiblings(obj, relFilter));
     };
 
     self._resolveArg = function(obj, arg) {
@@ -851,20 +850,20 @@ function Controller(dbxAppId) {
 
     self.findNext = function(parent, dd_id) {
         return $(parent).find('[data-dd-id="' + dd_id +'"]').filter(function (idx, obj) {
-            return $(obj).parentsUntil($(parent)).filter('[data-dd-id]').length == 0;
+            return $(obj).parentsUntil(parent, '[data-dd-id]').length == 0;
         });
     };
 
-    self.findChildren = function(parent) {
+    self.findChildren = function(parent, extraFilter='') {
         parent = $(parent);
-        return parent.find('[data-dd-id]').filter(function (idx, obj) {
+        return parent.find('[data-dd-id]' + extraFilter).filter(function (idx, obj) {
             // Make sure there is nothing in the middle
-            return $(obj).parentsUntil(parent).filter('[data-dd-id]').length == 0;
+            return $(obj).parentsUntil(parent, '[data-dd-id]').length == 0;
         });
     };
 
-    self.findSiblings = function(obj) {
-        return self.findChildren(self.findParent(obj)).not(obj);
+    self.findSiblings = function(obj, extraFilter='') {
+        return self.findChildren(self.findParent(obj), extraFilter).not(obj);
     };
 
     self.findParent = function(obj) {
