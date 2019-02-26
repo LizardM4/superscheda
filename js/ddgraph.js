@@ -52,6 +52,10 @@ class DDNode {
         this._setRawValue(formatValue(this.type, v));
     }
 
+    get isRoot() {
+        return !this.parent;
+    }
+
     get formulaValue() {
         if (this.isVoid) {
             return this._formulaValue;
@@ -78,6 +82,8 @@ class DDNode {
         this._holdsData = false;
         this._formulaValue = null;
         this._type = DDType.NONE;
+        this._descendantsByPath = {};
+        this._leavesByPath = {};
         this._setup();
     }
 
@@ -85,19 +91,42 @@ class DDNode {
         console.assert(!this.holdsData);
         return this._childById[child.id] === child;
     }
-    // TODO keep a list of path -> node mappings in the root
 
     _updateChild(updatedChild) {
         console.assert(!this.holdsData);
-        const entries = this._childById.entries();
-        for (let i = 0; i < entries.length; i++) {
-            const [childId, child] = entries[i];
-            if (child === updatedChild) {
-                delete this._childById[childId];
-                this._childById[child.id] = child;
-                return;
-            }
+        updateDict(this._childById, updatedChild, updatedChild.id);
+        this.getRoot()._updateDescendant(updatedChild);
+    }
+
+    _updateDescendant(updatedDescendant) {
+        console.assert(this.isRoot);
+        updateDict(this._descendantsByPath, updatedDescendant, updatedDescendant.path);
+        if (updatedDescendant.holdsData) {
+            updateDict(this._leavesByPath, updatedDescendant, updatedDescendant.path);
         }
+    }
+
+    _addDescendant(descendant) {
+        console.assert(this.isRoot);
+        this._descendantsByPath[descendant.path] = descendant;
+        if (descendant.holdsData) {
+            this._leavesByPath[descendant.path] = descendant;
+        }
+    }
+
+    _removeDescendant(descendant) {
+        console.assert(this.isRoot);
+        delete this._descendantsByPath[descendant.path];
+        if (descendant.holdsData) {
+            delete this._leavesByPath[descendant.path];
+        }
+    }
+
+    getRoot() {
+        if (!this.isRoot) {
+            return this.parent.getRoot();
+        }
+        return this;
     }
 
     addChild(child) {
@@ -105,11 +134,13 @@ class DDNode {
         console.assert(!(child.id in this._childById));
         this._children.push(child);
         this._childById[child.id] = child;
+        this.getRoot()._addDescendant(child);
     }
 
     removeChild(child) {
         console.assert(!this.holdsData);
         console.assert(this.hasChild(child));
+        this.getRoot()._removeDescendant(child);
         delete this._childById[child.id];
         const idx = this._children.indexOf(child);
         console.assert(idx >= 0);
@@ -194,6 +225,24 @@ class DDNode {
             return children.filter(child => typeof child !== 'undefined');
         }
         return children;
+    }
+
+    descendantByPath(path) {
+        console.assert(this.isRoot);
+        const descendant = this._descendantsByPath[id];
+        if (typeof descendant === 'undefined') {
+            return null;
+        }
+        return descendant;
+    }
+
+    leafByPath(path) {
+        console.assert(this.isRoot);
+        const leaf = this._leavesByPath[id];
+        if (typeof leaf === 'undefined') {
+            return null;
+        }
+        return leaf;
     }
 
     static indicesToString(indices) {
@@ -290,6 +339,18 @@ class DDNode {
                 break;
         }
         return rawValue;
+    }
+
+    static updateDict(dict, obj, newKey) {
+        const entries = dict.entries();
+        for (let i = 0; i < entries.length; i++) {
+            const [key, value] = entries[i];
+            if (value === obj) {
+                delete dict[key];
+                dict[newKey] = value;
+                return;
+            }
+        }
     }
 
     static formatValue(type, value) {
