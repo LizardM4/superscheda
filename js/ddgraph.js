@@ -1,7 +1,9 @@
 const DDType = Object.freeze({
     INT:     Symbol('int'),
-    RELINT:  Symbol('rel_int'),
-    BOOL:    Symbol('bool')
+    FLOAT:   Symbol('float'),
+    BOOL:    Symbol('bool'),
+    STRING:  Symbol('string'),
+    NONE:    Symbol('none')
 });
 
 class DDNode {
@@ -26,27 +28,87 @@ class DDNode {
         return this._id;
     }
 
+    get baseId() {
+        return this._baseId;
+    }
+
+    get indices() {
+        return this._indices;
+    }
+
+    get type() {
+        return this._type;
+    }
+
+    get isVoid() {
+        return testVoid(this._getRawValue());
+    }
+
+    get value() {
+        return castRawValue(this.type, this._getRawValue());
+    }
+
+    set value(v) {
+        this._setRawValue(formatValue(this.type, v));
+    }
+
+    get formulaValue() {
+        if (this.isVoid) {
+            return this._formulaValue;
+        }
+        return castRawValue(this.type, this._getRawValue(), true);
+    }
+
+    set formulaValue(v) {
+        this._formulaValue = v;
+        this._updateFormulaValue();
+    }
+
     constructor($obj, parent=null) {
         this._$obj = $obj;
         this._parent = parent;
         this._children = [];
         this._childById = {};
         this._id = null;
+        this._indices = null;
+        this._baseId = null;
         this._path = null;
+        this._idx = null;
+        this._isCheckbox = false;
+        this._holdsData = false;
+        this._formulaValue = null;
+        this._type = DDType.NONE;
         this._setup();
     }
 
     hasChild(child) {
+        console.assert(!this.holdsData);
         return this._childById[child.id] === child;
+    }
+    // TODO keep a list of path -> node mappings in the root
+
+    _updateChild(updatedChild) {
+        console.assert(!this.holdsData);
+        const entries = this._childById.entries();
+        for (let i = 0; i < entries.length; i++) {
+            const [childId, child] = entries[i];
+            if (child === updatedChild) {
+                delete this._childById[childId];
+                this._childById[child.id] = child;
+                return;
+            }
+        }
     }
 
     addChild(child) {
-        console.assert(!(child.id in self._childById));
+        console.assert(!this.holdsData);
+        console.assert(!(child.id in this._childById));
         this._children.push(child);
         this._childById[child.id] = child;
     }
 
     removeChild(child) {
+        console.assert(!this.holdsData);
         console.assert(this.hasChild(child));
         delete this._childById[child.id];
         const idx = this._children.indexOf(child);
@@ -54,16 +116,68 @@ class DDNode {
         this._children.splice(idx, 1);
     }
 
+    _updateFormulaValue() {
+        console.assert(this._holdsData);
+        this.obj.attr('placeholder', formatValue(this.type, this._formulaValue));
+    }
+
+    _getRawValue() {
+        console.assert(this._holdsData);
+        if (this._isCheckbox) {
+            return this.obj.is(':checked');
+        }
+        const val = this.obj.val();
+        if (typeof val === 'undefined' || val == null || val == '') {
+            return null;
+        }
+        return val;
+    }
+
+    _setRawValue(v) {
+        console.assert(this._holdsData);
+        if (this._isCheckbox) {
+            console.assert(typeof v === 'boolean');
+            this.obj.prop('checked', v);
+        } else {
+            console.assert(typeof v === 'string');
+            this.obj.val(v);
+        }
+    }
+
+    _getIndices() {
+        // Search for all data-dd-array="item" between this object and the parent
+        const filter = '[data-dd-array="item"]';
+        let ddItems = null;
+        if (this.parent) {
+            ddItems = this.obj.parentsUntil(this.parent.obj, filter)
+        } else {
+            ddItems = this.obj.parents()
+        }
+        if (ddItems.length == 0) {
+            return null;
+        } else if (ddItems.length == 1) {
+            return parseInt(ddItems.attr('data-dd-index'));
+        } else {
+            return ddItems.map((i, item) => parseInt($(item).attr('data-dd-index')));
+        }
+    }
+
     _setup() {
-        this.obj.data('ddNode') = this;
-        this._id = this.obj.attr('data-dd-id');
+        this._baseId = this.obj.attr('data-dd-id');
+        this._indices = this._getIndices(this.parent);
+        this._id = this.baseId + indicesToString(this.indices);
         if (this.parent) {
             this.parent.addChild(this);
-            this._path = combinePath(this.parent, this);
+            this._path = combinePath(this.parent.path, this.id);
         } else {
             this._path = this.id;
         }
-        // Attributes for
+        this._isCheckbox = (this.obj.attr('type') === 'checkbox');
+        this._holdsData = holdsData(this.obj);
+        this._type = inferType(this.obj);
+        // TODO infer formula
+        this.obj.data('ddNode') = this;
+
     }
 
     childById(id) {
@@ -82,11 +196,117 @@ class DDNode {
         return children;
     }
 
-    static holdsData($obj) {
-        return $obj.is('input[data-dd-path], select[data-dd-path], textarea[data-dd-path]');
+    static indicesToString(indices) {
+        if (typeof indices === 'number') {
+            return '[' + indices.toString() + ']';
+        } else if (!indices || indices.length == 0) {
+            return '';
+        } else {
+            return '[' + indices.join('][') + ']';
+        }
     }
 
-    static combinePath(parent, child) {
-        return parent.path + '.' + child.id;
+    static holdsData($obj) {
+        return $obj.is('input[data-dd-id], select[data-dd-id], textarea[data-dd-id]');
+    }
+
+    static inferType($obj) {
+        if (!holdsData($obj)) {
+            return DDType.NONE;
+        }
+        if ($obj.attr('type') === 'checkbox') {
+            return DDType.BOOL;
+        }
+        const declaredType = $obj.attr('data-dd-type');
+        if (declaredType) {
+            const inferredType = DDType[declaredType.toUpperCase()];
+            console.assert(inferredType);
+            return inferredType;
+        }
+        return DDType.STRING;
+    }
+
+    static combinePath(parentPath, childId) {
+        return parentPath + '.' + childId;
+    }
+
+    static testVoid(type, rawValue) {
+        if (type == DDType.BOOL) {
+            return false; // Booleans are never void
+        }
+        if (type == DDType.NONE || rawValue == null) {
+            return true;
+        }
+        switch (type) {
+            case DDType.BOOL:
+                // Already tested before
+                break;
+            case DDType.STRING:
+                return rawValue.length > 0;
+            case DDType.INT:
+            case DDType.FLOAT:
+                // Number types ignore the spaces
+                return rawValue.trim().length > 0;
+        }
+        return false;
+    }
+
+    static castRawValue(type, rawValue, nullIfInvalid=false) {
+        if (testVoid(type, rawValue)) {
+            return null;
+        }
+        switch (type) {
+            case DDType.INT: {
+                    const intValue = parseInt(rawValue);
+                    if (intValue != intValue) {
+                        if (nullIfInvalid) {
+                            return null;
+                        }
+                    } else {
+                        return intValue;
+                    }
+                }
+                break;
+            case DDType.FLOAT: {
+                    const floatValue = parseFloat(rawValue);
+                    if (floatValue != floatValue) {
+                        if (nullIfInvalid) {
+                            return null;
+                        }
+                    } else {
+                        return floatValue;
+                    }
+                }
+                break;
+            case DDType.STRING:
+                // Nothing to do, already string.
+                break;
+            case DDType.BOOL:
+                if (typeof rawValue !== 'boolean') {
+                    if (nullIfInvalid) {
+                        return null;
+                    }
+                }
+                break;
+        }
+        return rawValue;
+    }
+
+    static formatValue(type, value) {
+        if (typeof value === 'undefined' || value == null) {
+            return '';
+        }
+        switch (type) {
+            case DDType.INT:
+            case DDType.FLOAT:
+            case DDType.STRING:
+                // Just cast to string
+                break;
+            case DDType.BOOL:
+                // Do an explicit cast to bool
+                return !!value;
+                break;
+        }
+        return value.toString();
     }
 }
