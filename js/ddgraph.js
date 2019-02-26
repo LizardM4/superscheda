@@ -69,6 +69,12 @@ class DDNode {
     }
 
     constructor($obj, parent=null) {
+        if (typeof $obj === 'undefined') {
+            // We are creating a root
+            console.assert(typeof parent === 'undefined' || parent == null);
+            parent = null
+            $obj = null;
+        }
         this._$obj = $obj;
         this._parent = parent;
         this._children = [];
@@ -84,7 +90,9 @@ class DDNode {
         this._type = DDType.NONE;
         this._descendantsByPath = {};
         this._leavesByPath = {};
-        this._setup();
+        if (!this.isRoot) {
+            this._setup();
+        }
     }
 
     hasChild(child) {
@@ -176,14 +184,10 @@ class DDNode {
     }
 
     _getIndices() {
+        console.assert(!this.isRoot);
         // Search for all data-dd-array="item" between this object and the parent
         const filter = '[data-dd-array="item"]';
-        let ddItems = null;
-        if (this.parent) {
-            ddItems = this.obj.parentsUntil(this.parent.obj, filter)
-        } else {
-            ddItems = this.obj.parents()
-        }
+        const ddItems = this.obj.parentsUntil(this.parent.obj, filter);
         if (ddItems.length == 0) {
             return null;
         } else if (ddItems.length == 1) {
@@ -194,6 +198,8 @@ class DDNode {
     }
 
     _setup() {
+        console.assert(!this.isRoot);
+        console.assert(this.obj);
         this._baseId = this.obj.attr('data-dd-id');
         this._isCheckbox = (this.obj.attr('type') === 'checkbox');
         this._holdsData = holdsData(this.obj);
@@ -205,21 +211,17 @@ class DDNode {
         this._setupIdAndPath();
         if (this.parent) {
             this.parent.addChild(this);
-        } else {
-            this.getRoot()._addDescendant(this);
         }
     }
 
     _setupIdAndPath() {
+        console.assert(!this.isRoot);
         this._id = this.baseId + indicesToString(this.indices);
-        if (this.parent) {
-            this._path = combinePath(this.parent.path, this.id);
-        } else {
-            this._path = this.id;
-        }
+        this._path = combinePath(this.parent.path, this.id);
     }
 
     reindexIfNeeded() {
+        console.assert(!this.isRoot);
         const oldIndices = this.indices;
         const newIndices = this._getIndices();
         if (oldIndices != newIndices) {
