@@ -195,20 +195,42 @@ class DDNode {
 
     _setup() {
         this._baseId = this.obj.attr('data-dd-id');
-        this._indices = this._getIndices(this.parent);
-        this._id = this.baseId + indicesToString(this.indices);
-        if (this.parent) {
-            this.parent.addChild(this);
-            this._path = combinePath(this.parent.path, this.id);
-        } else {
-            this._path = this.id;
-        }
         this._isCheckbox = (this.obj.attr('type') === 'checkbox');
         this._holdsData = holdsData(this.obj);
         this._type = inferType(this.obj);
         // TODO infer formula
         this.obj.data('ddNode') = this;
+        // Mutable properties:
+        this._indices = this._getIndices(this.parent);
+        this._setupIdAndPath();
+        if (this.parent) {
+            this.parent.addChild(this);
+        } else {
+            this.getRoot()._addDescendant(this);
+        }
+    }
 
+    _setupIdAndPath() {
+        this._id = this.baseId + indicesToString(this.indices);
+        if (this.parent) {
+            this._path = combinePath(this.parent.path, this.id);
+        } else {
+            this._path = this.id;
+        }
+    }
+
+    reindexIfNeeded() {
+        const oldIndices = this.indices;
+        const newIndices = this._getIndices();
+        if (oldIndices != newIndices) {
+            this._indices = newIndices;
+            this._setupIdAndPath();
+            if (this.parent) {
+                this.parent._updateChild(this);
+            } else {
+                this.getRoot()._updateDescendant(this);
+            }
+        }
     }
 
     childById(id) {
