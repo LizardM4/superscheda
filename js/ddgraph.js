@@ -137,7 +137,7 @@ class DDNode {
         return this;
     }
 
-    addChild(child) {
+    _addChild(child) {
         console.assert(!this.holdsData);
         console.assert(!(child.id in this._childById));
         this._children.push(child);
@@ -145,7 +145,7 @@ class DDNode {
         this.getRoot()._addDescendant(child);
     }
 
-    removeChild(child) {
+    _removeChild(child) {
         console.assert(!this.holdsData);
         console.assert(this.hasChild(child));
         this.getRoot()._removeDescendant(child);
