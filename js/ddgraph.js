@@ -62,6 +62,43 @@ class DDGraph {
             delete this._leavesByPath[descendant.path];
         }
     }
+
+    _getDirectDescendantFilter($obj) {
+        return function(_, descendant) {
+            const node = this._getNodeOfDOMElement(descendant);
+            return node && node.obj.parentsUntil($obj, '[data-dd-path]').length == 0;
+        };
+    }
+
+    _getNodeOfDOMElement(domElement) {
+        const path = domElement.getAttribute('data-dd-path');
+        console.assert(path);
+        return this.descendantByPath(path);
+    }
+
+    getChildrenNodes($domElement) {
+        return $domElement.find('[data-dd-path]')
+            .filter(this._getDirectDescendantFilter($domElement))
+            .toArray()
+            .map(this._getNodeOfDOMElement);
+    }
+
+    getElementsNotInGraph($domParent, sortByDepth=true) {
+        let results = $domParent.find('[data-dd-id]:not([data-dd-path])').toArray();
+        if (!sortByDepth) {
+            return results.map($);
+        }
+        // Create an array of [depth, object]
+        for (var i = 0; i < results.length; i++) {
+            const $item = $(results[i]);
+            const relDepth = $item.parentsUntil($domParent, '[data-dd-id]').length;
+            results[i] = [relDepth, $item];
+        }
+        // Sort that and then discard the depth
+        results.sort();
+        return results.map((relDepth, $item) => $item);
+    }
+
     static indicesToString(indices) {
         if (typeof indices === 'number') {
             return '[' + indices.toString() + ']';
