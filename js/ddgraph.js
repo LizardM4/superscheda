@@ -351,9 +351,8 @@ class DDNode {
         // Mutable properties:
         this._indices = this._getIndices(this.parent);
         this._setupIdAndPath();
-        if (this.parent) {
-            this.parent.addChild(this);
-        }
+        this.parent._addChild(this);
+        this.graph.root._addDescendant(this);
     }
 
     _setupIdAndPath() {
@@ -370,7 +369,7 @@ class DDNode {
             this._indices = newIndices;
             this._setupIdAndPath();
             this.parent._updateChild(this);
-            // TODO update root
+            this.graph.root._updateDescendant(this);
         }
     }
 
