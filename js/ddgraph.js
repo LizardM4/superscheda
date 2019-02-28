@@ -33,10 +33,14 @@ class DDGraph {
         return leaf;
     }
 
-    _updateDescendant(updatedDescendant) {
-        updateDict(this._descendantsByPath, updatedDescendant, updatedDescendant.path);
+    _updateDescendant(oldPath, updatedDescendant) {
+        console.assert(this._descendantsByPath[oldPath] === updatedDescendant);
+        delete this._descendantsByPath[oldPath];
+        this._descendantsByPath[updatedDescendant.path] = updatedDescendant;
         if (updatedDescendant.holdsData) {
-            updateDict(this._leavesByPath, updatedDescendant, updatedDescendant.path);
+            console.assert(this._leavesByPath[oldPath] === updatedDescendant);
+            delete this._leavesByPath[oldPath];
+            this._leavesByPath[updatedDescendant.path] = updatedDescendant;
         }
     }
 
@@ -147,18 +151,6 @@ class DDGraph {
                 break;
         }
         return rawValue;
-    }
-
-    static updateDict(dict, obj, newKey) {
-        const entries = dict.entries();
-        for (let i = 0; i < entries.length; i++) {
-            const [key, value] = entries[i];
-            if (value === obj) {
-                delete dict[key];
-                dict[newKey] = value;
-                return;
-            }
-        }
     }
 
     static formatValue(type, value) {
@@ -276,9 +268,11 @@ class DDNode {
         return this._childById[child.id] === child;
     }
 
-    _updateChild(updatedChild) {
+    _updateChild(oldId, updatedChild) {
         console.assert(!this.holdsData);
-        DDGraph.updateDict(this._childById, updatedChild, updatedChild.id);
+        console.assert(this._childById[oldId] === updatedChild);
+        delete this._childById[oldId]
+        this._childById[updatedChild.id] = updatedChild;
     }
 
     _addChild(child) {
