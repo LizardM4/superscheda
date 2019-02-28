@@ -354,18 +354,27 @@ class DDNode {
         this._holdsData = DDGraph.holdsData(this.obj);
         this._type = DDGraph.inferType(this.obj);
         // TODO infer formula
-        this.obj.data('ddNode') = this;
         // Mutable properties:
         this._indices = this._getIndices(this.parent);
-        this._setupIdAndPath();
-        this.parent._addChild(this);
-        this.graph.root._addDescendant(this);
+        this._assignIdAndPath();
     }
 
-    _setupIdAndPath() {
+    _assignIdAndPath() {
         console.assert(!this.isRoot);
+        const oldId = this._id;
+        const oldPath = this._path;
         this._id = this.baseId + DDGraph.indicesToString(this.indices);
         this._path = DDGraph.combinePath(this.parent.path, this.id);
+        this.obj.attr('data-dd-path', this.path);
+        if (oldId == null && oldPath == null) {
+            // First insertion
+            this.parent._addChild(this);
+            this.graph.root._addDescendant(this);
+        } else {
+            // Rename
+            this.parent._updateChild(oldId, node);
+            this.graph.root._updateDescendant(oldPath, node);
+        }
     }
 
     reindexIfNeeded() {
@@ -374,10 +383,14 @@ class DDNode {
         const newIndices = this._getIndices();
         if (oldIndices != newIndices) {
             this._indices = newIndices;
-            this._setupIdAndPath();
-            this.parent._updateChild(this);
-            this.graph.root._updateDescendant(this);
+            this.traverse(function(node, evt) {
+                if (evt == DFSEvent.ENTER) {
+                    node._assignIdAndPath();
+                }
+            });
+            return true;
         }
+        return false;
     }
 
     childById(id) {
