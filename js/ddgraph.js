@@ -296,6 +296,21 @@ class DDNode {
         this._children.splice(idx, 1);
     }
 
+    _remove() {
+        console.assert(!this.isRoot);
+        this.obj.removeAttr('data-dd-path');
+        this.graph.root._removeDescendant(this);
+        this.parent._removeChild(this);
+    }
+
+    removeSubtree() {
+        this.traverse(function(node, evt) {
+            if (evt == DFSEvent.EXIT) {
+                node._remove();
+            }
+        });
+    }
+
     traverse(fn) {
         fn(DFSEvent.ENTER, this);
         for (var i = 0; i < this.children.length; i++) {
