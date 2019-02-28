@@ -6,6 +6,11 @@ const DDType = Object.freeze({
     NONE:    Symbol('none')
 });
 
+const DFSEvent = Object.freeze({
+    ENTER: Symbol('enter'),
+    EXIT:  Symbol('exit')
+});
+
 class DDGraph {
     get root() {
         return this._root;
@@ -289,6 +294,14 @@ class DDNode {
         const idx = this._children.indexOf(child);
         console.assert(idx >= 0);
         this._children.splice(idx, 1);
+    }
+
+    traverse(fn) {
+        fn(DFSEvent.ENTER, this);
+        for (var i = 0; i < this.children.length; i++) {
+            traverse(this.children[i]);
+        }
+        fn(DFSEvent.EXIT, this);
     }
 
     _updateFormulaValue() {
