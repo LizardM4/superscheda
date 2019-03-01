@@ -73,64 +73,66 @@ You should have received a copy of the GNU General Public License
     <!-- Extra custom styles -->
     <link rel="stylesheet" href="css/superscheda.css?v=%REV">
 
+    <!-- <script src="js/ddgraph.js?v=%REV" type="module"></script> -->
+
     <script>
-      DD = new Controller('h2jyx20rz9lbwiw');
-      $(function() {
-        DD.setup();
+      // DD = new Controller('h2jyx20rz9lbwiw');
+      // $(function() {
+      //   DD.setup();
 
-        // Event for activating/deactivating the details of the abilities
-        $('#toggle_abilities_modifier').click(function() {
-          var obj = $(this);
-          var t_active = obj.find('.toggle-active');
-          var t_inactive = obj.find('.toggle-inactive');
-          var cur_state = t_active.hasClass('d-none');
-          if (cur_state) {
-            t_inactive.addClass('d-none');
-            t_active.removeClass('d-none');
-            $('.extra-mods').removeClass('d-none');
-            $('#array_abilita').addClass('always-stripe');
-          } else {
-            t_inactive.removeClass('d-none');
-            t_active.addClass('d-none');
-            $('.extra-mods').addClass('d-none');
-            $('#array_abilita').removeClass('always-stripe');
-          }
-        });
+      //   // Event for activating/deactivating the details of the abilities
+      //   $('#toggle_abilities_modifier').click(function() {
+      //     var obj = $(this);
+      //     var t_active = obj.find('.toggle-active');
+      //     var t_inactive = obj.find('.toggle-inactive');
+      //     var cur_state = t_active.hasClass('d-none');
+      //     if (cur_state) {
+      //       t_inactive.addClass('d-none');
+      //       t_active.removeClass('d-none');
+      //       $('.extra-mods').removeClass('d-none');
+      //       $('#array_abilita').addClass('always-stripe');
+      //     } else {
+      //       t_inactive.removeClass('d-none');
+      //       t_active.addClass('d-none');
+      //       $('.extra-mods').addClass('d-none');
+      //       $('#array_abilita').removeClass('always-stripe');
+      //     }
+      //   });
 
-        // Event for loading a new item
-        $('#load_default').click(function(evt) {
-          // That's an 'a', so we need to prevent jumping to href="#"
-          evt.preventDefault();
-          evt.stopPropagation();
-          DD.toggleWaiting(true);
-          DD.loadRemote('etc/default.json', function(res) { DD.toggleWaiting(false, res); });
-        });
+      //   // Event for loading a new item
+      //   $('#load_default').click(function(evt) {
+      //     // That's an 'a', so we need to prevent jumping to href="#"
+      //     evt.preventDefault();
+      //     evt.stopPropagation();
+      //     DD.toggleWaiting(true);
+      //     DD.loadRemote('etc/default.json', function(res) { DD.toggleWaiting(false, res); });
+      //   });
 
-        // Toggle the dd-nav-toc class that drives the toc; having multiple TOCs
-        // causes some not to trigger, so we toggle between one and the other.
-        $(window).resize(function() {
-            if ($(window).width() >= 768) {
-              if (!$('#toc_md').is('.dd-nav-toc')) {
-                $('#toc_md').addClass('dd-nav-toc');
-                $('#toc_sm').removeClass('dd-nav-toc');
-                // You need both these for scrollspy to refresh properly
-                $('body').scrollspy('refresh');
-                $(window).scroll();
-              }
-            } else {
-              if (!$('#toc_sm').is('.dd-nav-toc')) {
-                $('#toc_md').removeClass('dd-nav-toc');
-                $('#toc_sm').addClass('dd-nav-toc');
-                // You need both these for scrollspy to refresh properly
-                $('body').scrollspy('refresh');
-                $(window).scroll();
-              }
-            }
-        });
+      //   // Toggle the dd-nav-toc class that drives the toc; having multiple TOCs
+      //   // causes some not to trigger, so we toggle between one and the other.
+      //   $(window).resize(function() {
+      //       if ($(window).width() >= 768) {
+      //         if (!$('#toc_md').is('.dd-nav-toc')) {
+      //           $('#toc_md').addClass('dd-nav-toc');
+      //           $('#toc_sm').removeClass('dd-nav-toc');
+      //           // You need both these for scrollspy to refresh properly
+      //           $('body').scrollspy('refresh');
+      //           $(window).scroll();
+      //         }
+      //       } else {
+      //         if (!$('#toc_sm').is('.dd-nav-toc')) {
+      //           $('#toc_md').removeClass('dd-nav-toc');
+      //           $('#toc_sm').addClass('dd-nav-toc');
+      //           // You need both these for scrollspy to refresh properly
+      //           $('body').scrollspy('refresh');
+      //           $(window).scroll();
+      //         }
+      //       }
+      //   });
 
-        // Activate the TOCs
-        $(window).resize();
-      });
+      //   // Activate the TOCs
+      //   $(window).resize();
+      // });
     </script>
     <style>
 
@@ -2621,12 +2623,20 @@ You should have received a copy of the GNU General Public License
     </div>
 
 
-    <div class="modal-backdrop fade show" id="loading_modal">
+<!--     <div class="modal-backdrop fade show" id="loading_modal">
       <div class="my-0 h-100 d-flex align-items-center justify-content-center">
         <div class="modal-dialog text-light" role="document">
           Caricamento...
         </div>
       </div>
-    </div>
+    </div> -->
+    <script type="module">
+      import { DDGraph } from './js/ddgraph.js?v=%REV';
+      $(function() {
+        window.dd = new DDGraph();
+        window.dd.buildFromDom();
+        console.log(window.dd.getRepresentation());
+      });
+    </script>
   </body>
 </html>
