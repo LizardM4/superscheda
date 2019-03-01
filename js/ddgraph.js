@@ -120,6 +120,27 @@ class DDGraph {
             .map(domElement => this._getNodeOfDOMElement(domElement));
     }
 
+    static arrayEqual(l, r) {
+        if (typeof l === 'undefined') {
+            l = null;
+        }
+        if (typeof r === 'undefined') {
+            r = null;
+        }
+        if ((l == null) != (r == null)) {
+            return false;
+        } else if (l.length != r.length) {
+            return false;
+        } else {
+            for (let i = 0; i < l.length; ++i) {
+                if (l[i] != r[i]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     static getElementsNotInGraph($domParent, sortByDepth=true) {
         let results = $domParent.find('[data-dd-id]:not([data-dd-path])').toArray();
         if (!sortByDepth) {
@@ -162,7 +183,11 @@ class DDGraph {
         console.assert(match);
         const baseId = match[1];
         let indices = match[2];
-        indices = indices.substring(1, indices.length - 1).split('][').map(x => parseInt(x));
+        if (indices) {
+            indices = indices.substring(1, indices.length - 1).split('][').map(x => parseInt(x));
+        } else {
+            indices = null;
+        }
         return [baseId, indices];
     }
 
@@ -302,7 +327,14 @@ class DDNode {
     }
 
     get indices() {
-        return this._indices;
+        if (this._indices && this._extraIndices) {
+            return this._indices.concat(this._extraIndices);
+        } else if (this._indices) {
+            return this._indices.slice();
+        } else if (this._extraIndices) {
+            return this._extraIndices.slice();
+        }
+        return null;
     }
 
     get type() {
@@ -355,6 +387,7 @@ class DDNode {
         this._childById = {};
         this._id = null;
         this._indices = null;
+        this._extraIndices = null;
         this._baseId = null;
         this._path = null;
         this._idx = null;
@@ -465,7 +498,7 @@ class DDNode {
     _setup() {
         console.assert(!this.isRoot);
         console.assert(this.obj);
-        this._baseId = this.obj.attr('data-dd-id');
+        [this._baseId, this._extraIndices] = DDGraph.parseIndicesFromId(this.obj.attr('data-dd-id'));
         this._isCheckbox = (this.obj.attr('type') === 'checkbox');
         this._holdsData = DDGraph.holdsData(this.obj);
         this._type = DDGraph.inferType(this.obj);
@@ -495,7 +528,7 @@ class DDNode {
 
     reindexIfNeeded() {
         console.assert(!this.isRoot);
-        const oldIndices = this.indices;
+        const oldIndices = this._indices;
         const newIndices = this._getIndices();
         if (oldIndices != newIndices) {
             this._indices = newIndices;
