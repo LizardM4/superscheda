@@ -143,7 +143,10 @@ class DDGraph {
     }
 
     static getElementsNotInGraph($domParent, sortByDepth=true) {
-        let results = $domParent.find('[data-dd-id]:not([data-dd-path])').toArray();
+        let results = $domParent
+            .find('[data-dd-id]:not([data-dd-path])')
+            .not('[data-dd-array="master"] *')
+            .toArray();
         if (!sortByDepth) {
             return results.map(elm => $(elm));
         }
