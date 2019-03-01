@@ -1,3 +1,5 @@
+'use strict';
+
 const DDType = Object.freeze({
     INT:     Symbol('int'),
     FLOAT:   Symbol('float'),
@@ -24,14 +26,14 @@ class DDGraph {
 
     buildFromDom($rootElement=null) {
         const elements = $rootElement
-            ? getElementsNotInGraph($rootElement, true)
-            : getElementsNotInGraph($('body'), true);
+            ? DDGraph.getElementsNotInGraph($rootElement, true)
+            : DDGraph.getElementsNotInGraph($('body'), true);
         elements.forEach(function (domElement) {
             const $domElement = $(domElement);
             const parentNode = this.findParentNode($domElement, $rootElement);
             console.assert(parentNode);
             new DDNode(this, $domElement, parentNode);
-        });
+        }, this);
     }
 
     getRepresentation() {
@@ -96,7 +98,7 @@ class DDGraph {
     }
 
     _getDirectDescendantFilter($obj) {
-        return function(_, descendant) {
+        return (_, descendant) => {
             const node = this._getNodeOfDOMElement(descendant);
             return node && node.obj.parentsUntil($obj, '[data-dd-path]').length == 0;
         };
@@ -128,7 +130,7 @@ class DDGraph {
         }
         // Sort that and then discard the depth
         results.sort();
-        return results.map((relDepth, $item) => $item);
+        return results.map(([relDepth, $item]) => $item);
     }
 
     findParentNode($domElement, $rootElement=null) {
@@ -156,7 +158,7 @@ class DDGraph {
     }
 
     static inferType($obj) {
-        if (!holdsData($obj)) {
+        if (!DDGraph.holdsData($obj)) {
             return DDType.NONE;
         }
         if ($obj.attr('type') === 'checkbox') {
@@ -197,7 +199,7 @@ class DDGraph {
     }
 
     static castRawValue(type, rawValue, nullIfInvalid=false) {
-        if (testVoid(type, rawValue)) {
+        if (DDGraph.testVoid(type, rawValue)) {
             return null;
         }
         switch (type) {
@@ -304,6 +306,7 @@ class DDNode {
 
     get isRoot() {
         return !this.parent;
+    }
 
     get graph() {
         return this._graph;
@@ -463,11 +466,11 @@ class DDNode {
         if (oldId == null && oldPath == null) {
             // First insertion
             this.parent._addChild(this);
-            this.graph.root._addDescendant(this);
+            this.graph._addDescendant(this);
         } else {
             // Rename
             this.parent._updateChild(oldId, node);
-            this.graph.root._updateDescendant(oldPath, node);
+            this.graph._updateDescendant(oldPath, node);
         }
     }
 
@@ -504,3 +507,5 @@ class DDNode {
     }
 
 }
+
+export { DDGraph };
