@@ -25,9 +25,10 @@ class DDGraph {
     }
 
     buildFromDom($rootElement=null) {
-        const elements = $rootElement
+        const elements = ($rootElement
             ? DDGraph.getElementsNotInGraph($rootElement, true)
-            : DDGraph.getElementsNotInGraph($('body'), true);
+            : DDGraph.getElementsNotInGraph($('body'), true)
+        );
         elements.forEach(function (domElement) {
             const $domElement = $(domElement);
             const parentNode = this.findParentNode($domElement, $rootElement);
@@ -40,7 +41,7 @@ class DDGraph {
         let depth = 0;
         let retval = '';
         this.root.traverse(function(evt, node) {
-            if (evt == DFSEvent.ENTER) {
+            if (evt === DFSEvent.ENTER) {
                 ++depth;
                 retval += ' '.repeat(depth - 1);
                 if (node.holdsData) {
@@ -49,9 +50,9 @@ class DDGraph {
                     retval += node.id;
                 }
                 if (node.indices) {
-                    retval += ' @' + DDGraph.indicesToString(node.indices) + '>'
+                    retval += ' @' + DDGraph.indicesToString(node.indices)
                 }
-                retval += '\n;';
+                retval += '\n';
             } else {
                 --depth;
             }
@@ -103,7 +104,7 @@ class DDGraph {
     _getDirectDescendantFilter($obj) {
         return (_, descendant) => {
             const node = this._getNodeOfDOMElement(descendant);
-            return node && node.obj.parentsUntil($obj, '[data-dd-path]').length == 0;
+            return node && node.obj.parentsUntil($obj, '[data-dd-path]').length === 0;
         };
     }
 
@@ -120,20 +121,20 @@ class DDGraph {
             .map(domElement => this._getNodeOfDOMElement(domElement));
     }
 
-    static arrayEqual(l, r) {
+    static arrayEquals(l, r) {
         if (typeof l === 'undefined') {
             l = null;
         }
         if (typeof r === 'undefined') {
             r = null;
         }
-        if ((l == null) != (r == null)) {
+        if ((l === null) !== (r === null)) {
             return false;
-        } else if (l.length != r.length) {
+        } else if (l.length !== r.length) {
             return false;
         } else {
             for (let i = 0; i < l.length; ++i) {
-                if (l[i] != r[i]) {
+                if (l[i] !== r[i]) {
                     return false;
                 }
             }
@@ -147,13 +148,13 @@ class DDGraph {
             return results.map(elm => $(elm));
         }
         // Create an array of [depth, object]
-        for (var i = 0; i < results.length; i++) {
+        for (let i = 0; i < results.length; i++) {
             const $item = $(results[i]);
             const relDepth = $item.parentsUntil($domParent, '[data-dd-id]').length;
             results[i] = [relDepth, $item];
         }
         // Sort that and then discard the depth
-        results.sort();
+        results.sort((l, r) => l[0] - r[0]);
         return results.map(([relDepth, $item]) => $item);
     }
 
@@ -161,7 +162,7 @@ class DDGraph {
         const candidates = $rootElement
             ? $domElement.parentsUntil($rootElement, '[data-dd-id]')
             : $domElement.parents('[data-dd-id]');
-        if (candidates.length == 0) {
+        if (candidates.length === 0) {
             return this.root;
         }
         return this._getNodeOfDOMElement(candidates[0]);
@@ -170,7 +171,7 @@ class DDGraph {
     static indicesToString(indices) {
         if (typeof indices === 'number') {
             return '[' + indices.toString() + ']';
-        } else if (!indices || indices.length == 0) {
+        } else if (!indices || indices.length === 0) {
             return '';
         } else {
             return '[' + indices.join('][') + ']';
@@ -216,10 +217,10 @@ class DDGraph {
     }
 
     static testVoid(type, rawValue) {
-        if (type == DDType.BOOL) {
+        if (type === DDType.BOOL) {
             return false; // Booleans are never void
         }
-        if (type == DDType.NONE || rawValue == null) {
+        if (type === DDType.NONE || rawValue === null) {
             return true;
         }
         switch (type) {
@@ -243,7 +244,7 @@ class DDGraph {
         switch (type) {
             case DDType.INT: {
                     const intValue = parseInt(rawValue);
-                    if (intValue != intValue) {
+                    if (intValue !== intValue) {
                         if (nullIfInvalid) {
                             return null;
                         }
@@ -254,7 +255,7 @@ class DDGraph {
                 break;
             case DDType.FLOAT: {
                     const floatValue = parseFloat(rawValue);
-                    if (floatValue != floatValue) {
+                    if (floatValue !== floatValue) {
                         if (nullIfInvalid) {
                             return null;
                         }
@@ -278,7 +279,7 @@ class DDGraph {
     }
 
     static formatValue(type, value) {
-        if (typeof value === 'undefined' || value == null) {
+        if (typeof value === 'undefined' || value === null) {
             return '';
         }
         switch (type) {
@@ -327,14 +328,7 @@ class DDNode {
     }
 
     get indices() {
-        if (this._indices && this._extraIndices) {
-            return this._indices.concat(this._extraIndices);
-        } else if (this._indices) {
-            return this._indices.slice();
-        } else if (this._extraIndices) {
-            return this._extraIndices.slice();
-        }
-        return null;
+        return this._indices;
     }
 
     get type() {
@@ -377,7 +371,7 @@ class DDNode {
         this._graph = graph;
         if (typeof $obj === 'undefined') {
             // We are creating a root
-            console.assert(typeof parent === 'undefined' || parent == null);
+            console.assert(typeof parent === 'undefined' || parent === null);
             parent = null
             $obj = null;
         }
@@ -386,7 +380,7 @@ class DDNode {
         this._children = [];
         this._childById = {};
         this._id = null;
-        this._indices = null;
+        this._arrayIndices = null;
         this._extraIndices = null;
         this._baseId = null;
         this._path = null;
@@ -398,6 +392,17 @@ class DDNode {
         if (!this.isRoot) {
             this._setup();
         }
+    }
+
+    _recacheIndices() {
+        if (this._arrayIndices && this._extraIndices) {
+            this._indices = this._arrayIndices.concat(this._extraIndices);
+        } else if (this._arrayIndices) {
+            this._indices = this._arrayIndices.slice();
+        } else if (this._extraIndices) {
+            this._indices = this._extraIndices.slice();
+        }
+        this._indices = null;
     }
 
     hasChild(child) {
@@ -437,7 +442,7 @@ class DDNode {
 
     removeSubtree() {
         this.traverse(function(node, evt) {
-            if (evt == DFSEvent.EXIT) {
+            if (evt === DFSEvent.EXIT) {
                 node._remove();
             }
         });
@@ -446,7 +451,7 @@ class DDNode {
     traverse(fn) {
         fn(DFSEvent.ENTER, this);
         if (this.children) {
-            for (var i = 0; i < this.children.length; i++) {
+            for (let i = 0; i < this.children.length; i++) {
                 this.children[i].traverse(fn);
             }
         }
@@ -464,7 +469,7 @@ class DDNode {
             return this.obj.is(':checked');
         }
         const val = this.obj.val();
-        if (typeof val === 'undefined' || val == null || val == '') {
+        if (typeof val === 'undefined' || val === null || val === '') {
             return null;
         }
         return val;
@@ -481,14 +486,14 @@ class DDNode {
         }
     }
 
-    _getIndices() {
+    _getArrayIndices() {
         console.assert(!this.isRoot);
         // Search for all data-dd-array="item" between this object and the parent
         const filter = '[data-dd-array="item"]';
         const ddItems = this.obj.parentsUntil(this.parent.obj, filter);
-        if (ddItems.length == 0) {
+        if (ddItems.length === 0) {
             return null;
-        } else if (ddItems.length == 1) {
+        } else if (ddItems.length === 1) {
             return parseInt(ddItems.attr('data-dd-index'));
         } else {
             return ddItems.map((i, item) => parseInt($(item).attr('data-dd-index')));
@@ -504,7 +509,7 @@ class DDNode {
         this._type = DDGraph.inferType(this.obj);
         // TODO infer formula
         // Mutable properties:
-        this._indices = this._getIndices(this.parent);
+        this._arrayIndices = this._getArrayIndices(this.parent);
         this._assignIdAndPath();
     }
 
@@ -512,10 +517,11 @@ class DDNode {
         console.assert(!this.isRoot);
         const oldId = this._id;
         const oldPath = this._path;
+        this._recacheIndices();
         this._id = this.baseId + DDGraph.indicesToString(this.indices);
         this._path = DDGraph.combinePath(this.parent.path, this.id);
         this.obj.attr('data-dd-path', this.path);
-        if (oldId == null && oldPath == null) {
+        if (oldId === null && oldPath === null) {
             // First insertion
             this.parent._addChild(this);
             this.graph._addDescendant(this);
@@ -528,12 +534,12 @@ class DDNode {
 
     reindexIfNeeded() {
         console.assert(!this.isRoot);
-        const oldIndices = this._indices;
-        const newIndices = this._getIndices();
-        if (oldIndices != newIndices) {
-            this._indices = newIndices;
+        const oldIndices = this._arrayIndices;
+        const newIndices = this._getArrayIndices();
+        if (!DDGraph.arrayEquals(oldIndices, newIndices)) {
+            this._arrayIndices = newIndices;
             this.traverse(function(node, evt) {
-                if (evt == DFSEvent.ENTER) {
+                if (evt === DFSEvent.ENTER) {
                     node._assignIdAndPath();
                 }
             });
