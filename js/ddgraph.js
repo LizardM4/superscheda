@@ -44,9 +44,12 @@ class DDGraph {
                 ++depth;
                 retval += ' '.repeat(depth - 1);
                 if (node.holdsData) {
-                    retval += node.id;
+                    retval += '<' + node.id + '>'
                 } else {
-                    retval += '{' + node.id + '}'
+                    retval += node.id;
+                }
+                if (node.indices) {
+                    retval += ' @' + DDGraph.indicesToString(node.indices) + '>'
                 }
                 retval += '\n;';
             } else {
@@ -57,7 +60,7 @@ class DDGraph {
     }
 
     descendantByPath(path) {
-        const descendant = this._descendantsByPath[id];
+        const descendant = this._descendantsByPath[path];
         if (typeof descendant === 'undefined') {
             return null;
         }
@@ -280,6 +283,10 @@ class DDNode {
         return this._id;
     }
 
+    get holdsData() {
+        return this._holdsData;
+    }
+
     get baseId() {
         return this._baseId;
     }
@@ -395,8 +402,10 @@ class DDNode {
 
     traverse(fn) {
         fn(DFSEvent.ENTER, this);
-        for (var i = 0; i < this.children.length; i++) {
-            traverse(this.children[i]);
+        if (this.children) {
+            for (var i = 0; i < this.children.length; i++) {
+                this.children[i].traverse(fn);
+            }
         }
         fn(DFSEvent.EXIT, this);
     }
