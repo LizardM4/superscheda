@@ -22,6 +22,38 @@ class DDGraph {
         this._leavesByPath = {};
     }
 
+    buildFromDom($rootElement=null) {
+        const elements = $rootElement
+            ? getElementsNotInGraph($rootElement, true)
+            : getElementsNotInGraph($('body'), true);
+        elements.forEach(function (domElement) {
+            const $domElement = $(domElement);
+            const parentNode = this.findParentNode($domElement, $rootElement);
+            console.assert(parentNode);
+            new DDNode(this, $domElement, parentNode);
+        });
+    }
+
+    getRepresentation() {
+        let depth = 0;
+        let retval = '';
+        this.root.traverse(function(evt, node) {
+            if (evt == DFSEvent.ENTER) {
+                ++depth;
+                retval += ' '.repeat(depth - 1);
+                if (node.holdsData) {
+                    retval += node.id;
+                } else {
+                    retval += '{' + node.id + '}'
+                }
+                retval += '\n;';
+            } else {
+                --depth;
+            }
+        });
+        return retval;
+    }
+
     descendantByPath(path) {
         const descendant = this._descendantsByPath[id];
         if (typeof descendant === 'undefined') {
@@ -83,7 +115,7 @@ class DDGraph {
             .map(this._getNodeOfDOMElement);
     }
 
-    getElementsNotInGraph($domParent, sortByDepth=true) {
+    static getElementsNotInGraph($domParent, sortByDepth=true) {
         let results = $domParent.find('[data-dd-id]:not([data-dd-path])').toArray();
         if (!sortByDepth) {
             return results.map($);
@@ -99,8 +131,10 @@ class DDGraph {
         return results.map((relDepth, $item) => $item);
     }
 
-    findParentNode($domObj) {
-        const candidates = $domObj.parents('[data-dd-id]');
+    findParentNode($domElement, $rootElement=null) {
+        const candidates = $rootElement
+            ? $domElement.parentsUntil($rootElement, '[data-dd-id]')
+            : $domElement.parents('[data-dd-id]');
         if (candidates.length == 0) {
             return this.root;
         }
