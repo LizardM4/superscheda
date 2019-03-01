@@ -45,12 +45,12 @@ class DDGraph {
                 ++depth;
                 retval += ' '.repeat(depth - 1);
                 if (node.holdsData) {
-                    retval += '<' + node.id + '>'
+                    retval += ' - ' + node._baseId
                 } else {
-                    retval += node.id;
+                    retval += '+ ' + node.id;
                 }
                 if (node.indices) {
-                    retval += ' @' + DDGraph.indicesToString(node.indices)
+                    retval += ' @ ' + node.indices.join(', ');
                 }
                 retval += '\n';
             } else {
@@ -213,7 +213,11 @@ class DDGraph {
     }
 
     static combinePath(parentPath, childId) {
-        return parentPath + '.' + childId;
+        if (parentPath !== null) {
+            return parentPath + '.' + childId;
+        } else {
+            return childId;
+        }
     }
 
     static testVoid(type, rawValue) {
@@ -401,8 +405,9 @@ class DDNode {
             this._indices = this._arrayIndices.slice();
         } else if (this._extraIndices) {
             this._indices = this._extraIndices.slice();
+        } else {
+            this._indices = null;
         }
-        this._indices = null;
     }
 
     hasChild(child) {
