@@ -99,6 +99,14 @@ class DDGraph {
         return results.map((relDepth, $item) => $item);
     }
 
+    findParentNode($domObj) {
+        const candidates = $domObj.parents('[data-dd-id]');
+        if (candidates.length == 0) {
+            return this.root;
+        }
+        return this._getNodeOfDOMElement(candidates[0]);
+    }
+
     static indicesToString(indices) {
         if (typeof indices === 'number') {
             return '[' + indices.toString() + ']';
