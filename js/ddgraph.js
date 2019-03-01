@@ -156,6 +156,19 @@ class DDGraph {
         }
     }
 
+    static parseIndices(suggestedId) {
+        const baseIdAndIndices = /(.+?)((\[\d+\])*)$/
+        const match = baseIdAndIndices.exec(suggestedId);
+        console.assert(match);
+        const baseId = match[1];
+        const indicesString = match[2];
+        if (indicesToString )
+        // group 1 is the baseId, group 2 the indices
+        const re2 = /\[\d+\]/
+        // each of the results of
+        search
+    }
+
     static holdsData($obj) {
         return $obj.is('input[data-dd-id], select[data-dd-id], textarea[data-dd-id]');
     }
