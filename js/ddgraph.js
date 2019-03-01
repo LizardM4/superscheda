@@ -117,13 +117,13 @@ class DDGraph {
         return $domElement.find('[data-dd-path]')
             .filter(this._getDirectDescendantFilter($domElement))
             .toArray()
-            .map(this._getNodeOfDOMElement);
+            .map(domElement => this._getNodeOfDOMElement(domElement));
     }
 
     static getElementsNotInGraph($domParent, sortByDepth=true) {
         let results = $domParent.find('[data-dd-id]:not([data-dd-path])').toArray();
         if (!sortByDepth) {
-            return results.map($);
+            return results.map(elm => $(elm));
         }
         // Create an array of [depth, object]
         for (var i = 0; i < results.length; i++) {
