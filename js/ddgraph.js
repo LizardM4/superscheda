@@ -45,9 +45,9 @@ class DDGraph {
                 ++depth;
                 retval += ' '.repeat(depth - 1);
                 if (node.holdsData) {
-                    retval += ' - ' + node._baseId
+                    retval += ' - ' + node.baseId
                 } else {
-                    retval += '+ ' + node._baseId;
+                    retval += '+ ' + node.baseId;
                 }
                 if (node.indices) {
                     retval += ' @ ' + node.indices.join(', ');
