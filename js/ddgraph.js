@@ -47,7 +47,7 @@ class DDGraph {
                 if (node.holdsData) {
                     retval += ' - ' + node._baseId
                 } else {
-                    retval += '+ ' + node.id;
+                    retval += '+ ' + node._baseId;
                 }
                 if (node.indices) {
                     retval += ' @ ' + node.indices.join(', ');
@@ -145,7 +145,6 @@ class DDGraph {
     static getElementsNotInGraph($domParent, sortByDepth=true) {
         let results = $domParent
             .find('[data-dd-id]:not([data-dd-path])')
-            .not('[data-dd-array="master"] *')
             .toArray();
         if (!sortByDepth) {
             return results.map(elm => $(elm));
@@ -495,17 +494,25 @@ class DDNode {
     }
 
     _getArrayIndices() {
+        const getOneIndex = domElement => {
+            if (domElement.getAttribute('data-dd-array') === 'master') {
+                return -1;
+            } else {
+                return parseInt(domElement.getAttribute('data-dd-index'));
+            }
+        };
+
         console.assert(!this.isRoot);
         // Search for all data-dd-array="item" between this object and the parent
-        const filter = '[data-dd-array="item"]';
-        const ddItems = this.obj.parentsUntil(this.parent.obj, filter);
+        const filter = '[data-dd-array="item"][data-dd-index], [data-dd-array="master"]';
+        let ddItems = this.obj.parentsUntil(this.parent.obj, filter).toArray();
+        if (this.obj.is(filter)) {
+            ddItems.push(this.obj[0]);
+        }
         if (ddItems.length === 0) {
             return null;
-        } else if (ddItems.length === 1) {
-            return parseInt(ddItems.attr('data-dd-index'));
-        } else {
-            return ddItems.map((i, item) => parseInt($(item).attr('data-dd-index')));
         }
+        return ddItems.map(getOneIndex);
     }
 
     _setup() {
