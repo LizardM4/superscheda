@@ -359,11 +359,17 @@ class DDNode {
         return DDGraph.testVoid(this._getRawValue());
     }
 
+
+    // TODO convert this into a method
     get isArrayMaster() {
-        if (this.indices) {
-            return this.indices.indexOf(-1) >= 0;
+        if (this.isRoot) {
+            return false;
         }
-        return false;
+        if (this.indices && this.indices.indexOf(-1) >= 0) {
+            return true;
+        }
+        // Check parents
+        return this.parent.isArrayMaster();
     }
 
     get value() {
@@ -484,6 +490,103 @@ class DDNode {
             }
         }
         fn(DFSEvent.EXIT, this);
+    }
+
+    _collectChildrenByIdWithoutIndices() {
+        let retval = {};
+        this.children.forEach(child => {
+            if (child.isArrayMaster) {
+                // TODO make an empty array here
+            }
+            let arrOrObj = retval[child.baseId];
+            if (arrOrObj) {
+                if (Array.isArray(arrOrObj)) {
+                    arrOrObj.push(child);
+                } else {
+                    retval[child.baseId] = [arrOrObj, child];
+                }
+            } else {
+                if (child.isArrayMaster) {
+                    // Just an empty array
+                    retval[child.baseId] = []
+                } else {
+                    retval[child.baseId] = child;
+                }
+            }
+        });
+        return retval;
+    }
+
+    static _assertArrayConsistency(childrenArray) {
+        if (childrenArray.length === 0) {
+            return;
+        }
+        let maxDim = 0;
+        // First of all assert dimensionality
+        for (let i = 0; i < childrenArray.length; i++) {
+            console.assert(childrenArray[i].indices);
+            console.assert(childrenArray[i].indices.length > 0);
+            if (i > 0) {
+                console.assert(childrenArray[i].indices.length == childrenArray[0].indices.length);
+            }
+            maxDim = Math.max(maxDim, childrenArray[i].indices.length);
+        }
+        // For each dimension, check the max index. Initialize to zero
+        let maxIdxPerDim = arrayMultidimensionalPrefill(maxDim, 1, 0);
+        for (let i = 0; i < childrenArray.length; ++i) {
+            for (let j = 0; j < childrenArray[i].indices.length; ++j) {
+                maxIdxPerDim[j] = Math.max(childrenArray[i].indices[j], maxIdxPerDim[j]);
+            }
+        }
+        // Assert that they all coincide with the number of elements
+        for (let i = 0; i < maxDim; ++i) {
+            console.assert(maxIdxPerDim[i] === childrenArray.length - 1);
+        }
+    }
+
+    static _getArrayOrder(childrenArray) {
+        DDNode._assertArrayConsistency(childrenArray);
+        let maxDim = 0;
+        // First of all assert dimensionality
+        for (let i = 0; i < childrenArray.length; i++) {
+            maxDim = Math.max(maxDim, childrenArray[i].indices.length);
+        }
+        return maxDim;
+    }
+
+    static _buildMultidimensionalDataBagArray(childrenArray) {
+        const dims = DDNode._getArrayOrder(childrenArray);
+        let retval = arrayMultidimensionalPrefill(childrenArray.length, dims);
+        for (let i = 0; i < childrenArray.length; ++i) {
+            const child = childrenArray[i];
+            let parentArray = retval;
+            // Navigate all indices
+            for (let j = 0; j < child.indices.length - 1; ++j) {
+                parentArray = parentArray[child.indices[j]];
+            }
+            const lastIdx = child.indices[child.indices.length - 1];
+            // Assign the value
+            parentArray[lastIdx] = child.getDataBag();
+        }
+        return retval;
+    }
+
+    getDataBag() {
+        if (this.holdsData) {
+            return this.value;
+        }
+        let retval = this._collectChildrenByIdWithoutIndices();
+        Object.keys(retval).forEach(key => {
+            const childOrArray = retval[key];
+            // If it's an array, replace it with a multidimensional value array
+            if (Array.isArray(childOrArray)) {
+                retval[key] = DDNode._buildMultidimensionalDataBagArray(childOrArray);
+            } else {
+                // Extract just the value
+                retval[key] = childOrArray.getDataBag();
+            }
+        });
+        return retval;
     }
 
     _updateFormulaValue() {
