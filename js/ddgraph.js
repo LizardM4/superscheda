@@ -13,6 +13,28 @@ const DFSEvent = Object.freeze({
     EXIT:  Symbol('exit')
 });
 
+function arrayEquals(l, r) {
+    if (typeof l === 'undefined') {
+        l = null;
+    }
+    if (typeof r === 'undefined') {
+        r = null;
+    }
+    if ((l === null) !== (r === null)) {
+        return false;
+    } else if (l.length !== r.length) {
+        return false;
+    } else {
+        for (let i = 0; i < l.length; ++i) {
+            if (l[i] !== r[i]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+
 class DDGraph {
     get root() {
         return this._root;
@@ -119,27 +141,6 @@ class DDGraph {
             .filter(this._getDirectDescendantFilter($domElement))
             .toArray()
             .map(domElement => this._getNodeOfDOMElement(domElement));
-    }
-
-    static arrayEquals(l, r) {
-        if (typeof l === 'undefined') {
-            l = null;
-        }
-        if (typeof r === 'undefined') {
-            r = null;
-        }
-        if ((l === null) !== (r === null)) {
-            return false;
-        } else if (l.length !== r.length) {
-            return false;
-        } else {
-            for (let i = 0; i < l.length; ++i) {
-                if (l[i] !== r[i]) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
     static getElementsNotInGraph($domParent, sortByDepth=true) {
@@ -551,7 +552,7 @@ class DDNode {
         console.assert(!this.isRoot);
         const oldIndices = this._arrayIndices;
         const newIndices = this._getArrayIndices();
-        if (!DDGraph.arrayEquals(oldIndices, newIndices)) {
+        if (!arrayEquals(oldIndices, newIndices)) {
             this._arrayIndices = newIndices;
             this.traverse(function(node, evt) {
                 if (evt === DFSEvent.ENTER) {
