@@ -248,11 +248,11 @@ class DDGraph {
                 // Already tested before
                 break;
             case DDType.STRING:
-                return rawValue.length > 0;
+                return rawValue.length === 0;
             case DDType.INT:
             case DDType.FLOAT:
                 // Number types ignore the spaces
-                return rawValue.trim().length > 0;
+                return rawValue.trim().length === 0;
         }
         return false;
     }
