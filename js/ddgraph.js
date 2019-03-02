@@ -359,6 +359,13 @@ class DDNode {
         return DDGraph.testVoid(this._getRawValue());
     }
 
+    get isArrayMaster() {
+        if (this.indices) {
+            return this.indices.indexOf(-1) >= 0;
+        }
+        return false;
+    }
+
     get value() {
         return DDGraph.castRawValue(this.type, this._getRawValue());
     }
