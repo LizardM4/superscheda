@@ -104,7 +104,7 @@ class DDGraph {
     }
 
     leafByPath(path) {
-        const leaf = this._leavesByPath[id];
+        const leaf = this._leavesByPath[path];
         if (typeof leaf === 'undefined') {
             return null;
         }
@@ -224,6 +224,10 @@ class DDGraph {
             const inferredType = DDType[declaredType.toUpperCase()];
             console.assert(inferredType);
             return inferredType;
+        }
+        // TODO Toggle this off to migrate
+        if ($obj.is('.dd-integer-field, .dd-natural-field')) {
+            return DDType.INT;
         }
         return DDType.STRING;
     }
@@ -369,7 +373,7 @@ class DDNode {
             return true;
         }
         // Check parents
-        return this.parent.isArrayMaster();
+        return false;
     }
 
     get value() {
