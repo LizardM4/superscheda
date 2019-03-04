@@ -322,6 +322,24 @@ class DDGraph {
         }
         return value.toString();
     }
+
+    static traverseDataBag(data, baseId, indices) {
+        console.assert(baseId != '');
+        console.assert(typeof data === 'object');
+        if (!data || !(baseId in data)) {
+            return [false, null];
+        }
+        data = data[baseId];
+        if (indices !== null && indices.length > 0) {
+            for (let i = 0; i < indices.length; i++) {
+                if (!Array.isArray(data) || data.length <= indices[i]) {
+                    return [false, null];
+                }
+                data = data[indices[i]];
+            }
+        }
+        return [true, data];
+    }
 }
 
 class DDNode {
@@ -449,19 +467,26 @@ class DDNode {
         return this._childById[child.id] === child;
     }
 
+    _sortChildren() {
+        // The data loading routine relies on the children being sorted
+        // as it processes first array masters to resize the array appropriately, and
+        // then each child.
+        this._children.sort((a, b) => a.id.localeCompare(b.id));
+    }
+
     _updateChild(oldId, updatedChild) {
         console.assert(!this.holdsData);
         console.assert(this._childById[oldId] === updatedChild);
         delete this._childById[oldId]
         this._childById[updatedChild.id] = updatedChild;
-        this._children.sort((a, b) => a.id.localeCompare(b.id));
+        this._sortChildren();
     }
 
     _addChild(child) {
         console.assert(!this.holdsData);
         console.assert(!(child.id in this._childById));
         this._children.push(child);
-        this._children.sort((a, b) => a.id.localeCompare(b.id));
+        this._sortChildren();
         this._childById[child.id] = child;
     }
 
@@ -610,6 +635,35 @@ class DDNode {
             }
         });
         return retval;
+    }
+
+    loadDataBag(data) {
+        if (this.holdsData) {
+            this.value = data;
+            return;
+        }
+        // This loop
+        for (let i = 0; i < this.children.length; ++i) {
+            if (child.isArrayMaster) {
+                // An array master always comes before its corresponding elements.
+                // Retrieve the array object that manages this array.
+                const arrayController = /* TODO */ null;
+                const [success, innerData] = DDGraph.traverseDataBag(data, child.baseId, null);
+                console.assert(!success || Array.isArray(innerData));
+                if (success && Array.isArray(innerData)) {
+                    arrayController.resize(innerData.length);
+                } else {
+                    arrayController.clear();
+                }
+            } else {
+                const [success, innerData] = DDGraph.traverseDataBag(data, child.baseId, child.indices);
+                if (success) {
+                    child.loadDataBag(innerData);
+                } else {
+                    child.clearSubtree();
+                }
+            }
+        }
     }
 
     _updateFormulaValue() {
