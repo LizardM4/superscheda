@@ -366,8 +366,6 @@ class DDNode {
         return DDGraph.testVoid(this._getRawValue());
     }
 
-
-    // TODO convert this into a method
     get isArrayMaster() {
         if (this.isRoot) {
             return false;
