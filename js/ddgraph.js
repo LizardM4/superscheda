@@ -487,10 +487,12 @@ class DDNode {
     }
 
     traverse(fn) {
-        fn(DFSEvent.ENTER, this);
-        if (this.children) {
-            for (let i = 0; i < this.children.length; i++) {
-                this.children[i].traverse(fn);
+        const res = fn(DFSEvent.ENTER, this);
+        if (typeof res === 'undefined' || res === null || res === true) {
+            if (this.children) {
+                for (let i = 0; i < this.children.length; i++) {
+                    this.children[i].traverse(fn);
+                }
             }
         }
         fn(DFSEvent.EXIT, this);
