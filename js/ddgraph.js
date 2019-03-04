@@ -36,6 +36,9 @@ function arrayEquals(l, r) {
 
 
 function arrayMultidimensionalPrefill(size, dims, defaultValue=null) {
+    if (dims <= 0) {
+        return null;
+    }
     let retval = [];
     for (let i = 0; i < size; ++i) {
         if (dims > 1) {
@@ -501,10 +504,17 @@ class DDNode {
     _collectChildrenByIdWithoutIndices() {
         let retval = {};
         this.children.forEach(child => {
+            let arrOrObj = retval[child.baseId];
             if (child.isArrayMaster) {
+                if (arrOrObj) {
+                    if (!Array.isArray(arrOrObj)) {
+                        retval[child.baseId] = [arrOrObj];
+                    }
+                } else {
+                    retval[child.baseId] = [];
+                }
                 return;
             }
-            let arrOrObj = retval[child.baseId];
             if (arrOrObj) {
                 if (Array.isArray(arrOrObj)) {
                     arrOrObj.push(child);
