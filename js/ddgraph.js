@@ -67,7 +67,7 @@ class DDGraph {
             ? DDGraph.getElementsNotInGraph($rootElement, true)
             : DDGraph.getElementsNotInGraph($('body'), true)
         );
-        elements.forEach(function (domElement) {
+        elements.forEach(domElement => {
             const $domElement = $(domElement);
             const parentNode = this.findParentNode($domElement, $rootElement);
             console.assert(parentNode);
@@ -78,7 +78,7 @@ class DDGraph {
     getRepresentation() {
         let depth = 0;
         let retval = '';
-        this.root.traverse(function(evt, node) {
+        this.root.traverse((evt, node) => {
             if (evt === DFSEvent.ENTER) {
                 ++depth;
                 retval += ' '.repeat(depth - 1);
@@ -484,7 +484,7 @@ class DDNode {
     }
 
     removeSubtree() {
-        this.traverse(function(node, evt) {
+        this.traverse((node, evt) => {
             if (evt === DFSEvent.EXIT) {
                 node._remove();
             }
@@ -694,7 +694,7 @@ class DDNode {
         const newIndices = this._getArrayIndices();
         if (!arrayEquals(oldIndices, newIndices)) {
             this._arrayIndices = newIndices;
-            this.traverse(function(node, evt) {
+            this.traverse((node, evt) => {
                 if (evt === DFSEvent.ENTER) {
                     node._assignIdAndPath();
                 }
