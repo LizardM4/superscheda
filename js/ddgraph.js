@@ -456,12 +456,14 @@ class DDNode {
         console.assert(this._childById[oldId] === updatedChild);
         delete this._childById[oldId]
         this._childById[updatedChild.id] = updatedChild;
+        this._children.sort((a, b) => a.id.localeCompare(b.id));
     }
 
     _addChild(child) {
         console.assert(!this.holdsData);
         console.assert(!(child.id in this._childById));
         this._children.push(child);
+        this._children.sort((a, b) => a.id.localeCompare(b.id));
         this._childById[child.id] = child;
     }
 
