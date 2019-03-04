@@ -589,12 +589,12 @@ class DDNode {
             }
             const lastIdx = child.indices[child.indices.length - 1];
             // Assign the value
-            parentArray[lastIdx] = child.getDataBag();
+            parentArray[lastIdx] = child.dumpDataBag();
         }
         return retval;
     }
 
-    getDataBag() {
+    dumpDataBag() {
         if (this.holdsData) {
             return this.value;
         }
@@ -606,7 +606,7 @@ class DDNode {
                 retval[key] = DDNode._buildMultidimensionalDataBagArray(childOrArray);
             } else {
                 // Extract just the value
-                retval[key] = childOrArray.getDataBag();
+                retval[key] = childOrArray.dumpDataBag();
             }
         });
         return retval;
