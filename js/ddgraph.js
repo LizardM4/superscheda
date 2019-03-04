@@ -500,7 +500,7 @@ class DDNode {
         let retval = {};
         this.children.forEach(child => {
             if (child.isArrayMaster) {
-                // TODO make an empty array here
+                return;
             }
             let arrOrObj = retval[child.baseId];
             if (arrOrObj) {
@@ -510,9 +510,8 @@ class DDNode {
                     retval[child.baseId] = [arrOrObj, child];
                 }
             } else {
-                if (child.isArrayMaster) {
-                    // Just an empty array
-                    retval[child.baseId] = []
+                if (child.indices) {
+                    retval[child.baseId] = [child];
                 } else {
                     retval[child.baseId] = child;
                 }
