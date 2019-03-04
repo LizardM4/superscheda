@@ -491,6 +491,14 @@ class DDNode {
         });
     }
 
+    clearSubtree() {
+        this.traverse((node, evt) => {
+            if (evt === DFSEvent.ENTER && node.holdsData) {
+                node.value = null;
+            }
+        });
+    }
+
     traverse(fn) {
         const res = fn(DFSEvent.ENTER, this);
         if (typeof res === 'undefined' || res === null || res === true) {
