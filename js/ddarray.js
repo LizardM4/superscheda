@@ -49,7 +49,9 @@ class DDArray {
         this._items = this._collectItems();
         this._reindex(0, false);
         // Notify of mass insertion
-        this.container.trigger('ddarray.insertion', this._items.slice());
+        if (this.length > 0) {
+            this.container.trigger('ddarray.insertion', [this._items.slice()]);
+        }
     }
 
     clear() {
@@ -59,6 +61,7 @@ class DDArray {
     _reindex(startAt=0, collectUpdated=true) {
         let updatedItems = collectUpdated ? [] : null;
         for (let i = startAt; i < this._items.length; ++i) {
+            const domItem = this._items[i];
             const previousIdx = DDArray.getIndex(domItem);
             if (previousIdx !== i) {
                 domItem.setAttribute('data-dd-index', i.toString());
@@ -82,18 +85,18 @@ class DDArray {
                 .clone(true)
                 .attr('data-dd-array', 'item')
                 .attr('data-dd-index', (idx + i).toString());
-            newItems.push(newItem[0]);
+            newItems.push($newItem[0]);
         }
         // Insert into the elements
         this._items.splice(idx, 0, ...newItems);
         // Reindex
         const reindexedItems = this._reindex(idx + numInsert, true);
         if (reindexedItems.length > 0) {
-            this.container.trigger('ddarray.reindex', reindexedItems);
+            this.container.trigger('ddarray.reindex', [reindexedItems]);
         }
         if (newItems.length > 0) {
             $(newItems).insertAfter(insertAfter);
-            this.container.trigger('ddarray.insertion', newItems);
+            this.container.trigger('ddarray.insertion', [newItems]);
         }
     }
 
@@ -110,11 +113,11 @@ class DDArray {
         const deletedDomItems = this._items.splice(idx, numDeleted);
         const reindexedItems = this._reindex(idx, true);
         if (deletedDomItems.length > 0) {
-            this.container.trigger('ddarray.removal', deletedDomItems.slice());
+            this.container.trigger('ddarray.removal', [deletedDomItems.slice()]);
             $(deletedDomItems).remove();
         }
         if (reindexedItems.length > 0) {
-            this.container.trigger('ddarray.reindex', reindexedItems);
+            this.container.trigger('ddarray.reindex', [reindexedItems]);
         }
     }
 
@@ -122,7 +125,7 @@ class DDArray {
         if (this.length > reqSize) {
             this._remove(reqSize, this.length - reqSize);
         } else if (this.length < reqSize) {
-            this._insert(this.length, this.length - reqSize);
+            this._insert(this.length, reqSize - this.length);
         }
     }
 
@@ -188,7 +191,6 @@ class DDArray {
                         DDArray.getDirectChildrenArrays($item, 'remove')
                             .click(() => {controller.remove(item)});
                     });
-                    DDArray.setup($(insertedItems), customEvents);
                     // It is important to stop propagation or the event will bubble up to the parent
                     evt.stopPropagation();
                 })
@@ -212,4 +214,14 @@ class DDArray {
             });
         });
     }
+
+    static getController(domElement) {
+        const matches = $(domElement).parents('[data-dd-array="container"]');
+        if (matches && matches.length > 0) {
+            return $(matches[0]).data('dd-array-controller');
+        }
+        return null;
+    }
 }
+
+export { DDArray };
