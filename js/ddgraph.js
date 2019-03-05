@@ -347,9 +347,6 @@ class DDGraph {
     }
 
     static formatValue(type, value) {
-        if (typeof value === 'undefined' || value === null) {
-            return '';
-        }
         switch (type) {
             case DDType.INT:
             case DDType.FLOAT:
@@ -360,6 +357,9 @@ class DDGraph {
                 // Do an explicit cast to bool
                 return !!value;
                 break;
+        }
+        if (typeof value === 'undefined' || value === null) {
+            return '';
         }
         return value.toString();
     }
@@ -694,13 +694,14 @@ class DDNode {
         }
         // This loop
         for (let i = 0; i < this.children.length; ++i) {
+            const child = this.children[i];
             if (child.isArrayMaster) {
                 // An array master always comes before its corresponding elements.
                 // Retrieve the array object that manages this array.
                 const arrayController = DDArray.getController(child.obj);
                 console.assert(arrayController !== null);
                 const [success, innerData] = DDGraph.traverseDataBag(data, child.baseId, null);
-                console.assert(!success || Array.isArray(innerData));
+                console.assert(!success || innerData === null || Array.isArray(innerData));
                 if (success && Array.isArray(innerData)) {
                     arrayController.resize(innerData.length);
                 } else {
