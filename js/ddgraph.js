@@ -97,7 +97,7 @@ class DDGraph {
     getRepresentation() {
         let depth = 0;
         let retval = '';
-        this.root.traverse((evt, node) => {
+        this.root.traverse((node, evt) => {
             if (evt === DFSEvent.ENTER) {
                 ++depth;
                 retval += ' '.repeat(depth - 1);
@@ -521,16 +521,18 @@ class DDNode {
     _remove() {
         console.assert(!this.isRoot);
         this.obj.removeAttr('data-dd-path');
-        this.graph.root._removeDescendant(this);
+        this.graph._removeDescendant(this);
         this.parent._removeChild(this);
     }
 
     removeSubtree() {
-        this.traverse((node, evt) => {
-            if (evt === DFSEvent.EXIT) {
-                node._remove();
+        if (this.children) {
+            while (this.children.length > 0) {
+                const child = this.children[this.children.length - 1];
+                child.removeSubtree();
+                child._remove();
             }
-        });
+        }
     }
 
     clearSubtree() {
@@ -549,7 +551,7 @@ class DDNode {
     }
 
     traverse(fn) {
-        const res = fn(DFSEvent.ENTER, this);
+        const res = fn(this, DFSEvent.ENTER);
         if (typeof res === 'undefined' || res === null || res === true) {
             if (this.children) {
                 for (let i = 0; i < this.children.length; i++) {
@@ -557,7 +559,7 @@ class DDNode {
                 }
             }
         }
-        fn(DFSEvent.EXIT, this);
+        fn(this, DFSEvent.EXIT);
     }
 
     _collectChildrenByIdWithoutIndices() {
