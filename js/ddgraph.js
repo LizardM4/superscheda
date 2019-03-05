@@ -533,8 +533,14 @@ class DDNode {
 
     clearSubtree() {
         this.traverse((node, evt) => {
-            if (evt === DFSEvent.ENTER && node.holdsData) {
-                node.value = null;
+            if (evt === DFSEvent.ENTER) {
+                if (node.holdsData) {
+                    node.value = null;
+                }
+                if (node.isArrayMaster) {
+                    const arrayController = /* TODO */ null;
+                    arrayController.clear();
+                }
             }
         });
     }
