@@ -178,22 +178,22 @@ class DDGraph {
             .map(domElement => this._getNodeOfDOMElement(domElement));
     }
 
-    static getElementsNotInGraph($domParent, sortByDepth=true) {
-        let results = $domParent
-            .find('[data-dd-id]:not([data-dd-path])')
-            .toArray();
+    static getElementsNotInGraph($domParents, sortByDepth=true) {
+        const filter = '[data-dd-id]:not([data-dd-path])';
+        let results = $domParents.find(filter).toArray();
+        let $parentsResults = $domParents.filter(filter).toArray().map(domElement => $(domElement));
         if (!sortByDepth) {
-            return results.map(elm => $(elm));
+            return $parentResults.concat(results.map(elm => $(elm)));
         }
         // Create an array of [depth, object]
         for (let i = 0; i < results.length; i++) {
             const $item = $(results[i]);
-            const relDepth = $item.parentsUntil($domParent, '[data-dd-id]').length;
+            const relDepth = $item.parentsUntil($domParents, '[data-dd-id]').length;
             results[i] = [relDepth, $item];
         }
         // Sort that and then discard the depth
         results.sort((l, r) => l[0] - r[0]);
-        return results.map(([relDepth, $item]) => $item);
+        return $parentResults.concat(results.map(([relDepth, $item]) => $item));
     }
 
     findParentNode($domElement, $rootElement=null) {
