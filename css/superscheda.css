@@ -23,6 +23,8 @@
 next to them*/
 *[data-dd-array="item"] ~ .array-placeholder { display: none!important; }
 
+*[data-dd-array="master"] { display: none!important; }
+
 /*Adds a little bit of spacing on the right of a row. Used for the inline arrays that have a
 table-like header: this makes sure that the last label on the right aligns correctly with the
 last column on the right (spacing rules for controls and labels are different.)*/
