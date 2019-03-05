@@ -81,14 +81,14 @@ class DDGraph {
         this._leavesByPath = {};
     }
 
-    buildFromDom($rootElement=null) {
-        const elements = ($rootElement
-            ? DDGraph.getElementsNotInGraph($rootElement, true)
+    buildFromDom($parentElements=null) {
+        const elements = ($parentElements
+            ? DDGraph.getElementsNotInGraph($parentElements, true)
             : DDGraph.getElementsNotInGraph($('body'), true)
         );
         elements.forEach(domElement => {
             const $domElement = $(domElement);
-            const parentNode = this.findParentNode($domElement, $rootElement);
+            const parentNode = this.findParentNode($domElement);
             console.assert(parentNode);
             new DDNode(this, $domElement, parentNode);
         }, this);
@@ -158,10 +158,10 @@ class DDGraph {
         }
     }
 
-    _getDirectDescendantFilter($obj) {
+    _getDirectDescendantFilter($parents) {
         return (_, descendant) => {
             const node = this._getNodeOfDOMElement(descendant);
-            return node && node.obj.parentsUntil($obj, '[data-dd-path]').length === 0;
+            return node && node.obj.parentsUntil($parents, '[data-dd-path]').length === 0;
         };
     }
 
@@ -171,9 +171,9 @@ class DDGraph {
         return this.descendantByPath(path);
     }
 
-    getChildrenNodes($domElement) {
-        return $domElement.find('[data-dd-path]')
-            .filter(this._getDirectDescendantFilter($domElement))
+    getDirectChildrenNodes($domElements) {
+        return $domElements.find('[data-dd-path]')
+            .filter(this._getDirectDescendantFilter($domElements))
             .toArray()
             .map(domElement => this._getNodeOfDOMElement(domElement));
     }
@@ -196,10 +196,8 @@ class DDGraph {
         return $parentResults.concat(results.map(([relDepth, $item]) => $item));
     }
 
-    findParentNode($domElement, $rootElement=null) {
-        const candidates = $rootElement
-            ? $domElement.parentsUntil($rootElement, '[data-dd-id]')
-            : $domElement.parents('[data-dd-id]');
+    findParentNode($domElement) {
+        const candidates = $domElement.parents('[data-dd-id]');
         if (candidates.length === 0) {
             return this.root;
         }
