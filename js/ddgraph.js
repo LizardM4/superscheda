@@ -17,6 +17,8 @@
 
 'use strict';
 
+import { DDArray } from './ddarray.js?v=%REV';
+
 const DDType = Object.freeze({
     INT:     Symbol('int'),
     FLOAT:   Symbol('float'),
@@ -538,7 +540,8 @@ class DDNode {
                     node.value = null;
                 }
                 if (node.isArrayMaster) {
-                    const arrayController = /* TODO */ null;
+                    const arrayController = DDArray.getController(node.obj);
+                    console.assert(arrayController !== null);
                     arrayController.clear();
                 }
             }
@@ -670,7 +673,8 @@ class DDNode {
             if (child.isArrayMaster) {
                 // An array master always comes before its corresponding elements.
                 // Retrieve the array object that manages this array.
-                const arrayController = /* TODO */ null;
+                const arrayController = DDArray.getController(child.obj);
+                console.assert(arrayController !== null);
                 const [success, innerData] = DDGraph.traverseDataBag(data, child.baseId, null);
                 console.assert(!success || Array.isArray(innerData));
                 if (success && Array.isArray(innerData)) {

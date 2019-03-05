@@ -215,8 +215,8 @@ class DDArray {
         });
     }
 
-    static getController(domElement) {
-        const matches = $(domElement).parents('[data-dd-array="container"]');
+    static getController($domElement) {
+        const matches = $domElement.parents('[data-dd-array="container"]');
         if (matches && matches.length > 0) {
             return $(matches[0]).data('dd-array-controller');
         }
