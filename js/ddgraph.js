@@ -83,18 +83,30 @@ class DDGraph {
         this._leavesByPath = {};
     }
 
-    buildFromDom($parentElements=null) {
+    _getArrayHandlers() {
+        return {
+            insertion: (evt, insertedItems) => {
+                this.buildFromDom($(insertedItems), false, false);
+            },
+            removal: (evt, removedItems) => {
+                this.getDirectChildrenNodes($(removedItems))
+                    .forEach(child => { child.removeSubtree(); });
+            },
+            reindex: (evt, domItemPrevIdxIdxTriples) => {
+                const domItems = domItemPrevIdxIdxTriples.map(([domItem, previousIdx, Idx]) => domItem);
+                this.getDirectChildrenNodes($(domItems)).forEach(child => { child.reindexIfNeeded(); });
+            }
+        };
+    }
+
+    buildFromDom($parentElements=null, setupArray=true, excludeElementsWithPath=true) {
         if ($parentElements === null) {
-            DDArray.setup($('body'), {
-                insertion: this._handleArrayInsertion,
-                removal: this._handleArrayRemoval,
-                reindex: this._handleArrayReinde
-            });
+            $parentElements = $('body');
         }
-        const elements = ($parentElements
-            ? DDGraph.getElementsNotInGraph($parentElements, true)
-            : DDGraph.getElementsNotInGraph($('body'), true)
-        );
+        if (setupArray) {
+            DDArray.setup($parentElements, this._getArrayHandlers());
+        }
+        const elements = DDGraph.getElementsWithId($parentElements, true, excludeElementsWithPath);
         elements.forEach(domElement => {
             const $domElement = $(domElement);
             const parentNode = this.findParentNode($domElement);
@@ -181,33 +193,21 @@ class DDGraph {
     }
 
     getDirectChildrenNodes($domElements) {
-        return $domElements.find('[data-dd-path]')
-            .filter(this._getDirectDescendantFilter($domElements))
-            .toArray()
+        const $matchingDomElements = $domElements.filter('[data-dd-path]');
+        const $directChildren = $domElements
+            .not($matchingDomElements)
+            .find('[data-dd-path]')
+            .filter(this._getDirectDescendantFilter($domElements));
+        return $matchingDomElements.toArray().concat($directChildren.toArray())
             .map(domElement => this._getNodeOfDOMElement(domElement));
     }
 
-    _handleArrayInsertion(evt, insertedItems) {
-        this.buildFromDom($(insertedItems));
-    }
-
-    _handleArrayRemoval(evt, removedItems) {
-        this.getDirectChildrenNodes($(removedItems))
-            .forEach(child => { child.removeSubtree(); });
-    }
-
-    _handleArrayReindex(evt, domItemPrevIdxIdxTriples) {
-        this.getDirectChildrenNodes($(domItemPrevIdxIdxTriples
-                .map(([domItem, previousIdx, Idx]) => domItem)))
-            .forEach(child => { child.reindexIfNeeded(); });
-    }
-
-    static getElementsNotInGraph($domParents, sortByDepth=true) {
-        const filter = '[data-dd-id]:not([data-dd-path])';
+    static getElementsWithId($domParents, sortByDepth=true, excludeElementsWithPath=true) {
+        const filter = excludeElementsWithPath ? '[data-dd-id]:not([data-dd-path])' : '[data-dd-id]';
         let results = $domParents.find(filter).toArray();
         let $parentsResults = $domParents.filter(filter).toArray().map(domElement => $(domElement));
         if (!sortByDepth) {
-            return $parentResults.concat(results.map(elm => $(elm)));
+            return $parentsResults.concat(results.map(elm => $(elm)));
         }
         // Create an array of [depth, object]
         for (let i = 0; i < results.length; i++) {
@@ -217,7 +217,7 @@ class DDGraph {
         }
         // Sort that and then discard the depth
         results.sort((l, r) => l[0] - r[0]);
-        return $parentResults.concat(results.map(([relDepth, $item]) => $item));
+        return $parentsResults.concat(results.map(([relDepth, $item]) => $item));
     }
 
     findParentNode($domElement) {
@@ -552,9 +552,9 @@ class DDNode {
             while (this.children.length > 0) {
                 const child = this.children[this.children.length - 1];
                 child.removeSubtree();
-                child._remove();
             }
         }
+        this._remove();
     }
 
     clearSubtree() {
@@ -794,8 +794,8 @@ class DDNode {
             this.graph._addDescendant(this);
         } else {
             // Rename
-            this.parent._updateChild(oldId, node);
-            this.graph._updateDescendant(oldPath, node);
+            this.parent._updateChild(oldId, this);
+            this.graph._updateDescendant(oldPath, this);
         }
     }
 
