@@ -82,6 +82,13 @@ class DDGraph {
     }
 
     buildFromDom($parentElements=null) {
+        if ($parentElements === null) {
+            DDArray.setup($('body'), {
+                insertion: this._handleArrayInsertion,
+                removal: this._handleArrayRemoval,
+                reindex: this._handleArrayReinde
+            });
+        }
         const elements = ($parentElements
             ? DDGraph.getElementsNotInGraph($parentElements, true)
             : DDGraph.getElementsNotInGraph($('body'), true)
@@ -176,6 +183,21 @@ class DDGraph {
             .filter(this._getDirectDescendantFilter($domElements))
             .toArray()
             .map(domElement => this._getNodeOfDOMElement(domElement));
+    }
+
+    _handleArrayInsertion(evt, insertedItems) {
+        this.buildFromDom($(insertedItems));
+    }
+
+    _handleArrayRemoval(evt, removedItems) {
+        this.getDirectChildrenNodes($(removedItems))
+            .forEach(child => { child.removeSubtree(); });
+    }
+
+    _handleArrayReindex(evt, domItemPrevIdxIdxTriples) {
+        this.getDirectChildrenNodes($(domItemPrevIdxIdxTriples
+                .map(([domItem, previousIdx, Idx]) => domItem)))
+            .forEach(child => { child.reindexIfNeeded(); });
     }
 
     static getElementsNotInGraph($domParents, sortByDepth=true) {
