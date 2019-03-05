@@ -41,6 +41,8 @@ function arrayEquals(l, r) {
     }
     if ((l === null) !== (r === null)) {
         return false;
+    } else if (l === null) {
+        return true;
     } else if (l.length !== r.length) {
         return false;
     } else {
