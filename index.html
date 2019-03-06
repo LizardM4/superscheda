@@ -2635,6 +2635,16 @@ You should have received a copy of the GNU General Public License
       $(function() {
         window.dd = new DDGraph();
         window.dd.buildFromDom();
+
+        $('.btn-custom-checkbox input[type="checkbox"]').on('dd.changed', function(e) {
+          const $this = $(this);
+          const label = $this.closest('.btn-custom-checkbox');
+          if ($this.is(':checked')) {
+            label.addClass('active');
+          } else {
+            label.removeClass('active');
+          }
+        });
       });
     </script>
   </body>

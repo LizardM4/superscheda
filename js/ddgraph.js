@@ -740,20 +740,11 @@ class DDNode {
         if (this._isCheckbox) {
             console.assert(typeof v === 'boolean');
             this.obj.prop('checked', v);
-            // TODO this should happen outside DDGRaph by triggering the event
-            // Make sure to handle also custom checkboxes
-            const label = this.obj.closest('.btn-custom-checkbox');
-            if (label.length > 0) {
-                if (v) {
-                    label.addClass('active');
-                } else {
-                    label.removeClass('active');
-                }
-            }
         } else {
             console.assert(typeof v === 'string');
             this.obj.val(v);
         }
+        this.obj.trigger('dd.changed');
     }
 
     _getArrayIndices() {
