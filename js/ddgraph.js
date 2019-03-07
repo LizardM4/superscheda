@@ -482,6 +482,45 @@ class DDGraph {
     }
 }
 
+
+/**
+A DDNode represents a single object with a `data-dd-id`. Every DOM element with a DD Id can be
+associated a node. A dynamic array container or master has no representation in the graph unless it
+is associated a DD Id. The DOM hierarchy induces a hierarchy in the graph whose nodes are these
+DDNode instances.
+
+A node always has a nonempty textual @ref baseId, followed optionally by a series of indices. These
+indices can either be induces by dynamic arrays, via the `data-dd-array-index` attribute on some of
+the DOM parents, or by the specified DD Id, if an array index is part of it.
+
+When a node is added to the graph, it receives a path, and this path is set to the attribute
+`data-dd-path` of the DOM element associated to the node. When the node is removed, that attribute
+is removed.
+
+A node refererring to DOM element inside an array master in a dynamic array receives an index of -1.
+
+A DOM hierarchy as follows:
+    - div[data-dd-id="A"]
+        - div[data-dd-array="master"]
+            - div[data-dd-id="B"]
+                -input[data-dd-id="v"]
+                -input[data-dd-id="w[0]"]
+                -input[data-dd-id="w[1]"]
+
+Yields the following graph:
+    - A (path A, baseId A, indices null)
+        - B[-1] (path A.B[-1], baseId B, indices [-1])
+            - v (path A.B[-1].v, baseId v, indices null)
+            - w (path A.B[-1].w[0], baseId w, indices [0])
+            - w (path A.B[-1].w[1], baseId w, indices [1])
+
+As path representation:
+    - A
+        - A.B[-1]
+            - A.B[-1].v
+            - A.B[-1].w[0]
+            - A.B[-1].w[1]
+*/
 class DDNode {
 
     get obj() {
@@ -512,6 +551,11 @@ class DDNode {
         return this._baseId;
     }
 
+    /**
+    If this object is indexed, this returns an array with the indices of this object.
+    This includes the indices specified in the `data-dd-id` property as well as the indices induces
+    by the dynamic arrays (DD Id indices come last).
+    */
     get indices() {
         return this._indices;
     }
@@ -520,10 +564,18 @@ class DDNode {
         return this._type;
     }
 
+    /**
+    Returns true if and only if the value is void according to @ref DDGraph.testVoid
+    */
     get isVoid() {
         return DDGraph.testVoid(this._getRawValue());
     }
 
+    /**
+    Returns true if this object is a direct descandant of an dyanamic array master (that is, there
+    is a -1 in the indices array). Note that a descendant of an array master node isn't necessarily
+    an array master itself.
+    */
     get isArrayMaster() {
         if (this.isRoot) {
             return false;
@@ -535,10 +587,18 @@ class DDNode {
         return false;
     }
 
+    /**
+    Returns the strongly typed representation of this control's value. If the value cannot be cast,
+    the original string value is returned.
+    */
     get value() {
         return DDGraph.castRawValue(this.type, this._getRawValue());
     }
 
+    /**
+    Sets the value of the control. This will trigger a `dd.changed` event on the corresponding DOM
+    element.
+    */
     set value(v) {
         this._setRawValue(DDGraph.formatValue(this.type, v));
     }
@@ -551,6 +611,10 @@ class DDNode {
         return this._graph;
     }
 
+    /**
+    Returns the value for computing formulas on this control, that is, @ref value if the control is
+    not void (@ref isVoid), otherwise its placeholder.
+    */
     get formulaValue() {
         if (this.isVoid) {
             return this._formulaValue;
@@ -558,12 +622,25 @@ class DDNode {
         return DDGraph.castRawValue(this.type, this._getRawValue(), true);
     }
 
+    /**
+    Sets the formula value for this control.
+    */
     set formulaValue(v) {
         this._formulaValue = v;
         this._updateFormulaValue();
     }
 
+    /**
+    Constructs a new node in @p graph, wrapping @p $obj, and registers it to the parent @p parent.
+
+    @param graph the @ref DDGraph instance.
+    @param $obj a jQuery match object containing a single object that represents this node in the
+    DOM.
+    @param parent If null, a root objet is created. Note that this must be the result of the method
+    @ref DDGraph.findParentNode.
+    */
     constructor(graph, $obj, parent=null) {
+        console.assert($obj.length === 1);
         this._graph = graph;
         if (typeof $obj === 'undefined') {
             // We are creating a root
@@ -590,6 +667,9 @@ class DDNode {
         }
     }
 
+    /**
+    Rebuilds the cached list of indices starting by @ref _extraIndices and @ref_arrayIndices.
+    */
     _recacheIndices() {
         if (this._arrayIndices && this._extraIndices) {
             this._indices = this._arrayIndices.concat(this._extraIndices);
@@ -602,11 +682,17 @@ class DDNode {
         }
     }
 
+    /**
+    Returns true if and only if @p child is among the children of this object.
+    */
     hasChild(child) {
         console.assert(!this.holdsData);
         return this._childById[child.id] === child;
     }
 
+    /**
+    Resorts the children by id.
+    */
     _sortChildren() {
         // The data loading routine relies on the children being sorted
         // as it processes first array masters to resize the array appropriately, and
@@ -614,6 +700,11 @@ class DDNode {
         this._children.sort((a, b) => a.id.localeCompare(b.id));
     }
 
+    /**
+    Changes the id by which a child is registered to the parent.
+    @param oldId the old id of @p updatedChild
+    @param updatedChild the child which has changed id.
+    */
     _updateChild(oldId, updatedChild) {
         console.assert(!this.holdsData);
         console.assert(this._childById[oldId] === updatedChild);
@@ -622,6 +713,9 @@ class DDNode {
         this._sortChildren();
     }
 
+    /**
+    Registers a new child to this object.
+    */
     _addChild(child) {
         console.assert(!this.holdsData);
         console.assert(!(child.id in this._childById));
@@ -630,6 +724,9 @@ class DDNode {
         this._childById[child.id] = child;
     }
 
+    /**
+    Unregisters a new child from this object.
+    */
     _removeChild(child) {
         console.assert(!this.holdsData);
         console.assert(this.hasChild(child));
@@ -639,6 +736,10 @@ class DDNode {
         this._children.splice(idx, 1);
     }
 
+    /**
+    Removes the path attribute, removes the node from the parent and removes it from the graph.
+    Does not modify the DOM.
+    */
     _remove() {
         console.assert(!this.isRoot);
         this.obj.removeAttr('data-dd-path');
@@ -646,6 +747,10 @@ class DDNode {
         this.parent._removeChild(this);
     }
 
+    /**
+    Completely removes this node and the subtree rooted at it from the graph. Does not modify the
+    DOM.
+    */
     removeSubtree() {
         if (this.children) {
             while (this.children.length > 0) {
@@ -656,7 +761,14 @@ class DDNode {
         this._remove();
     }
 
+    /**
+    Sets to null all the nodes that hold data in the subtree and clears all the dynamic arrays in
+    the subtree.
+    */
     clearSubtree() {
+        // This method can use correctly the traverse function only thanks to sorting. The master
+        // will always come before the elements, so we can clear the array at the master and skip
+        // traversing the remaining elements.
         this.traverse((node, evt) => {
             if (evt === DFSEvent.ENTER) {
                 if (node.holdsData) {
@@ -671,6 +783,16 @@ class DDNode {
         });
     }
 
+    /**
+    Calls @p fn on all the nodes in the subtree rooted at this node. The children are traversed in
+    order.
+
+    @param fn a function with the signature `function(node, dfsEvent)`, where the first argument is
+    a @ref DDNode and the second one of @ref DFSEvent.
+
+    Modifying the children while traversing is safe if and only if the elements that are added or
+    removed haven't yet been traversed (so think twice before doing it).
+    */
     traverse(fn) {
         const res = fn(this, DFSEvent.ENTER);
         if (typeof res === 'undefined' || res === null || res === true) {
@@ -683,10 +805,16 @@ class DDNode {
         fn(this, DFSEvent.EXIT);
     }
 
+    /**
+    Returns an object having the @ref baseId as key and the child as value. If there are multiple
+    children with the same @ref baseId, or if one such child is an array master, then the children
+    are grouped in an array.
+    */
     _collectChildrenByIdWithoutIndices() {
         let retval = {};
         this.children.forEach(child => {
             let arrOrObj = retval[child.baseId];
+            // TODO isArrayMaster should be if(indices). That suffices to tell us it's an array
             if (child.isArrayMaster) {
                 if (arrOrObj) {
                     if (!Array.isArray(arrOrObj)) {
@@ -714,7 +842,12 @@ class DDNode {
         return retval;
     }
 
+    /**
+    Given an array of children, makes sure that they all have the same number of indices and that
+    they fill up the indices up to their count.
+    */
     static _assertArrayConsistency(childrenArray) {
+        // TODO This should check all the indices incrementally, like 00 01 02 0k 10.. kk
         if (childrenArray.length === 0) {
             return;
         }
@@ -741,6 +874,9 @@ class DDNode {
         }
     }
 
+    /**
+    Returns the maximum number of indices each children in the array has.
+    */
     static _getArrayOrder(childrenArray) {
         DDNode._assertArrayConsistency(childrenArray);
         let maxDim = 0;
@@ -751,6 +887,10 @@ class DDNode {
         return maxDim;
     }
 
+    /**
+    Builds a data bag multidimensional array containing the specified children's data at the correct
+    index.
+    */
     static _buildMultidimensionalDataBagArray(childrenArray) {
         const dims = DDNode._getArrayOrder(childrenArray);
         let retval = arrayMultidimensionalPrefill(childrenArray.length, dims);
@@ -768,6 +908,10 @@ class DDNode {
         return retval;
     }
 
+    /**
+    Generates a hieararchical representation of the data contained in the subtree rooted at the
+    current node, consisting only of Javascript primitives, Objects and Arrays.
+    */
     dumpDataBag() {
         if (this.holdsData) {
             return this.value;
@@ -786,6 +930,11 @@ class DDNode {
         return retval;
     }
 
+    /**
+    Loads the data previously stored into a data bag from @ref dumpDataBag into the DOM. The arrays
+    are appropriately resized to hold the correct data. Nodes that have no data associated are
+    cleared via @ref clearSubtree.
+    */
     loadDataBag(data) {
         if (this.holdsData) {
             this.value = data;
@@ -817,11 +966,17 @@ class DDNode {
         }
     }
 
+    /**
+    Changes the placeholder by casting the value to its textual representation.
+    */
     _updateFormulaValue() {
         console.assert(this._holdsData);
         this.obj.attr('placeholder', DDGraph.formatValue(this.type, this._formulaValue));
     }
 
+    /**
+    Returns the raw value for an input; either a string, a bool or null.
+    */
     _getRawValue() {
         console.assert(this._holdsData);
         if (this._isCheckbox) {
@@ -834,10 +989,14 @@ class DDNode {
         return val;
     }
 
+    /**
+    Sets the raw value, takes a string, a boolean or null.
+    */
     _setRawValue(v) {
         console.assert(this._holdsData);
         if (this._isCheckbox) {
             console.assert(typeof v === 'boolean');
+            // TODO forcingly cast to boool
             this.obj.prop('checked', v);
         } else {
             console.assert(typeof v === 'string');
@@ -846,6 +1005,11 @@ class DDNode {
         this.obj.trigger('dd.changed');
     }
 
+    /**
+    Extracts the array indices for the node. Returns an array consisting of all the `dd-array-index`
+    attributes of the DOM elements between @ref obj and @ref parent, plus all the indices specified
+    explicitly in the `data-dd-id` property.
+    */
     _getArrayIndices() {
         const getOneIndex = domElement => {
             if (domElement.getAttribute('data-dd-array') === 'master') {
@@ -881,6 +1045,10 @@ class DDNode {
         this._assignIdAndPath();
     }
 
+    /**
+    Computes the final id and path for this node, stores it into the DOM, and updates the @ref graph
+    and the @ref parent accordingly.
+    */
     _assignIdAndPath() {
         console.assert(!this.isRoot);
         const oldId = this._id;
@@ -900,6 +1068,10 @@ class DDNode {
         }
     }
 
+    /**
+    Recomputes the indices for this objects, if they changed, updates the @ref id, the @ref path,
+    in the node and in the DOM, and updates @ref parent and @ref graph.
+    */
     reindexIfNeeded() {
         console.assert(!this.isRoot);
         const oldIndices = this._arrayIndices;
@@ -916,6 +1088,9 @@ class DDNode {
         return false;
     }
 
+    /**
+    Returns a child of this node for the given id, if it exists, otherwise null.
+    */
     childById(id) {
         const child = this._childById[id];
         if (typeof child === 'undefined') {
@@ -924,9 +1099,17 @@ class DDNode {
         return child;
     }
 
+    /**
+    Returns an array of all the children with the requested @p ids.
+
+    @param ids an array of ids to search for.
+    @param filterMissing if true, all the children that are not found are removed from the return
+    value, otherwise the null placholders are kept
+    */
     childrenById(ids, filterMissing=true) {
         const children = ids.map(id => this.childById(id));
         if (filterMissing) {
+            // TODO does not test for null
             return children.filter(child => typeof child !== 'undefined');
         }
         return children;
