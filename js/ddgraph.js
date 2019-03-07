@@ -28,11 +28,19 @@ const DDType = Object.freeze({
     NONE:    Symbol('none')
 });
 
+/**
+Depth first search event. Enter occurs when visiting a node, exit when leaving it. A node cannot be
+left until all its descendants have been visited and left.
+*/
 const DFSEvent = Object.freeze({
     ENTER: Symbol('enter'),
     EXIT:  Symbol('exit')
 });
 
+/**
+A separate DOM-like structure that manages and allows fast lookup of controls marked by the
+`data-dd-id` attributes.
+*/
 class DDGraph {
     get root() {
         return this._root;
@@ -40,14 +48,19 @@ class DDGraph {
 
     constructor() {
         this._root = new DDNode(this);
-        this._descendantsByPath = {};
-        this._leavesByPath = {};
+        this._nodesByPath = {};
     }
 
+    /**
+    Returns an object suitable to be used with @ref DDArray.setup that contains event handlers for
+    the events `insertion`, `removal` and `reindex` that make the dynamic DOM arrays compatible with
+    the graph structure. By using these handlers, the graph is always in sync with the DOM even when
+    the dynamic arrays are modified.
+    */
     _getArrayHandlers() {
         return {
             insertion: (evt, insertedItems) => {
-                this.buildFromDom($(insertedItems), false, false);
+                this.loadNodesFromDom($(insertedItems), false, false);
             },
             removal: (evt, removedItems) => {
                 this.getDirectChildrenNodes($(removedItems))
@@ -60,7 +73,20 @@ class DDGraph {
         };
     }
 
-    buildFromDom($parentElements=null, setupArray=true, excludeElementsWithPath=true) {
+
+    /**
+    Traverses the DOM and adds all elements marked with `data-dd-id` to the graph.
+    @param $parentElements jQuery matches containing the elements from where the search for marked
+    elements starts. $parentElements themselves are included.
+    @param setupArray if specified, it also sets up the dynamic DOM arrays with the correct event
+    handlers to interoperate with them.
+    @param excludeElementsWithPath DOM elements which have already the `data-dd-path` attribute may
+    have been added to the graph previously. These should thus be skipped. Specifying `false` may
+    cause DOM elements to be added twice to the graph. The only safe usage for this parameter is
+    when adding a new group of nodes that has cloned from an existing DOM subtree which is already
+    in the graph.
+    */
+    loadNodesFromDom($parentElements=null, setupArray=true, excludeElementsWithPath=true) {
         if ($parentElements === null) {
             $parentElements = $('body');
         }
@@ -76,7 +102,10 @@ class DDGraph {
         }, this);
     }
 
-    getRepresentation() {
+    /**
+    Returns a tree-like string representation of the graph.
+    */
+    toString() {
         let depth = 0;
         let retval = '';
         this.root.traverse((node, evt) => {
@@ -99,48 +128,43 @@ class DDGraph {
         return retval;
     }
 
-    descendantByPath(path) {
-        const descendant = this._descendantsByPath[path];
-        if (typeof descendant === 'undefined') {
+    /**
+    Retrieves a node with a given path, if any exists, otherwise `null`.
+    */
+    nodeByPath(path) {
+        const node = this._nodesByPath[path];
+        if (typeof node === 'undefined') {
             return null;
         }
-        return descendant;
+        return node;
     }
 
-    leafByPath(path) {
-        const leaf = this._leavesByPath[path];
-        if (typeof leaf === 'undefined') {
-            return null;
-        }
-        return leaf;
+    /**
+    Updates the node storage when @p updatedNode has changed path.
+    @param oldPath the old path by which the node was known.
+    @param updatedNode node with a new path.
+    */
+    _updateNode(oldPath, updatedNode) {
+        console.assert(this._nodesByPath[oldPath] === updatedNode);
+        delete this._nodesByPath[oldPath];
+        this._nodesByPath[updatedNode.path] = updatedNode;
     }
 
-    _updateDescendant(oldPath, updatedDescendant) {
-        console.assert(this._descendantsByPath[oldPath] === updatedDescendant);
-        delete this._descendantsByPath[oldPath];
-        this._descendantsByPath[updatedDescendant.path] = updatedDescendant;
-        if (updatedDescendant.holdsData) {
-            console.assert(this._leavesByPath[oldPath] === updatedDescendant);
-            delete this._leavesByPath[oldPath];
-            this._leavesByPath[updatedDescendant.path] = updatedDescendant;
-        }
+    /**
+    Updates the node storage by registering a newly created node.
+    */
+    _addNode(node) {
+        this._nodesByPath[node.path] = node;
     }
 
-    _addDescendant(descendant) {
-        this._descendantsByPath[descendant.path] = descendant;
-        if (descendant.holdsData) {
-            this._leavesByPath[descendant.path] = descendant;
-        }
+    /**
+    Updates the node storage by removing a soon-to-delete node.
+    */
+    _removeNode(node) {
+        delete this._nodesByPath[node.path];
     }
 
-    _removeDescendant(descendant) {
-        delete this._descendantsByPath[descendant.path];
-        if (descendant.holdsData) {
-            delete this._leavesByPath[descendant.path];
-        }
-    }
-
-    _getDirectDescendantFilter($parents) {
+    _getDOMChildrenFilter($parents) {
         return (_, descendant) => {
             const node = this._getNodeOfDOMElement(descendant);
             return node && node.obj.parentsUntil($parents, '[data-dd-path]').length === 0;
@@ -150,7 +174,7 @@ class DDGraph {
     _getNodeOfDOMElement(domElement) {
         const path = domElement.getAttribute('data-dd-path');
         console.assert(path);
-        return this.descendantByPath(path);
+        return this.nodeByPath(path);
     }
 
     getDirectChildrenNodes($domElements) {
@@ -158,7 +182,7 @@ class DDGraph {
         const $directChildren = $domElements
             .not($matchingDomElements)
             .find('[data-dd-path]')
-            .filter(this._getDirectDescendantFilter($domElements));
+            .filter(this._getDOMChildrenFilter($domElements));
         return $matchingDomElements.toArray().concat($directChildren.toArray())
             .map(domElement => this._getNodeOfDOMElement(domElement));
     }
@@ -504,7 +528,7 @@ class DDNode {
     _remove() {
         console.assert(!this.isRoot);
         this.obj.removeAttr('data-dd-path');
-        this.graph._removeDescendant(this);
+        this.graph._removeNode(this);
         this.parent._removeChild(this);
     }
 
@@ -754,11 +778,11 @@ class DDNode {
         if (oldId === null && oldPath === null) {
             // First insertion
             this.parent._addChild(this);
-            this.graph._addDescendant(this);
+            this.graph._addNode(this);
         } else {
             // Rename
             this.parent._updateChild(oldId, this);
-            this.graph._updateDescendant(oldPath, this);
+            this.graph._updateNode(oldPath, this);
         }
     }
 
