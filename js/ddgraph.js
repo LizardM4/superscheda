@@ -838,42 +838,9 @@ class DDNode {
     }
 
     /**
-    Given an array of children, makes sure that they all have the same number of indices and that
-    they fill up the indices up to their count.
-    */
-    static _assertArrayConsistency(childrenArray) {
-        // TODO This should check all the indices incrementally, like 00 01 02 0k 10.. kk
-        if (childrenArray.length === 0) {
-            return;
-        }
-        let maxDim = 0;
-        // First of all assert dimensionality
-        for (let i = 0; i < childrenArray.length; i++) {
-            console.assert(childrenArray[i].indices);
-            console.assert(childrenArray[i].indices.length > 0);
-            if (i > 0) {
-                console.assert(childrenArray[i].indices.length == childrenArray[0].indices.length);
-            }
-            maxDim = Math.max(maxDim, childrenArray[i].indices.length);
-        }
-        // For each dimension, check the max index. Initialize to zero
-        let maxIdxPerDim = arrayMultidimensionalPrefill(maxDim, 1, 0);
-        for (let i = 0; i < childrenArray.length; ++i) {
-            for (let j = 0; j < childrenArray[i].indices.length; ++j) {
-                maxIdxPerDim[j] = Math.max(childrenArray[i].indices[j], maxIdxPerDim[j]);
-            }
-        }
-        // Assert that they all coincide with the number of elements
-        for (let i = 0; i < maxDim; ++i) {
-            console.assert(maxIdxPerDim[i] === childrenArray.length - 1);
-        }
-    }
-
-    /**
     Returns the maximum number of indices each children in the array has.
     */
     static _getArrayOrder(childrenArray) {
-        DDNode._assertArrayConsistency(childrenArray);
         let maxDim = 0;
         // First of all assert dimensionality
         for (let i = 0; i < childrenArray.length; i++) {
