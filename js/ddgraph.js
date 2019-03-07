@@ -697,7 +697,13 @@ class DDNode {
         // The data loading routine relies on the children being sorted
         // as it processes first array masters to resize the array appropriately, and
         // then each child.
-        this._children.sort((a, b) => a.id.localeCompare(b.id));
+        this._children.sort((a, b) => {
+            const baseCompare = a.baseId.localeCompare(b.baseId);
+            if (baseCompare === 0) {
+                return arrayCompare(a.indices, b.indices);
+            }
+            return baseCompare;
+        });
     }
 
     /**
