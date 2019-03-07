@@ -808,36 +808,25 @@ class DDNode {
     /**
     Returns an object having the @ref baseId as key and the child as value. If there are multiple
     children with the same @ref baseId, or if one such child is an array master, then the children
-    are grouped in an array.
+    are grouped in an array. Array masters themselves are excluded from the arrays.
     */
     _collectChildrenByIdWithoutIndices() {
         let retval = {};
         this.children.forEach(child => {
             let arrOrObj = retval[child.baseId];
-            // TODO isArrayMaster should be if(indices). That suffices to tell us it's an array
-            if (child.isArrayMaster) {
-                if (arrOrObj) {
-                    if (!Array.isArray(arrOrObj)) {
-                        retval[child.baseId] = [arrOrObj];
-                    }
-                } else {
-                    retval[child.baseId] = [];
+            if (arrOrObj) {
+                if (!Array.isArray(arrOrObj)) {
+                    arrOrObj = [arrOrObj]
                 }
-                return;
+            } else if (child.indices) {
+                arrOrObj = [];
             }
             if (arrOrObj) {
-                if (Array.isArray(arrOrObj)) {
-                    arrOrObj.push(child);
-                } else {
-                    retval[child.baseId] = [arrOrObj, child];
-                }
+                arrOrObj.push(child);
             } else {
-                if (child.indices) {
-                    retval[child.baseId] = [child];
-                } else {
-                    retval[child.baseId] = child;
-                }
+                arrOrObj = child;
             }
+            retval[child.baseId] = arrOrObj;
         });
         return retval;
     }
