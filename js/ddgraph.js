@@ -640,13 +640,14 @@ class DDNode {
     @ref DDGraph.findParentNode.
     */
     constructor(graph, $obj, parent=null) {
-        console.assert($obj.length === 1);
         this._graph = graph;
         if (typeof $obj === 'undefined') {
             // We are creating a root
             console.assert(typeof parent === 'undefined' || parent === null);
             parent = null
             $obj = null;
+        } else {
+            console.assert($obj.length === 1);
         }
         this._$obj = $obj;
         this._parent = parent;
