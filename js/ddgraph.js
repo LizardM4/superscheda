@@ -63,12 +63,12 @@ class DDGraph {
                 this.loadNodesFromDom($(insertedItems), false, false);
             },
             removal: (evt, removedItems) => {
-                this.getDirectChildrenNodes($(removedItems))
+                this.getNodeChildrenOfDOMElements($(removedItems))
                     .forEach(child => { child.removeSubtree(); });
             },
             reindex: (evt, domItemPrevIdxIdxTriples) => {
                 const domItems = domItemPrevIdxIdxTriples.map(([domItem, previousIdx, Idx]) => domItem);
-                this.getDirectChildrenNodes($(domItems)).forEach(child => { child.reindexIfNeeded(); });
+                this.getNodeChildrenOfDOMElements($(domItems)).forEach(child => { child.reindexIfNeeded(); });
             }
         };
     }
@@ -93,7 +93,7 @@ class DDGraph {
         if (setupArray) {
             DDArray.setup($parentElements, this._getArrayHandlers());
         }
-        const elements = DDGraph.getElementsWithId($parentElements, true, excludeElementsWithPath);
+        const elements = DDGraph.getElementsWithDDId($parentElements, true, excludeElementsWithPath);
         elements.forEach(domElement => {
             const $domElement = $(domElement);
             const parentNode = this.findParentNode($domElement);
@@ -164,30 +164,74 @@ class DDGraph {
         delete this._nodesByPath[node.path];
     }
 
-    _getDOMChildrenFilter($parents) {
+    /**
+    Returns a filter function to be used with jQuery which returns true if and only if an object is
+    a direct descendant of @p $parents, that is, there is no node with `data-dd-path` attribute
+    in the parent tree from the matched object and its parent in @p $parents.
+
+    @param $parents jQuery match object.
+
+    @returns A binary function.
+    */
+    _getDOMNodeChildrenFilter($parents) {
         return (_, descendant) => {
             const node = this._getNodeOfDOMElement(descendant);
             return node && node.obj.parentsUntil($parents, '[data-dd-path]').length === 0;
         };
     }
 
+    /**
+    Given a DOM element @p domElement object, it returns the @ref DDNode object associated to it.
+
+    @param domElement DOM element with a `data-dd-path` attribute.
+
+    @return A DDNode or null if the node has not been found.
+    */
     _getNodeOfDOMElement(domElement) {
         const path = domElement.getAttribute('data-dd-path');
         console.assert(path);
         return this.nodeByPath(path);
     }
 
-    getDirectChildrenNodes($domElements) {
+    /**
+    Returns the first nodes (children of the given @p domElements) in the DOM hierarchy which have a
+    corresponding node in the graph. By "first", we mean that there is no intermediate DOM element
+    with an associated @ref DDNode in the parents path from the matched element and the parent in
+    @p $domElements.
+
+    @note Elements included in $domElements which have a `data-dd-path` attribute *are* included in
+    the returned array.;
+
+    @param $domElements A jQuery matched sets of DOM elements.
+
+    @returns An Array of @ref DDNode.
+    */
+    getNodeChildrenOfDOMElements($domElements) {
         const $matchingDomElements = $domElements.filter('[data-dd-path]');
         const $directChildren = $domElements
             .not($matchingDomElements)
             .find('[data-dd-path]')
-            .filter(this._getDOMChildrenFilter($domElements));
+            .filter(this._getDOMNodeChildrenFilter($domElements));
         return $matchingDomElements.toArray().concat($directChildren.toArray())
             .map(domElement => this._getNodeOfDOMElement(domElement));
     }
 
-    static getElementsWithId($domParents, sortByDepth=true, excludeElementsWithPath=true) {
+    /**
+    Finds al the DOM elements which have a `data-dd-id` attribute, below @p $domParents (including
+    the elements in @p $domParents). Optionally sorts them by depth and excludes those with an
+    already defined `data-dd-path` attribute (which indicates they already exist in the graph).
+
+    @param $domParents a jQuery match set defining the start point for the hierarchical traversal
+    to identify nodes with `data-dd-id`. Elements of @p $domParents may be included in the result if
+    they meet the requirements.
+    @param sortByDepth if set to true, the elements will be sorted by depth (parents come before
+    children).
+    @param exlcudeElementsWithPath if set to true, elements which have a `data-dd-path` will be
+    excluded from the match.
+
+    @return An array of jQuery objects, each containing one element.
+    */
+    static getElementsWithDDId($domParents, sortByDepth=true, excludeElementsWithPath=true) {
         const filter = excludeElementsWithPath ? '[data-dd-id]:not([data-dd-path])' : '[data-dd-id]';
         let results = $domParents.find(filter).toArray();
         let $parentsResults = $domParents.filter(filter).toArray().map(domElement => $(domElement));
@@ -205,7 +249,15 @@ class DDGraph {
         return $parentsResults.concat(results.map(([relDepth, $item]) => $item));
     }
 
+    /**
+    Returns the DDNode associated to the closest parent to the given @p $domElement which has a
+    `data-dd-id` property. If the closest parent with a `data-dd-id` property is not in the graph,
+    it returs null. If there is not parent node with a `data-dd-id` property, it returns the root.
+
+    @param $domElement a jQuery match set containing only one element.
+    */
     findParentNode($domElement) {
+        console.assert($domElement.length === 1);
         const candidates = $domElement.parents('[data-dd-id]');
         if (candidates.length === 0) {
             return this.root;
@@ -213,6 +265,12 @@ class DDGraph {
         return this._getNodeOfDOMElement(candidates[0]);
     }
 
+    /**
+    Converts an array of numeric indices, or a numeric index, to a string representation, as in
+        - 2 -> "[2]"
+        - null, [] -> ""
+        - [1, 2, 3] -> "[1][2][3]"
+    */
     static indicesToString(indices) {
         if (typeof indices === 'number') {
             return '[' + indices.toString() + ']';
@@ -223,6 +281,14 @@ class DDGraph {
         }
     }
 
+    /**
+    Extracts a textual part and an index part from an id in the format `name[idx1][idx2]...`, as in
+        - "abc[2]" -> ["abc", [2]]
+        - "abcdef" -> ["abcdef", null]
+        - "abc[1][2]" -> ["abc", [1, 2]]
+
+    @returns a pair with the textual part, and an array of indices.
+    */
     static parseIndicesFromId(suggestedId) {
         const baseIdAndIndices = /(.+?)((\[\d+\])*)$/
         const match = baseIdAndIndices.exec(suggestedId);
@@ -237,11 +303,23 @@ class DDGraph {
         return [baseId, indices];
     }
 
+    /**
+    Returns true if and only if @p $obj is DOM elements that holds data (i.e. an input of sorts).
+    @param $obj A jQuery match object.
+    */
     static holdsData($obj) {
         return $obj.is('input[data-dd-id], select[data-dd-id], textarea[data-dd-id]');
     }
 
+    /**
+    Returns the expected specific type associated to a given DOM element.
+
+    @param $obj a jQuery match containing only one object.
+
+    @returns One of the DDType enum.
+    */
     static inferType($obj) {
+        console.assert($obj.length === 1);
         if (!DDGraph.holdsData($obj)) {
             return DDType.NONE;
         }
@@ -269,6 +347,13 @@ class DDGraph {
         }
     }
 
+    /**
+    Returns true if and only if @p rawValue is to be interpreted as a "void" value, assuming it
+    should be cast to the given @p type.
+
+    @param type One of @ref DDType.
+    @param rawValue A raw value as obtained from an input (so a string, null, or a boolean).
+    */
     static testVoid(type, rawValue) {
         if (type === DDType.BOOL) {
             return false; // Booleans are never void
@@ -290,6 +375,16 @@ class DDGraph {
         return false;
     }
 
+    /**
+    Converts a raw value coming from a control (so a string, null, or a boolean) to the strong type
+    specified by @p rawValue. If casting is not possible (due for example to invalid value), the
+    method returns the raw value as-is, unless @p nullIfInvalid is set to true; in this latter case,
+    it returns null.
+
+    @param type One of @ref DDType.
+    @param rawValue The raw value
+    @param nullIfInvalid If true, the method returns null when it detects an invalid value.
+    */
     static castRawValue(type, rawValue, nullIfInvalid=false) {
         if (DDGraph.testVoid(type, rawValue)) {
             return null;
@@ -331,6 +426,12 @@ class DDGraph {
         return rawValue;
     }
 
+    /**
+    Converts a strongly typed @p value into its string representation for a DOM input.
+
+    @param type One of @ref DDTYpe.
+    @param value A strongly typed value.
+    */
     static formatValue(type, value) {
         switch (type) {
             case DDType.INT:
@@ -349,6 +450,19 @@ class DDGraph {
         return value.toString();
     }
 
+    /**
+    Tries to navigate a data bag. Takes a data bag @p data, a @p baseId and an array of @p indices,
+    and gets the object in @p data at key @p baseId. If @p indices is nonempty, it then further
+    extracts in a nested fashion the indices specified by @p indices. This process is successful if
+    @p baseId is a key in @p data, and (if @p indices is nonempty) it points to a set of nested
+    arrays which all contain the specified @p indices.
+
+    TL;DR: it does `data[baseId][indices[0]][indices[1]]...[indices[indices.length - 1]]`. If this
+    suceeeds, returns `[true, <whatever was found>]`, otherwise `[false, null]`.
+
+    @return a pair of boolean an an object. The boolean describes if the process is successful, and
+    the object is the found object.
+    */
     static traverseDataBag(data, baseId, indices) {
         console.assert(baseId != '');
         console.assert(typeof data === 'object');
