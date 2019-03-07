@@ -18,7 +18,7 @@
 'use strict';
 
 import { DDArray } from './ddarray.js?v=%REV';
-import { arrayEquals, arrayMultidimensionalPrefill } from './helper.js?v=%REV';
+import { arrayCompare, arrayMultidimensionalPrefill } from './helper.js?v=%REV';
 
 const DDType = Object.freeze({
     INT:     Symbol('int'),
@@ -1065,7 +1065,7 @@ class DDNode {
         console.assert(!this.isRoot);
         const oldIndices = this._arrayIndices;
         const newIndices = this._getArrayIndices();
-        if (!arrayEquals(oldIndices, newIndices)) {
+        if (arrayCompare(oldIndices, newIndices) !== 0) {
             this._arrayIndices = newIndices;
             this.traverse((node, evt) => {
                 if (evt === DFSEvent.ENTER) {

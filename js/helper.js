@@ -17,27 +17,39 @@
 
 'use strict';
 
-function arrayEquals(l, r) {
-    if (typeof l === 'undefined') {
-        l = null;
+function arrayCompare(l, r) {
+    const lUndef = (typeof l === 'undefined');
+    const rUndef = (typeof r === 'undefined');
+    if (lUndef && !rUndef) {
+        return -1;
+    } else if (!lUndef && rUndef) {
+        return 1;
+    } else if (lUndef && rUndef) {
+        return 0;
     }
-    if (typeof r === 'undefined') {
-        r = null;
+    const lNull = (l === null);
+    const rNull = (r === null);
+    if (lNull && !rNull) {
+        return -1;
+    } else if (!lNull && rNull) {
+        return 1;
+    } else if (lNull && rNull) {
+        return 0;
     }
-    if ((l === null) !== (r === null)) {
-        return false;
-    } else if (l === null) {
-        return true;
-    } else if (l.length !== r.length) {
-        return false;
-    } else {
-        for (let i = 0; i < l.length; ++i) {
-            if (l[i] !== r[i]) {
-                return false;
-            }
+    for (let i = 0; i < Math.min(l.length, r.length); ++i) {
+        if (l[i] < r[i]) {
+            return -1;
+        } else if (l[i] > r[i]) {
+            return 1;
         }
+        console.assert(l[i] === r[i]);
     }
-    return true;
+    if (l.length < r.length) {
+        return -1;
+    } else if (l.length > r.length) {
+        return 1;
+    }
+    return 0;
 }
 
 
@@ -57,4 +69,4 @@ function arrayMultidimensionalPrefill(size, dims, defaultValue=null) {
 }
 
 
-export { arrayEquals, arrayMultidimensionalPrefill };
+export { arrayCompare, arrayMultidimensionalPrefill };
