@@ -985,11 +985,9 @@ class DDNode {
         console.assert(this._holdsData);
         if (this._isCheckbox) {
             console.assert(typeof v === 'boolean');
-            // TODO forcingly cast to boool
-            this.obj.prop('checked', v);
+            this.obj.prop('checked', !!v);
         } else {
-            console.assert(typeof v === 'string');
-            this.obj.val(v);
+            this.obj.val(v.toString());
         }
         this.obj.trigger('dd.changed');
     }
@@ -1098,8 +1096,7 @@ class DDNode {
     childrenById(ids, filterMissing=true) {
         const children = ids.map(id => this.childById(id));
         if (filterMissing) {
-            // TODO does not test for null
-            return children.filter(child => typeof child !== 'undefined');
+            return children.filter(child => typeof child !== 'undefined' && child !== null);
         }
         return children;
     }
