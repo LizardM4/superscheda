@@ -18,6 +18,7 @@
 'use strict';
 
 import { DDArray } from './ddarray.js?v=%REV';
+import { arrayEquals, arrayMultidimensionalPrefill } from './helper.js?v=%REV';
 
 const DDType = Object.freeze({
     INT:     Symbol('int'),
@@ -31,46 +32,6 @@ const DFSEvent = Object.freeze({
     ENTER: Symbol('enter'),
     EXIT:  Symbol('exit')
 });
-
-function arrayEquals(l, r) {
-    if (typeof l === 'undefined') {
-        l = null;
-    }
-    if (typeof r === 'undefined') {
-        r = null;
-    }
-    if ((l === null) !== (r === null)) {
-        return false;
-    } else if (l === null) {
-        return true;
-    } else if (l.length !== r.length) {
-        return false;
-    } else {
-        for (let i = 0; i < l.length; ++i) {
-            if (l[i] !== r[i]) {
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
-
-function arrayMultidimensionalPrefill(size, dims, defaultValue=null) {
-    if (dims <= 0) {
-        return null;
-    }
-    let retval = [];
-    for (let i = 0; i < size; ++i) {
-        if (dims > 1) {
-            retval.push(arrayMultidimensionalPrefill(size, dims - 1));
-        } else {
-            retval.push(defaultValue);
-        }
-    }
-    return retval;
-}
-
 
 class DDGraph {
     get root() {
