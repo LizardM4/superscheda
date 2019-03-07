@@ -18,7 +18,7 @@
 'use strict';
 
 import { DDArray } from './ddarray.js?v=%REV';
-import { arrayCompare, arrayMultidimensionalPrefill } from './helper.js?v=%REV';
+import { arrayCompare, arrayMultidimensionalPrefill, timeIt } from './helper.js?v=%REV';
 
 const DDType = Object.freeze({
     INT:     Symbol('int'),
@@ -49,6 +49,18 @@ class DDGraph {
     constructor() {
         this._root = new DDNode(this);
         this._nodesByPath = {};
+    }
+
+    loadDataBag(data) {
+        timeIt('Loading data bag', () => {
+            this.root.loadDataBag(data);
+        });
+    }
+
+    dumpDataBag() {
+        return timeIt('Dumping data bag', () => {
+            return this.root.dumpDataBag();
+        });
     }
 
     /**

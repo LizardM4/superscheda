@@ -17,6 +17,24 @@
 
 'use strict';
 
+const _debug = true;
+let _timeItCnt = 0;
+
+function timeIt(desc, body) {
+    if (!_debug) {
+        return body();
+    }
+    const start = performance.now();
+    _timeItCnt++;
+    console.log('>'.repeat(_timeItCnt) + ' ' + desc + '...');
+    const retval = body();
+    const end = performance.now();
+    console.log('>'.repeat(_timeItCnt) + ' ' + desc + ' took ' + (end - start).toString() + 'ms');
+    _timeItCnt--;
+    return retval;
+
+}
+
 function arrayCompare(l, r) {
     const lUndef = (typeof l === 'undefined');
     const rUndef = (typeof r === 'undefined');
@@ -69,4 +87,4 @@ function arrayMultidimensionalPrefill(size, dims, defaultValue=null) {
 }
 
 
-export { arrayCompare, arrayMultidimensionalPrefill };
+export { arrayCompare, arrayMultidimensionalPrefill, timeIt };
