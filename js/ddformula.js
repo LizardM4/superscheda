@@ -24,48 +24,52 @@ class DDMatcher {
         return this._relative;
     }
 
-    get matchAgainst() {
-        return this._matchAgainst;
+    get matchParts() {
+        return this._matchParts;
     }
 
-    static matchParts(matchAgainst, candidate, startIdx=0, matchToEnd=true) {
+    get matchString() {
+        return this._matchString;
+    }
+
+    static tryMatchParts(matchParts, candidate, startIdx=0, matchToEnd=true) {
         if (matchToEnd) {
-            if (matchAgainst.length !== candidate.length - startIdx) {
+            if (matchParts.length !== candidate.length - startIdx) {
                 return false;
             }
         } else {
-            if (matchAgainst.length > candidate.length - startIdx) {
+            if (matchParts.length > candidate.length - startIdx) {
                 return false;
             }
         }
 
-        for (let i = 0; i < matchAgainst.length; ++i) {
+        for (let i = 0; i < matchParts.length; ++i) {
             const candidatePart = candidate[startIdx + i];
             if (candidatePart === -1) {
                 // No array masters here
                 return false;
             }
-            if (matchAgainst[i] === -1) {
+            if (matchParts[i] === -1) {
                 // Match all numbers
                 if (typeof candidatePart !== 'number') {
                     return false;
                 }
-            } else if (matchAgainst[i] !== candidatePart) {
+            } else if (matchParts[i] !== candidatePart) {
                 return false;
             }
         }
         return true;
     }
 
-    static matchAbsolute(matchAgainst, candidate) {
-        return DDMatcher.matchParts(matchAgainst, candidate, 0, true);
+    static tryMatchAbsolute(matchParts, candidate) {
+        return DDMatcher.tryMatchParts(matchParts, candidate, 0, true);
     }
 
-    static matchRelative(matchAgainst, commonParent, candidate) {
-        if (!DDMatcher.matchParts(commonParent, candidate, 0, false)) {
+    static tryMatchRelative(matchParts, commonParent, candidate) {
+        if (!DDMatcher.tryMatchParts(commonParent, candidate, 0, false)) {
             return false;
         }
-        return DDMatcher.matchParts(matchAgainst, candidate, commonParent.length, true);
+        return DDMatcher.tryMatchParts(matchParts, candidate, commonParent.length, true);
     }
 
     static parseMatchString(matchString) {
@@ -89,18 +93,40 @@ class DDMatcher {
         return [relative, matchParts];
     }
 
-    reverseMatch(formulaNode, candidateNode) {
+    reverseMatch(candidateNode) {
+        let results = [];
+        this._nodesUsingThis.forEach(node => {
+            if (this._reverseMatch(node, candidateNode)) {
+                results.push(node);
+            }
+        });
+        return results;
+    }
+
+    _reverseMatch(formulaNode, candidateNode) {
         console.assert(candidateNode.holdsData);
         if (this.isRelative) {
-            return DDMatcher.matchRelative(this.matchAgainst, formulaNode.parent.pathPieces,
+            return DDMatcher.tryMatchRelative(this.matchParts, formulaNode.parent.pathPieces,
                 candidateNode.pathPieces);
         } else {
-            return DDMatcher.matchAbsolute(this.matchAgainst, candidateNode.pathPieces);
+            return DDMatcher.tryMatchAbsolute(this.matchParts, candidateNode.pathPieces);
         }
     }
 
+    _registerNode(node) {
+        this._nodesUsingThis.add(node);
+    }
+
+    _unregisterNode(node) {
+        this._nodesUsingThis.delete(node);
+    }
+
     constructor(matchString) {
-        [this._relative, this._matchAgainst] = DDMatcher.parseMatchString(matchString);
+        this._matchString = matchString;
+        this._relative = null;
+        this._matchParts = null;
+        this._nodesUsingThis = new Set();
+        [this._relative, this._matchParts] = DDMatcher.parseMatchString(matchString);
     }
 }
 
