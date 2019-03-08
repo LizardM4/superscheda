@@ -17,7 +17,7 @@
 
 'use strict';
 
-import { DDGraph } from './ddgraph.js?v=%REV';
+import { DDGraph, DFSEvent } from './ddgraph.js?v=%REV';
 
 class DDMatcher {
     get isRelative() {
@@ -28,8 +28,78 @@ class DDMatcher {
         return this._matchParts;
     }
 
-    get matchString() {
-        return this._matchString;
+    static tryMatchIndices(matchParts, matchPartsIdx, indices) {
+        if (matchPartsIdx + indices.length >= matchParts.length) {
+            return false;
+        }
+        for (let i = 0; i < indices.length; ++i) {
+            if (indices[i] === -1) {
+                return false; // No array master
+            }
+            const tryMatchIndex = matchParts[matchPartsIdx + i];
+            if (tryMatchIndex === -1) {
+                continue; // Matches all indices
+            } else if (tryMatchIndex !== indices[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    static tryMatchNode(matchParts, matchPartsIdx, node) {
+        console.assert(matchPartsIdx < matchParts.length);
+        if (node.baseId !== matchParts[0]) {
+            return 0;
+        }
+        if (node.indices) {
+            if (DDMatcher.tryMatchIndices(matchParts, matchPartsIdx + 1, node.indices)) {
+                // Matches, consumes 1 unit for the baseId plus the indices length
+                return 1 + node.indices.length;
+            }
+            return 0; // Doesn't match;
+        } else {
+            return 1; // Matches and consumes one unit
+        }
+    }
+
+    static traverseMatchingNodes(matchParts, startNode) {
+        let matchingNodes = [];
+        let idxs = [0];
+        startNode.traverse((node, evt) => {
+            if (node === startNode) {
+                // Ignore
+                return;
+            }
+            if (evt === DFSEvent.EXIT) {
+                // Restore the previous index
+                idxs.pop();
+                return;
+            }
+            // Always add the same index to match the pop
+            idxs.push(idxs[idxs.length - 1]);
+            // We are traversing node. Does this node match a subsequence?
+            const matchLength = DDMatcher.tryMatchNode(matchParts, idxs[idxs.length - 1], node);
+            if (matchLength > 0) {
+                // Update the idxs we will be using for the chldren to consume the matched subsequence
+                idxs[idxs.length - 1] += matchLength;
+                if (idxs[idxs.length - 1] >= matchParts.length) {
+                    // Found a matching node!
+                    matchingNodes.push(node);
+                    console.assert(idxs[idxs.length - 1] === matchParts.length);
+                    // Just a safety check
+                    if (!node.holdsData) {
+                        // Return false nonetheless, we have matched some node with children but we can't
+                        // go any further
+                        return false;
+                    }
+                }
+                return true;
+            } else {
+                // Do nothing, do not traverse. The "exit" version will be called and pop the index.
+                return false;
+            }
+        });
+        return matchingNodes;
     }
 
     static tryMatchParts(matchParts, candidate, startIdx=0, matchToEnd=true) {
@@ -122,7 +192,6 @@ class DDMatcher {
     }
 
     constructor(matchString) {
-        this._matchString = matchString;
         this._relative = null;
         this._matchParts = null;
         this._nodesUsingThis = new Set();
