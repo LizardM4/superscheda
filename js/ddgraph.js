@@ -301,8 +301,10 @@ class DDGraph {
 
     @returns a pair with the textual part, and an array of indices.
     */
-    static parseIndicesFromId(suggestedId) {
-        const baseIdAndIndices = /(.+?)((\[\d+\])*)$/
+    static parseIndicesFromId(suggestedId, allowNegIndices=false) {
+        const _withNegIndices    = /(.+?)((\[-?\d+\])*)$/;
+        const _withoutNegIndices = /(.+?)((\[\d+\])*)$/;
+        const baseIdAndIndices = allowNegIndices ? _withNegIndices : _withoutNegIndices;
         const match = baseIdAndIndices.exec(suggestedId);
         console.assert(match);
         const baseId = match[1];
