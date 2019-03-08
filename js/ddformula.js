@@ -207,3 +207,5 @@ class DDMatcher {
         [this._relative, this._matchParts] = DDMatcher.parseMatchString(matchString);
     }
 }
+
+export { DDMatcher };
