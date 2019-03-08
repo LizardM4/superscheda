@@ -563,6 +563,10 @@ class DDNode {
         return this._baseId;
     }
 
+    get pathPieces() {
+        return this._pathPieces;
+    }
+
     /**
     If this object is indexed, this returns an array with the indices of this object.
     This includes the indices specified in the `data-dd-id` property as well as the indices induces
@@ -670,6 +674,7 @@ class DDNode {
         this._extraIndices = null;
         this._baseId = null;
         this._path = null;
+        this._pathPieces = null;
         this._idx = null;
         this._isCheckbox = false;
         this._holdsData = false;
@@ -1018,6 +1023,18 @@ class DDNode {
         this._assignIdAndPath();
     }
 
+    _collectPathPieces() {
+        if (this.isRoot) {
+            return [];
+        }
+        if (this.indices) {
+            return Array.concat(this.parent.pathPieces, [this.baseId], this.indices);
+        } else {
+            return Array.concat(this.parent.pathPieces, [this.baseId]);
+        }
+
+    }
+
     /**
     Computes the final id and path for this node, stores it into the DOM, and updates the @ref graph
     and the @ref parent accordingly.
@@ -1029,6 +1046,7 @@ class DDNode {
         this._recacheIndices();
         this._id = this.baseId + DDGraph.indicesToString(this.indices);
         this._path = DDGraph.combinePath(this.parent.path, this.id);
+        this._pathPieces = this._collectPathPieces();
         this.obj.attr('data-dd-path', this.path);
         if (oldId === null && oldPath === null) {
             // First insertion
