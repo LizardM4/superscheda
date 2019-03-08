@@ -163,6 +163,15 @@ class DDMatcher {
         return [relative, matchParts];
     }
 
+    forwardMatch(graph, formulaNode) {
+        console.assert(formulaNode.holdsData);
+        if (this.isRelative) {
+            return DDMatcher.traverseMatchingNodes(this.matchParts, formulaNode.parent);
+        } else {
+            return DDMatcher.traverseMatchingNodes(this.matchParts, graph.root);
+        }
+    }
+
     reverseMatch(candidateNode) {
         let results = [];
         this._nodesUsingThis.forEach(node => {
@@ -198,15 +207,3 @@ class DDMatcher {
         [this._relative, this._matchParts] = DDMatcher.parseMatchString(matchString);
     }
 }
-
-/*
-
-./path
-../path
-../../path
-
-path
-
-path.subpath[0][][].subpath
-does ".." match [2]!?
-*/
