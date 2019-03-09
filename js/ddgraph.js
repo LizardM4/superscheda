@@ -676,7 +676,7 @@ class DDNode {
         this._extraIndices = null;
         this._baseId = null;
         this._path = null;
-        this._pathPieces = null;
+        this._pathPieces = [];
         this._idx = null;
         this._isCheckbox = false;
         this._holdsData = false;
@@ -1109,4 +1109,4 @@ class DDNode {
 
 }
 
-export { DDGraph };
+export { DDGraph, DFSEvent };
