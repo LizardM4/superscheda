@@ -213,6 +213,7 @@ class DDMatcher {
             this._usages[node.path] = usage;
         }
         usage.matcherIdxsInFormula.add(idxOfMatcherInFormula);
+        return usage;
     }
 
     _updateNode(oldPath, updatedNode) {
@@ -305,8 +306,7 @@ class DDMatcherStorage {
             matcher = new DDMatcher(matchString);
             this._storage[matchString] = matcher;
         }
-        matcher._registerNode(node, idxOfMatcherInFormula);
-        return matcher;
+        return matcher._registerNode(node, idxOfMatcherInFormula);
     }
 }
 
@@ -321,7 +321,7 @@ class DDFormula {
     evaluateArguments(formulaNode) {
         const values = [];
         this._argDefs.forEach(argDef => {
-            if (argDef instanceof DDMatcher) {
+            if (argDef instanceof DDMatcherUsage) {
                 if (!argDef.matchingNodes) {
                     argDef.recacheMatchingNodes();
                 }
@@ -337,16 +337,16 @@ class DDFormula {
 
     _updateNode(oldPath, updatedNode) {
         this._argDefs.forEach(argDef => {
-            if (argDef instanceof DDMatcher) {
-                argDef._updateNode(oldPath, updatedNode);
+            if (argDef instanceof DDMatcherUsage) {
+                argDef.matcher._updateNode(oldPath, updatedNode);
             }
         });
     }
 
     _removeNode(nodeToRemove) {
         this._argDefs.forEach(argDef => {
-            if (argDef instanceof DDMatcher) {
-                argDef._unregisterNode(nodeToRemove);
+            if (argDef instanceof DDMatcherUsage) {
+                argDef.matcher._unregisterNode(nodeToRemove);
             }
         });
     }
