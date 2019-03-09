@@ -182,27 +182,28 @@ class DDSelector {
     }
 
     reverseMatch(candidateNode) {
-        let results = null
-        Object.keys(this._usages).forEach(key => {
-            const usage = this._usages[key];
-            if (this._reverseMatch(usage.node, candidateNode)) {
-                if (results) {
-                    results.push(usage);
-                } else {
-                    results = [usage];
-                }
-            }
-        });
-        return results;
-    }
-
-    _reverseMatch(formulaNode, candidateNode) {
         console.assert(candidateNode.holdsData);
         if (this.isRelative) {
-            return DDSelector.tryMatchRelative(this.selectorParts, formulaNode.parent.pathPieces,
-                candidateNode.pathPieces);
+            let results = null;
+            Object.keys(this._usages).forEach(key => {
+                const usage = this._usages[key];
+                const isMatch = DDSelector.tryMatchRelative(this.selectorParts, usage.node.parent.pathPieces, candidateNode.pathPieces);
+                if (isMatch) {
+                    if (results) {
+                        results.push(usage);
+                    } else {
+                        results = [usage];
+                    }
+                }
+            });
+            return results;
         } else {
-            return DDSelector.tryMatchAbsolute(this.selectorParts, candidateNode.pathPieces);
+            const matchAll = DDSelector.tryMatchAbsolute(this.selectorParts, candidateNode.pathPieces);
+            if (matchAll) {
+                return Object.values(this._usages);
+            } else {
+                return null;
+            }
         }
     }
 
