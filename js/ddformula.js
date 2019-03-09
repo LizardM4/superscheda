@@ -17,7 +17,8 @@
 
 'use strict';
 
-import { DDGraph, DDNode, DFSEvent } from './ddgraph.js?v=%REV';
+import { DDGraph, DFSEvent } from './ddgraph.js?v=%REV';
+import { arrayBinarySearch } from './helper.js?v=%REV';
 
 class DDMatcher {
     get isRelative() {
@@ -175,15 +176,15 @@ class DDMatcher {
             results = DDMatcher.traverseMatchingNodes(this.matchParts, formulaNode.graph.root);
         }
         if (results && sort) {
-            results.sort((a, b) => DDNode.nodeCompare(a, b));
+            results.sort(DDMatcher.nodeCompare);
         }
         return results;
     }
 
     reverseMatch(candidateNode) {
         let results = null
-        Object.keys(this._nodesUsingThis).forEach(key => {
-            const usage = this._nodesUsingThis[key];
+        Object.keys(this._usages).forEach(key => {
+            const usage = this._usages[key];
             if (this._reverseMatch(usage.node, candidateNode)) {
                 if (results) {
                     results.push(usage);
@@ -206,30 +207,41 @@ class DDMatcher {
     }
 
     _registerNode(node, idxOfMatcherInFormula) {
-        const usage = this._nodesUsingThis[node.path];
+        const usage = this._usages[node.path];
         if (!usage) {
-            usage = new DDMatcherUsage(node);
-            this._nodesUsingThis[node.path] = usage;
+            usage = new DDMatcherUsage(this, node);
+            this._usages[node.path] = usage;
         }
         usage.matcherIdxsInFormula.add(idxOfMatcherInFormula);
     }
 
     _updateNode(oldPath, updatedNode) {
-        const usage = this._nodesUsingThis[oldPath];
+        const usage = this._usages[oldPath];
         console.assert(usage.node === updatedNode);
-        delete this._nodesUsingThis[oldPath];
-        this._nodesUsingThis[updatedNode.path] = usage;
+        delete this._usages[oldPath];
+        this._usages[updatedNode.path] = usage;
     }
 
     _unregisterNode(node) {
-        delete this._nodesUsingThis[node.path];
+        delete this._usages[node.path];
     }
 
     constructor(matchString) {
         this._relative = null;
         this._matchParts = null;
-        this._nodesUsingThis = {};
+        this._usages = {};
         [this._relative, this._matchParts] = DDMatcher.parseMatchString(matchString);
+    }
+
+    static nodeCompare(a, b) {
+        if (a.isRoot && !b.isRoot) {
+            return -1;
+        } else if (!a.isRoot && b.isRoot) {
+            return 1;
+        } else if (a.isRoot && b.isRoot) {
+            return 0;
+        }
+        return a.path.localeCompare(b);
     }
 }
 
@@ -238,13 +250,48 @@ class DDMatcherUsage {
         return this._node;
     }
 
+    get matcher() {
+        return this._matcher;
+    }
+
     get matcherIdxsInFormula() {
         return this._matcherIdxsInFormula;
     }
 
-    constructor(node) {
+    get matchingNodes() {
+        return this._matchingNodes;
+    }
+
+    recacheMatchingNodes() {
+        this._matchingNodes = this.matcher.forwardMatch(this.node, true);
+        if (!this._matchingNodes) {
+            this._matchingNodes = [];
+        }
+    }
+
+    addToMatchingNodes(node) {
+        if (this._matchingNodes === null) {
+            this.recacheMatchingNodes();
+        }
+        const idx = arrayBinarySearch(this._matchingNodes, node, DDMatcher.nodeCompare);
+        console.assert(idx < 0);
+        this._matchingNodes.splice(-idx - 1, 0, node);
+    }
+
+    removeFromMatchingNodes(node) {
+        if (this._matchingNodes === null) {
+            return;
+        }
+        const idx = arrayBinarySearch(this._matchingNodes, node, DDMatcher.nodeCompare);
+        console.assert(idx >= 0);
+        this._matchingNodes.splice(idx, 1);
+    }
+
+    constructor(matcher, node) {
+        this._matcher = matcher;
         this._node = node;
         this._matcherIdxsInFormula = new Set();
+        this._matchingNodes = null;
     }
 }
 
@@ -274,8 +321,10 @@ class DDFormula {
     resolveArguments(formulaNode) {
         return this._argDefs.map(argDef => {
             if (argDef instanceof DDMatcher) {
-                // Resolve
-                argDef = argDef.forwardMatch(formulaNode, true);
+                if (!argDef.matchingNodes) {
+                    argDef.recacheMatchingNodes();
+                }
+                return argDef.matchingNodes;
             }
             return argDef;
         });
