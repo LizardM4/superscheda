@@ -18,7 +18,7 @@
 'use strict';
 
 import { DDArray } from './ddarray.js?v=%REV';
-import { arrayCompare, arrayMultidimensionalPrefill, timeIt } from './helper.js?v=%REV';
+import { arrayCompare, arrayMultidimensionalPrefill, arrayBinarySearch, timeIt } from './helper.js?v=%REV';
 
 const DDType = Object.freeze({
     INT:     Symbol('int'),
@@ -719,16 +719,6 @@ class DDNode {
     }
 
     /**
-    Resorts the children by id.
-    */
-    _sortChildren() {
-        // The data loading routine relies on the children being sorted
-        // as it processes first array masters to resize the array appropriately, and
-        // then each child.
-        this._children.sort((a, b) => DDNode.nodeCompare(a, b));
-    }
-
-    /**
     Changes the id by which a child is registered to the parent.
     @param oldId the old id of @p updatedChild
     @param updatedChild the child which has changed id.
@@ -738,7 +728,10 @@ class DDNode {
         console.assert(this._childById[oldId] === updatedChild);
         delete this._childById[oldId]
         this._childById[updatedChild.id] = updatedChild;
-        this._sortChildren();
+        // The data loading routine relies on the children being sorted
+        // as it processes first array masters to resize the array appropriately, and
+        // then each child.
+        this._children.sort(DDNode.nodeCompare);
     }
 
     /**
@@ -747,8 +740,9 @@ class DDNode {
     _addChild(child) {
         console.assert(!this.holdsData);
         console.assert(!(child.id in this._childById));
-        this._children.push(child);
-        this._sortChildren();
+        const idx = arrayBinarySearch(this._children, child, DDNode.nodeCompare);
+        console.assert(idx < 0);
+        this._children.splice(-idx, 0, child);
         this._childById[child.id] = child;
     }
 
@@ -759,7 +753,7 @@ class DDNode {
         console.assert(!this.holdsData);
         console.assert(this.hasChild(child));
         delete this._childById[child.id];
-        const idx = this._children.indexOf(child);
+        const idx = arrayBinarySearch(this._children, child, DDNode.nodeCompare);
         console.assert(idx >= 0);
         this._children.splice(idx, 1);
     }

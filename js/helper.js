@@ -104,4 +104,4 @@ function arrayMultidimensionalPrefill(size, dims, defaultValue=null) {
 }
 
 
-export { arrayCompare, arrayMultidimensionalPrefill, timeIt };
+export { arrayCompare, arrayMultidimensionalPrefill, arrayBinarySearch, timeIt };
