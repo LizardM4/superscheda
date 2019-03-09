@@ -313,12 +313,106 @@ class DDMatcherStorage {
 
 class DDFormula {
     constructor(matcherStorage, formulaNode, expression) {
+        this._node = formulaNode;
         this._argDefs = expression.split(/\s+/);
-        this._operator = this._argDefs.shift();
+        console.assert(this._argDefs.length > 1);
+        console.assert(typeof this._argDefs[0] === 'string');
+        this._operator = this._argDefs.shift().toLowerCase();
         this._setupArguments(matcherStorage);
     }
 
-    evaluateArguments(formulaNode) {
+    _evalSum() {
+        const args = this.evaluateArguments();
+        if (args.length == 0) {
+            return 0;
+        }
+        let retval = 0;
+        for (let i = 0; i < args.length; i++) {
+            if (typeof args[i] !== 'number') {
+                return null; // Cannot compute
+            }
+            retval += args[i];
+        }
+        return retval;
+    }
+
+    _evalRef() {
+        const args = this.evaluateArguments();
+        console.assert(args.length === 1);
+        if (args.length !== 1) {
+            return null;
+        }
+        return args[0];
+    }
+
+    _evalMod() {
+        const args = this.evaluateArguments();
+        if (args.length <= 1) {
+            return 0;
+        }
+        const div = args.shift();
+        if (typeof div !== 'number') {
+            return null;
+        }
+        const tot = DDFormula._evalSum(args);
+        return Math.floor(tot / div);
+    }
+
+    _evalSel() {
+        if (this._argDefs.length <= 1) {
+            return null;
+        }
+        let select = this._argDefs[0];
+        if (select instanceof DDMatcherUsage) {
+            // Evaluate the matcher
+            if (!select.matchingNodes) {
+                select.recacheMatchingNodes()
+            }
+            console.assert(select.matchingNodes.length === 1);
+            if (select.matchingNodes.length !== 1) {
+                // Must be a unique node
+                return null;
+            }
+            select = select.matchingNodes[0].formulaValue;
+            if (typeof select === 'string') {
+                select = select.toLowerCase();
+            }
+        }
+        // select should appear in only one matcher
+        for (let i = 1; i < this._argDefs.length; ++i) {
+            const argDef = this._argDefs[i];
+            console.assert(argDef instanceof DDMatcherUsage);
+            // Does the selected path contain the selector
+            if (argDef.matcher.matchParts.indexOf(select) >= 0) {
+                // Evaluate the matcher
+                if (!argDef.matchingNodes) {
+                    argDef.recacheMatchingNodes()
+                }
+                console.assert(argDef.matchingNodes.length === 1);
+                if (argDef.matchingNodes.length !== 1) {
+                    // Must be a unique node
+                    return null;
+                }
+                return argDef.matchingNodes[0].formulaValue;
+            }
+        }
+        return null;
+    }
+
+    evaluate() {
+        switch (this._operator) {
+            case 'sum': return this._evalSum(); break;
+            case 'sel': return this._evalSel(); break;
+            case 'mod': return this._evalMod(); break;
+            case 'ref': return this._evalRef(); break;
+            default:
+                console.assert(false);
+                return null;
+                break;
+        }
+    }
+
+    evaluateArguments() {
         const values = [];
         this._argDefs.forEach(argDef => {
             if (argDef instanceof DDMatcherUsage) {
@@ -335,27 +429,29 @@ class DDFormula {
         return values;
     }
 
-    _updateNode(oldPath, updatedNode) {
+    _updateFormulaNode(oldFormulaNodePath) {
         this._argDefs.forEach(argDef => {
             if (argDef instanceof DDMatcherUsage) {
-                argDef.matcher._updateNode(oldPath, updatedNode);
+                argDef.matcher._updateNode(oldFormulaNodePath, this._node);
             }
         });
     }
 
-    _removeNode(nodeToRemove) {
+    _remove() {
         this._argDefs.forEach(argDef => {
             if (argDef instanceof DDMatcherUsage) {
-                argDef.matcher._unregisterNode(nodeToRemove);
+                argDef.matcher._unregisterNode(this._node);
             }
         });
+        // The usages are now not usable anymore
+        this._argDefs = null;
     }
 
-    _setupArguments(matcherStorage, formulaNode) {
+    _setupArguments(matcherStorage) {
         for (let i = 0; i < this._argDefs.length; ++i) {
             const arg = this._argDefs[i];
             if (arg.startsWith('/') || arg.startsWith('./')) {
-                this._argDefs[i] = matcherStorage.createAndRegisterMatcher(arg, formulaNode, i);
+                this._argDefs[i] = matcherStorage.createAndRegisterMatcher(arg, this._node, i);
             } else {
                 // Try casting to number
                 const num = Number(arg);
