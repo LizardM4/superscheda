@@ -29,7 +29,7 @@ class DDMatcher {
     }
 
     static tryMatchIndices(matchParts, matchPartsIdx, indices) {
-        if (matchPartsIdx + indices.length >= matchParts.length) {
+        if (matchPartsIdx + indices.length > matchParts.length) {
             return false;
         }
         for (let i = 0; i < indices.length; ++i) {
@@ -48,7 +48,7 @@ class DDMatcher {
 
     static tryMatchNode(matchParts, matchPartsIdx, node) {
         console.assert(matchPartsIdx < matchParts.length);
-        if (node.baseId !== matchParts[0]) {
+        if (node.baseId !== matchParts[matchPartsIdx]) {
             return 0;
         }
         if (node.indices) {
