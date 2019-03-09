@@ -597,7 +597,7 @@ class DDNode {
     Returns true if and only if the value is void according to @ref DDGraph.testVoid
     */
     get isVoid() {
-        return DDGraph.testVoid(this._getRawValue());
+        return DDGraph.testVoid(this.type, this._getRawValue());
     }
 
     /**
