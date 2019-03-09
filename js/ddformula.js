@@ -466,4 +466,4 @@ class DDFormula {
 }
 
 
-export { DDSelector };
+export { DDSelector, DDSelectorInstance, DDSelectorStorage, DDFormula };
