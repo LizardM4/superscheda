@@ -208,7 +208,7 @@ class DDSelector {
     }
 
     _registerNode(node, idxOfSelectorInFormula) {
-        const usage = this._usages[node.path];
+        let usage = this._usages[node.path];
         if (!usage) {
             usage = new DDSelectorInstance(this, node);
             this._usages[node.path] = usage;
@@ -302,7 +302,7 @@ class DDSelectorStorage {
         this._storage = {};
     }
     createAndRegisterSelector(selectorString, node, idxOfSelectorInFormula) {
-        const selector = this._storage[selectorString];
+        let selector = this._storage[selectorString];
         if (!selector) {
             selector = new DDSelector(selectorString);
             this._storage[selectorString] = selector;
