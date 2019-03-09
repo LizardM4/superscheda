@@ -35,6 +35,7 @@ function timeIt(desc, body) {
 
 }
 
+// https://stackoverflow.com/a/29018745/1749822
 function arrayBinarySearch(a, elm, compareFn) {
     let m = 0;
     let n = a.length - 1;
