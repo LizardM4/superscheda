@@ -742,7 +742,7 @@ class DDNode {
         console.assert(!(child.id in this._childById));
         const idx = arrayBinarySearch(this._children, child, DDNode.nodeCompare);
         console.assert(idx < 0);
-        this._children.splice(-idx, 0, child);
+        this._children.splice(-idx - 1, 0, child);
         this._childById[child.id] = child;
     }
 
