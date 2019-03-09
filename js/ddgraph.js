@@ -710,7 +710,7 @@ class DDNode {
         return this._childById[child.id] === child;
     }
 
-    static nodeCompare(a, b) {
+    static childCompare(a, b) {
         const baseCompare = a.baseId.localeCompare(b.baseId);
         if (baseCompare === 0) {
             return arrayCompare(a.indices, b.indices);
@@ -731,7 +731,7 @@ class DDNode {
         // The data loading routine relies on the children being sorted
         // as it processes first array masters to resize the array appropriately, and
         // then each child.
-        this._children.sort(DDNode.nodeCompare);
+        this._children.sort(DDNode.childCompare);
     }
 
     /**
@@ -740,7 +740,7 @@ class DDNode {
     _addChild(child) {
         console.assert(!this.holdsData);
         console.assert(!(child.id in this._childById));
-        const idx = arrayBinarySearch(this._children, child, DDNode.nodeCompare);
+        const idx = arrayBinarySearch(this._children, child, DDNode.childCompare);
         console.assert(idx < 0);
         this._children.splice(-idx - 1, 0, child);
         this._childById[child.id] = child;
@@ -753,7 +753,7 @@ class DDNode {
         console.assert(!this.holdsData);
         console.assert(this.hasChild(child));
         delete this._childById[child.id];
-        const idx = arrayBinarySearch(this._children, child, DDNode.nodeCompare);
+        const idx = arrayBinarySearch(this._children, child, DDNode.childCompare);
         console.assert(idx >= 0);
         this._children.splice(idx, 1);
     }
