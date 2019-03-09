@@ -786,6 +786,9 @@ class DDNode {
     */
     _remove() {
         console.assert(!this.isRoot);
+        if (this._formula) {
+            this._formula._remove();
+        }
         this.obj.removeAttr('data-dd-path');
         this.graph._removeNode(this);
         this.parent._removeChild(this);
@@ -1037,13 +1040,13 @@ class DDNode {
         this._isCheckbox = (this.obj.attr('type') === 'checkbox');
         this._holdsData = DDGraph.holdsData(this.obj);
         this._type = DDGraph.inferType(this.obj);
+        // Mutable properties:
+        this._arrayIndices = this._getArrayIndices(this.parent);
+        this._assignIdAndPath();
         const formulaExpression = this.obj.attr('data-dd-formula');
         if (formulaExpression) {
             this._formula = new DDFormula(this.graph.selectorStorage, this, formulaExpression);
         }
-        // Mutable properties:
-        this._arrayIndices = this._getArrayIndices(this.parent);
-        this._assignIdAndPath();
     }
 
     _collectPathPieces() {
@@ -1079,6 +1082,9 @@ class DDNode {
             // Rename
             this.parent._updateChild(oldId, this);
             this.graph._updateNode(oldPath, this);
+            if (this._formula) {
+                this._formula._updateFormulaNode(oldPath);
+            }
         }
     }
 
