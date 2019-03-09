@@ -175,12 +175,12 @@ class DDMatcher {
     reverseMatch(candidateNode) {
         let results = null
         Object.keys(this._nodesUsingThis).forEach(key => {
-            const nodeAndIdx = this._nodesUsingThis[key];
-            if (this._reverseMatch(nodeAndIdx[0], candidateNode)) {
+            const usage = this._nodesUsingThis[key];
+            if (this._reverseMatch(usage.node, candidateNode)) {
                 if (results) {
-                    results.push(nodeAndIdx);
+                    results.push(usage);
                 } else {
-                    results = [nodeAndIdx];
+                    results = [usage];
                 }
             }
         });
@@ -198,15 +198,19 @@ class DDMatcher {
     }
 
     _registerNode(node, idxOfMatcherInFormula) {
-        console.assert(!(node.path in this._nodesUsingThis));
-        this._nodesUsingThis[node.path] = [node, idxOfMatcherInFormula];
+        const usage = this._nodesUsingThis[node.path];
+        if (!usage) {
+            usage = new DDMatcherUsage(node);
+            this._nodesUsingThis[node.path] = usage;
+        }
+        usage.matcherIdxsInFormula.add(idxOfMatcherInFormula);
     }
 
     _updateNode(oldPath, updatedNode) {
-        const [node, oldIdx] = this._nodesUsingThis[oldPath];
-        console.assert(node === updatedNode);
+        const usage = this._nodesUsingThis[oldPath];
+        console.assert(usage.node === updatedNode);
         delete this._nodesUsingThis[oldPath];
-        this._nodesUsingThis[updatedNode.path] = [updatedNode, oldIdx];
+        this._nodesUsingThis[updatedNode.path] = usage;
     }
 
     _unregisterNode(node) {
@@ -220,5 +224,77 @@ class DDMatcher {
         [this._relative, this._matchParts] = DDMatcher.parseMatchString(matchString);
     }
 }
+
+class DDMatcherUsage {
+    get node() {
+        return this._node;
+    }
+
+    get matcherIdxsInFormula() {
+        return this._matcherIdxsInFormula;
+    }
+
+    constructor(node) {
+        this._node = node;
+        this._matcherIdxsInFormula = new Set();
+    }
+}
+
+class DDMatcherStorage {
+    constructor() {
+        this._storage = {};
+    }
+    createAndRegisterMatcher(matchString, node, idxOfMatcherInFormula) {
+        const matcher = this._storage[matchString];
+        if (!matcher) {
+            matcher = new DDMatcher(matchString);
+            this._storage[matchString] = matcher;
+        }
+        matcher._registerNode(node, idxOfMatcherInFormula);
+        return matcher;
+    }
+}
+
+
+class DDFormula {
+    constructor(matcherStorage, node, expression) {
+        this._argDefs = expression.split(/\s+/);
+        this._operator = this._argDefs.shift();
+        this._setupArguments(matcherStorage);
+    }
+
+    _updateNode(oldPath, updatedNode) {
+        this._argDefs.forEach(argDef => {
+            if (argDef instanceof DDMatcher) {
+                argDef._updateNode(oldPath, updatedNode);
+            }
+        });
+    }
+
+    _removeNode(nodeToRemove) {
+        this._argDefs.forEach(argDef => {
+            if (argDef instanceof DDMatcher) {
+                argDef._unregisterNode(nodeToRemove);
+            }
+        });
+    }
+
+    _setupArguments(matcherStorage, node) {
+        for (let i = 0; i < this._argDefs.length; ++i) {
+            const arg = this._argDefs[i];
+            if (arg.startsWith('/') || arg.startsWith('./')) {
+                this._argDefs[i] = matcherStorage.createAndRegisterMatcher(arg, node, i);
+            } else {
+                // Try casting to number
+                const num = Number(arg);
+                if (num === num) {
+                    this._argDefs[i] = num;
+                }
+                // Keep it as string
+            }
+        }
+    }
+}
+
 
 export { DDMatcher };
