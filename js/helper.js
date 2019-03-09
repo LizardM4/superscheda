@@ -35,6 +35,23 @@ function timeIt(desc, body) {
 
 }
 
+function arrayBinarySearch(a, elm, compareFn) {
+    let m = 0;
+    let n = a.length - 1;
+    while (m <= n) {
+        const k = (n + m) >> 1;
+        const cmp = compareFn(elm, a[k]);
+        if (cmp > 0) {
+            m = k + 1;
+        } else if (cmp < 0) {
+            n = k - 1;
+        } else {
+            return k;
+        }
+    }
+    return -m - 1;
+}
+
 function arrayCompare(l, r) {
     const lUndef = (typeof l === 'undefined');
     const rUndef = (typeof r === 'undefined');
