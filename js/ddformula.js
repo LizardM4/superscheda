@@ -174,12 +174,13 @@ class DDMatcher {
 
     reverseMatch(candidateNode) {
         let results = null
-        this._nodesUsingThis.forEach(node => {
-            if (this._reverseMatch(node, candidateNode)) {
+        Object.keys(this._nodesUsingThis).forEach(key => {
+            const nodeAndIdx = this._nodesUsingThis[key];
+            if (this._reverseMatch(nodeAndIdx[0], candidateNode)) {
                 if (results) {
-                    results.push(node);
+                    results.push(nodeAndIdx);
                 } else {
-                    results = [node];
+                    results = [nodeAndIdx];
                 }
             }
         });
@@ -196,18 +197,26 @@ class DDMatcher {
         }
     }
 
-    _registerNode(node) {
-        this._nodesUsingThis.add(node);
+    _registerNode(node, idxOfMatcherInFormula) {
+        console.assert(!(node.path in this._nodesUsingThis));
+        this._nodesUsingThis[node.path] = [node, idxOfMatcherInFormula];
+    }
+
+    _updateNode(oldPath, updatedNode) {
+        const [node, oldIdx] = this._nodesUsingThis[oldPath];
+        console.assert(node === updatedNode);
+        delete this._nodesUsingThis[oldPath];
+        this._nodesUsingThis[updatedNode.path] = [updatedNode, oldIdx];
     }
 
     _unregisterNode(node) {
-        this._nodesUsingThis.delete(node);
+        delete this._nodesUsingThis[node.path];
     }
 
     constructor(matchString) {
         this._relative = null;
         this._matchParts = null;
-        this._nodesUsingThis = new Set();
+        this._nodesUsingThis = {};
         [this._relative, this._matchParts] = DDMatcher.parseMatchString(matchString);
     }
 }
