@@ -20,24 +20,24 @@
 import { DDGraph, DFSEvent } from './ddgraph.js?v=%REV';
 import { arrayBinarySearch } from './helper.js?v=%REV';
 
-class DDMatcher {
+class DDSelector {
     get isRelative() {
         return this._relative;
     }
 
-    get matchParts() {
-        return this._matchParts;
+    get selectorParts() {
+        return this._selectorParts;
     }
 
-    static tryMatchIndices(matchParts, matchPartsIdx, indices) {
-        if (matchPartsIdx + indices.length > matchParts.length) {
+    static tryMatchIndices(selectorParts, selectorPartsIdx, indices) {
+        if (selectorPartsIdx + indices.length > selectorParts.length) {
             return false;
         }
         for (let i = 0; i < indices.length; ++i) {
             if (indices[i] === -1) {
                 return false; // No array master
             }
-            const tryMatchIndex = matchParts[matchPartsIdx + i];
+            const tryMatchIndex = selectorParts[selectorPartsIdx + i];
             if (tryMatchIndex === -1) {
                 continue; // Matches all indices
             } else if (tryMatchIndex !== indices[i]) {
@@ -47,13 +47,13 @@ class DDMatcher {
         return true;
     }
 
-    static tryMatchNode(matchParts, matchPartsIdx, node) {
-        console.assert(matchPartsIdx < matchParts.length);
-        if (node.baseId !== matchParts[matchPartsIdx]) {
+    static tryMatchNode(selectorParts, selectorPartsIdx, node) {
+        console.assert(selectorPartsIdx < selectorParts.length);
+        if (node.baseId !== selectorParts[selectorPartsIdx]) {
             return 0;
         }
         if (node.indices) {
-            if (DDMatcher.tryMatchIndices(matchParts, matchPartsIdx + 1, node.indices)) {
+            if (DDSelector.tryMatchIndices(selectorParts, selectorPartsIdx + 1, node.indices)) {
                 // Matches, consumes 1 unit for the baseId plus the indices length
                 return 1 + node.indices.length;
             }
@@ -63,7 +63,7 @@ class DDMatcher {
         }
     }
 
-    static traverseMatchingNodes(matchParts, startNode) {
+    static traverseMatchingNodes(selectorParts, startNode) {
         let matchingNodes = null;
         let idxs = [0];
         startNode.traverse((node, evt) => {
@@ -79,17 +79,17 @@ class DDMatcher {
             // Always add the same index to match the pop
             idxs.push(idxs[idxs.length - 1]);
             // We are traversing node. Does this node match a subsequence?
-            const matchLength = DDMatcher.tryMatchNode(matchParts, idxs[idxs.length - 1], node);
+            const matchLength = DDSelector.tryMatchNode(selectorParts, idxs[idxs.length - 1], node);
             if (matchLength > 0) {
                 // Update the idxs we will be using for the chldren to consume the matched subsequence
                 idxs[idxs.length - 1] += matchLength;
-                if (idxs[idxs.length - 1] >= matchParts.length) {
+                if (idxs[idxs.length - 1] >= selectorParts.length) {
                     // Found a matching node!
                     if (!matchingNodes) {
                         matchingNodes = [];
                     }
                     matchingNodes.push(node);
-                    console.assert(idxs[idxs.length - 1] === matchParts.length);
+                    console.assert(idxs[idxs.length - 1] === selectorParts.length);
                     // Just a safety check
                     if (!node.holdsData) {
                         // Return false nonetheless, we have matched some node with children but we can't
@@ -106,77 +106,77 @@ class DDMatcher {
         return matchingNodes;
     }
 
-    static tryMatchParts(matchParts, candidate, startIdx=0, matchToEnd=true) {
+    static tryMatchParts(selectorParts, candidate, startIdx=0, matchToEnd=true) {
         if (matchToEnd) {
-            if (matchParts.length !== candidate.length - startIdx) {
+            if (selectorParts.length !== candidate.length - startIdx) {
                 return false;
             }
         } else {
-            if (matchParts.length > candidate.length - startIdx) {
+            if (selectorParts.length > candidate.length - startIdx) {
                 return false;
             }
         }
 
-        for (let i = 0; i < matchParts.length; ++i) {
+        for (let i = 0; i < selectorParts.length; ++i) {
             const candidatePart = candidate[startIdx + i];
             if (candidatePart === -1) {
                 // No array masters here
                 return false;
             }
-            if (matchParts[i] === -1) {
+            if (selectorParts[i] === -1) {
                 // Match all numbers
                 if (typeof candidatePart !== 'number') {
                     return false;
                 }
-            } else if (matchParts[i] !== candidatePart) {
+            } else if (selectorParts[i] !== candidatePart) {
                 return false;
             }
         }
         return true;
     }
 
-    static tryMatchAbsolute(matchParts, candidate) {
-        return DDMatcher.tryMatchParts(matchParts, candidate, 0, true);
+    static tryMatchAbsolute(selectorParts, candidate) {
+        return DDSelector.tryMatchParts(selectorParts, candidate, 0, true);
     }
 
-    static tryMatchRelative(matchParts, commonParent, candidate) {
-        if (!DDMatcher.tryMatchParts(commonParent, candidate, 0, false)) {
+    static tryMatchRelative(selectorParts, commonParent, candidate) {
+        if (!DDSelector.tryMatchParts(commonParent, candidate, 0, false)) {
             return false;
         }
-        return DDMatcher.tryMatchParts(matchParts, candidate, commonParent.length, true);
+        return DDSelector.tryMatchParts(selectorParts, candidate, commonParent.length, true);
     }
 
-    static parseMatchString(matchString) {
+    static parseSelectorString(selectorString) {
         let relative = false;
-        let matchParts = [];
-        if (matchString.startsWith('./')) {
+        let selectorParts = [];
+        if (selectorString.startsWith('./')) {
             relative = true;
-            matchString = matchString.slice(2);
-        } else if (matchString.startsWith('/')) {
-            matchString = matchString.slice(1);
+            selectorString = selectorString.slice(2);
+        } else if (selectorString.startsWith('/')) {
+            selectorString = selectorString.slice(1);
         }
         // Get the pieces
-        matchString.split('.').forEach(piece => {
+        selectorString.split('.').forEach(piece => {
             const [baseId, indices] = DDGraph.parseIndicesFromId(piece, true);
             console.assert(baseId && baseId.length > 0);
-            matchParts.push(baseId);
+            selectorParts.push(baseId);
             if (indices && indices.length > 0) {
-                matchParts.push(...indices);
+                selectorParts.push(...indices);
             }
         });
-        return [relative, matchParts];
+        return [relative, selectorParts];
     }
 
     forwardMatch(formulaNode, sort=true) {
         console.assert(formulaNode.holdsData);
         let results = null;
         if (this.isRelative) {
-            results = DDMatcher.traverseMatchingNodes(this.matchParts, formulaNode.parent);
+            results = DDSelector.traverseMatchingNodes(this.selectorParts, formulaNode.parent);
         } else {
-            results = DDMatcher.traverseMatchingNodes(this.matchParts, formulaNode.graph.root);
+            results = DDSelector.traverseMatchingNodes(this.selectorParts, formulaNode.graph.root);
         }
         if (results && sort) {
-            results.sort(DDMatcher.nodeCompare);
+            results.sort(DDSelector.nodeCompare);
         }
         return results;
     }
@@ -199,20 +199,20 @@ class DDMatcher {
     _reverseMatch(formulaNode, candidateNode) {
         console.assert(candidateNode.holdsData);
         if (this.isRelative) {
-            return DDMatcher.tryMatchRelative(this.matchParts, formulaNode.parent.pathPieces,
+            return DDSelector.tryMatchRelative(this.selectorParts, formulaNode.parent.pathPieces,
                 candidateNode.pathPieces);
         } else {
-            return DDMatcher.tryMatchAbsolute(this.matchParts, candidateNode.pathPieces);
+            return DDSelector.tryMatchAbsolute(this.selectorParts, candidateNode.pathPieces);
         }
     }
 
-    _registerNode(node, idxOfMatcherInFormula) {
+    _registerNode(node, idxOfSelectorInFormula) {
         const usage = this._usages[node.path];
         if (!usage) {
-            usage = new DDMatcherUsage(this, node);
+            usage = new DDSelectorInstance(this, node);
             this._usages[node.path] = usage;
         }
-        usage.matcherIdxsInFormula.add(idxOfMatcherInFormula);
+        usage.selectorIdxsInFormula.add(idxOfSelectorInFormula);
         return usage;
     }
 
@@ -227,11 +227,11 @@ class DDMatcher {
         delete this._usages[node.path];
     }
 
-    constructor(matchString) {
+    constructor(selectorString) {
         this._relative = null;
-        this._matchParts = null;
+        this._selectorParts = null;
         this._usages = {};
-        [this._relative, this._matchParts] = DDMatcher.parseMatchString(matchString);
+        [this._relative, this._selectorParts] = DDSelector.parseSelectorString(selectorString);
     }
 
     static nodeCompare(a, b) {
@@ -246,17 +246,17 @@ class DDMatcher {
     }
 }
 
-class DDMatcherUsage {
+class DDSelectorInstance {
     get node() {
         return this._node;
     }
 
-    get matcher() {
-        return this._matcher;
+    get selector() {
+        return this._selector;
     }
 
-    get matcherIdxsInFormula() {
-        return this._matcherIdxsInFormula;
+    get selectorIdxsInFormula() {
+        return this._selectorIdxsInFormula;
     }
 
     get matchingNodes() {
@@ -264,7 +264,7 @@ class DDMatcherUsage {
     }
 
     recacheMatchingNodes() {
-        this._matchingNodes = this.matcher.forwardMatch(this.node, true);
+        this._matchingNodes = this.selector.forwardMatch(this.node, true);
         if (!this._matchingNodes) {
             this._matchingNodes = [];
         }
@@ -274,7 +274,7 @@ class DDMatcherUsage {
         if (this._matchingNodes === null) {
             this.recacheMatchingNodes();
         }
-        const idx = arrayBinarySearch(this._matchingNodes, node, DDMatcher.nodeCompare);
+        const idx = arrayBinarySearch(this._matchingNodes, node, DDSelector.nodeCompare);
         console.assert(idx < 0);
         this._matchingNodes.splice(-idx - 1, 0, node);
     }
@@ -283,42 +283,42 @@ class DDMatcherUsage {
         if (this._matchingNodes === null) {
             return;
         }
-        const idx = arrayBinarySearch(this._matchingNodes, node, DDMatcher.nodeCompare);
+        const idx = arrayBinarySearch(this._matchingNodes, node, DDSelector.nodeCompare);
         console.assert(idx >= 0);
         this._matchingNodes.splice(idx, 1);
     }
 
-    constructor(matcher, node) {
-        this._matcher = matcher;
+    constructor(selector, node) {
+        this._selector = selector;
         this._node = node;
-        this._matcherIdxsInFormula = new Set();
+        this._selectorIdxsInFormula = new Set();
         this._matchingNodes = null;
     }
 }
 
-class DDMatcherStorage {
+class DDSelectorStorage {
     constructor() {
         this._storage = {};
     }
-    createAndRegisterMatcher(matchString, node, idxOfMatcherInFormula) {
-        const matcher = this._storage[matchString];
-        if (!matcher) {
-            matcher = new DDMatcher(matchString);
-            this._storage[matchString] = matcher;
+    createAndRegisterSelector(selectorString, node, idxOfSelectorInFormula) {
+        const selector = this._storage[selectorString];
+        if (!selector) {
+            selector = new DDSelector(selectorString);
+            this._storage[selectorString] = selector;
         }
-        return matcher._registerNode(node, idxOfMatcherInFormula);
+        return selector._registerNode(node, idxOfSelectorInFormula);
     }
 }
 
 
 class DDFormula {
-    constructor(matcherStorage, formulaNode, expression) {
+    constructor(selectorStorage, formulaNode, expression) {
         this._node = formulaNode;
         this._argDefs = expression.split(/\s+/);
         console.assert(this._argDefs.length > 1);
         console.assert(typeof this._argDefs[0] === 'string');
         this._operator = this._argDefs.shift().toLowerCase();
-        this._setupArguments(matcherStorage);
+        this._setupArguments(selectorStorage);
     }
 
     _evalSum() {
@@ -363,8 +363,8 @@ class DDFormula {
             return null;
         }
         let select = this._argDefs[0];
-        if (select instanceof DDMatcherUsage) {
-            // Evaluate the matcher
+        if (select instanceof DDSelectorInstance) {
+            // Evaluate the selector
             if (!select.matchingNodes) {
                 select.recacheMatchingNodes()
             }
@@ -378,13 +378,13 @@ class DDFormula {
                 select = select.toLowerCase();
             }
         }
-        // select should appear in only one matcher
+        // select should appear in only one selector
         for (let i = 1; i < this._argDefs.length; ++i) {
             const argDef = this._argDefs[i];
-            console.assert(argDef instanceof DDMatcherUsage);
+            console.assert(argDef instanceof DDSelectorInstance);
             // Does the selected path contain the selector
-            if (argDef.matcher.matchParts.indexOf(select) >= 0) {
-                // Evaluate the matcher
+            if (argDef.selector.selectorParts.indexOf(select) >= 0) {
+                // Evaluate the selector
                 if (!argDef.matchingNodes) {
                     argDef.recacheMatchingNodes()
                 }
@@ -415,7 +415,7 @@ class DDFormula {
     evaluateArguments() {
         const values = [];
         this._argDefs.forEach(argDef => {
-            if (argDef instanceof DDMatcherUsage) {
+            if (argDef instanceof DDSelectorInstance) {
                 if (!argDef.matchingNodes) {
                     argDef.recacheMatchingNodes();
                 }
@@ -431,27 +431,27 @@ class DDFormula {
 
     _updateFormulaNode(oldFormulaNodePath) {
         this._argDefs.forEach(argDef => {
-            if (argDef instanceof DDMatcherUsage) {
-                argDef.matcher._updateNode(oldFormulaNodePath, this._node);
+            if (argDef instanceof DDSelectorInstance) {
+                argDef.selector._updateNode(oldFormulaNodePath, this._node);
             }
         });
     }
 
     _remove() {
         this._argDefs.forEach(argDef => {
-            if (argDef instanceof DDMatcherUsage) {
-                argDef.matcher._unregisterNode(this._node);
+            if (argDef instanceof DDSelectorInstance) {
+                argDef.selector._unregisterNode(this._node);
             }
         });
         // The usages are now not usable anymore
         this._argDefs = null;
     }
 
-    _setupArguments(matcherStorage) {
+    _setupArguments(selectorStorage) {
         for (let i = 0; i < this._argDefs.length; ++i) {
             const arg = this._argDefs[i];
             if (arg.startsWith('/') || arg.startsWith('./')) {
-                this._argDefs[i] = matcherStorage.createAndRegisterMatcher(arg, this._node, i);
+                this._argDefs[i] = selectorStorage.createAndRegisterSelector(arg, this._node, i);
             } else {
                 // Try casting to number
                 const num = Number(arg);
@@ -465,4 +465,4 @@ class DDFormula {
 }
 
 
-export { DDMatcher };
+export { DDSelector };
