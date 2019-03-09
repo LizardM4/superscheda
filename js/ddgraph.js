@@ -18,6 +18,7 @@
 'use strict';
 
 import { DDArray } from './ddarray.js?v=%REV';
+import { DDFormula, DDSelectorStorage } from './ddformula.js?v=%REV';
 import { arrayCompare, arrayMultidimensionalPrefill, arrayBinarySearch, timeIt } from './helper.js?v=%REV';
 
 const DDType = Object.freeze({
@@ -57,9 +58,14 @@ class DDGraph {
         return this._root;
     }
 
+    get selectorStorage() {
+        return this._selectorStorage;
+    }
+
     constructor() {
         this._root = new DDNode(this);
         this._nodesByPath = {};
+        this._selectorStorage = new DDSelectorStorage();
     }
 
     loadDataBag(data) {
@@ -1031,7 +1037,10 @@ class DDNode {
         this._isCheckbox = (this.obj.attr('type') === 'checkbox');
         this._holdsData = DDGraph.holdsData(this.obj);
         this._type = DDGraph.inferType(this.obj);
-        // TODO infer formula
+        const formulaExpression = this.obj.attr('data-dd-formula');
+        if (formulaExpression) {
+            this._formula = new DDFormula(this.graph.selectorStorage, this, formulaExpression);
+        }
         // Mutable properties:
         this._arrayIndices = this._getArrayIndices(this.parent);
         this._assignIdAndPath();
