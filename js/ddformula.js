@@ -17,7 +17,7 @@
 
 'use strict';
 
-import { DDGraph, DFSEvent } from './ddgraph.js?v=%REV';
+import { DDGraph, DDNode, DFSEvent } from './ddgraph.js?v=%REV';
 
 class DDMatcher {
     get isRelative() {
@@ -63,7 +63,7 @@ class DDMatcher {
     }
 
     static traverseMatchingNodes(matchParts, startNode) {
-        let matchingNodes = [];
+        let matchingNodes = null;
         let idxs = [0];
         startNode.traverse((node, evt) => {
             if (node === startNode) {
@@ -84,6 +84,9 @@ class DDMatcher {
                 idxs[idxs.length - 1] += matchLength;
                 if (idxs[idxs.length - 1] >= matchParts.length) {
                     // Found a matching node!
+                    if (!matchingNodes) {
+                        matchingNodes = [];
+                    }
                     matchingNodes.push(node);
                     console.assert(idxs[idxs.length - 1] === matchParts.length);
                     // Just a safety check
@@ -163,13 +166,18 @@ class DDMatcher {
         return [relative, matchParts];
     }
 
-    forwardMatch(graph, formulaNode) {
+    forwardMatch(formulaNode, sort=true) {
         console.assert(formulaNode.holdsData);
+        let results = null;
         if (this.isRelative) {
-            return DDMatcher.traverseMatchingNodes(this.matchParts, formulaNode.parent);
+            results = DDMatcher.traverseMatchingNodes(this.matchParts, formulaNode.parent);
         } else {
-            return DDMatcher.traverseMatchingNodes(this.matchParts, graph.root);
+            results = DDMatcher.traverseMatchingNodes(this.matchParts, formulaNode.graph.root);
         }
+        if (results && sort) {
+            results.sort((a, b) => DDNode.nodeCompare(a, b));
+        }
+        return results;
     }
 
     reverseMatch(candidateNode) {
@@ -257,10 +265,20 @@ class DDMatcherStorage {
 
 
 class DDFormula {
-    constructor(matcherStorage, node, expression) {
+    constructor(matcherStorage, formulaNode, expression) {
         this._argDefs = expression.split(/\s+/);
         this._operator = this._argDefs.shift();
         this._setupArguments(matcherStorage);
+    }
+
+    resolveArguments(formulaNode) {
+        return this._argDefs.map(argDef => {
+            if (argDef instanceof DDMatcher) {
+                // Resolve
+                argDef = argDef.forwardMatch(formulaNode, true);
+            }
+            return argDef;
+        });
     }
 
     _updateNode(oldPath, updatedNode) {
@@ -279,11 +297,11 @@ class DDFormula {
         });
     }
 
-    _setupArguments(matcherStorage, node) {
+    _setupArguments(matcherStorage, formulaNode) {
         for (let i = 0; i < this._argDefs.length; ++i) {
             const arg = this._argDefs[i];
             if (arg.startsWith('/') || arg.startsWith('./')) {
-                this._argDefs[i] = matcherStorage.createAndRegisterMatcher(arg, node, i);
+                this._argDefs[i] = matcherStorage.createAndRegisterMatcher(arg, formulaNode, i);
             } else {
                 // Try casting to number
                 const num = Number(arg);
