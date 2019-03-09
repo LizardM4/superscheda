@@ -318,16 +318,21 @@ class DDFormula {
         this._setupArguments(matcherStorage);
     }
 
-    resolveArguments(formulaNode) {
-        return this._argDefs.map(argDef => {
+    evaluateArguments(formulaNode) {
+        const values = [];
+        this._argDefs.forEach(argDef => {
             if (argDef instanceof DDMatcher) {
                 if (!argDef.matchingNodes) {
                     argDef.recacheMatchingNodes();
                 }
-                return argDef.matchingNodes;
+                argDef.matchingNodes.forEach(node => {
+                    values.push(node.formulaValue);
+                });
+            } else {
+                values.push(argDef);
             }
-            return argDef;
         });
+        return values;
     }
 
     _updateNode(oldPath, updatedNode) {
