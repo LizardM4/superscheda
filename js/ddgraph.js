@@ -710,6 +710,14 @@ class DDNode {
         return this._childById[child.id] === child;
     }
 
+    static nodeCompare(a, b) {
+        const baseCompare = a.baseId.localeCompare(b.baseId);
+        if (baseCompare === 0) {
+            return arrayCompare(a.indices, b.indices);
+        }
+        return baseCompare;
+    }
+
     /**
     Resorts the children by id.
     */
@@ -717,13 +725,7 @@ class DDNode {
         // The data loading routine relies on the children being sorted
         // as it processes first array masters to resize the array appropriately, and
         // then each child.
-        this._children.sort((a, b) => {
-            const baseCompare = a.baseId.localeCompare(b.baseId);
-            if (baseCompare === 0) {
-                return arrayCompare(a.indices, b.indices);
-            }
-            return baseCompare;
-        });
+        this._children.sort((a, b) => DDNode.nodeCompare(a, b));
     }
 
     /**
@@ -1109,4 +1111,4 @@ class DDNode {
 
 }
 
-export { DDGraph, DFSEvent };
+export { DDGraph, DDNode, DFSEvent };
