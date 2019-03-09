@@ -28,6 +28,14 @@ const DDType = Object.freeze({
     NONE:    Symbol('none')
 });
 
+const DDDefaultPerType = Object.freeze({
+    DDType.INT:     0,
+    DDType.FLOAT:   0.,
+    DDType.BOOL:    false,
+    DDType.STRING:  '',
+    DDTYpe.NONE:    null
+});
+
 /**
 Depth first search event. Enter occurs when visiting a node, exit when leaving it. A node cannot be
 left until all its descendants have been visited and left.
@@ -635,6 +643,9 @@ class DDNode {
     */
     get formulaValue() {
         if (this.isVoid) {
+            if (this._formulaValue === null) {
+                return DDDefaultPerType[this.type];
+            }
             return this._formulaValue;
         }
         return DDGraph.castRawValue(this.type, this._getRawValue(), true);
@@ -644,6 +655,7 @@ class DDNode {
     Sets the formula value for this control.
     */
     set formulaValue(v) {
+        console.assert(this._formula);
         this._formulaValue = v;
         this._updateFormulaValue();
     }
@@ -682,6 +694,7 @@ class DDNode {
         this._holdsData = false;
         this._formulaValue = null;
         this._type = DDType.NONE;
+        this._formula = null;
         if (!this.isRoot) {
             this._setup();
         }
