@@ -28,13 +28,16 @@ const DDType = Object.freeze({
     NONE:    Symbol('none')
 });
 
-const DDDefaultPerType = Object.freeze({
-    DDType.INT:     0,
-    DDType.FLOAT:   0.,
-    DDType.BOOL:    false,
-    DDType.STRING:  '',
-    DDTYpe.NONE:    null
-});
+
+function defaultPerType(type) {
+    switch (type) {
+        case DDType.INT:    return 0;
+        case DDType.FLOAT:  return 0.;
+        case DDType.BOOL:   return false;
+        case DDType.STRING: return '';
+        default:            return null;
+    }
+}
 
 /**
 Depth first search event. Enter occurs when visiting a node, exit when leaving it. A node cannot be
@@ -644,7 +647,7 @@ class DDNode {
     get formulaValue() {
         if (this.isVoid) {
             if (this._formulaValue === null) {
-                return DDDefaultPerType[this.type];
+                return defaultPerType(this.type);
             }
             return this._formulaValue;
         }
