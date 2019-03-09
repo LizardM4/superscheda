@@ -173,10 +173,14 @@ class DDMatcher {
     }
 
     reverseMatch(candidateNode) {
-        let results = [];
+        let results = null
         this._nodesUsingThis.forEach(node => {
             if (this._reverseMatch(node, candidateNode)) {
-                results.push(node);
+                if (results) {
+                    results.push(node);
+                } else {
+                    results = [node];
+                }
             }
         });
         return results;
