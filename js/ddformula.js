@@ -264,6 +264,10 @@ class DDSelectorInstance {
         return this._matchingNodes;
     }
 
+    clearMatchingNodesCache() {
+        this._matchingNodes = null;
+    }
+
     recacheMatchingNodes() {
         this._matchingNodes = this.selector.forwardMatch(this.node, true);
         if (!this._matchingNodes) {
@@ -366,9 +370,6 @@ class DDFormula {
         let select = this._argDefs[0];
         if (select instanceof DDSelectorInstance) {
             // Evaluate the selector
-            if (!select.matchingNodes) {
-                select.recacheMatchingNodes()
-            }
             console.assert(select.matchingNodes.length === 1);
             if (select.matchingNodes.length !== 1) {
                 // Must be a unique node
@@ -386,9 +387,6 @@ class DDFormula {
             // Does the selected path contain the selector
             if (argDef.selector.selectorParts.indexOf(select) >= 0) {
                 // Evaluate the selector
-                if (!argDef.matchingNodes) {
-                    argDef.recacheMatchingNodes()
-                }
                 console.assert(argDef.matchingNodes.length === 1);
                 if (argDef.matchingNodes.length !== 1) {
                     // Must be a unique node
@@ -398,6 +396,25 @@ class DDFormula {
             }
         }
         return null;
+    }
+
+    clearMatchingNodesCache() {
+        this._argDefs.forEach(argDef => {
+            if (argDef instanceof DDSelectorInstance) {
+                argDef.clearMatchingNodesCache();
+            }
+        });
+    }
+
+    rebuildMatchingNodesCache(fromScratch=true) {
+        if (fromScratch) {
+            this.clearMatchingNodesCache();
+        }
+        this._argDefs.forEach(argDef => {
+            if (argDef instanceof DDSelectorInstance) {
+                argDef.recacheMatchingNodes();
+            }
+        });
     }
 
     evaluate() {
@@ -413,13 +430,11 @@ class DDFormula {
         }
     }
 
-    evaluateArguments() {
+    evaluateArguments(recacheFromScratch=false) {
+        this.rebuildMatchingNodesCache(recacheFromScratch);
         const values = [];
         this._argDefs.forEach(argDef => {
             if (argDef instanceof DDSelectorInstance) {
-                if (!argDef.matchingNodes) {
-                    argDef.recacheMatchingNodes();
-                }
                 argDef.matchingNodes.forEach(node => {
                     values.push(node.formulaValue);
                 });
