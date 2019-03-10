@@ -398,6 +398,19 @@ class DDFormula {
         return null;
     }
 
+    getAllMatchingNodes(recacheFromScratch=false) {
+        this.rebuildMatchingNodesCache(recacheFromScratch);
+        const matchingNodes = new Set();
+        this._argDefs.forEach(argDef => {
+            if (argDef instanceof DDSelectorInstance) {
+                if (argDef.matchingNodes && argDef.matchingNodes.length > 0) {
+                    argDef.matchingNodes.forEach(matchingNodes.add);
+                }
+            }
+        });
+        return matchingNodes;
+    }
+
     clearMatchingNodesCache() {
         this._argDefs.forEach(argDef => {
             if (argDef instanceof DDSelectorInstance) {
