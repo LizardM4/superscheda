@@ -493,5 +493,80 @@ class DDFormula {
     }
 }
 
+class DDDependencyList {
+    clear() {
+        this.predecessors.clear();
+        this.successors.clear();
+    }
+    constructor() {
+        this.precessors = new Set();
+        this.successors = new Set();
+    }
+}
+
+
+class DDFormulaManager {
+    get selectorStorage() {
+        return this._selectorStorage;
+    }
+
+    get dynamicUpdate() {
+        return this._dynamicUpdate;
+    }
+
+    set dynamicUpdate(v) {
+        this._dynamicUpdate = v;
+    }
+
+    get graph() {
+        return this._graph;
+    }
+
+    _rebuildPredecessors(node, formula, updateSuccessors=true, recacheFromScratch=false) {
+        const depList = this._ensureDepList(node);
+        depList.predecessors = formula.getAllMatchingNodes(recacheFromScratch);
+        if (updateSuccessors) {
+            depList.predecessors.forEach(predecessorNode => {
+                const predecessorDepList = this._ensureDepList(predecessorNode);
+                predecessorsDepList.successors.add(node);
+            });
+        }
+    }
+
+    _rebuildSuccessors(node, formula, updatePredecessors=false) {
+        const depList = this._ensureDepList(node);
+        depList.predecessors = formula.getAllMatchingNodes(recacheFromScratch);
+        if (updateSuccessors) {
+            depList.predecessors.forEach(predecessorNode => {
+                const predecessorDepList = this._ensureDepList(predecessorNode);
+                predecessorsDepList.successors.add(node);
+            });
+        }
+    }
+
+    _ensureDepList(node) {
+        let depList = this._depList[node.path];
+        if (!depList) {
+            depList = new DDDependencyList();
+            this._depList[node.path] = depList;
+        }
+        return depList;
+    }
+
+    buildAndRegisterFormula(node, formulaExpression) {
+        this._ensureDepList(node);
+        return new DDFormula(this.selectorStorage, node, formulaExpression);
+    }
+
+    constructor(graph) {
+        this._graph = graph;
+        this._selectorStorage = new DDSelectorStorage();
+        this._dynamicUpdate = false;
+        this._depList = {};
+    }
+
+
+}
+
 
 export { DDSelector, DDSelectorInstance, DDSelectorStorage, DDFormula };
