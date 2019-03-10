@@ -116,19 +116,26 @@ class DDGraph {
     in the graph.
     */
     loadNodesFromDom($parentElements=null, setupArray=true, excludeElementsWithPath=true) {
+        const action = () => {
+            if ($parentElements === null) {
+                $parentElements = $('body');
+            }
+            if (setupArray) {
+                DDArray.setup($parentElements, this._getArrayHandlers());
+            }
+            const elements = DDGraph.getElementsWithDDId($parentElements, true, excludeElementsWithPath);
+            elements.forEach(domElement => {
+                const $domElement = $(domElement);
+                const parentNode = this.findParentNode($domElement);
+                console.assert(parentNode);
+                new DDNode(this, $domElement, parentNode);
+            }, this);
+        };
         if ($parentElements === null) {
-            $parentElements = $('body');
+            timeIt('Initializing nodes from DOM', action);
+        } else {
+            action();
         }
-        if (setupArray) {
-            DDArray.setup($parentElements, this._getArrayHandlers());
-        }
-        const elements = DDGraph.getElementsWithDDId($parentElements, true, excludeElementsWithPath);
-        elements.forEach(domElement => {
-            const $domElement = $(domElement);
-            const parentNode = this.findParentNode($domElement);
-            console.assert(parentNode);
-            new DDNode(this, $domElement, parentNode);
-        }, this);
     }
 
     /**
