@@ -185,14 +185,14 @@ class DDSelector {
         console.assert(candidateNode.holdsData);
         if (this.isRelative) {
             let results = null;
-            Object.keys(this._usages).forEach(key => {
-                const usage = this._usages[key];
-                const isMatch = DDSelector.tryMatchRelative(this.selectorParts, usage.node.parent.pathPieces, candidateNode.pathPieces);
+            Object.keys(this._instances).forEach(key => {
+                const selInstance = this._instances[key];
+                const isMatch = DDSelector.tryMatchRelative(this.selectorParts, selInstance.node.parent.pathPieces, candidateNode.pathPieces);
                 if (isMatch) {
                     if (results) {
-                        results.push(usage);
+                        results.push(selInstance);
                     } else {
-                        results = [usage];
+                        results = [selInstance];
                     }
                 }
             });
@@ -200,38 +200,38 @@ class DDSelector {
         } else {
             const matchAll = DDSelector.tryMatchAbsolute(this.selectorParts, candidateNode.pathPieces);
             if (matchAll) {
-                return Object.values(this._usages);
+                return Object.values(this._instances);
             } else {
                 return null;
             }
         }
     }
 
-    _registerNode(node, idxOfSelectorInFormula) {
-        let usage = this._usages[node.path];
-        if (!usage) {
-            usage = new DDSelectorInstance(this, node);
-            this._usages[node.path] = usage;
+    _registerNodeUsingSelector(node, idxOfSelectorInFormula) {
+        let selInstance = this._instances[node.path];
+        if (!selInstance) {
+            selInstance = new DDSelectorInstance(this, node);
+            this._instances[node.path] = selInstance;
         }
-        usage.selectorIdxsInFormula.add(idxOfSelectorInFormula);
-        return usage;
+        selInstance.selectorIdxsInFormula.add(idxOfSelectorInFormula);
+        return selInstance;
     }
 
-    _updateNode(oldPath, updatedNode) {
-        const usage = this._usages[oldPath];
-        console.assert(usage.node === updatedNode);
-        delete this._usages[oldPath];
-        this._usages[updatedNode.path] = usage;
+    _updateNodeUsingSelector(oldPath, updatedNode) {
+        const selInstance = this._instances[oldPath];
+        console.assert(selInstance.node === updatedNode);
+        delete this._instances[oldPath];
+        this._instances[updatedNode.path] = selInstance;
     }
 
-    _unregisterNode(node) {
-        delete this._usages[node.path];
+    _unregisterNodeUsingSelector(node) {
+        delete this._instances[node.path];
     }
 
     constructor(selectorString) {
         this._relative = null;
         this._selectorParts = null;
-        this._usages = {};
+        this._instances = {};
         [this._relative, this._selectorParts] = DDSelector.parseSelectorString(selectorString);
     }
 
@@ -327,7 +327,7 @@ class DDSelectorStorage {
             selector = new DDSelector(selectorString);
             this._storage[selectorString] = selector;
         }
-        return selector._registerNode(node, idxOfSelectorInFormula);
+        return selector._registerNodeUsingSelector(node, idxOfSelectorInFormula);
     }
 }
 
@@ -485,7 +485,7 @@ class DDFormula {
     _updateFormulaNode(oldFormulaNodePath) {
         this._argDefs.forEach(argDef => {
             if (argDef instanceof DDSelectorInstance) {
-                argDef.selector._updateNode(oldFormulaNodePath, this.node);
+                argDef.selector._updateNodeUsingSelector(oldFormulaNodePath, this.node);
             }
         });
     }
@@ -493,10 +493,10 @@ class DDFormula {
     _remove() {
         this._argDefs.forEach(argDef => {
             if (argDef instanceof DDSelectorInstance) {
-                argDef.selector._unregisterNode(this.node);
+                argDef.selector._unregisterNodeUsingSelector(this.node);
             }
         });
-        // The usages are now not usable anymore
+        // The args are now not usable anymore
         this._argDefs = null;
     }
 
@@ -534,25 +534,25 @@ class DDFormulaNode {
         this.predecessorNodes = this.formula.getAllMatchingNodes(recacheFromScratch);
     }
     _rebuildSuccessors(selectorStorage) {
-        this.successorUsages = selectorStorage.reverseMatch(this.node);
+        this.successorSelInstances = selectorStorage.reverseMatch(this.node);
     }
     _addToSuccessorsMatchingNodes() {
-        this.successorUsages.forEach(usage => {
-            usage.addToMatchingNodes(this.node);
+        this.successorSelInstances.forEach(selInstance => {
+            selInstance.addToMatchingNodes(this.node);
         });
     }
     _removeFromSuccessorsMatchingNodes(oldPath=null) {
         if (!oldPath) {
             oldPath = this.node.path;
         }
-        this.successorUsages.forEach(usage => {
-            usage.removeFromMatchingNodes(oldPath);
+        this.successorSelInstances.forEach(selInstance => {
+            selInstance.removeFromMatchingNodes(oldPath);
         });
     }
     constructor(node) {
         this._nodeOrFormula = node;
         this.predecessorNodes = new Set();
-        this.successorUsages = new Set();
+        this.successorSelInstances = new Set();
     }
 }
 
@@ -565,8 +565,8 @@ class DDFormulaGraph {
     _traverse(nodeData, fn) {
         const res = fn(nodeData, DFSEvent.ENTER);
         if (typeof res === 'undefined' || res === null || res === true) {
-            nodeData.successorUsages.forEach(usage => {
-                this.traverse(this._ensureNodeData(usage.node), fn);
+            nodeData.successorSelInstances.forEach(selInstance => {
+                this.traverse(this._ensureNodeData(selInstance.node), fn);
             })
         }
         fn(this, DFSEvent.EXIT);
@@ -634,7 +634,7 @@ class DDFormulaGraph {
         const oldDynamicUpdate = this._dynamicUpdate;
         this._dynamicUpdate = false;
         Object.values(this._nodeData).forEach(nodeData => {
-            nodeData.successorUsages.clear();
+            nodeData.successorSelInstances.clear();
         });
         Object.values(this._nodeData).forEach(nodeData => {
             nodeData._rebuildPredecessors(true);
@@ -643,7 +643,7 @@ class DDFormulaGraph {
         const keys = Object.keys(this._nodeData);
         keys.forEach(key => {
             const nodeData = this._nodeData[key];
-            if (nodeData.predecessorNodes.size === 0 && nodeData.successorUsages.size === 0) {
+            if (nodeData.predecessorNodes.size === 0 && nodeData.successorSelInstances.size === 0) {
                 delete this._nodeData[key];
             }
         })
@@ -651,7 +651,7 @@ class DDFormulaGraph {
         this._dynamicUpdate = oldDynamicUpdate;
     }
 
-    _updateNode(oldPath, nodeData) {
+    _updateNodeUsingSelector(oldPath, nodeData) {
         if (!this.dynamicUpdate) {
             this._outdated = true;
             return;
@@ -697,23 +697,23 @@ class DDFormulaGraph {
         if (!nodeData.formula) {
             return;
         }
-        nodeData.formula.getAllSelectorInstances().forEach(usage => {
-            console.assert(usage.matchingNodes);
-            usage.matchingNodes.forEach(node => {
-                this._ensureNodeData(usage.node).successorUsages.delete(usage);
+        nodeData.formula.getAllSelectorInstances().forEach(selInstance => {
+            console.assert(selInstance.matchingNodes);
+            selInstance.matchingNodes.forEach(node => {
+                this._ensureNodeData(selInstance.node).successorSelInstances.delete(selInstance);
             });
         });
     }
 
     _removeFromSuccessorsOfNode(nodeData) {
-        nodeData.successorUsages.forEach(usage => {
-            this._ensureNodeData(usage.node).predecessorNodes.delete(nodeData.node);
+        nodeData.successorSelInstances.forEach(selInstance => {
+            this._ensureNodeData(selInstance.node).predecessorNodes.delete(nodeData.node);
         });
     }
 
     _addToSuccessorsOfNode(nodeData) {
-        nodeData.successorUsages.forEach(usage => {
-            const successorNodeData = this._ensureNodeData(usage.node);
+        nodeData.successorSelInstances.forEach(selInstance => {
+            const successorNodeData = this._ensureNodeData(selInstance.node);
             successorNodeData.predecessorNodes.add(nodeData.node);
         });
     }
@@ -722,10 +722,10 @@ class DDFormulaGraph {
         if (!nodeData.formula) {
             return;
         }
-        nodeData.formula.getAllSelectorInstances().forEach(usage => {
-            console.assert(usage.matchingNodes);
-            usage.matchingNodes.forEach(node => {
-                this._ensureNodeData(usage.node).successorUsages.add(usage);
+        nodeData.formula.getAllSelectorInstances().forEach(selInstance => {
+            console.assert(selInstance.matchingNodes);
+            selInstance.matchingNodes.forEach(node => {
+                this._ensureNodeData(selInstance.node).successorSelInstances.add(selInstance);
             });
         });
     }
@@ -756,7 +756,7 @@ class DDFormulaGraph {
 
     updateNode(oldPath, node) {
         if (this.hasNode(node)) {
-            this._updateNode(oldPath, this._nodeData(node));
+            this._updateNodeUsingSelector(oldPath, this._nodeData(node));
         }
     }
 
