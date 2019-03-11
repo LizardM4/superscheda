@@ -96,7 +96,7 @@ function arrayMultidimensionalPrefill(size, dims, defaultValue=null) {
     let retval = [];
     for (let i = 0; i < size; ++i) {
         if (dims > 1) {
-            retval.push(arrayMultidimensionalPrefill(size, dims - 1));
+            retval.push(arrayMultidimensionalPrefill(size, dims - 1, defaultValue));
         } else {
             retval.push(defaultValue);
         }
