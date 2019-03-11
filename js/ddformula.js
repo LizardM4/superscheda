@@ -236,14 +236,18 @@ class DDSelector {
     }
 
     static nodeCompare(a, b) {
-        if (a.isRoot && !b.isRoot) {
+        const aIsRoot = (a === null || a === '' || a.isRoot);
+        const bIsRoot = (b === null || b === '' || b.isRoot);
+        if (aIsRoot && !bIsRoot) {
             return -1;
-        } else if (!a.isRoot && b.isRoot) {
+        } else if (!aIsRoot && bIsRoot) {
             return 1;
-        } else if (a.isRoot && b.isRoot) {
+        } else if (aIsRoot && bIsRoot) {
             return 0;
         }
-        return a.path.localeCompare(b);
+        const aPath = (typeof 'a' === 'string' ? a : a.path);
+        const bPath = (typeof 'b' === 'string' ? b : b.path);
+        return aPath.localeCompare(bPath);
     }
 }
 
@@ -284,11 +288,11 @@ class DDSelectorInstance {
         this._matchingNodes.splice(-idx - 1, 0, node);
     }
 
-    removeFromMatchingNodes(node) {
+    removeFromMatchingNodes(nodeOrNodePath) {
         if (this._matchingNodes === null) {
             return;
         }
-        const idx = arrayBinarySearch(this._matchingNodes, node, DDSelector.nodeCompare);
+        const idx = arrayBinarySearch(this._matchingNodes, nodeOrNodePath, DDSelector.nodeCompare);
         console.assert(idx >= 0);
         this._matchingNodes.splice(idx, 1);
     }
@@ -414,6 +418,10 @@ class DDFormula {
         return null;
     }
 
+    getAllSelectorInstances() {
+        return this._argDefs.filter(argDef => argDef instanceof DDSelectorInstance);
+    }
+
     getAllMatchingNodes(recacheFromScratch=false) {
         this.rebuildMatchingNodesCache(recacheFromScratch);
         const matchingNodes = new Set();
@@ -510,10 +518,6 @@ class DDFormula {
 }
 
 class DDFormulaNode {
-    clear() {
-        this.predecessorNodes.clear();
-        this.successorUsages.clear();
-    }
     get node() {
         return (this._nodeOrFormula instanceof DDFormula) ? this._nodeOrFormula.node : this._nodeOrFormula;
     }
@@ -525,16 +529,24 @@ class DDFormulaNode {
         console.assert(this._nodeOrFormula === v.node);
         this._nodeOrFormula = v;
     }
-    rebuildPredecessors(recacheFromScratch=false) {
+    _rebuildPredecessors(recacheFromScratch=false) {
         console.assert(this.formula);
         this.predecessorNodes = this.formula.getAllMatchingNodes(recacheFromScratch);
     }
-    rebuildSuccessors(selectorStorage) {
+    _rebuildSuccessors(selectorStorage) {
         this.successorUsages = selectorStorage.reverseMatch(this.node);
     }
-    updateSuccessorsMatchingNodes() {
+    _addToSuccessorsMatchingNodes() {
         this.successorUsages.forEach(usage => {
             usage.addToMatchingNodes(this.node);
+        });
+    }
+    _removeFromSuccessorsMatchingNodes(oldPath=null) {
+        if (!oldPath) {
+            oldPath = this.node.path;
+        }
+        this.successorUsages.forEach(usage => {
+            usage.removeFromMatchingNodes(oldPath);
         });
     }
     constructor(node) {
@@ -545,7 +557,7 @@ class DDFormulaNode {
 }
 
 
-class DDFormulaManager {
+class DDFormulaGraph {
     get selectorStorage() {
         return this._selectorStorage;
     }
@@ -554,21 +566,111 @@ class DDFormulaManager {
         return this._dynamicUpdate;
     }
 
+    get outdated() {
+        return this._outdated;
+    }
+
     set dynamicUpdate(v) {
         this._dynamicUpdate = v;
     }
 
-    _updateSuccessorsOfNode(nodeData) {
+    rebuild() {
+        const oldDynamicUpdate = this._dynamicUpdate;
+        this._dynamicUpdate = false;
+        Object.values(this._nodeData).forEach(nodeData => {
+            nodeData.successorUsages.clear();
+        });
+        Object.values(this._nodeData).forEach(nodeData => {
+            nodeData._rebuildPredecessors(true);
+            this._addToPredecessorsOfNode(nodeData);
+        });
+        const keys = Object.keys(this._nodeData);
+        keys.forEach(key => {
+            const nodeData = this._nodeData[key];
+            if (nodeData.predecessorNodes.size === 0 && nodeData.successorUsages.size === 0) {
+                delete this._nodeData[key];
+            }
+        })
+        this._outdated = false;
+        this._dynamicUpdate = oldDynamicUpdate;
+    }
+
+    _updateNode(oldPath, nodeData) {
+        if (!this.dynamicUpdate) {
+            this._outdated = true;
+            return;
+        }
+        if (nodeData.formula) {
+            nodeData.formula._updateFormulaNode(oldPath);
+        }
+        this._removeFromSuccessorsOfNode(nodeData);
+        nodeData._removeFromSuccessorsMatchingNodes(oldPath);
+        nodeData._rebuildSuccessors(this.selectorStorage);
+        nodeData._addToSuccessorsMatchingNodes();
+        this._addToSuccessorsOfNode(nodeData);
+    }
+
+    _addNode(nodeData) {
+        if (!this.dynamicUpdate) {
+            this._outdated = true;
+            return;
+        }
+        if (nodeData.formula) {
+            nodeData._rebuildPredecessors(false);
+            this._addToPredecessorsOfNode(nodeData);
+        }
+        nodeData._rebuildSuccessors(this.selectorStorage);
+        nodeData._addToSuccessorsMatchingNodes();
+        this._addToSuccessorsOfNode(nodeData);
+    }
+
+    _removeNode(nodeData) {
+        if (!this.dynamicUpdate) {
+            this._outdated = true;
+            return;
+        }
+        if (nodeData.formula) {
+            this._removeFromPredecessorsOfNode(nodeData);
+            nodeData.formula._remove();
+        }
+        this._removeFromSuccessorsOfNode(nodeData);
+        nodeData._removeFromSuccessorsMatchingNodes();
+    }
+
+    _removeFromPredecessorsOfNode(nodeData) {
+        if (!nodeData.formula) {
+            return;
+        }
+        nodeData.formula.getAllSelectorInstances().forEach(usage => {
+            console.assert(usage.matchingNodes);
+            usage.matchingNodes.forEach(node => {
+                this._ensureNodeData(usage.node).successorUsages.delete(usage);
+            });
+        });
+    }
+
+    _removeFromSuccessorsOfNode(nodeData) {
+        nodeData.successorUsages.forEach(usage => {
+            this._ensureNodeData(usage.node).predecessorNodes.delete(nodeData.node);
+        });
+    }
+
+    _addToSuccessorsOfNode(nodeData) {
         nodeData.successorUsages.forEach(usage => {
             const successorNodeData = this._ensureNodeData(usage.node);
             successorNodeData.predecessorNodes.add(nodeData.node);
         });
     }
 
-    _updatePredecessorsOfNode(nodeData) {
-        nodeData.predecessorNodes.forEach(node => {
-            const predecessorNodeData = this._ensureNodeData(node);
-            predecessorNodeData.successorUsages.add(node);
+    _addToPredecessorsOfNode(nodeData) {
+        if (!nodeData.formula) {
+            return;
+        }
+        nodeData.formula.getAllSelectorInstances().forEach(usage => {
+            console.assert(usage.matchingNodes);
+            usage.matchingNodes.forEach(node => {
+                this._ensureNodeData(usage.node).successorUsages.add(usage);
+            });
         });
     }
 
@@ -581,17 +683,36 @@ class DDFormulaManager {
         return nodeData;
     }
 
-    buildAndRegisterFormula(node, formulaExpression) {
+    createFormulaForNode(node, formulaExpression) {
         const nodeData = this._ensureNodeData(node);
         console.assert(nodeData.formula === null);
         nodeData.formula = new DDFormula(this.selectorStorage, node, formulaExpression);
+        this._addNode(nodeData);
         return nodeData.formula;
+    }
+
+    removeNode(node) {
+        if (this.hasNode(node)) {
+            this._removeNode(this._nodeData(node));
+            delete this._nodeData[node.path];
+        }
+    }
+
+    updateNode(oldPath, node) {
+        if (this.hasNode(node)) {
+            this._updateNode(oldPath, this._nodeData(node));
+        }
+    }
+
+    hasNode(node) {
+        return !!this._nodeData[node.path];
     }
 
     constructor() {
         this._selectorStorage = new DDSelectorStorage();
         this._dynamicUpdate = false;
         this._nodeData = {};
+        this._outdated = false;
     }
 
 
