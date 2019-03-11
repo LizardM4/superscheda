@@ -305,6 +305,18 @@ class DDSelectorStorage {
     constructor() {
         this._storage = {};
     }
+
+    reverseMatch(candidateNode) {
+        const results = new Set();
+        Object.values(this._storage).forEach(selector => {
+            const selectorResults = selector.reverseMatch(candidateNode);
+            if (selectorResults && selectorResults.length > 0) {
+                selectorResults.forEach(results.add);
+            }
+        });
+        return results;
+    }
+
     createAndRegisterSelector(selectorString, node, idxOfSelectorInFormula) {
         let selector = this._storage[selectorString];
         if (!selector) {
@@ -324,6 +336,10 @@ class DDFormula {
         console.assert(typeof this._argDefs[0] === 'string');
         this._operator = this._argDefs.shift().toLowerCase();
         this._setupArguments(selectorStorage);
+    }
+
+    get node() {
+        return this._node;
     }
 
     _evalSum() {
@@ -461,7 +477,7 @@ class DDFormula {
     _updateFormulaNode(oldFormulaNodePath) {
         this._argDefs.forEach(argDef => {
             if (argDef instanceof DDSelectorInstance) {
-                argDef.selector._updateNode(oldFormulaNodePath, this._node);
+                argDef.selector._updateNode(oldFormulaNodePath, this.node);
             }
         });
     }
@@ -469,7 +485,7 @@ class DDFormula {
     _remove() {
         this._argDefs.forEach(argDef => {
             if (argDef instanceof DDSelectorInstance) {
-                argDef.selector._unregisterNode(this._node);
+                argDef.selector._unregisterNode(this.node);
             }
         });
         // The usages are now not usable anymore
@@ -480,7 +496,7 @@ class DDFormula {
         for (let i = 0; i < this._argDefs.length; ++i) {
             const arg = this._argDefs[i];
             if (arg.startsWith('/') || arg.startsWith('./')) {
-                this._argDefs[i] = selectorStorage.createAndRegisterSelector(arg, this._node, i);
+                this._argDefs[i] = selectorStorage.createAndRegisterSelector(arg, this.node, i);
             } else {
                 // Try casting to number
                 const num = Number(arg);
@@ -493,14 +509,38 @@ class DDFormula {
     }
 }
 
-class DDDependencyList {
+class DDFormulaNode {
     clear() {
-        this.predecessors.clear();
-        this.successors.clear();
+        this.predecessorNodes.clear();
+        this.successorUsages.clear();
     }
-    constructor() {
-        this.precessors = new Set();
-        this.successors = new Set();
+    get node() {
+        return (this._nodeOrFormula instanceof DDFormula) ? this._nodeOrFormula.node : this._nodeOrFormula;
+    }
+    get formula() {
+        return (this._nodeOrFormula instanceof DDFormula) ? this._nodeOrFormula : null;
+    }
+    set formula(v) {
+        console.assert(!(this._nodeOrFormula instanceof DDFormula));
+        console.assert(this._nodeOrFormula === v.node);
+        this._nodeOrFormula = v;
+    }
+    rebuildPredecessors(recacheFromScratch=false) {
+        console.assert(this.formula);
+        this.predecessorNodes = this.formula.getAllMatchingNodes(recacheFromScratch);
+    }
+    rebuildSuccessors(selectorStorage) {
+        this.successorUsages = selectorStorage.reverseMatch(this.node);
+    }
+    updateSuccessorsMatchingNodes() {
+        this.successorUsages.forEach(usage => {
+            usage.addToMatchingNodes(this.node);
+        });
+    }
+    constructor(node) {
+        this._nodeOrFormula = node;
+        this.predecessorNodes = new Set();
+        this.successorUsages = new Set();
     }
 }
 
@@ -518,51 +558,40 @@ class DDFormulaManager {
         this._dynamicUpdate = v;
     }
 
-    get graph() {
-        return this._graph;
+    _updateSuccessorsOfNode(nodeData) {
+        nodeData.successorUsages.forEach(usage => {
+            const successorNodeData = this._ensureNodeData(usage.node);
+            successorNodeData.predecessorNodes.add(nodeData.node);
+        });
     }
 
-    _rebuildPredecessors(node, formula, updateSuccessors=true, recacheFromScratch=false) {
-        const depList = this._ensureDepList(node);
-        depList.predecessors = formula.getAllMatchingNodes(recacheFromScratch);
-        if (updateSuccessors) {
-            depList.predecessors.forEach(predecessorNode => {
-                const predecessorDepList = this._ensureDepList(predecessorNode);
-                predecessorsDepList.successors.add(node);
-            });
-        }
+    _updatePredecessorsOfNode(nodeData) {
+        nodeData.predecessorNodes.forEach(node => {
+            const predecessorNodeData = this._ensureNodeData(node);
+            predecessorNodeData.successorUsages.add(node);
+        });
     }
 
-    _rebuildSuccessors(node, formula, updatePredecessors=false) {
-        const depList = this._ensureDepList(node);
-        depList.predecessors = formula.getAllMatchingNodes(recacheFromScratch);
-        if (updateSuccessors) {
-            depList.predecessors.forEach(predecessorNode => {
-                const predecessorDepList = this._ensureDepList(predecessorNode);
-                predecessorsDepList.successors.add(node);
-            });
+    _ensureNodeData(node) {
+        let nodeData = this._nodeData[node.path];
+        if (!nodeData) {
+            nodeData = new DDFormulaNode(node);
+            this._nodeData[node.path] = nodeData;
         }
-    }
-
-    _ensureDepList(node) {
-        let depList = this._depList[node.path];
-        if (!depList) {
-            depList = new DDDependencyList();
-            this._depList[node.path] = depList;
-        }
-        return depList;
+        return nodeData;
     }
 
     buildAndRegisterFormula(node, formulaExpression) {
-        this._ensureDepList(node);
-        return new DDFormula(this.selectorStorage, node, formulaExpression);
+        const nodeData = this._ensureNodeData(node);
+        console.assert(nodeData.formula === null);
+        nodeData.formula = new DDFormula(this.selectorStorage, node, formulaExpression);
+        return nodeData.formula;
     }
 
-    constructor(graph) {
-        this._graph = graph;
+    constructor() {
         this._selectorStorage = new DDSelectorStorage();
         this._dynamicUpdate = false;
-        this._depList = {};
+        this._nodeData = {};
     }
 
 
