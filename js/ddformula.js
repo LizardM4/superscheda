@@ -562,6 +562,62 @@ class DDFormulaGraph {
         return this._selectorStorage;
     }
 
+    _traverse(nodeData, fn) {
+        const res = fn(nodeData, DFSEvent.ENTER);
+        if (typeof res === 'undefined' || res === null || res === true) {
+            nodeData.successorUsages.forEach(usage => {
+                this.traverse(this._ensureNodeData(usage.node), fn);
+            })
+        }
+        fn(this, DFSEvent.EXIT);
+    }
+
+    traverse(node, fn) {
+        this._traverse(this._ensureNodeData(node), (nodeData, evt) => fn(nodeData.node, evt));
+    }
+
+    getRoots() {
+        return this._getRoots().map(nodeData => nodeData.node);
+    }
+
+    _getRoots() {
+        return Object.values(this._nodeData)
+            .filter(nodeData => nodeData.predecessorNodes.size === 0);
+    }
+
+    _reassignLevels() {
+        let maxLevel = 0;
+        Object.values(this._nodeData).forEach(nodeData => {
+            nodeData._level = -1;
+        });
+        const roots = this._getRoots();
+        roots.forEach(root => {
+            let level = -1;
+            this._traverse(root, (nodeData, evt) => {
+                if (evt === DFSEvent.ENTER) {
+                    ++level;
+                    nodeData._level = Math.max(nodeData._level, level);
+                    maxLevel = Math.max(maxLevel, level);
+                } else {
+                    --level;
+                }
+            });
+        });
+        return maxLevel;
+    }
+
+    partitionInLevels() {
+        const maxLevel = this._reassignLevels();
+        const levels = [];
+        for (let i = 0; i <= maxLevel; i++) {
+            levels.push([]);
+        }
+        Object.values(this._nodeData).forEach(nodeData => {
+            levels[nodeData._level].push(nodeData.node);
+        });
+        return levels;
+    }
+
     get dynamicUpdate() {
         return this._dynamicUpdate;
     }
