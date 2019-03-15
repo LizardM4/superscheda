@@ -245,8 +245,8 @@ class DDSelector {
         } else if (aIsRoot && bIsRoot) {
             return 0;
         }
-        const aPath = (typeof 'a' === 'string' ? a : a.path);
-        const bPath = (typeof 'b' === 'string' ? b : b.path);
+        const aPath = (typeof a === 'string' ? a : a.path);
+        const bPath = (typeof b === 'string' ? b : b.path);
         return aPath.localeCompare(bPath);
     }
 }
