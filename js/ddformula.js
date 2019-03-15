@@ -821,7 +821,7 @@ class DDFormulaGraph {
 
     updateNode(oldPath, node) {
         if (this.hasNode(node)) {
-            this._updateNodeUsingSelector(oldPath, this._nodeData(node));
+            this._updateNodeUsingSelector(oldPath, this._nodeData[node.path]);
         } else if (this.dynamicUpdate) {
             // Attempt at adding this node, maybe it matches some selectors
             this.addNode(node, null);
