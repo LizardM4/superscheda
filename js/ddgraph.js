@@ -657,6 +657,13 @@ class DDNode {
         return false;
     }
 
+    get isInAnyArrayMaster() {
+        if (this.isRoot) {
+            return false;
+        }
+        return this.pathPieces.indexOf(-1) >= 0;
+    }
+
     /**
     Returns the strongly typed representation of this control's value. If the value cannot be cast,
     the original string value is returned.
@@ -821,7 +828,7 @@ class DDNode {
     */
     _remove() {
         console.assert(!this.isRoot);
-        if (this.holdsData) {
+        if (this.holdsData && !this.isInAnyArrayMaster) {
             this.graph.formulaGraph.removeNode(this);
         }
         this.obj.removeAttr('data-dd-path');
@@ -1110,7 +1117,7 @@ class DDNode {
             // First insertion
             this.parent._addChild(this);
             this.graph._addNode(this);
-            if (this.holdsData) {
+            if (this.holdsData && !this.isInAnyArrayMaster) {
                 // Handles correctly a missing attribute (will return null)
                 this._formula = this.graph.formulaGraph.addNode(this, this.obj.attr('data-dd-formula'));
             }
@@ -1118,7 +1125,7 @@ class DDNode {
             // Rename
             this.parent._updateChild(oldId, this);
             this.graph._updateNode(oldPath, this);
-            if (this.holdsData) {
+            if (this.holdsData && !this.isInAnyArrayMaster) {
                 this.graph.formulaGraph.updateNode(oldPath, this);
             }
         }
