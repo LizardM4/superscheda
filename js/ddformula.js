@@ -742,7 +742,7 @@ class DDFormulaGraph {
         nodeData.formula.getAllSelectorInstances().forEach(selInstance => {
             console.assert(selInstance.matchingNodes);
             selInstance.matchingNodes.forEach(node => {
-                this._ensureNodeData(selInstance.node).successorSelInstances.delete(selInstance);
+                this._ensureNodeData(node).successorSelInstances.delete(selInstance);
             });
         });
     }
@@ -767,7 +767,7 @@ class DDFormulaGraph {
         nodeData.formula.getAllSelectorInstances().forEach(selInstance => {
             console.assert(selInstance.matchingNodes);
             selInstance.matchingNodes.forEach(node => {
-                this._ensureNodeData(selInstance.node).successorSelInstances.add(selInstance);
+                this._ensureNodeData(node).successorSelInstances.add(selInstance);
             });
         });
     }
