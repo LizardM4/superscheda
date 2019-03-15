@@ -315,7 +315,7 @@ class DDSelectorStorage {
         Object.values(this._storage).forEach(selector => {
             const selectorResults = selector.reverseMatch(candidateNode);
             if (selectorResults && selectorResults.length > 0) {
-                selectorResults.forEach(results.add);
+                selectorResults.forEach(item => { results.add(item); });
             }
         });
         return results;
@@ -428,7 +428,7 @@ class DDFormula {
         this._argDefs.forEach(argDef => {
             if (argDef instanceof DDSelectorInstance) {
                 if (argDef.matchingNodes && argDef.matchingNodes.length > 0) {
-                    argDef.matchingNodes.forEach(matchingNodes.add);
+                    argDef.matchingNodes.forEach(item => { matchingNodes.add(item); });
                 }
             }
         });
