@@ -775,4 +775,4 @@ class DDFormulaGraph {
 }
 
 
-export { DDSelector, DDSelectorInstance, DDSelectorStorage, DDFormula };
+export { DDSelector, DDSelectorInstance, DDSelectorStorage, DDFormula, DDFormulaGraph };

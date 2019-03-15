@@ -18,7 +18,7 @@
 'use strict';
 
 import { DDArray } from './ddarray.js?v=%REV';
-import { DDFormula, DDSelectorStorage } from './ddformula.js?v=%REV';
+import { DDFormula, DDFormulaGraph, DDSelectorStorage } from './ddformula.js?v=%REV';
 import { arrayCompare, arrayMultidimensionalPrefill, arrayBinarySearch, timeIt } from './helper.js?v=%REV';
 
 const DDType = Object.freeze({
@@ -62,8 +62,13 @@ class DDGraph {
         return this._selectorStorage;
     }
 
+    get formulaGraph() {
+        return this._formulaGraph;
+    }
+
     constructor() {
         this._root = new DDNode(this);
+        this._formulaGraph = new DDFormulaGraph();
         this._nodesByPath = {};
         this._selectorStorage = new DDSelectorStorage();
     }
@@ -132,7 +137,11 @@ class DDGraph {
             }, this);
         };
         if ($parentElements === null) {
+            const oldDynamicUpdate = this.formulaGraph.dynamicUpdate;
+            this.formulaGraph.dynamicUpdate = false;
             timeIt('Initializing nodes from DOM', action);
+            timeIt('Building formula graph', () => { this.formulaGraph.rebuild(); });
+            this.formulaGraph.dynamicUpdate = oldDynamicUpdate;
         } else {
             action();
         }
@@ -794,7 +803,7 @@ class DDNode {
     _remove() {
         console.assert(!this.isRoot);
         if (this._formula) {
-            this._formula._remove();
+            this.graph.formulaGraph.removeNode(this);
         }
         this.obj.removeAttr('data-dd-path');
         this.graph._removeNode(this);
@@ -1052,7 +1061,7 @@ class DDNode {
         this._assignIdAndPath();
         const formulaExpression = this.obj.attr('data-dd-formula');
         if (formulaExpression) {
-            this._formula = new DDFormula(this.graph.selectorStorage, this, formulaExpression);
+            this._formula = this.graph.formulaGraph.createFormulaForNode(this, formulaExpression);
         }
     }
 
@@ -1090,7 +1099,7 @@ class DDNode {
             this.parent._updateChild(oldId, this);
             this.graph._updateNode(oldPath, this);
             if (this._formula) {
-                this._formula._updateFormulaNode(oldPath);
+                this.graph.formulaGraph.updateNode(oldPath, this);
             }
         }
     }
