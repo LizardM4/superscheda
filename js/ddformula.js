@@ -820,7 +820,9 @@ class DDFormulaGraph {
     }
 
     updateNode(oldPath, node) {
-        if (this.hasNode(node)) {
+        if (this.hasNode(oldPath)) {
+            this._nodeData[node.path] = this._nodeData[oldPath];
+            delete this._nodeData[oldPath];
             this._updateNodeUsingSelector(oldPath, this._nodeData[node.path]);
         } else if (this.dynamicUpdate) {
             // Attempt at adding this node, maybe it matches some selectors
@@ -828,8 +830,13 @@ class DDFormulaGraph {
         }
     }
 
-    hasNode(node) {
-        return !!this._nodeData[node.path];
+    hasNode(nodeOrNodePath) {
+        if (typeof nodeOrNodePath === 'string') {
+            return !!this._nodeData[nodeOrNodePath];
+        } else {
+            return !!this._nodeData[nodeOrNodePath.path];
+        }
+
     }
 
     constructor() {
