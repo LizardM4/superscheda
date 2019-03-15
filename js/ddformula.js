@@ -675,7 +675,7 @@ class DDFormulaGraph {
     }
 
     removeIsolatedNodes() {
-        Object.entries(this._nodeData).forEach((key, nodeData) => {
+        Object.entries(this._nodeData).forEach(([key, nodeData]) => {
             if (nodeData.predecessorNodes.size === 0 && nodeData.successorSelInstances.size === 0) {
                 delete this._nodeData[key];
             }
