@@ -1061,9 +1061,9 @@ class DDNode {
             return [];
         }
         if (this.indices) {
-            return Array.concat(this.parent.pathPieces, [this.baseId], this.indices);
+            return this.parent.pathPieces.concat([this.baseId], this.indices);
         } else {
-            return Array.concat(this.parent.pathPieces, [this.baseId]);
+            return this.parent.pathPieces.concat([this.baseId]);
         }
 
     }
