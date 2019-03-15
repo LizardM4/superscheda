@@ -674,6 +674,14 @@ class DDFormulaGraph {
         this._dynamicUpdate = v;
     }
 
+    removeIsolatedNodes() {
+        Object.entries(this._nodeData).forEach((key, nodeData) => {
+            if (nodeData.predecessorNodes.size === 0 && nodeData.successorSelInstances.size === 0) {
+                delete this._nodeData[key];
+            }
+        });
+    }
+
     rebuild() {
         const oldDynamicUpdate = this._dynamicUpdate;
         this._dynamicUpdate = false;
@@ -684,13 +692,7 @@ class DDFormulaGraph {
             nodeData._rebuildPredecessors(true);
             this._addToPredecessorsOfNode(nodeData);
         });
-        const keys = Object.keys(this._nodeData);
-        keys.forEach(key => {
-            const nodeData = this._nodeData[key];
-            if (nodeData.predecessorNodes.size === 0 && nodeData.successorSelInstances.size === 0) {
-                delete this._nodeData[key];
-            }
-        })
+        this.removeIsolatedNodes();
         this._outdated = false;
         this._dynamicUpdate = oldDynamicUpdate;
     }
