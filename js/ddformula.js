@@ -606,6 +606,48 @@ class DDFormulaGraph {
         return maxLevel;
     }
 
+    subtreeToString(root) {
+        let depth = 0;
+        let retval = '';
+        this.traverse(root, (node, evt) => {
+            if (evt === DFSEvent.ENTER) {
+                ++depth;
+                retval += ' '.repeat(depth - 1);
+                if (node.holdsData) {
+                    retval += ' - ' + node.id
+                } else {
+                    retval += '+ ' + node.id;
+                }
+                retval += '\n';
+            } else {
+                --depth;
+            }
+        });
+        return retval;
+    }
+
+    toString() {
+        let retval = '';
+        Object.values(this._nodeData).forEach(nodeData => {
+            retval += nodeData.node.path + '\n';
+            if (nodeData.predecessorNodes.size > 0) {
+                retval += '  <=';
+                nodeData.predecessorNodes.forEach(node => {
+                    retval += ' ' + node.path;
+                });
+                retval += '\n';
+            }
+            if (nodeData.successorSelInstances.size > 0) {
+                retval += '  =>';
+                nodeData.successorSelInstances.forEach(nodeData => {
+                    retval += ' ' + nodeData.node.path;
+                });
+                retval += '\n';
+            }
+        });
+        return retval;
+    }
+
     partitionInLevels() {
         const maxLevel = this._reassignLevels();
         const levels = [];
