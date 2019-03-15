@@ -78,6 +78,10 @@ class DDSelector {
             }
             // Always add the same index to match the pop
             idxs.push(idxs[idxs.length - 1]);
+            // No array masters
+            if (node.isArrayMaster) {
+                return false;
+            }
             // We are traversing node. Does this node match a subsequence?
             const matchLength = DDSelector.tryMatchNode(selectorParts, idxs[idxs.length - 1], node);
             if (matchLength > 0) {
@@ -828,7 +832,7 @@ class DDFormulaGraph {
 
     constructor() {
         this._selectorStorage = new DDSelectorStorage();
-        this._dynamicUpdate = false;
+        this._dynamicUpdate = true;
         this._nodeData = {};
         this._outdated = false;
     }
