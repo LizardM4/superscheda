@@ -821,7 +821,7 @@ class DDNode {
     */
     _remove() {
         console.assert(!this.isRoot);
-        if (this._formula) {
+        if (this.holdsData) {
             this.graph.formulaGraph.removeNode(this);
         }
         this.obj.removeAttr('data-dd-path');
@@ -1110,13 +1110,17 @@ class DDNode {
             // First insertion
             this.parent._addChild(this);
             this.graph._addNode(this);
-            // Handles correctly a missing attribute (will return null)
-            this._formula = this.graph.formulaGraph.addNode(this, this.obj.attr('data-dd-formula'));
+            if (this.holdsData) {
+                // Handles correctly a missing attribute (will return null)
+                this._formula = this.graph.formulaGraph.addNode(this, this.obj.attr('data-dd-formula'));
+            }
         } else {
             // Rename
             this.parent._updateChild(oldId, this);
             this.graph._updateNode(oldPath, this);
-            this.graph.formulaGraph.updateNode(oldPath, this);
+            if (this.holdsData) {
+                this.graph.formulaGraph.updateNode(oldPath, this);
+            }
         }
     }
 
