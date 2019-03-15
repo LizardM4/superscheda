@@ -1080,7 +1080,9 @@ class DDNode {
         this._assignIdAndPath();
         const formulaExpression = this.obj.attr('data-dd-formula');
         if (formulaExpression) {
-            this._formula = this.graph.formulaGraph.createFormulaForNode(this, formulaExpression);
+            this._formula = this.graph.formulaGraph.addNode(this, formulaExpression);
+        } else {
+            this.graph.formulaGraph.addNode(this);
         }
     }
 

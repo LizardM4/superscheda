@@ -783,12 +783,24 @@ class DDFormulaGraph {
         return nodeData;
     }
 
-    createFormulaForNode(node, formulaExpression) {
-        const nodeData = this._ensureNodeData(node);
-        console.assert(nodeData.formula === null);
-        nodeData.formula = new DDFormula(this.selectorStorage, node, formulaExpression);
-        this._addNode(nodeData);
-        return nodeData.formula;
+    addNode(node, formulaExpression=null) {
+        if (formulaExpression === null) {
+            if (this.dynamicUpdate) {
+                const nodeData = this._ensureNodeData(node);
+                console.assert(nodeData.formula === null);
+                this._addNode(nodeData);
+                if (nodeData.successorSelInstances.size === 0) {
+                    // No need to update the nonexistent successors, no need to keep this node.
+                    delete this._nodeData[node.path];
+                }
+            }
+        } else {
+            const nodeData = this._ensureNodeData(node);
+            console.assert(nodeData.formula === null);
+            nodeData.formula = new DDFormula(this.selectorStorage, node, formulaExpression);
+            this._addNode(nodeData);
+            return nodeData.formula;
+        }
     }
 
     removeNode(node) {
