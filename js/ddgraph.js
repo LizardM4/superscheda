@@ -173,6 +173,25 @@ class DDGraph {
         return retval;
     }
 
+    toDOT() {
+        let retval = 'digraph {\n   graph[rankdir=LR];\n';
+        this.root.traverse((node, evt) => {
+            if (evt === DFSEvent.ENTER) {
+                retval += '   "' + node.path + '"';
+                if (node.children.length > 0) {
+                    retval += ' -> {';
+                    node.children.forEach(child => {
+                        retval += ' "' + child.path + '"';
+                    });
+                    retval += ' }';
+                }
+                retval += ';\n';
+            }
+        });
+        retval += '}';
+        return retval;
+    }
+
     /**
     Retrieves a node with a given path, if any exists, otherwise `null`.
     */
