@@ -790,6 +790,8 @@ class DDFormulaGraph {
     }
 
     addNode(node, formulaExpression=null) {
+        // Do not allow master nodes in the formula graph.
+        console.assert(!node.isInAnyArrayMaster);
         if (typeof formulaExpression === 'undefined' || formulaExpression === null) {
             if (this.dynamicUpdate) {
                 const nodeData = this._ensureNodeData(node);
@@ -812,7 +814,7 @@ class DDFormulaGraph {
 
     removeNode(node) {
         if (this.hasNode(node)) {
-            this._removeNode(this._nodeData(node));
+            this._removeNode(this._nodeData[node.path]);
             delete this._nodeData[node.path];
         }
     }
