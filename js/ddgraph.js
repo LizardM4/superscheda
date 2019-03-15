@@ -1077,13 +1077,8 @@ class DDNode {
         this._type = DDGraph.inferType(this.obj);
         // Mutable properties:
         this._arrayIndices = this._getArrayIndices(this.parent);
+        // Upon first insertion, will also set the formula up
         this._assignIdAndPath();
-        const formulaExpression = this.obj.attr('data-dd-formula');
-        if (formulaExpression) {
-            this._formula = this.graph.formulaGraph.addNode(this, formulaExpression);
-        } else {
-            this.graph.formulaGraph.addNode(this);
-        }
     }
 
     _collectPathPieces() {
@@ -1115,13 +1110,13 @@ class DDNode {
             // First insertion
             this.parent._addChild(this);
             this.graph._addNode(this);
+            // Handles correctly a missing attribute (will return null)
+            this._formula = this.graph.formulaGraph.addNode(this, this.obj.attr('data-dd-formula'));
         } else {
             // Rename
             this.parent._updateChild(oldId, this);
             this.graph._updateNode(oldPath, this);
-            if (this._formula) {
-                this.graph.formulaGraph.updateNode(oldPath, this);
-            }
+            this.graph.formulaGraph.updateNode(oldPath, this);
         }
     }
 

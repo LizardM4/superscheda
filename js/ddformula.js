@@ -786,7 +786,7 @@ class DDFormulaGraph {
     }
 
     addNode(node, formulaExpression=null) {
-        if (formulaExpression === null) {
+        if (typeof formulaExpression === 'undefined' || formulaExpression === null) {
             if (this.dynamicUpdate) {
                 const nodeData = this._ensureNodeData(node);
                 console.assert(nodeData.formula === null);
@@ -796,6 +796,7 @@ class DDFormulaGraph {
                     delete this._nodeData[node.path];
                 }
             }
+            return null;
         } else {
             const nodeData = this._ensureNodeData(node);
             console.assert(nodeData.formula === null);
@@ -815,6 +816,9 @@ class DDFormulaGraph {
     updateNode(oldPath, node) {
         if (this.hasNode(node)) {
             this._updateNodeUsingSelector(oldPath, this._nodeData(node));
+        } else if (this.dynamicUpdate) {
+            // Attempt at adding this node, maybe it matches some selectors
+            this.addNode(node, null);
         }
     }
 
