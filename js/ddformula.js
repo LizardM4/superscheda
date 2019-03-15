@@ -626,25 +626,27 @@ class DDFormulaGraph {
         return retval;
     }
 
-    toString() {
-        let retval = '';
+    toDOT(buildFromPredecessors=false) {
+        let retval = 'digraph {\n   graph[rankdir=LR, ranksep=2];\n';
         Object.values(this._nodeData).forEach(nodeData => {
-            retval += nodeData.node.path + '\n';
-            if (nodeData.predecessorNodes.size > 0) {
-                retval += '  <=';
-                nodeData.predecessorNodes.forEach(node => {
-                    retval += ' ' + node.path;
+            retval += '   "'  + nodeData.node.path + '"';
+            if (buildFromPredecessors) {
+                retval += ';\n';
+                nodeData.predecessorNodes.forEach(predecessorNode => {
+                    retval += '   "' + predecessorNode.path + '" -> "' + nodeData.node.path + '";\n';
                 });
-                retval += '\n';
-            }
-            if (nodeData.successorSelInstances.size > 0) {
-                retval += '  =>';
-                nodeData.successorSelInstances.forEach(nodeData => {
-                    retval += ' ' + nodeData.node.path;
-                });
-                retval += '\n';
+            } else {
+                if (nodeData.successorSelInstances.size > 0) {
+                    retval += ' -> {';
+                    nodeData.successorSelInstances.forEach(successorNodeData => {
+                        retval += ' "' + successorNodeData.node.path + '"';
+                    });
+                    retval += ' }';
+                }
+                retval += ';\n'
             }
         });
+        retval += '}';
         return retval;
     }
 
