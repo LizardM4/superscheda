@@ -563,10 +563,10 @@ class DDFormulaGraph {
         return this._selectorStorage;
     }
 
-    _traverse(nodeData, fn) {
-        const res = fn(nodeData, DFSEvent.ENTER);
+    _traverse(formulaNode, fn) {
+        const res = fn(formulaNode, DFSEvent.ENTER);
         if (typeof res === 'undefined' || res === null || res === true) {
-            nodeData.successorSelInstances.forEach(selInstance => {
+            formulaNode.successorSelInstances.forEach(selInstance => {
                 this.traverse(this._ensureNodeData(selInstance.node), fn);
             })
         }
@@ -574,30 +574,30 @@ class DDFormulaGraph {
     }
 
     traverse(node, fn) {
-        this._traverse(this._ensureNodeData(node), (nodeData, evt) => fn(nodeData.node, evt));
+        this._traverse(this._ensureNodeData(node), (formulaNode, evt) => fn(formulaNode.node, evt));
     }
 
     getRoots() {
-        return this._getRoots().map(nodeData => nodeData.node);
+        return this._getRoots().map(formulaNode => formulaNode.node);
     }
 
     _getRoots() {
-        return Object.values(this._nodeData)
-            .filter(nodeData => nodeData.predecessorNodes.size === 0);
+        return Object.values(this._formulaNodes)
+            .filter(formulaNode => formulaNode.predecessorNodes.size === 0);
     }
 
     _reassignLevels() {
         let maxLevel = 0;
-        Object.values(this._nodeData).forEach(nodeData => {
-            nodeData._level = -1;
+        Object.values(this._formulaNodes).forEach(formulaNode => {
+            formulaNode._level = -1;
         });
         const roots = this._getRoots();
         roots.forEach(root => {
             let level = -1;
-            this._traverse(root, (nodeData, evt) => {
+            this._traverse(root, (formulaNode, evt) => {
                 if (evt === DFSEvent.ENTER) {
                     ++level;
-                    nodeData._level = Math.max(nodeData._level, level);
+                    formulaNode._level = Math.max(formulaNode._level, level);
                     maxLevel = Math.max(maxLevel, level);
                 } else {
                     --level;
@@ -629,17 +629,17 @@ class DDFormulaGraph {
 
     toDOT(buildFromPredecessors=false) {
         let retval = 'digraph {\n   graph[rankdir=LR, ranksep=2];\n';
-        Object.values(this._nodeData).forEach(nodeData => {
-            retval += '   "'  + nodeData.node.path + '"';
+        Object.values(this._formulaNodes).forEach(formulaNode => {
+            retval += '   "'  + formulaNode.node.path + '"';
             if (buildFromPredecessors) {
                 retval += ';\n';
-                nodeData.predecessorNodes.forEach(predecessorNode => {
-                    retval += '   "' + predecessorNode.path + '" -> "' + nodeData.node.path + '";\n';
+                formulaNode.predecessorNodes.forEach(predecessorNode => {
+                    retval += '   "' + predecessorNode.path + '" -> "' + formulaNode.node.path + '";\n';
                 });
             } else {
-                if (nodeData.successorSelInstances.size > 0) {
+                if (formulaNode.successorSelInstances.size > 0) {
                     retval += ' -> {';
-                    nodeData.successorSelInstances.forEach(successorNodeData => {
+                    formulaNode.successorSelInstances.forEach(successorNodeData => {
                         retval += ' "' + successorNodeData.node.path + '"';
                     });
                     retval += ' }';
@@ -657,8 +657,8 @@ class DDFormulaGraph {
         for (let i = 0; i <= maxLevel; i++) {
             levels.push([]);
         }
-        Object.values(this._nodeData).forEach(nodeData => {
-            levels[nodeData._level].push(nodeData);
+        Object.values(this._formulaNodes).forEach(formulaNode => {
+            levels[formulaNode._level].push(formulaNode);
         });
         return levels;
     }
@@ -676,9 +676,9 @@ class DDFormulaGraph {
     }
 
     removeIsolatedNodes() {
-        Object.entries(this._nodeData).forEach(([key, nodeData]) => {
-            if (nodeData.predecessorNodes.size === 0 && nodeData.successorSelInstances.size === 0) {
-                delete this._nodeData[key];
+        Object.entries(this._formulaNodes).forEach(([key, formulaNode]) => {
+            if (formulaNode.predecessorNodes.size === 0 && formulaNode.successorSelInstances.size === 0) {
+                delete this._formulaNodes[key];
             }
         });
     }
@@ -686,65 +686,65 @@ class DDFormulaGraph {
     rebuild() {
         const oldDynamicUpdate = this._dynamicUpdate;
         this._dynamicUpdate = false;
-        Object.values(this._nodeData).forEach(nodeData => {
-            nodeData.successorSelInstances.clear();
+        Object.values(this._formulaNodes).forEach(formulaNode => {
+            formulaNode.successorSelInstances.clear();
         });
-        Object.values(this._nodeData).forEach(nodeData => {
-            nodeData._rebuildPredecessors(true);
-            this._addToPredecessorsOfNode(nodeData);
+        Object.values(this._formulaNodes).forEach(formulaNode => {
+            formulaNode._rebuildPredecessors(true);
+            this._addToPredecessorsOfNode(formulaNode);
         });
         this.removeIsolatedNodes();
         this._outdated = false;
         this._dynamicUpdate = oldDynamicUpdate;
     }
 
-    _updateNodeUsingSelector(oldPath, nodeData) {
+    _updateNodeUsingSelector(oldPath, formulaNode) {
         if (!this.dynamicUpdate) {
             this._outdated = true;
             return;
         }
-        if (nodeData.formula) {
-            nodeData.formula._updateFormulaNode(oldPath);
+        if (formulaNode.formula) {
+            formulaNode.formula._updateFormulaNode(oldPath);
         }
-        this._removeFromSuccessorsOfNode(nodeData);
-        nodeData._removeFromSuccessorsMatchingNodes();
-        nodeData._rebuildSuccessors(this.selectorStorage);
-        nodeData._addToSuccessorsMatchingNodes();
-        this._addToSuccessorsOfNode(nodeData);
+        this._removeFromSuccessorsOfNode(formulaNode);
+        formulaNode._removeFromSuccessorsMatchingNodes();
+        formulaNode._rebuildSuccessors(this.selectorStorage);
+        formulaNode._addToSuccessorsMatchingNodes();
+        this._addToSuccessorsOfNode(formulaNode);
     }
 
-    _addNode(nodeData) {
+    _addNode(formulaNode) {
         if (!this.dynamicUpdate) {
             this._outdated = true;
             return;
         }
-        if (nodeData.formula) {
-            nodeData._rebuildPredecessors(false);
-            this._addToPredecessorsOfNode(nodeData);
+        if (formulaNode.formula) {
+            formulaNode._rebuildPredecessors(false);
+            this._addToPredecessorsOfNode(formulaNode);
         }
-        nodeData._rebuildSuccessors(this.selectorStorage);
-        nodeData._addToSuccessorsMatchingNodes();
-        this._addToSuccessorsOfNode(nodeData);
+        formulaNode._rebuildSuccessors(this.selectorStorage);
+        formulaNode._addToSuccessorsMatchingNodes();
+        this._addToSuccessorsOfNode(formulaNode);
     }
 
-    _removeNode(nodeData) {
+    _removeNode(formulaNode) {
         if (!this.dynamicUpdate) {
             this._outdated = true;
             return;
         }
-        if (nodeData.formula) {
-            this._removeFromPredecessorsOfNode(nodeData);
-            nodeData.formula._remove();
+        if (formulaNode.formula) {
+            this._removeFromPredecessorsOfNode(formulaNode);
+            formulaNode.formula._remove();
         }
-        this._removeFromSuccessorsOfNode(nodeData);
-        nodeData._removeFromSuccessorsMatchingNodes();
+        this._removeFromSuccessorsOfNode(formulaNode);
+        formulaNode._removeFromSuccessorsMatchingNodes();
     }
 
-    _removeFromPredecessorsOfNode(nodeData) {
-        if (!nodeData.formula) {
+    _removeFromPredecessorsOfNode(formulaNode) {
+        if (!formulaNode.formula) {
             return;
         }
-        nodeData.formula.getAllSelectorInstances().forEach(selInstance => {
+        formulaNode.formula.getAllSelectorInstances().forEach(selInstance => {
             console.assert(selInstance.matchingNodes);
             selInstance.matchingNodes.forEach(node => {
                 this._ensureNodeData(node).successorSelInstances.delete(selInstance);
@@ -752,24 +752,24 @@ class DDFormulaGraph {
         });
     }
 
-    _removeFromSuccessorsOfNode(nodeData) {
-        nodeData.successorSelInstances.forEach(selInstance => {
-            this._ensureNodeData(selInstance.node).predecessorNodes.delete(nodeData.node);
+    _removeFromSuccessorsOfNode(formulaNode) {
+        formulaNode.successorSelInstances.forEach(selInstance => {
+            this._ensureNodeData(selInstance.node).predecessorNodes.delete(formulaNode.node);
         });
     }
 
-    _addToSuccessorsOfNode(nodeData) {
-        nodeData.successorSelInstances.forEach(selInstance => {
+    _addToSuccessorsOfNode(formulaNode) {
+        formulaNode.successorSelInstances.forEach(selInstance => {
             const successorNodeData = this._ensureNodeData(selInstance.node);
-            successorNodeData.predecessorNodes.add(nodeData.node);
+            successorNodeData.predecessorNodes.add(formulaNode.node);
         });
     }
 
-    _addToPredecessorsOfNode(nodeData) {
-        if (!nodeData.formula) {
+    _addToPredecessorsOfNode(formulaNode) {
+        if (!formulaNode.formula) {
             return;
         }
-        nodeData.formula.getAllSelectorInstances().forEach(selInstance => {
+        formulaNode.formula.getAllSelectorInstances().forEach(selInstance => {
             console.assert(selInstance.matchingNodes);
             selInstance.matchingNodes.forEach(node => {
                 this._ensureNodeData(node).successorSelInstances.add(selInstance);
@@ -778,12 +778,12 @@ class DDFormulaGraph {
     }
 
     _ensureNodeData(node) {
-        let nodeData = this._nodeData[node.path];
-        if (!nodeData) {
-            nodeData = new DDFormulaNode(node);
-            this._nodeData[node.path] = nodeData;
+        let formulaNode = this._formulaNodes[node.path];
+        if (!formulaNode) {
+            formulaNode = new DDFormulaNode(node);
+            this._formulaNodes[node.path] = formulaNode;
         }
-        return nodeData;
+        return formulaNode;
     }
 
     addNode(node, formulaExpression=null) {
@@ -791,36 +791,36 @@ class DDFormulaGraph {
         console.assert(!node.isInAnyArrayMaster);
         if (typeof formulaExpression === 'undefined' || formulaExpression === null) {
             if (this.dynamicUpdate) {
-                const nodeData = this._ensureNodeData(node);
-                console.assert(nodeData.formula === null);
-                this._addNode(nodeData);
-                if (nodeData.successorSelInstances.size === 0) {
+                const formulaNode = this._ensureNodeData(node);
+                console.assert(formulaNode.formula === null);
+                this._addNode(formulaNode);
+                if (formulaNode.successorSelInstances.size === 0) {
                     // No need to update the nonexistent successors, no need to keep this node.
-                    delete this._nodeData[node.path];
+                    delete this._formulaNodes[node.path];
                 }
             }
             return null;
         } else {
-            const nodeData = this._ensureNodeData(node);
-            console.assert(nodeData.formula === null);
-            nodeData.formula = new DDFormula(this.selectorStorage, node, formulaExpression);
-            this._addNode(nodeData);
-            return nodeData.formula;
+            const formulaNode = this._ensureNodeData(node);
+            console.assert(formulaNode.formula === null);
+            formulaNode.formula = new DDFormula(this.selectorStorage, node, formulaExpression);
+            this._addNode(formulaNode);
+            return formulaNode.formula;
         }
     }
 
     removeNode(node) {
         if (this.hasNode(node)) {
-            this._removeNode(this._nodeData[node.path]);
-            delete this._nodeData[node.path];
+            this._removeNode(this._formulaNodes[node.path]);
+            delete this._formulaNodes[node.path];
         }
     }
 
     updateNode(oldPath, node) {
         if (this.hasNode(oldPath)) {
-            this._nodeData[node.path] = this._nodeData[oldPath];
-            delete this._nodeData[oldPath];
-            this._updateNodeUsingSelector(oldPath, this._nodeData[node.path]);
+            this._formulaNodes[node.path] = this._formulaNodes[oldPath];
+            delete this._formulaNodes[oldPath];
+            this._updateNodeUsingSelector(oldPath, this._formulaNodes[node.path]);
         } else if (this.dynamicUpdate) {
             // Attempt at adding this node, maybe it matches some selectors
             this.addNode(node, null);
@@ -829,17 +829,17 @@ class DDFormulaGraph {
 
     hasNode(nodeOrNodePath) {
         if (typeof nodeOrNodePath === 'string') {
-            return !!this._nodeData[nodeOrNodePath];
+            return !!this._formulaNodes[nodeOrNodePath];
         } else {
-            return !!this._nodeData[nodeOrNodePath.path];
+            return !!this._formulaNodes[nodeOrNodePath.path];
         }
     }
 
     recomputeFormulas(includeVoid=true) {
         this._partitionInLevels().forEach(level => {
-            level.forEach(nodeData => {
-                if (nodeData.formula && (includeVoid || !nodeData.node.isVoid)) {
-                    nodeData.node.formulaValue = nodeData.formula.evaluate();
+            level.forEach(formulaNode => {
+                if (formulaNode.formula && (includeVoid || !formulaNode.node.isVoid)) {
+                    formulaNode.node.formulaValue = formulaNode.formula.evaluate();
                 }
             });
         });
@@ -848,7 +848,7 @@ class DDFormulaGraph {
     constructor() {
         this._selectorStorage = new DDSelectorStorage();
         this._dynamicUpdate = true;
-        this._nodeData = {};
+        this._formulaNodes = {};
         this._outdated = false;
     }
 
