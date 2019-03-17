@@ -567,18 +567,10 @@ class DDFormulaGraph {
         const res = fn(formulaNode, DFSEvent.ENTER);
         if (typeof res === 'undefined' || res === null || res === true) {
             formulaNode.successorSelInstances.forEach(selInstance => {
-                this.traverse(this._ensureNodeData(selInstance.node), fn);
+                this._traverse(this._ensureNodeData(selInstance.node), fn);
             })
         }
         fn(this, DFSEvent.EXIT);
-    }
-
-    traverse(node, fn) {
-        this._traverse(this._ensureNodeData(node), (formulaNode, evt) => fn(formulaNode.node, evt));
-    }
-
-    getRoots() {
-        return this._getRoots().map(formulaNode => formulaNode.node);
     }
 
     _getRoots() {
@@ -591,8 +583,7 @@ class DDFormulaGraph {
         Object.values(this._formulaNodes).forEach(formulaNode => {
             formulaNode._level = -1;
         });
-        const roots = this._getRoots();
-        roots.forEach(root => {
+        this._getRoots().forEach(root => {
             let level = -1;
             this._traverse(root, (formulaNode, evt) => {
                 if (evt === DFSEvent.ENTER) {
@@ -605,26 +596,6 @@ class DDFormulaGraph {
             });
         });
         return maxLevel;
-    }
-
-    subtreeToString(root) {
-        let depth = 0;
-        let retval = '';
-        this.traverse(root, (node, evt) => {
-            if (evt === DFSEvent.ENTER) {
-                ++depth;
-                retval += ' '.repeat(depth - 1);
-                if (node.holdsData) {
-                    retval += ' - ' + node.id
-                } else {
-                    retval += '+ ' + node.id;
-                }
-                retval += '\n';
-            } else {
-                --depth;
-            }
-        });
-        return retval;
     }
 
     toDOT(buildFromPredecessors=false) {
