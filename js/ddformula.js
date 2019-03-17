@@ -835,6 +835,29 @@ class DDFormulaGraph {
         }
     }
 
+    _collectSubtree(nodesOrNodePathsOrFormulaNodes, beyondNonVoid=true) {
+        const retval = new Set();
+        if (!Array.isArray(nodesOrNodePathsOrFormulaNodes)) {
+            nodesOrNodePathsOrFormulaNodes = [nodesOrNodePathsOrFormulaNodes];
+        }
+        nodesOrNodePathsOrFormulaNodes.forEach(nodeOrNodePathOrFormulaNode => {
+            if (!(nodeOrNodePathOrFormulaNode instanceof DDFormulaNode)) {
+                if (!this.hasNode(nodeOrNodePathOrFormulaNode)) {
+                    return;
+                }
+                nodeOrNodePathOrFormulaNode = this._getNode(nodeOrNodePathOrFormulaNode);
+            }
+            this._traverse(nodeOrNodePathOrFormulaNode, (formulaNode, evt) => {
+                if (evt === DFSEvent.ENTER) {
+                    if (retval.has(formulaNode) || (!beyondNonVoid && formulaNode.node.isVoid)) {
+                        return false;
+                    }
+                    retval.add(formulaNode);
+                }
+            });
+        });
+        return retval;
+    }
     recomputeFormulaSubtree(node, voidsOnly=true) {
         if (!this.hasNode(node)) {
             return;
