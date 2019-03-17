@@ -813,6 +813,21 @@ class DDFormulaGraph {
         }
     }
 
+    recomputeFormulaSubtree(node, voidsOnly=true) {
+        if (!this.hasNode(node)) {
+            return;
+        }
+        this._traverse(this._formulaNodes[node.path], (formulaNode, evt) => {
+            if (evt === DFSEvent.ENTER) {
+                console.assert(formulaNode.formula);
+                if (voidsOnly && !formulaNode.node.isVoid) {
+                    return false;
+                }
+                formulaNode.node.formulaValue = formulaNode.formula.evaluate();
+            }
+        });
+    }
+
     recomputeFormulas(includeVoid=true) {
         timeIt('Recomputing formulas', () => {
             this._partitionInLevels().forEach(level => {
