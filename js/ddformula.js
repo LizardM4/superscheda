@@ -729,6 +729,13 @@ class DDFormulaGraph {
         }
         this._removeFromSuccessorsOfNode(formulaNode);
         formulaNode._removeFromSuccessorsMatchingNodes();
+        // Collect all the successors
+        const successorsFormulaNodes = [];
+        formulaNode.successorSelInstances.forEach(selInstance => {
+            successorsFormulaNodes.push(this._getNode(selInstance.node.path));
+        });
+        // Recompute their formulas
+        this.recomputeFormulas(successorsFormulaNodes);
     }
 
     _removeFromPredecessorsOfNode(formulaNode) {
@@ -826,6 +833,7 @@ class DDFormulaGraph {
         if (typeof nodeOrNodePath === 'string') {
             return this._formulaNodes[nodeOrNodePath];
         } else {
+            console.assert(this._formulaNodes[nodeOrNodePath.path]);
             return this._formulaNodes[nodeOrNodePath.path];
         }
     }
