@@ -644,11 +644,7 @@ class DDFormulaGraph {
                 if (!this.hasNode(nodeOrNodePathOrFormulaNode)) {
                     return;
                 }
-                if (typeof nodeOrNodePathOrFormulaNode === 'string') {
-                    nodeOrNodePathOrFormulaNode = this._formulaNodes[nodeOrNodePathOrFormulaNode];
-                } else {
-                    nodeOrNodePathOrFormulaNode = this._formulaNodes[nodeOrNodePathOrFormulaNode.path];
-                }
+                nodeOrNodePathOrFormulaNode = this._getNode(nodeOrNodePathOrFormulaNode);
             }
             // Store at the appropriate level
             levels[nodeOrNodePathOrFormulaNode._level].push(nodeOrNodePathOrFormulaNode);
@@ -828,10 +824,14 @@ class DDFormulaGraph {
     }
 
     hasNode(nodeOrNodePath) {
+        return !!this._getNode(nodeOrNodePath);
+    }
+
+    _getNode(nodeOrNodePath) {
         if (typeof nodeOrNodePath === 'string') {
-            return !!this._formulaNodes[nodeOrNodePath];
+            return this._formulaNodes[nodeOrNodePath];
         } else {
-            return !!this._formulaNodes[nodeOrNodePath.path];
+            return this._formulaNodes[nodeOrNodePath.path];
         }
     }
 
