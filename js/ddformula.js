@@ -383,7 +383,7 @@ class DDFormula {
         if (typeof div !== 'number') {
             return null;
         }
-        const tot = DDFormula._evalSum(args);
+        const tot = this._evalSum(args);
         return Math.floor(tot / div);
     }
 
