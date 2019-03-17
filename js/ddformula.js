@@ -554,6 +554,7 @@ class DDFormulaNode {
         });
     }
     constructor(node) {
+        this._level = -1;
         this._nodeOrFormula = node;
         this.predecessorNodes = new Set();
         this.successorSelInstances = new Set();
@@ -581,8 +582,11 @@ class DDFormulaGraph {
             .filter(formulaNode => formulaNode.predecessorNodes.size === 0);
     }
 
-    _reassignLevels() {
-        let maxLevel = 0;
+    _reassignLevelsIfNeeded() {
+        if (!this._levelsOutdated) {
+            return;
+        }
+        this._maxLevel = 0;
         Object.values(this._formulaNodes).forEach(formulaNode => {
             formulaNode._level = -1;
         });
@@ -592,13 +596,14 @@ class DDFormulaGraph {
                 if (evt === DFSEvent.ENTER) {
                     ++level;
                     formulaNode._level = Math.max(formulaNode._level, level);
-                    maxLevel = Math.max(maxLevel, level);
+                    this._maxLevel = Math.max(this._maxLevel, level);
                 } else {
                     --level;
                 }
             });
         });
-        return maxLevel;
+        this._levelsOutdated = false;
+        return this._maxLevel;
     }
 
     toDOT(buildFromPredecessors=false) {
@@ -626,9 +631,9 @@ class DDFormulaGraph {
     }
 
     _partitionInLevels() {
-        const maxLevel = this._reassignLevels();
+        this._reassignLevelsIfNeeded();
         const levels = [];
-        for (let i = 0; i <= maxLevel; i++) {
+        for (let i = 0; i <= this._maxLevel; i++) {
             levels.push([]);
         }
         Object.values(this._formulaNodes).forEach(formulaNode => {
@@ -681,6 +686,7 @@ class DDFormulaGraph {
             this._outdated = true;
             return;
         }
+        this._levelsOutdated = true;
         if (formulaNode.formula) {
             formulaNode.formula._updateFormulaNode(oldPath);
         }
@@ -696,6 +702,7 @@ class DDFormulaGraph {
             this._outdated = true;
             return;
         }
+        this._levelsOutdated = true;
         if (formulaNode.formula) {
             formulaNode._rebuildPredecessors(false);
             this._addToPredecessorsOfNode(formulaNode);
@@ -710,6 +717,7 @@ class DDFormulaGraph {
             this._outdated = true;
             return;
         }
+        this._levelsOutdated = true;
         if (formulaNode.formula) {
             this._removeFromPredecessorsOfNode(formulaNode);
             formulaNode.formula._remove();
@@ -845,6 +853,8 @@ class DDFormulaGraph {
         this._dynamicUpdate = true;
         this._formulaNodes = {};
         this._outdated = false;
+        this._levelsOutdated = false;
+        this._maxLevel = 0;
     }
 
 
