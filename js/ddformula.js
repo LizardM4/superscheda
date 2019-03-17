@@ -384,6 +384,9 @@ class DDFormula {
             return null;
         }
         const tot = this._evalSum(args);
+        if (tot === null) {
+            return null;
+        }
         return Math.floor(tot / div);
     }
 
