@@ -838,7 +838,7 @@ class DDFormulaGraph {
         }
     }
 
-    _collectSubtree(nodesOrNodePathsOrFormulaNodes, beyondNonVoid=true) {
+    _collectSubtree(nodesOrNodePathsOrFormulaNodes, beyondNonVoid=true, skipRoots=false) {
         const retval = new Set();
         if (!Array.isArray(nodesOrNodePathsOrFormulaNodes)) {
             nodesOrNodePathsOrFormulaNodes = [nodesOrNodePathsOrFormulaNodes];
@@ -855,14 +855,16 @@ class DDFormulaGraph {
                     if (retval.has(formulaNode) || (!beyondNonVoid && formulaNode.node.isVoid)) {
                         return false;
                     }
-                    retval.add(formulaNode);
+                    if (!skipRoots || nodeOrNodePathOrFormulaNode !== formulaNode) {
+                        retval.add(formulaNode);
+                    }
                 }
             });
         });
         return retval;
     }
 
-    recomputeFormulas(startingAt=null, beyondNonVoid=true) {
+    recomputeFormulas(startingAt=null, beyondNonVoid=true, skipRoots=false) {
         let levels = null;
         if (startingAt === null) {
             levels = this._partitionInLevels();
@@ -870,7 +872,7 @@ class DDFormulaGraph {
             if (!Array.isArray(startingAt)) {
                 startingAt = [startingAt];
             }
-            levels = this._partitionInLevels(this._collectSubtree(startingAt, beyondNonVoid))
+            levels = this._partitionInLevels(this._collectSubtree(startingAt, beyondNonVoid, skipRoots));
         }
         const action = () => {
             levels.forEach(level => {
