@@ -836,7 +836,7 @@ class DDFormulaGraph {
         }
     }
 
-    _collectSubtree(nodesOrNodePathsOrFormulaNodes, beyondNonVoid=true, skipRoots=false) {
+    _collectSubtree(nodesOrNodePathsOrFormulaNodes, beyondNonVoid=true, excludeRoots=false) {
         const retval = new Set();
         if (!Array.isArray(nodesOrNodePathsOrFormulaNodes)) {
             nodesOrNodePathsOrFormulaNodes = [nodesOrNodePathsOrFormulaNodes];
@@ -850,19 +850,28 @@ class DDFormulaGraph {
             }
             this._traverse(nodeOrNodePathOrFormulaNode, (formulaNode, evt) => {
                 if (evt === DFSEvent.ENTER) {
-                    if (retval.has(formulaNode) || (!beyondNonVoid && formulaNode.node.isVoid)) {
+                    if (retval.has(formulaNode)) {
                         return false;
                     }
-                    if (!skipRoots || nodeOrNodePathOrFormulaNode !== formulaNode) {
-                        retval.add(formulaNode);
+                    if (nodeOrNodePathOrFormulaNode === formulaNode) {
+                        // That's the root
+                        if (excludeRoots) {
+                            return true;
+                        }
+                    } else if (!beyondNonVoid && !formulaNode.node.isVoid) {
+                        // Check if this is one of the nodes beyond which you don't want to go
+                        return false;
                     }
+                    // Not a root, or !excludeRoots
+                    retval.add(formulaNode);
+                    return true;
                 }
             });
         });
         return retval;
     }
 
-    recomputeFormulas(startingAt=null, beyondNonVoid=true, skipRoots=false) {
+    recomputeFormulas(startingAt=null, beyondNonVoid=true, excludeRoots=false) {
         let levels = null;
         if (startingAt === null) {
             levels = this._partitionInLevels();
@@ -870,12 +879,12 @@ class DDFormulaGraph {
             if (!Array.isArray(startingAt)) {
                 startingAt = [startingAt];
             }
-            levels = this._partitionInLevels(this._collectSubtree(startingAt, beyondNonVoid, skipRoots));
+            levels = this._partitionInLevels(this._collectSubtree(startingAt, beyondNonVoid, excludeRoots));
         }
         const action = () => {
             levels.forEach(level => {
                 level.forEach(formulaNode => {
-                    if (formulaNode.formula && (beyondNonVoid || !formulaNode.node.isVoid)) {
+                    if (formulaNode.formula && (beyondNonVoid || formulaNode.node.isVoid)) {
                         formulaNode.node.formulaValue = formulaNode.formula.evaluate();
                     }
                 });
