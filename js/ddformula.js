@@ -292,11 +292,11 @@ class DDSelectorInstance {
         this._matchingNodes.splice(-idx - 1, 0, node);
     }
 
-    removeFromMatchingNodes(nodeOrNodePath) {
+    removeFromMatchingNodes(node) {
         if (this._matchingNodes === null) {
             return;
         }
-        const idx = arrayBinarySearch(this._matchingNodes, nodeOrNodePath, DDSelector.nodeCompare);
+        const idx = arrayBinarySearch(this._matchingNodes, node, DDSelector.nodeCompare);
         console.assert(idx >= 0);
         this._matchingNodes.splice(idx, 1);
     }
@@ -545,12 +545,9 @@ class DDFormulaNode {
             selInstance.addToMatchingNodes(this.node);
         });
     }
-    _removeFromSuccessorsMatchingNodes(oldPath=null) {
-        if (!oldPath) {
-            oldPath = this.node.path;
-        }
+    _removeFromSuccessorsMatchingNodes() {
         this.successorSelInstances.forEach(selInstance => {
-            selInstance.removeFromMatchingNodes(oldPath);
+            selInstance.removeFromMatchingNodes(this.node);
         });
     }
     constructor(node) {
@@ -710,7 +707,7 @@ class DDFormulaGraph {
             nodeData.formula._updateFormulaNode(oldPath);
         }
         this._removeFromSuccessorsOfNode(nodeData);
-        nodeData._removeFromSuccessorsMatchingNodes(oldPath);
+        nodeData._removeFromSuccessorsMatchingNodes();
         nodeData._rebuildSuccessors(this.selectorStorage);
         nodeData._addToSuccessorsMatchingNodes();
         this._addToSuccessorsOfNode(nodeData);
