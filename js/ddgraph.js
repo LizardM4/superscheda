@@ -74,9 +74,14 @@ class DDGraph {
     }
 
     loadDataBag(data) {
+        const oldDynamicUpdate = this.formulaGraph.dynamicUpdate;
+        this.formulaGraph.dynamicUpdate = false;
         timeIt('Loading data bag', () => {
             this.root.loadDataBag(data);
         });
+        this.formulaGraph.rebuild();
+        this.formulaGraph.recomputeFormulas();
+        this.formulaGraph.dynamicUpdate = oldDynamicUpdate;
     }
 
     dumpDataBag() {
