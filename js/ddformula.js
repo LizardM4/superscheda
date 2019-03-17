@@ -852,31 +852,31 @@ class DDFormulaGraph {
         });
         return retval;
     }
-    recomputeFormulaSubtree(node, voidsOnly=true) {
-        if (!this.hasNode(node)) {
-            return;
-        }
-        this._traverse(this._formulaNodes[node.path], (formulaNode, evt) => {
-            if (evt === DFSEvent.ENTER) {
-                console.assert(formulaNode.formula);
-                if (voidsOnly && !formulaNode.node.isVoid) {
-                    return false;
-                }
-                formulaNode.node.formulaValue = formulaNode.formula.evaluate();
-            }
-        });
-    }
 
-    recomputeFormulas(includeVoid=true) {
-        timeIt('Recomputing formulas', () => {
-            this._partitionInLevels().forEach(level => {
+    recomputeFormulas(startingAt=null, beyondNonVoid=true) {
+        let levels = null;
+        if (startingAt === null) {
+            levels = this._partitionInLevels();
+        } else {
+            if (!Array.isArray(startingAt)) {
+                startingAt = [startingAt];
+            }
+            levels = this._partitionInLevels(this._collectSubtree(startingAt, beyondNonVoid))
+        }
+        const action = () => {
+            levels.forEach(level => {
                 level.forEach(formulaNode => {
-                    if (formulaNode.formula && (includeVoid || !formulaNode.node.isVoid)) {
+                    if (formulaNode.formula && (beyondNonVoid || !formulaNode.node.isVoid)) {
                         formulaNode.node.formulaValue = formulaNode.formula.evaluate();
                     }
                 });
             });
-        });
+        };
+        if (startingAt === null) {
+            timeIt('Recomputing all formulas', action);
+        } else {
+            action();
+        }
     }
 
     constructor() {

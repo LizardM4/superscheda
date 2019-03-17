@@ -1049,7 +1049,7 @@ class DDNode {
             this.obj.val(v.toString());
         }
         if (this.graph.formulaGraph.dynamicUpdate) {
-            this.graph.formulaGraph.recomputeFormulaSubtree(this);
+            this.graph.formulaGraph.recomputeFormulas(this, false);
         }
         // TODO Is this event really needed?
         this.obj.trigger('dd.changed');
@@ -1137,7 +1137,7 @@ class DDNode {
             }
         }
         if (this.graph.formulaGraph.dynamicUpdate) {
-            this.graph.formulaGraph.recomputeFormulaSubtree(this);
+            this.graph.formulaGraph.recomputeFormulas(this, false);
         }
     }
 
