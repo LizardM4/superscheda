@@ -29,7 +29,7 @@ function timeIt(desc, body) {
     console.log('>'.repeat(_timeItCnt) + ' ' + desc + '...');
     const retval = body();
     const end = performance.now();
-    console.log('>'.repeat(_timeItCnt) + ' ' + desc + ' took ' + (end - start).toString() + 'ms');
+    console.log('>'.repeat(_timeItCnt) + ' ' + desc + ' took ' + Math.round(end - start).toString() + 'ms');
     _timeItCnt--;
     return retval;
 
