@@ -651,14 +651,14 @@ class DDFormulaGraph {
         return retval;
     }
 
-    partitionInLevels() {
+    _partitionInLevels() {
         const maxLevel = this._reassignLevels();
         const levels = [];
         for (let i = 0; i <= maxLevel; i++) {
             levels.push([]);
         }
         Object.values(this._nodeData).forEach(nodeData => {
-            levels[nodeData._level].push(nodeData.node);
+            levels[nodeData._level].push(nodeData);
         });
         return levels;
     }
@@ -833,7 +833,16 @@ class DDFormulaGraph {
         } else {
             return !!this._nodeData[nodeOrNodePath.path];
         }
+    }
 
+    recomputeFormulas(includeVoid=true) {
+        this._partitionInLevels().forEach(level => {
+            level.forEach(nodeData => {
+                if (nodeData.formula && (includeVoid || !nodeData.node.isVoid)) {
+                    nodeData.node.formulaValue = nodeData.formula.evaluate();
+                }
+            });
+        });
     }
 
     constructor() {
