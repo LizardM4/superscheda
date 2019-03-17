@@ -665,8 +665,10 @@ class DDFormulaGraph {
                 formulaNode.successorSelInstances.clear();
             });
             Object.values(this._formulaNodes).forEach(formulaNode => {
-                formulaNode._rebuildPredecessors(true);
-                this._addToPredecessorsOfNode(formulaNode);
+                if (formulaNode.formula) {
+                    formulaNode._rebuildPredecessors(true);
+                    this._addToPredecessorsOfNode(formulaNode);
+                }
             });
             this.removeIsolatedNodes();
             this._outdated = false;
