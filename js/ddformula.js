@@ -676,7 +676,7 @@ class DDFormulaGraph {
         });
     }
 
-    _updateNodeUsingSelector(oldPath, formulaNode) {
+    _updateNode(oldPath, formulaNode) {
         if (!this.dynamicUpdate) {
             this._outdated = true;
             return;
@@ -798,7 +798,7 @@ class DDFormulaGraph {
         if (this.hasNode(oldPath)) {
             this._formulaNodes[node.path] = this._formulaNodes[oldPath];
             delete this._formulaNodes[oldPath];
-            this._updateNodeUsingSelector(oldPath, this._formulaNodes[node.path]);
+            this._updateNode(oldPath, this._formulaNodes[node.path]);
         } else if (this.dynamicUpdate) {
             // Attempt at adding this node, maybe it matches some selectors
             this.addNode(node, null);
