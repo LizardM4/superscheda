@@ -398,10 +398,6 @@ class DDGraph {
             console.assert(inferredType);
             return inferredType;
         }
-        // TODO Toggle this off to migrate
-        if ($obj.is('.dd-integer-field, .dd-natural-field')) {
-            return DDType.INT;
-        }
         return DDType.STRING;
     }
 
