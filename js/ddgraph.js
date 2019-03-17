@@ -1048,11 +1048,23 @@ class DDNode {
         } else {
             this.obj.val(v.toString());
         }
-        if (this.graph.formulaGraph.dynamicUpdate) {
+        this._recomputeFormulasIfNecessary();
+        // TODO Is this event really needed? Why can't I just call .change?
+        this.obj.trigger('dd.changed');
+    }
+
+    get canBeInFormulaGraph() {
+        return this.holdsData && !this.isInAnyArrayMaster;
+    }
+
+    get isInFormulaGraph() {
+        return this.canBeInFormulaGraph && this.graph.formulaGraph.hasFormulaNode(this);
+    }
+
+    _recomputeFormulasIfNecessary() {
+        if (this.isInFormulaGraph) {
             this.graph.formulaGraph.recomputeFormulas(this, false);
         }
-        // TODO Is this event really needed?
-        this.obj.trigger('dd.changed');
     }
 
     /**
@@ -1089,6 +1101,11 @@ class DDNode {
         this._isCheckbox = (this.obj.attr('type') === 'checkbox');
         this._holdsData = DDGraph.holdsData(this.obj);
         this._type = DDGraph.inferType(this.obj);
+        // Setup on change event
+        this.obj.change((evt) => {
+            this._recomputeFormulasIfNecessary();
+            evt.stopPropagation();
+        });
         // Mutable properties:
         this._arrayIndices = this._getArrayIndices(this.parent);
         // Upon first insertion, will also set the formula up
@@ -1124,7 +1141,7 @@ class DDNode {
             // First insertion
             this.parent._addChild(this);
             this.graph._addNode(this);
-            if (this.holdsData && !this.isInAnyArrayMaster) {
+            if (this.canBeInFormulaGraph) {
                 // Handles correctly a missing attribute (will return null)
                 this._formula = this.graph.formulaGraph.addFormulaNode(this, this.obj.attr('data-dd-formula'));
             }
@@ -1132,7 +1149,9 @@ class DDNode {
             // Rename
             this.parent._updateChild(oldId, this);
             this.graph._updateNode(oldPath, this);
-            if (this.holdsData && !this.isInAnyArrayMaster) {
+            // It is correct to call it only if it *can* be in formula graph, because the change
+            // of id *may* cause it to be matched somewhere.
+            if (this.canBeInFormulaGraph) {
                 this.graph.formulaGraph.updateFormulaNode(oldPath, this);
             }
         }
