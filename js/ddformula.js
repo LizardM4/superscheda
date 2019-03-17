@@ -839,7 +839,6 @@ class DDFormulaGraph {
         if (typeof nodeOrNodePath === 'string') {
             return this._formulaNodes[nodeOrNodePath];
         } else {
-            console.assert(this._formulaNodes[nodeOrNodePath.path]);
             return this._formulaNodes[nodeOrNodePath.path];
         }
     }
