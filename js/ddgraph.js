@@ -832,7 +832,7 @@ class DDNode {
     _remove() {
         console.assert(!this.isRoot);
         if (this.holdsData && !this.isInAnyArrayMaster) {
-            this.graph.formulaGraph.removeNode(this);
+            this.graph.formulaGraph.removeFormulaNode(this);
         }
         this.obj.removeAttr('data-dd-path');
         this.graph._removeNode(this);
@@ -1126,18 +1126,15 @@ class DDNode {
             this.graph._addNode(this);
             if (this.holdsData && !this.isInAnyArrayMaster) {
                 // Handles correctly a missing attribute (will return null)
-                this._formula = this.graph.formulaGraph.addNode(this, this.obj.attr('data-dd-formula'));
+                this._formula = this.graph.formulaGraph.addFormulaNode(this, this.obj.attr('data-dd-formula'));
             }
         } else {
             // Rename
             this.parent._updateChild(oldId, this);
             this.graph._updateNode(oldPath, this);
             if (this.holdsData && !this.isInAnyArrayMaster) {
-                this.graph.formulaGraph.updateNode(oldPath, this);
+                this.graph.formulaGraph.updateFormulaNode(oldPath, this);
             }
-        }
-        if (this.graph.formulaGraph.dynamicUpdate) {
-            this.graph.formulaGraph.recomputeFormulas(this, false);
         }
     }
 
