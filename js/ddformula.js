@@ -18,7 +18,7 @@
 'use strict';
 
 import { DDGraph, DFSEvent } from './ddgraph.js?v=%REV';
-import { arrayBinarySearch } from './helper.js?v=%REV';
+import { arrayBinarySearch, timeIt } from './helper.js?v=%REV';
 
 class DDSelector {
     get isRelative() {
@@ -658,18 +658,20 @@ class DDFormulaGraph {
     }
 
     rebuild() {
-        const oldDynamicUpdate = this._dynamicUpdate;
-        this._dynamicUpdate = false;
-        Object.values(this._formulaNodes).forEach(formulaNode => {
-            formulaNode.successorSelInstances.clear();
+        timeIt('Building formula graph', () => {
+            const oldDynamicUpdate = this._dynamicUpdate;
+            this._dynamicUpdate = false;
+            Object.values(this._formulaNodes).forEach(formulaNode => {
+                formulaNode.successorSelInstances.clear();
+            });
+            Object.values(this._formulaNodes).forEach(formulaNode => {
+                formulaNode._rebuildPredecessors(true);
+                this._addToPredecessorsOfNode(formulaNode);
+            });
+            this.removeIsolatedNodes();
+            this._outdated = false;
+            this._dynamicUpdate = oldDynamicUpdate;
         });
-        Object.values(this._formulaNodes).forEach(formulaNode => {
-            formulaNode._rebuildPredecessors(true);
-            this._addToPredecessorsOfNode(formulaNode);
-        });
-        this.removeIsolatedNodes();
-        this._outdated = false;
-        this._dynamicUpdate = oldDynamicUpdate;
     }
 
     _updateNodeUsingSelector(oldPath, formulaNode) {
@@ -810,11 +812,13 @@ class DDFormulaGraph {
     }
 
     recomputeFormulas(includeVoid=true) {
-        this._partitionInLevels().forEach(level => {
-            level.forEach(formulaNode => {
-                if (formulaNode.formula && (includeVoid || !formulaNode.node.isVoid)) {
-                    formulaNode.node.formulaValue = formulaNode.formula.evaluate();
-                }
+        timeIt('Recomputing formulas', () => {
+            this._partitionInLevels().forEach(level => {
+                level.forEach(formulaNode => {
+                    if (formulaNode.formula && (includeVoid || !formulaNode.node.isVoid)) {
+                        formulaNode.node.formulaValue = formulaNode.formula.evaluate();
+                    }
+                });
             });
         });
     }
