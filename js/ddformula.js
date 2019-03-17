@@ -571,7 +571,7 @@ class DDFormulaGraph {
         const res = fn(formulaNode, DFSEvent.ENTER);
         if (typeof res === 'undefined' || res === null || res === true) {
             formulaNode.successorSelInstances.forEach(selInstance => {
-                this._traverse(this._ensureFormulaNode(selInstance.node), fn);
+                this._traverse(this._getFormulaNode(selInstance.node), fn);
             })
         }
         fn(this, DFSEvent.EXIT);
@@ -745,14 +745,14 @@ class DDFormulaGraph {
         formulaNode.formula.getAllSelectorInstances().forEach(selInstance => {
             console.assert(selInstance.matchingNodes);
             selInstance.matchingNodes.forEach(node => {
-                this._ensureFormulaNode(node).successorSelInstances.delete(selInstance);
+                this._getFormulaNode(node).successorSelInstances.delete(selInstance);
             });
         });
     }
 
     _removeFromSuccessorsOfNode(formulaNode) {
         formulaNode.successorSelInstances.forEach(selInstance => {
-            this._ensureFormulaNode(selInstance.node).predecessorNodes.delete(formulaNode.node);
+            this._getFormulaNode(selInstance.node).predecessorNodes.delete(formulaNode.node);
         });
     }
 
