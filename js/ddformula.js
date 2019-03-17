@@ -681,6 +681,7 @@ class DDFormulaGraph {
             });
             this.removeIsolatedNodes();
             this._outdated = false;
+            this._levelsOutdated = true;
             this._dynamicUpdate = oldDynamicUpdate;
         });
     }
