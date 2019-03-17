@@ -2088,7 +2088,7 @@ You should have received a copy of the GNU General Public License
                                 <a class="dropdown-item" href="#">Car</a>
                               </div>
                             </div>
-                            <input data-dd-id="mod_c" data-dd-formula="select_mod ./chiave /caratteristiche.for.mod_temp /caratteristiche.des.mod_temp /caratteristiche.cos.mod_temp /caratteristiche.int.mod_temp /caratteristiche.sag.mod_temp /caratteristiche.car.mod_temp" type="text" class="form-control form-control-sm dd-integer-field">
+                            <input data-dd-id="mod_c" data-dd-formula="sel ./chiave /caratteristiche.for.mod_temp /caratteristiche.des.mod_temp /caratteristiche.cos.mod_temp /caratteristiche.int.mod_temp /caratteristiche.sag.mod_temp /caratteristiche.car.mod_temp" type="text" class="form-control form-control-sm dd-integer-field">
                           </div>
                         </div>
                         <div class="col-md-1 col-3">
@@ -2632,10 +2632,13 @@ You should have received a copy of the GNU General Public License
     </div> -->
     <script type="module">
       import { DDGraph } from './js/ddgraph.js?v=%REV';
-      import { DDSelector } from './js/ddformula.js?v=%REV';
+      import { DDSelector, DDSelectorInstance, DDSelectorStorage, DDFormula } from './js/ddformula.js?v=%REV';
 
       window.DDSelector = DDSelector;
       window.DDGraph = DDGraph;
+      window.DDSelectorInstance = DDSelectorInstance;
+      window.DDSelectorStorage = DDSelectorStorage;
+      window.DDFormula = DDFormula;
 
       $(function() {
         window.dd = new DDGraph();
