@@ -630,24 +630,18 @@ class DDFormulaGraph {
         return retval;
     }
 
-    _partitionInLevels(nodesOrNodePathsOrFormulaNodes=null) {
+    _partitionInLevels(formulaNodes=null) {
         this._reassignLevelsIfNeeded();
         const levels = [];
         for (let i = 0; i <= this._maxLevel; i++) {
             levels.push([]);
         }
-        if (nodesOrNodePathsOrFormulaNodes === null) {
-            nodesOrNodePathsOrFormulaNodes = Object.values(this._formulaNodes);
+        if (formulaNodes === null) {
+            formulaNodes = Object.values(this._formulaNodes);
         }
-        nodesOrNodePathsOrFormulaNodes.forEach(nodeOrNodePathOrFormulaNode => {
-            if (!(nodeOrNodePathOrFormulaNode instanceof DDFormulaNode)) {
-                if (!this.hasNode(nodeOrNodePathOrFormulaNode)) {
-                    return;
-                }
-                nodeOrNodePathOrFormulaNode = this._getNode(nodeOrNodePathOrFormulaNode);
-            }
+        formulaNodes.forEach(formulaNode => {
             // Store at the appropriate level
-            levels[nodeOrNodePathOrFormulaNode._level].push(nodeOrNodePathOrFormulaNode);
+            levels[formulaNode._level].push(formulaNode);
         });
         return levels;
     }
