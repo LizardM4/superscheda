@@ -146,6 +146,7 @@ class DDGraph {
             this.formulaGraph.dynamicUpdate = false;
             timeIt('Initializing nodes from DOM', action);
             this.formulaGraph.rebuild();
+            this.formulaGraph.recomputeFormulas();
             this.formulaGraph.dynamicUpdate = oldDynamicUpdate;
         } else {
             action();
@@ -1047,6 +1048,10 @@ class DDNode {
         } else {
             this.obj.val(v.toString());
         }
+        if (this.graph.formulaGraph.dynamicUpdate) {
+            this.graph.formulaGraph.recomputeFormulaSubtree(this);
+        }
+        // TODO Is this event really needed?
         this.obj.trigger('dd.changed');
     }
 
@@ -1130,6 +1135,9 @@ class DDNode {
             if (this.holdsData && !this.isInAnyArrayMaster) {
                 this.graph.formulaGraph.updateNode(oldPath, this);
             }
+        }
+        if (this.graph.formulaGraph.dynamicUpdate) {
+            this.graph.formulaGraph.recomputeFormulaSubtree(this);
         }
     }
 
