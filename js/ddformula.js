@@ -697,9 +697,11 @@ class DDFormulaGraph {
         }
         this._removeFromSuccessorsOfNode(formulaNode);
         formulaNode._removeFromSuccessorsMatchingNodes();
+        this.recomputeFormulas(formulaNode, false, true);
         formulaNode._rebuildSuccessors(this.selectorStorage);
         formulaNode._addToSuccessorsMatchingNodes();
         this._addToSuccessorsOfNode(formulaNode);
+        this.recomputeFormulas(formulaNode, false, true);
     }
 
     _addFormulaNode(formulaNode) {
@@ -715,6 +717,7 @@ class DDFormulaGraph {
         formulaNode._rebuildSuccessors(this.selectorStorage);
         formulaNode._addToSuccessorsMatchingNodes();
         this._addToSuccessorsOfNode(formulaNode);
+        this.recomputeFormulas(formulaNode, false, false);
     }
 
     _removeFormulaNode(formulaNode) {
@@ -729,13 +732,8 @@ class DDFormulaGraph {
         }
         this._removeFromSuccessorsOfNode(formulaNode);
         formulaNode._removeFromSuccessorsMatchingNodes();
-        // Collect all the successors
-        const successorsFormulaNodes = [];
-        formulaNode.successorSelInstances.forEach(selInstance => {
-            successorsFormulaNodes.push(this._getFormulaNode(selInstance.node.path));
-        });
-        // Recompute their formulas
-        this.recomputeFormulas(successorsFormulaNodes);
+        // While the successors are still known to the node, recompute their formulas
+        this.recomputeFormulas(formulaNode, false, true);
     }
 
     _removeFromPredecessorsOfNode(formulaNode) {
