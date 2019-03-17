@@ -646,16 +646,20 @@ class DDFormulaGraph {
         return levels;
     }
 
-    get dynamicUpdate() {
-        return this._dynamicUpdate;
+    get dynamicUpdateGraph() {
+        return this._dynamicUpdateGraph;
     }
 
-    get outdated() {
-        return this._outdated;
+    set dynamicUpdateGraph(v) {
+        this._dynamicUpdateGraph = v;
     }
 
-    set dynamicUpdate(v) {
-        this._dynamicUpdate = v;
+    get dynamicRecomputeFormulas() {
+        return this._dynamicRecomputeFormulas;
+    }
+
+    set dynamicRecomputeFormulas(v) {
+        this._dynamicRecomputeFormulas = v;
     }
 
     removeIsolatedNodes() {
@@ -668,8 +672,8 @@ class DDFormulaGraph {
 
     rebuild() {
         timeIt('Building formula graph', () => {
-            const oldDynamicUpdate = this._dynamicUpdate;
-            this._dynamicUpdate = false;
+            const oldDynamicUpdate = this.dynamicUpdateGraph;
+            this.dynamicUpdateGraph = false;
             Object.values(this._formulaNodes).forEach(formulaNode => {
                 formulaNode.successorSelInstances.clear();
             });
@@ -680,15 +684,13 @@ class DDFormulaGraph {
                 }
             });
             this.removeIsolatedNodes();
-            this._outdated = false;
             this._levelsOutdated = true;
-            this._dynamicUpdate = oldDynamicUpdate;
+            this.dynamicUpdateGraph = oldDynamicUpdate;
         });
     }
 
     _updateFormulaNode(oldPath, formulaNode) {
-        if (!this.dynamicUpdate) {
-            this._outdated = true;
+        if (!this.dynamicUpdateGraph) {
             return;
         }
         this._levelsOutdated = true;
@@ -697,16 +699,19 @@ class DDFormulaGraph {
         }
         this._removeFromSuccessorsOfNode(formulaNode);
         formulaNode._removeFromSuccessorsMatchingNodes();
-        this.recomputeFormulas(formulaNode, false, true);
+        if (this.dynamicRecomputeFormulas) {
+            this.recomputeFormulas(formulaNode, false, true);
+        }
         formulaNode._rebuildSuccessors(this.selectorStorage);
         formulaNode._addToSuccessorsMatchingNodes();
         this._addToSuccessorsOfNode(formulaNode);
-        this.recomputeFormulas(formulaNode, false, true);
+        if (this.dynamicRecomputeFormulas) {
+            this.recomputeFormulas(formulaNode, false, true);
+        }
     }
 
     _addFormulaNode(formulaNode) {
-        if (!this.dynamicUpdate) {
-            this._outdated = true;
+        if (!this.dynamicUpdateGraph) {
             return;
         }
         this._levelsOutdated = true;
@@ -717,12 +722,13 @@ class DDFormulaGraph {
         formulaNode._rebuildSuccessors(this.selectorStorage);
         formulaNode._addToSuccessorsMatchingNodes();
         this._addToSuccessorsOfNode(formulaNode);
-        this.recomputeFormulas(formulaNode, false, false);
+        if (this.dynamicRecomputeFormulas) {
+            this.recomputeFormulas(formulaNode, false, false);
+        }
     }
 
     _removeFormulaNode(formulaNode) {
-        if (!this.dynamicUpdate) {
-            this._outdated = true;
+        if (!this.dynamicUpdateGraph) {
             return;
         }
         this._levelsOutdated = true;
@@ -733,7 +739,9 @@ class DDFormulaGraph {
         this._removeFromSuccessorsOfNode(formulaNode);
         formulaNode._removeFromSuccessorsMatchingNodes();
         // While the successors are still known to the node, recompute their formulas
-        this.recomputeFormulas(formulaNode, false, true);
+        if (this.dynamicRecomputeFormulas) {
+            this.recomputeFormulas(formulaNode, false, true);
+        }
     }
 
     _removeFromPredecessorsOfNode(formulaNode) {
@@ -786,7 +794,7 @@ class DDFormulaGraph {
         // Do not allow master nodes in the formula graph.
         console.assert(!node.isInAnyArrayMaster);
         if (typeof formulaExpression === 'undefined' || formulaExpression === null) {
-            if (this.dynamicUpdate) {
+            if (this.dynamicUpdateGraph) {
                 const formulaNode = this._ensureFormulaNode(node);
                 console.assert(formulaNode.formula === null);
                 this._addFormulaNode(formulaNode);
@@ -817,7 +825,7 @@ class DDFormulaGraph {
             this._formulaNodes[node.path] = this._formulaNodes[oldPath];
             delete this._formulaNodes[oldPath];
             this._updateFormulaNode(oldPath, this._formulaNodes[node.path]);
-        } else if (this.dynamicUpdate) {
+        } else if (this.dynamicUpdateGraph) {
             // Attempt at adding this node, maybe it matches some selectors
             this.addFormulaNode(node, null);
         }
@@ -899,9 +907,9 @@ class DDFormulaGraph {
 
     constructor() {
         this._selectorStorage = new DDSelectorStorage();
-        this._dynamicUpdate = true;
+        this._dynamicUpdateGraph = true;
+        this._dynamicRecomputeFormulas = true;
         this._formulaNodes = {};
-        this._outdated = false;
         this._levelsOutdated = false;
         this._maxLevel = 0;
     }
