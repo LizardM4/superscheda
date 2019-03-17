@@ -690,11 +690,12 @@ class DDNode {
 
     /**
     Returns the value for computing formulas on this control, that is, @ref value if the control is
-    not void (@ref isVoid), otherwise its placeholder.
+    not void (@ref isVoid), otherwise its placeholder. If the control is void and doesn't have a
+    formula associated, then the default value for the declared type is used.
     */
     get formulaValue() {
         if (this.isVoid) {
-            if (this._formulaValue === null) {
+            if (this._formula === null && this._formulaValue === null) {
                 return defaultPerType(this.type);
             }
             return this._formulaValue;
