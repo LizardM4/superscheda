@@ -140,7 +140,7 @@ class DDGraph {
             const oldDynamicUpdate = this.formulaGraph.dynamicUpdate;
             this.formulaGraph.dynamicUpdate = false;
             timeIt('Initializing nodes from DOM', action);
-            timeIt('Building formula graph', () => { this.formulaGraph.rebuild(); });
+            this.formulaGraph.rebuild();
             this.formulaGraph.dynamicUpdate = oldDynamicUpdate;
         } else {
             action();
