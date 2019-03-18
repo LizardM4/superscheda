@@ -814,6 +814,7 @@ class DDFormulaGraph {
                 this._addFormulaNode(formulaNode);
                 if (formulaNode.successorSelInstances.size === 0) {
                     // No need to update the nonexistent successors, no need to keep this node.
+                    this._pendingFormulaUpdate.delete(formulaNode);
                     delete this._formulaNodes[node.path];
                 }
             }
@@ -907,10 +908,13 @@ class DDFormulaGraph {
         const action = () => {
             levels.forEach(level => {
                 level.forEach(formulaNode => {
-                    if (formulaNode.formula && (beyondNonVoid || formulaNode.node.isVoid)) {
+                    if (formulaNode.formula) {
+                        if (!beyondNonVoid && !formulaNode.node.isVoid) {
+                            return;
+                        }
                         formulaNode.node.formulaValue = formulaNode.formula.evaluate();
-                        this._pendingFormulaUpdate.delete(formulaNode);
                     }
+                    this._pendingFormulaUpdate.delete(formulaNode);
                 });
             });
         };
