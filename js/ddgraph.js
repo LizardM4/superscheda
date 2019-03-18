@@ -74,14 +74,14 @@ class DDGraph {
     }
 
     loadDataBag(data) {
-        const oldDynamicUpdate = this.formulaGraph.dynamicUpdate;
-        this.formulaGraph.dynamicUpdate = false;
+        this.formulaGraph.dynamicUpdateGraph = false;
+        this.formulaGraph.dynamicRecomputeFormulas = false;
         timeIt('Loading data bag', () => {
             this.root.loadDataBag(data);
         });
-        this.formulaGraph.rebuild();
-        this.formulaGraph.recomputeFormulas();
-        this.formulaGraph.dynamicUpdate = oldDynamicUpdate;
+        this.formulaGraph.rebuild(true);
+        this.formulaGraph.dynamicRecomputeFormulas = true;
+        this.formulaGraph.dynamicUpdateGraph = true;
     }
 
     dumpDataBag() {
@@ -102,12 +102,18 @@ class DDGraph {
                 this.loadNodesFromDom($(insertedItems), false, false);
             },
             removal: (evt, removedItems) => {
+                this.formulaGraph.dynamicRecomputeFormulas = false;
                 this.getNodeChildrenOfDOMElements($(removedItems))
                     .forEach(child => { child.removeSubtree(); });
+                this.formulaGraph.recomputePendingFormulas(false);
+                this.formulaGraph.dynamicRecomputeFormulas = true;
             },
             reindex: (evt, domItemPrevIdxIdxTriples) => {
+                this.formulaGraph.dynamicRecomputeFormulas = false;
                 const domItems = domItemPrevIdxIdxTriples.map(([domItem, previousIdx, Idx]) => domItem);
                 this.getNodeChildrenOfDOMElements($(domItems)).forEach(child => { child.reindexIfNeeded(); });
+                this.formulaGraph.recomputePendingFormulas(false);
+                this.formulaGraph.dynamicRecomputeFormulas = true;
             }
         };
     }
@@ -139,18 +145,19 @@ class DDGraph {
                 const parentNode = this.findParentNode($domElement);
                 console.assert(parentNode);
                 new DDNode(this, $domElement, parentNode);
-            }, this);
+            });
         };
+        this.formulaGraph.dynamicRecomputeFormulas = false;
         if ($parentElements === null) {
-            const oldDynamicUpdate = this.formulaGraph.dynamicUpdate;
-            this.formulaGraph.dynamicUpdate = false;
+            // Recompute full formula graph and formulas
             timeIt('Initializing nodes from DOM', action);
-            this.formulaGraph.rebuild();
-            this.formulaGraph.recomputeFormulas();
-            this.formulaGraph.dynamicUpdate = oldDynamicUpdate;
+            this.formulaGraph.rebuild(true);
         } else {
             action();
+            // Incrementally add the nodes to the formula graph, but recompute at the end
+            this.formulaGraph.recomputePendingFormulas(false);
         }
+        this.formulaGraph.dynamicRecomputeFormulas = true;
     }
 
     /**
@@ -1062,7 +1069,7 @@ class DDNode {
     }
 
     _recomputeFormulasIfNecessary() {
-        if (this.isInFormulaGraph) {
+        if (this.graph.formulaGraph.dynamicRecomputeFormulas && this.isInFormulaGraph) {
             this.graph.formulaGraph.recomputeFormulas(this, false);
         }
     }
