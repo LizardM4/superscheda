@@ -695,6 +695,10 @@ class DDFormulaGraph {
         // While the successors are still known to the node, recompute their formulas
         if (this.dynamicRecomputeFormulas) {
             this.recomputeFormulas(formulaNode, false, true);
+        } else {
+            formulaNode.successorSelInstances.forEach(selInstance) {
+                this._pendingFormulaUpdate.add(this._getFormulaNode(selInstance.node));
+            }
         }
     }
 
@@ -704,6 +708,8 @@ class DDFormulaGraph {
         this._addToSuccessorsOfNode(formulaNode);
         if (this.dynamicRecomputeFormulas) {
             this.recomputeFormulas(formulaNode, false, false);
+        } else {
+            this._pendingFormulaUpdate.add(formulaNode);
         }
     }
 
@@ -741,6 +747,7 @@ class DDFormulaGraph {
             formulaNode.formula._remove();
         }
         this._detachFormulaNodeFromSuccessors(formulaNode);
+        this._pendingFormulaUpdate.delete(formulaNode);
     }
 
     _removeFromPredecessorsOfNode(formulaNode) {
@@ -892,6 +899,7 @@ class DDFormulaGraph {
                 level.forEach(formulaNode => {
                     if (formulaNode.formula && (beyondNonVoid || formulaNode.node.isVoid)) {
                         formulaNode.node.formulaValue = formulaNode.formula.evaluate();
+                        this._pendingFormulaUpdate.delete(formulaNode);
                     }
                 });
             });
@@ -907,6 +915,7 @@ class DDFormulaGraph {
         this._selectorStorage = new DDSelectorStorage();
         this._dynamicUpdateGraph = true;
         this._dynamicRecomputeFormulas = true;
+        this._pendingFormulaUpdate = new Set();
         this._formulaNodes = {};
         this._levelsOutdated = false;
         this._maxLevel = 0;
