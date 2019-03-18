@@ -689,6 +689,24 @@ class DDFormulaGraph {
         });
     }
 
+    _detachFormulaNodeFromSuccessors(formulaNode) {
+        this._removeFromSuccessorsOfNode(formulaNode);
+        formulaNode._removeFromSuccessorsMatchingNodes();
+        // While the successors are still known to the node, recompute their formulas
+        if (this.dynamicRecomputeFormulas) {
+            this.recomputeFormulas(formulaNode, false, true);
+        }
+    }
+
+    _attachFormulaNodeToSuccessors(formulaNode) {
+        formulaNode._rebuildSuccessors(this.selectorStorage);
+        formulaNode._addToSuccessorsMatchingNodes();
+        this._addToSuccessorsOfNode(formulaNode);
+        if (this.dynamicRecomputeFormulas) {
+            this.recomputeFormulas(formulaNode, false, false);
+        }
+    }
+
     _updateFormulaNode(oldPath, formulaNode) {
         if (!this.dynamicUpdateGraph) {
             return;
@@ -697,17 +715,8 @@ class DDFormulaGraph {
         if (formulaNode.formula) {
             formulaNode.formula._updateFormulaNode(oldPath);
         }
-        this._removeFromSuccessorsOfNode(formulaNode);
-        formulaNode._removeFromSuccessorsMatchingNodes();
-        if (this.dynamicRecomputeFormulas) {
-            this.recomputeFormulas(formulaNode, false, true);
-        }
-        formulaNode._rebuildSuccessors(this.selectorStorage);
-        formulaNode._addToSuccessorsMatchingNodes();
-        this._addToSuccessorsOfNode(formulaNode);
-        if (this.dynamicRecomputeFormulas) {
-            this.recomputeFormulas(formulaNode, false, true);
-        }
+        this._detachFormulaNodeFromSuccessors(formulaNode);
+        this._attachFormulaNodeToSuccessors(formulaNode);
     }
 
     _addFormulaNode(formulaNode) {
@@ -719,12 +728,7 @@ class DDFormulaGraph {
             formulaNode._rebuildPredecessors(false);
             this._addToPredecessorsOfNode(formulaNode);
         }
-        formulaNode._rebuildSuccessors(this.selectorStorage);
-        formulaNode._addToSuccessorsMatchingNodes();
-        this._addToSuccessorsOfNode(formulaNode);
-        if (this.dynamicRecomputeFormulas) {
-            this.recomputeFormulas(formulaNode, false, false);
-        }
+        this._attachFormulaNodeToSuccessors(formulaNode);
     }
 
     _removeFormulaNode(formulaNode) {
@@ -736,12 +740,7 @@ class DDFormulaGraph {
             this._removeFromPredecessorsOfNode(formulaNode);
             formulaNode.formula._remove();
         }
-        this._removeFromSuccessorsOfNode(formulaNode);
-        formulaNode._removeFromSuccessorsMatchingNodes();
-        // While the successors are still known to the node, recompute their formulas
-        if (this.dynamicRecomputeFormulas) {
-            this.recomputeFormulas(formulaNode, false, true);
-        }
+        this._detachFormulaNodeFromSuccessors(formulaNode);
     }
 
     _removeFromPredecessorsOfNode(formulaNode) {
