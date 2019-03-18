@@ -851,7 +851,7 @@ class DDFormulaGraph {
 
     _collectSubtree(nodesOrNodePathsOrFormulaNodes, beyondNonVoid=true, excludeRoots=false) {
         const retval = new Set();
-        if (!Array.isArray(nodesOrNodePathsOrFormulaNodes)) {
+        if (!nodesOrNodePathsOrFormulaNodes.forEach) {
             nodesOrNodePathsOrFormulaNodes = [nodesOrNodePathsOrFormulaNodes];
         }
         nodesOrNodePathsOrFormulaNodes.forEach(nodeOrNodePathOrFormulaNode => {
@@ -889,9 +889,6 @@ class DDFormulaGraph {
         if (startingAt === null) {
             levels = this._partitionInLevels();
         } else {
-            if (!Array.isArray(startingAt)) {
-                startingAt = [startingAt];
-            }
             levels = this._partitionInLevels(this._collectSubtree(startingAt, beyondNonVoid, excludeRoots));
         }
         const action = () => {
