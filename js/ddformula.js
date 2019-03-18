@@ -704,9 +704,9 @@ class DDFormulaGraph {
         if (this.dynamicRecomputeFormulas) {
             this.recomputeFormulas(formulaNode, false, true);
         } else {
-            formulaNode.successorSelInstances.forEach(selInstance) {
+            formulaNode.successorSelInstances.forEach(selInstance => {
                 this._pendingFormulaUpdate.add(this._getFormulaNode(selInstance.node));
-            }
+            });
         }
     }
 
