@@ -670,9 +670,10 @@ class DDFormulaGraph {
         });
     }
 
-    rebuild() {
+    rebuild(recompute=true) {
         timeIt('Building formula graph', () => {
-            const oldDynamicUpdate = this.dynamicUpdateGraph;
+            const oldDynamicUpdateGraph = this.dynamicUpdateGraph;
+            const oldDynamicRecomputeFormulas = this.dynamicRecomputeFormulas;
             this.dynamicUpdateGraph = false;
             Object.values(this._formulaNodes).forEach(formulaNode => {
                 formulaNode.successorSelInstances.clear();
@@ -685,7 +686,14 @@ class DDFormulaGraph {
             });
             this.removeIsolatedNodes();
             this._levelsOutdated = true;
-            this.dynamicUpdateGraph = oldDynamicUpdate;
+            this._pendingFormulaUpdate.clear();
+            if (oldDynamicRecomputeFormulas || recompute) {
+                this.recomputeFormulas();
+            } else {
+                this._getRoots().forEach(formulaNode => this._pendingFormulaUpdate.add(formulaNode));
+            }
+            this.dynamicRecomputeFormulas = oldDynamicRecomputeFormulas;
+            this.dynamicUpdateGraph = oldDynamicUpdateGraph;
         });
     }
 
@@ -882,6 +890,11 @@ class DDFormulaGraph {
             });
         });
         return retval;
+    }
+
+    recomputePendingFormulas(beyondNonVoid=true) {
+        this.recomputeFormulas(this._pendingFormulaUpdate, beyondNonVoid, false);
+        console.assert(this._pendingFormulaUpdate.size === 0);
     }
 
     recomputeFormulas(startingAt=null, beyondNonVoid=true, excludeRoots=false) {
