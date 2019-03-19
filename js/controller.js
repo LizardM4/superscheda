@@ -1,5 +1,5 @@
 // Superscheda
-// Copyright (C) 2017-2018  Pietro Saccardi
+// Copyright (C) 2017-2019  Pietro Saccardi
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,225 +15,43 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-function fromIntegerField(rawVal, passthrough) {
-    return fromNaturalField(rawVal, passthrough);
-}
+'use strict';
 
-let _timeItCnt = 0;
-const _debug = false;
+import { timeIt } from './helper.js?v=%REV';
+import { DropboxExplorer, pathCombine } from './dbxexplorer.js?v=%REV';
 
-function timeIt(desc, body) {
-    if (!_debug) {
-        body();
-        return;
+// 1. self -> this
+// 2. $(this)
+// 3. var
+// 4. for (let i)
+// 5. function
+// 6. ==, !=
+
+class SuperschedaController {
+    constructor(dbxAppId) {
+        this._appId = dbxAppId;
+        this._dropbox = null;
+        this._hasLocalStorage = true;
+        this._saveModal = null;
+        this._saveExplorer = null;
+        this._loadModal = null;
+        this._loadExplorer = null;
+        this._graph = null;
+        this._autosaveEvent = () => { this.autosave(); };
     }
-    const start = performance.now();
-    _timeItCnt++;
-    console.log('>'.repeat(_timeItCnt) + ' ' + desc + '...');
-    body();
-    const end = performance.now();
-    console.log('>'.repeat(_timeItCnt) + ' ' + desc + ' took ' + (end - start).toString() + 'ms');
-    _timeItCnt--;
 
-}
-
-function toIntegerField(num) {
-    if (num == null) {
-        return '';
-    } else if (typeof num === 'number' && num > 0) {
-        return '+' + num.toString();
-    } else {
-        return num.toString();
-    }
-}
-
-function fromNaturalField(rawVal, passthrough=false) {
-    if (rawVal == null) {
-        return passthrough ? null : 0;
-    } else {
-        rawVal = rawVal.replace(' ', '');
-    }
-    if (rawVal == '') {
-        return passthrough ? null : 0;
-    }
-    const cast = parseInt(rawVal);
-    if (cast != cast) {
-        // Nan, casting failed.
-        return passthrough ? rawVal : null;
-    }
-    return cast;
-}
-
-function indexOfMod(mod, fieldNames) {
-    mod = mod.toLowerCase();
-    for (let i = 0; i < fieldNames.length; i++) {
-        if (fieldNames[i].replace('/', '').split('.').indexOf(mod) >= 0) {
-            return i;
-        }
-    }
-    return -1;
-}
-
-function toNaturalField(num) {
-    if (num == null) {
-        return '';
-    } else {
-        return num.toString();
-    }
-}
-
-
-jQuery.fn.extend({
-    ddIsVoid: function () {
-        const val = $(this).val();
-        // Note: val == 0 is a non-void value.
-        return typeof val === 'undefined' || val == null || val.trim() == '';
-    },
-    ddSetDefault: function(arg) {
-        const obj = $(this);
-        const oldPlaceholder = obj.attr('placeholder');
-        if (obj.hasClass('dd-integer-field')) {
-            obj.attr('placeholder', toIntegerField(arg));
-        } else if (obj.hasClass('dd-natural-field')) {
-            obj.attr('placeholder', toNaturalField(arg));
-        } else {
-            obj.attr('placeholder', arg.toString());
-        }
-        return oldPlaceholder != obj.attr('placeholder');
-    },
-    ddVal: function(arg) {
-        const obj = $(this);
-        const isCheckbox = (obj.attr('type') === 'checkbox');
-        if (typeof arg === 'undefined') {
-            // Return the value
-            if (isCheckbox) {
-                return obj.is(':checked');
-            }
-            let val = obj.val();
-            if (obj.hasClass('dd-integer-field')) {
-                val = fromIntegerField(val, true);
-            } else if (obj.hasClass('dd-natural-field')) {
-                val = fromNaturalField(val, true);
-            }
-            if (typeof val === 'undefined') {
-                val = null;
-            }
-            return val;
-        } else {
-            // Set the value
-            if (isCheckbox) {
-                arg = !!arg; // Cast to bool
-                obj.prop('checked', arg);
-                // Make sure to handle also custom checkboxes
-                const label = obj.closest('.btn-custom-checkbox');
-                if (label.length > 0) {
-                    if (arg) {
-                        label.addClass('active');
-                    } else {
-                        label.removeClass('active');
-                    }
-                }
-            } else if (obj.hasClass('dd-integer-field')) {
-                obj.val(toIntegerField(arg));
-            } else if (obj.hasClass('dd-natural-field')) {
-                obj.val(toNaturalField(arg));
-            } else {
-                obj.val(arg);
-            }
-        }
-    },
-    ddFormulaVal: function (arg) {
-        const obj = $(this);
-        // If the object has no val, return a placeholder
-        let rawVal = obj.val()
-        if (typeof rawVal === 'undefined' || rawVal.trim() == '') {
-            rawVal = obj.attr('placeholder');
-            if (typeof rawVal === 'undefined') {
-                rawVal = null;
-            }
-        }
-        if (obj.hasClass('dd-integer-field')) {
-            return fromIntegerField(rawVal, false);
-        } else if (obj.hasClass('dd-natural-field')) {
-            return fromNaturalField(rawVal, false);
-        } else {
-            return rawVal;
-        }
-    }
-});
-
-function Controller(dbxAppId) {
-    const self = this;
-
-    self.appId = dbxAppId;
-    self.data = new Hier();
-    self.dropbox = null;
-    self.hasLocalStorage = true;
-
-    self._saveModal = null;
-    self._saveExplorer = null;
-
-    self._loadModal = null;
-    self._loadExplorer = null;
-
-    self.formulasActive = false;
-
-    self._getHierPath = function(obj) {
-        obj = $(obj);
-        let path = obj.attr('data-dd-id');
-        if (obj.attr('data-dd-index') != null) {
-            path += '[' + obj.attr('data-dd-index') + ']'
-        }
-        // Up one step
-        obj = obj.parent();
-        if (obj.length > 0) {
-            obj = obj.closest('[data-dd-id]');
-        }
-        if (obj.length > 0) {
-            path = self._getHierPath(obj) + '.' + path;
-        }
-        return path;
-    };
-
-    self._resolveTarget = function(obj) {
-        obj = $(obj);
-        if (obj.attr('data-target')) {
-            return $(obj.attr('data-target'));
-        }
-        return obj;
-    };
-
-    self._allControls = function(parent=$, extraFilter='') {
-        const selectors = ['input[data-dd-path]', 'select[data-dd-path]', 'textarea[data-dd-path]'];
-        for (var i = 0; i < selectors.length; i++) {
-            selectors[i] += extraFilter;
-        }
-        const filter = selectors.join(', ');
-        return $(parent).find(filter);
-    };
-
-    self._setupDDPaths = function(objs=$('body')) {
-        const matches = $(objs)
-            .find('input[data-dd-id], select[data-dd-id], textarea[data-dd-id]')
-            .not('[data-dd-array="master"] *');
-        for (let i = 0; i < matches.length; i++) {
-            const match = $(matches[i]);
-            match.attr('data-dd-path', self._getHierPath(match));
-        }
-    };
-
-    self._initLocalStorage = function () {
-        self.hasLocalStorage = storageAvailable('localStorage');
-        if (self.hasLocalStorage) {
+    _initLocalStorage() {
+        this._hasLocalStorage = storageAvailable('localStorage');
+        if (this._hasLocalStorage) {
             // Did we already open this?
-            if (window.localStorage.getItem('acknowledge_cookies') == null) {
+            if (window.localStorage.getItem('acknowledge_cookies') === null) {
                 // No.
                 const alert = $('<a href="#" class="alert-link" data-target="#cookie_explain" data-toggle="modal"></a>');
-                self.notify('warning', alert);
+                this.notify('warning', alert);
                 alert.text('per cosa')
                     .before('Questa pagina usa il local storage (vedi ')
                     .after('). Disattiva i cookie per questa pagina se non lo desideri.');
-                alert.parents('.alert').on('closed.bs.alert', function() {
+                alert.parents('.alert').on('closed.bs.alert', () => {
                     window.localStorage.setItem('acknowledge_cookies', true);
                 });
             }
@@ -242,23 +60,23 @@ function Controller(dbxAppId) {
             $('#no_local_storage_warning').removeClass('d-none');
             // Print a warning with the limitations
             const alert = $('<a href="#" class="alert-link" data-target="#cookie_explain" data-toggle="modal"></a>')
-            self.notify('warning', alert);
+            this.notify('warning', alert);
             alert.text('usare superscheda senza cookies')
                 .before('Il local storage è disabilitato; hai disattivato i cookie? Vedi quali limitazioni ci sono ad ')
                 .after('.');
         }
     }
 
-    self._retrieveAccessToken = function() {
+    _retrieveAccessToken() {
         // Try to get the access token from the local storage
         let accessToken = null;
         let appId = null;
-        if (self.hasLocalStorage) {
+        if (this._hasLocalStorage) {
             // Use the app id for versioning; forget the token if needed
             accessToken = window.localStorage.getItem('access_token');
             appId = window.localStorage.getItem('app_id');
         }
-        if (!accessToken || appId != self.appId) {
+        if (!accessToken || appId !== this._appId) {
             accessToken = null;
             const parms = parseQueryString();
             if ('access_token' in parms) {
@@ -266,41 +84,39 @@ function Controller(dbxAppId) {
             }
         }
         if (accessToken) {
-            self.dropbox = new Dropbox.Dropbox({accessToken: accessToken});
+            this._dropbox = new Dropbox.Dropbox({accessToken: accessToken});
             // Test if this dropbox works
-            self.dropbox.usersGetCurrentAccount()
-                .then(function() { self._setHasDropbox(true); })
-                .catch(function() { self._setHasDropbox(false); });
+            this._dropbox.usersGetCurrentAccount()
+                .then(() => { this._setHasDropbox(true); })
+                .catch(() => { this._setHasDropbox(false); });
         } else {
-            self._setHasDropbox(false);
+            this._setHasDropbox(false);
         }
-    };
+    }
 
-    self._setHasDropbox = function(hasDbx) {
+    _setHasDropbox(hasDbx) {
         if (hasDbx) {
             $('body').addClass('has-dbx');
             $('#btn_logout').prop('disabled', false);
-            if (self.hasLocalStorage) {
+            if (this._hasLocalStorage) {
                 // Save the access token
-                window.localStorage.setItem('access_token', self.dropbox.getAccessToken());
-                window.localStorage.setItem('app_id', self.appId);
+                window.localStorage.setItem('access_token', this._dropbox.getAccessToken());
+                window.localStorage.setItem('app_id', this._appId);
             }
-            self._setupSaveModal();
-            self._setupLoadModal();
+            this._setupSaveModal();
+            this._setupLoadModal();
         } else {
-            if (self.hasLocalStorage) {
+            if (this._hasLocalStorage) {
                 // Forget the access token if any
                 window.localStorage.removeItem('access_token');
                 // Make sure we autosave before leaving this page
-                $('.btn-dbx-login').click(function() {
-                    self.autosave();
-                });
+                $('.btn-dbx-login').click(this._autosaveEvent);
             }
             // Fall back on a client-id base dbx
-            self.dropbox = new Dropbox.Dropbox({clientId: self.appId});
+            this._dropbox = new Dropbox.Dropbox({clientId: this._appId});
             // Generate  the authentication url
             let url = null;
-            if (window.location.hostname == 'localhost') {
+            if (window.location.hostname === 'localhost') {
                 url = window.location;
             } else {
                 // Ensure https or Dropbox won't accept the redirect URI
@@ -308,410 +124,205 @@ function Controller(dbxAppId) {
                 url = 'https://' + location.hostname + (location.port ? ':' + location.port : '')
                 url += location.pathname + (location.search ? location.search : '')
             }
-            $('.btn-dbx-login').attr('href', self.dropbox.getAuthenticationUrl(url));
+            $('.btn-dbx-login').attr('href', this._dropbox.getAuthenticationUrl(url));
             // Display the login dialog
             $('#auth_dbx').modal('show');
         }
         // No matter what, enable the buttons
         $('nav#main_nav button[disabled]').not('#btn_logout').prop('disabled', false);
-    };
+    }
 
-    self.autosave = function() {
+    autosave() {
         // Save everything before changing window
-        if (self.hasLocalStorage) {
-            self.updateHier();
-            window.localStorage.setItem('_autosave', self.data.dump());
+        if (this._hasLocalStorage) {
+            window.localStorage.setItem('_autosave', this._graph.dumpDataBag());
         }
-    };
+    }
 
-    self._postLoadSync = function() {
-        self.formulasActive = false;
-        console.log('Data loaded.');
-        timeIt('Patching and loading data', function() {
-            if (self._needsPatching()) {
-                console.log('Data source needs patching.')
-                self._applyPatches();
-            }
-            self.updateForm();
-            self.refreshFormulas();
-        });
-        self.formulasActive = true;
-    };
-
-    self.loadAutosave = function() {
-        if (self.hasLocalStorage) {
+    loadAutosave() {
+        if (this._hasLocalStorage) {
             // Check if there is anything to load
             const toLoad = window.localStorage.getItem('_autosave');
             if (toLoad && toLoad.length > 0) {
                 window.localStorage.removeItem('_autosave');
                 console.log('Reloading latest save.');
-                self.data.load(toLoad);
-                self._postLoadSync();
+                this._graph.loadDataBag(toLoad);
+                this._postLoadSync();
             }
         }
-    };
+    }
 
-    self._setupLogoutButton = function() {
-        $('#btn_logout').click(function() {
-            self.dropbox.authTokenRevoke();
-            self.autosave();
-            if (self.hasLocalStorage) {
+    _setupLogoutButton() {
+        $('#btn_logout').click(() => {
+            this._dropbox.authTokenRevoke();
+            this.autosave();
+            if (this._hasLocalStorage) {
                 window.localStorage.removeItem('access_token');
             }
             // Clear access token parms
             window.location.hash = '';
             window.location.reload(true);
         });
-    };
-
-    self._setupAutosave = function() {
-        if (self.hasLocalStorage) {
-            $(window).bind('unload', function() {
-                self.autosave();
-            });
-        }
-        const autosaveInterval = 1000 * 60;
-        setInterval(function() { self.autosave(); }, autosaveInterval);
-    };
-
-    self._setupDlButton = function() {
-        self._saveModal.on('show.bs.modal', function () {
-            self.updateHier();
-            self._saveModal.find('a.btn[download]')
-                .attr('href', 'data:application/json;charset=utf-8,' +
-                    encodeURIComponent(self.data.dump()));
-        });
-        self._saveModal.find('a.btn[download]').click(function() {
-            self.autosave();
-        });
     }
 
-    self._setupSaveModal = function() {
-        const saveForm = self._saveModal.find('form');
+    _setupAutosave() {
+        const autosaveInterval = 1000 * 60;
+        if (this._hasLocalStorage) {
+            $(window).bind('unload', this._autosaveEvent);
+        }
+        setInterval(this._autosaveEvent, autosaveInterval);
+    }
+
+    _setupDlButton() {
+        this._saveModal.on('show.bs.modal', () => {
+            this._saveModal.find('a.btn[download]')
+                .attr('href', 'data:application/json;charset=utf-8,' +
+                    encodeURIComponent(this._graph.dumpDataBag()));
+        });
+        this._saveModal.find('a.btn[download]').click(this._autosaveEvent);
+    }
+
+    _setupSaveModal() {
+        const saveForm = this._saveModal.find('form');
         const fileNameInput = saveForm.find('input');
 
         // Setup dropbox explorer
-        self._saveExplorer = new Explorer(
-            self.dropbox,
-            self._saveModal.find('.dropbox-explorer'),
-            function(evt) {
+        this._saveExplorer = new DropboxExplorer(
+            this._dropbox,
+            this._saveModal.find('.dropbox-explorer'),
+            evt => {
                 // Change the control value
                 evt.preventDefault();
                 evt.stopPropagation();
-                fileNameInput.val($(this).attr('data-file')).change();
+                fileNameInput.val(evt.target.getAttribute('data-file')).change();
             },
-            function(tag, name) {
+            (tag, name) => {
                 // Only folders and json files
-                return tag == 'folder' || name.endsWith('.json');
+                return tag === 'folder' || name.endsWith('.json');
             }
         );
 
         // Make sure that on submit, we intercept the event and call the propert function
-        saveForm.on('submit', function (evt) {
+        saveForm.on('submit', evt => {
             evt.preventDefault();
             evt.stopPropagation();
             if (saveForm[0].checkValidity() === true) {
-                self._saveModal.modal('hide');
-                self.toggleWaiting(true);
+                this._saveModal.modal('hide');
+                this.toggleWaiting(true);
 
-                const path = combine(self._saveExplorer.pwd(), fileNameInput.val(), true);
-                self.saveDB(path, function(res) { self.toggleWaiting(false, res); });
+                const path = pathCombine(this._saveExplorer.workDir, fileNameInput.val(), true);
+                this.saveDB(path, res => { this.toggleWaiting(false, res); });
 
                 // Manually copy the path on the load dialog
-                self._loadExplorer.chdir(self._saveExplorer.pwd(), false);
+                this._loadExplorer.workDir = this._saveExplorer.workDir;
             }
             saveForm.addClass('was-validated');
         });
 
         // Make sure that the proposed name for download is something sensitive
-        fileNameInput.change(function() {
-            self._saveModal.find('a[download]').attr('download', fileNameInput.val());
+        fileNameInput.change(() => {
+            this._saveModal.find('a[download]').attr('download', fileNameInput.val());
         });
 
         // When we open the modal, update everything that is needed
-        self._saveModal.on('show.bs.modal', function () {
+        this._saveModal.on('show.bs.modal', () => {
             saveForm.removeClass('was-validated');
-            self._saveExplorer.refresh();
+            this._saveExplorer.refresh();
         });
     };
 
-    self._setupLoadModal = function() {
+    _setupLoadModal() {
         // Setup dropbox explorer
-        self._loadExplorer = new Explorer(
-            self.dropbox,
-            self._loadModal.find('.dropbox-explorer'),
-            function(evt) {
+        this._loadExplorer = new DropboxExplorer(
+            this._dropbox,
+            this._loadModal.find('.dropbox-explorer'),
+            evt => {
                 // Change the control value
                 evt.preventDefault();
                 evt.stopPropagation();
-                self._loadModal.modal('hide');
-                self.toggleWaiting(true);
-                const file = $(this).attr('data-file');
-                const path = combine(self._loadExplorer.pwd(), file, true);
-                self.loadDB(path, function(res) { self.toggleWaiting(false, res); });
+                this._loadModal.modal('hide');
+                this.toggleWaiting(true);
+                const file = evt.target.getAttribute('data-file');
+                const path = pathCombine(this._loadExplorer.workDir, file, true);
+                this.loadDB(path, res => { this.toggleWaiting(false, res); });
                 // Manually copy the path on the save dialog
-                self._saveExplorer.chdir(self._loadExplorer.pwd(), false);
+                this._saveExplorer.workDir = this._loadExplorer.workDir;
                 // And also suggest the name
-                self._saveModal.find('input').val(file).change();
+                this._saveModal.find('input').val(file).change();
             },
-            function(tag, name) {
+            (tag, name) => {
                 // Only folders and json files
-                return tag == 'folder' || name.endsWith('.json');
+                return tag === 'folder' || name.endsWith('.json');
             }
         );
 
-        self._loadModal.on('show.bs.modal', function () {
-            self._loadExplorer.refresh();
+        this._loadModal.on('show.bs.modal', () => {
+            this._loadExplorer.refresh();
         });
-    };
+    }
 
-    self._setupAnimatedChevrons = function() {
+    _setupAnimatedChevrons() {
         // Find all the chevron buttons
         const matches = $('div.card div.card-header button.close i.fas');
         for (let i = 0; i < matches.length; i++) {
-            const match = $(matches[i]);
-            const button = match.parents('button');
-            const card = button.parents('div.card');
-            card.on('hide.bs.collapse', function() {
-                button.prop('disabled', true);
-                match.animateRotate(180, {
-                    complete: function() {
-                        button.prop('disabled', false);
-                        match.css('transform', '')
+            const $match = $($matches[i]);
+            const $button = $match.parents('button');
+            const $card = $button.parents('div.card');
+            $card.on('hide.bs.collapse', () => {
+                $button.prop('disabled', true);
+                $match.animateRotate(180, {
+                    complete: () => {
+                        $button.prop('disabled', false);
+                        $match.css('transform', '')
                             .removeClass('fa-chevron-circle-up')
                             .addClass('fa-chevron-circle-down');
                     }
                 });
             });
-            card.on('show.bs.collapse', function() {
-                button.prop('disabled', true);
-                match.animateRotate(180, {
-                    complete: function() {
-                        button.prop('disabled', false);
-                        match.css('transform', '')
+            $card.on('show.bs.collapse', () => {
+                $button.prop('disabled', true);
+                $match.animateRotate(180, {
+                    complete: () => {
+                        $button.prop('disabled', false);
+                        $match.css('transform', '')
                             .removeClass('fa-chevron-circle-down')
                             .addClass('fa-chevron-circle-up');
                     }
                 });
             });
         }
-    };
+    }
 
-    self._setupWaitingModal = function() {
-        self._modalWaiting = $('#waiting');
-
-        self._modalWaiting.on('hidden.bs.modal', function () {
+    _setupWaitingModal() {
+        this._modalWaiting = $('#waiting');
+        this._modalWaiting.on('hidden.bs.modal', () => {
             // Reset the content
-            const dialog = self._modalWaiting.find('div.modal-dialog');
+            const dialog = this._modalWaiting.find('div.modal-dialog');
             dialog.empty();
             $('<i class="fas fa-spinner fa-pulse fa-5x"></i>').appendTo(dialog);
         });
-    };
+    }
 
-    self._inverseResolveArg = function(obj) {
-        obj = $(obj);
-        const absFilter = '[data-dd-formula~="/' + obj.attr('data-dd-path') + '"]';
-        const relFilter = '[data-dd-formula~="./' + obj.attr('data-dd-id') + '"]';
-        return self._allControls($, absFilter).add(self.findSiblings(obj, relFilter));
-    };
+    _setupDynamicTitles() {
 
-    self._resolveArg = function(obj, arg) {
-        if (arg == '') {
-            return null;
-        }
-        obj = $(obj);
-        if (arg[0] == '/') {
-            // Absolute path
-            return self.findByPath(arg.substring(1));
-        } else if (arg.substring(0, 2) == './') {
-            return self.findNext(self.findParent(obj), arg.substring(2));
-        } else {
-            // Try number
-            const num = Number(arg);
-            if (num != num) {
-                return arg;
-            }
-            return num;
-        }
-    };
-
-    self._formulaGetCtrls = function(obj) {
-        obj = $(obj);
-        const args = obj.attr('data-dd-formula').split(' ');
-        const ctrls = [];
-        for (let i = 1; i < args.length; i++) {
-            const arg = self._resolveArg(obj, args[i]);
-            if (typeof arg === 'object' && arg != null) {
-                ctrls.push(arg);
-            }
-        }
-        return ctrls;
-    };
-
-    self._formulaEvaluateArgs = function(obj) {
-        obj = $(obj);
-        const isNull = function(v) {
-            return typeof v === 'undefined' || (typeof v === 'object' && (v == null || v.length == 0));
-        };
-        const args = obj.attr('data-dd-formula').split(' ');
-        for (let i = 1; i < args.length; i++) {
-            args[i] = self._resolveArg(obj, args[i]);
-            if (typeof args[i] === 'object' && args[i] != null && args[i].length > 0) {
-                args[i] = args[i].ddFormulaVal();
-            }
-            if (isNull(args[i])) {
-                return null;
-            }
-        }
-        return args;
-    };
-
-    self._evalFormula = function(obj) {
-        const ensureNumbers = function(the_args) {
-            for (let i = 0; i < the_args.length; i++) {
-                if (typeof the_args[i] !== 'number') {
-                    return false;
-                }
-            }
-            return true;
-        };
-        obj = $(obj);
-        const args = self._formulaEvaluateArgs(obj, false, true, false);
-        if (args == null || args.length == 0) {
-            return null;
-        }
-        // All arguments are defined and numerical
-        switch (args.shift()) {
-            case 'sum':
-                if (!ensureNumbers(args)) {
-                    return null;
-                }
-                return args.reduce((a, b) => a + b, 0);
-                break;
-            case 'select_mod':
-                if (args.length < 1) {
-                    return null;
-                }
-                const requestedMod = args.shift();
-                const fieldNames = obj.attr('data-dd-formula').split(' ').slice(2);
-                const idxOfMod = indexOfMod(requestedMod, fieldNames);
-                if (idxOfMod != null) {
-                    return args[idxOfMod];
-                }
-                return null;
-                break;
-            case 'mod':
-                if (!ensureNumbers(args)) {
-                    return null;
-                }
-                const div = args.shift();
-                return Math.floor(args.reduce((a, b) => a + b, 0) / div);
-                break;
-            case 'ref':
-                return args[0];
-                break;
-            default:
-                return null;
-                break;
-        }
-    };
-
-    self.refreshFormulas = function(onlyVoids=true) {
-        const oldActive = self.formulasActive;
-        self.formulasActive = false;
-        timeIt('Recomputing ' + (onlyVoids ? 'void' : 'all') + ' formulas manually', function() {
-            let level = 0;
-            timeIt('Partitioning dependency graph into levels', function() {
-                let levelSet = $('.dd-formula-arg:not([data-dd-formula])');
-                while (levelSet.length > 0) {
-                    const newLevelSet = [];
-                    if (level > 10) {
-                        console.log('Maximum formula depth of ' + level.toString() + ' reached!');
-                        for (let i = 0; i < levelSet.length; i++) {
-                            console.log((i + 1).toString() + '. ' + $(levelSet[i]).attr('data-dd-path'));
-                        }
-                        break;
-                    }
-                    for (let i = 0; i < levelSet.length; i++) {
-                        const obj = $(levelSet[i]);
-                        if (!onlyVoids || obj.ddIsVoid()) {
-                            obj.attr('data-dd-depth', level);
-                            newLevelSet.push(...self._inverseResolveArg(obj));
-                        }
-                    }
-                    ++level;
-                    levelSet = newLevelSet;
-                }
-            });
-            timeIt('Recomputing each level', function() {
-                for (let i = 1; i < level; ++i) {
-                    const matches = $('[data-dd-depth="' + i.toString() + '"]');
-                    for (let j = 0; j < matches.length; j++) {
-                        const match = $(matches[j]);
-                        match.ddSetDefault(self._evalFormula(match));
-                    }
-                }
-                $('[data-dd-depth]').removeAttr('data-dd-depth');
-            });
-        });
-        self.formulasActive = oldActive;
-    };
-
-    self._setupFormulas = function(parent) {
-        const ctrls = self._allControls(parent);
-        const ctrlsWithFormula = ctrls.filter('[data-dd-formula]');
-        for (let i = 0; i < ctrlsWithFormula.length; i++) {
-            // Mark all the arguments
-            const argCtrls = self._formulaGetCtrls($(ctrlsWithFormula[i]), true, false, true);
-            for (let j = 0; j < argCtrls.length; j++) {
-                $(argCtrls[j]).addClass('dd-formula-arg');
-            }
-        }
-        const recomputeAndPropagate = function(ctrl) {
-            timeIt('Recomputing ' + ctrl.attr('data-dd-path'), function() {
-                // Does this control need to reevaluate its formula?
-                if (ctrl.ddIsVoid() && ctrl.attr('data-dd-formula')) {
-                    ctrl.ddSetDefault(self._evalFormula(ctrl));
-                }
-                const matches = self._inverseResolveArg(ctrl);
-                for (let i = 0; i < matches.length; i++) {
-                    const match = $(matches[i]);
-                    if (match.ddIsVoid()) {
-                        // Do not use the event system to save churn an memory
-                        recomputeAndPropagate(match);
-                    }
-                }
-            });
-        };
-
-        ctrls.filter('.dd-formula-arg').change(function(e) {
-            if ($(this).attr('data-dd-id') == 'chiave') {
-                console.log('Triggered!! ' + $(this).attr('data-dd-path'));
-            }
-            if (self.formulasActive) {
-                recomputeAndPropagate($(this));
-            }
-        });
-    };
-
-    self._setupDynamicTitles = function() {
+        // TODO this is nontrivial
         const matches = $('[data-dd-id][data-dd-array="master"]');
         for (let i = 0; i < matches.length; i++) {
-            const match = $(matches[i]);
-            const input = match.find('input.dd-dyn-title')
-                .filter(firstLevFilter(match));
-            if (input.length == 0) {
+            const $match = $(matches[i]);
+            const $input = $match.find('input.dd-dyn-title')
+                .filter(firstLevFilter($match));
+            if ($input.length == 0) {
                 return;
             }
             // Ok, set up an event on this container
-            const container = match.closest('[data-dd-array="container"]');
-            container.on('ddarray.insertion', function(evt, inserted_item) {
+            const $container = $match.closest('[data-dd-array="container"]');
+            $container.on('ddarray.insertion', function(evt, inserted_item) {
                 const itemInput = inserted_item.find('input.dd-dyn-title')
                     .filter(firstLevFilter(inserted_item));
                 itemInput.change(function() {
                     const newTitle = $(this).val().trim();
                     // Bubble an event up!!
-                    container.trigger('ddarray.title', [inserted_item, newTitle]);
+                    $container.trigger('ddarray.title', [inserted_item, newTitle]);
                 });
             });
         }
@@ -724,7 +335,18 @@ function Controller(dbxAppId) {
                 document.title = originalTitle;
             }
         });
-    };
+    }
+}
+
+function Controller(dbxAppId) {
+
+
+
+
+
+
+
+
 
 
     self.autosort = function(array) {
@@ -807,90 +429,6 @@ function Controller(dbxAppId) {
         });
     };
 
-    self._setupArrays = function() {
-        initDDArrays({
-            insertion: function(evt, item) { self._setupDDPaths(item); self._setupFormulas(item); },
-            reindex: function(evt, item, old_idx, new_idx) { self._setupDDPaths(item); }
-        });
-    }
-
-    self._resizeAllFormArrays = function() {
-        timeIt('Resizing arrays', function() {
-            const arraySizes = self.data.getArraySizes();
-            arraySizes.sort(function (a, b) { return a[0].localeCompare(b[0]); });
-            for (let i = 0; i < arraySizes.length; ++i) {
-                const arrayPath = arraySizes[i][0];
-                const arraySize = arraySizes[i][1];
-                // Is this a dynamic array?
-                const arrayMaster = self.findArrayMaster(arrayPath);
-                if (arrayMaster != null && arrayMaster.length > 0) {
-                    // Arr points at the master
-                    arrayMaster.closest('[data-dd-array="container"]')
-                        .data('ddArrayController')
-                        .resize(arraySize);
-                }
-            }
-        });
-    }
-
-    self._truncateAllHierArrays = function() {
-        const matches = $('[data-dd-id][data-dd-array="master"]');
-        for (let i = 0; i < matches.length; i++) {
-            const match = $(matches[i]);
-            const nChildren = match.siblings('[data-dd-array="item"]').length;
-            const path = self._getHierPath(match);
-            const item = self.data.get(path);
-            if (item) {
-                item.length = nChildren;
-            } else {
-                self.data.set(path, []);
-            }
-        }
-    }
-
-    self.findNext = function(parent, dd_id) {
-        return $(parent).find('[data-dd-id="' + dd_id +'"]').filter(function (idx, obj) {
-            return $(obj).parentsUntil(parent, '[data-dd-id]').length == 0;
-        });
-    };
-
-    self.findChildren = function(parent, extraFilter='') {
-        parent = $(parent);
-        return parent.find('[data-dd-id]' + extraFilter).filter(function (idx, obj) {
-            // Make sure there is nothing in the middle
-            return $(obj).parentsUntil(parent, '[data-dd-id]').length == 0;
-        });
-    };
-
-    self.findSiblings = function(obj, extraFilter='') {
-        return self.findChildren(self.findParent(obj), extraFilter).not(obj);
-    };
-
-    self.findParent = function(obj) {
-        const parents = $(obj).parents('[data-dd-id], [data-dd-index]');
-        if (parents.length == 0) {
-            return $;
-        } else {
-            return $(parents[0]);
-        }
-    };
-
-    self.findByPath = function (path) {
-        return $('[data-dd-path="' + path + '"]');
-    }
-
-    self.findArrayMaster = function (path) {
-        // Remove the last path components
-        const pieces = path.split('.');
-        const lastComp = pieces.pop();
-        let parent = $;
-        if (pieces.length > 0) {
-            parent = self.findByPath(pieces.join('.'));
-        }
-        return self.findNext(parent, lastComp).filter('[data-dd-array="master"]');
-    };
-
-
     self.notify = function(cls, text, auto_dismiss=-1) {
         const div = $('<div class="alert alert-dismissible sticky-top fade show" role="alert"></div>');
         let icon = null;
@@ -934,6 +472,21 @@ function Controller(dbxAppId) {
             modal.remove();
         }).removeClass('show');
     };
+
+    self._postLoadSync = function() {
+        self.formulasActive = false;
+        console.log('Data loaded.');
+        timeIt('Patching and loading data', function() {
+            if (self._needsPatching()) {
+                console.log('Data source needs patching.')
+                self._applyPatches();
+            }
+            self.updateForm();
+            self.refreshFormulas();
+        });
+        self.formulasActive = true;
+    };
+
 
     self.setup = function() {
         self._saveModal = $('#save_to');
@@ -1007,7 +560,7 @@ function Controller(dbxAppId) {
 
     self.saveDB = function(path, post_action=null) {
         self.updateHier();
-        self.dropbox.filesUpload({
+        self._dropbox.filesUpload({
             path: path,
             mode: 'overwrite',
             contents: self.data.dump()
@@ -1064,7 +617,7 @@ function Controller(dbxAppId) {
 
     self.loadDB = function(path, post_action=null) {
         console.log('Loading Dropbox file ' + path);
-        self.dropbox.filesDownload({path: path})
+        self._dropbox.filesDownload({path: path})
             .then(function (response) {
                 const blob = response.fileBlob;
                 const reader = new FileReader();
