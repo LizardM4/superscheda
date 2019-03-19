@@ -70,6 +70,7 @@ class DropboxExplorer {
         this._spinner = this._explorer.find('.dropbox-spinner');
         this._alert = this._explorer.find('.dropbox-alert');
         this._fileClickEvent = fileClickEvent;
+        this.workDir = '/';
     }
 
     get workDir() {
@@ -82,11 +83,12 @@ class DropboxExplorer {
         }
         this._nav.attr('data-path', pathNormalize(path, true));
         this._syncBreadcrumb();
-        this._loadFolderContent();
+        if (this._explorer.is(':visible')) {
+            this._loadFolderContent();
+        }
     }
 
     refresh() {
-        this._syncBreadcrumb();
         this._loadFolderContent();
     }
 
