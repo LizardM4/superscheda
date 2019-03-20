@@ -19,6 +19,7 @@
 
 import { timeIt } from './helper.js?v=%REV';
 import { DropboxExplorer, pathCombine } from './dbxexplorer.js?v=%REV';
+import { DDArray } from './ddarray.js?v=%REV';
 
 // 1. self -> this
 // 2. $(this)
@@ -304,31 +305,38 @@ class SuperschedaController {
     }
 
     _setupDynamicTitles() {
+        // Select all the containers which have a master which contain a direct descendant
+        // which itself is a input.dd-dyn-title
+        const $containers = [];
+        const matches = $('[data-dd-array="master"] input.dd-dyn-title').each((_, input) => {
+            // Find the corresponding container
+            $containers.push($(input).closest('[data-dd-array="container"]'));
+        });
 
-        // TODO this is nontrivial
-        const matches = $('[data-dd-id][data-dd-array="master"]');
-        for (let i = 0; i < matches.length; i++) {
-            const $match = $(matches[i]);
-            const $input = $match.find('input.dd-dyn-title')
-                .filter(firstLevFilter($match));
-            if ($input.length == 0) {
-                return;
-            }
-            // Ok, set up an event on this container
-            const $container = $match.closest('[data-dd-array="container"]');
-            $container.on('ddarray.insertion', function(evt, inserted_item) {
-                const itemInput = inserted_item.find('input.dd-dyn-title')
-                    .filter(firstLevFilter(inserted_item));
-                itemInput.change(function() {
-                    const newTitle = $(this).val().trim();
-                    // Bubble an event up!!
-                    $container.trigger('ddarray.title', [inserted_item, newTitle]);
+        // Setup an event that upon insertion, bubbles an extra event for the title to appear
+        $containers.forEach(($container) => {
+            $container.on('ddarray.insertion', (evt, insertedItems) => {
+                insertedItems.forEach(insertedItem => {
+                    const $insertedItem = $(insertedItem);
+                    $insertedItem
+                        .find('input.dd-dyn-title')
+                        .filter((_, input) => {
+                            return $(input)
+                                .parentsUntil($insertedItem, '[data-dd-array="container"]')
+                                .length === 0;
+                        })
+                        .change((changeEvt) => {
+                            $container.trigger('ddarray.title', [$insertedItem])
+                        })
+                        .change();
                 });
             });
-        }
+        });
+
+        // Different setup: the dynamic title change
         const originalTitle = document.title;
-        $('#dd-page-title[data-dd-id]').change(function () {
-            const val = $(this).val();
+        $('#dd-page-title[data-dd-id]').change((evt) => {
+            const val = $(evt.target).val();
             if (val.length > 0) {
                 document.title = val + ' - ' + originalTitle;
             } else {
@@ -336,6 +344,75 @@ class SuperschedaController {
             }
         });
     }
+
+    _setupCustomDropdown() {
+        $('.input-group-prepend .dropdown-menu .dropdown-item').click((evt) => {
+            evt.preventDefault();
+            const $obj = $(evt.target);
+            $obj.closest('.input-group-prepend')
+                .find('input[type="text"]')
+                .val($obj.text())
+                .change();
+        });
+        $('.input-group-append .dropdown-menu .dropdown-item').click((evt) => {
+            evt.preventDefault();
+            const $obj = $(evt.target);
+            $obj.closest('.input-group-append')
+                .find('input[type="text"]')
+                .val($obj.text())
+                .change();
+        });
+    };
+
+    _setupAttackTOC() {
+        const smTocController = DDArray.getController($('#toc_attacchi_sm'));
+        const mdTocController = DDArray.getController($('#toc_attacchi_md'));
+        $('#array_attacchi')
+            .on('ddarray.title', (evt, $item) => {
+                evt.stopPropagation();
+                let title = $item.val().trim();
+                if (title.length === 0) {
+                    title = 'Attacco';
+                }
+                $item.find('span.dd-dyn-title').text(title);
+                // Update the tocs too
+                const idx = DDArray.getIndex($item.closest('[data-dd-index]')[0]);
+                $(smTocController.get(idx)).find('a').text(title);
+                $(mdTocController.get(idx)).find('a').text(title);
+            })
+            .on('ddarray.insertion', function(evt, insertedItems) {
+                evt.stopPropagation();
+                insertedItems.forEach(insertedItem => {
+                    const idx = DDArray.getIndex(insertedItem);
+                    $(insertedItem).find('.hidden-anchor').attr('id', 'att_' + idx.toString());
+                    $(smTocController.append()).find('a').attr('href', '#att_' + idx.toString());
+                    $(mdTocController.append()).find('a').attr('href', '#att_' + idx.toString());
+                });
+            })
+            .on('ddarray.removal', function(evt, removedItems) {
+                evt.stopPropagation();
+                removedItems.forEach(removedItem => {
+                    const idx = DDArray.getIndex(removedItem);
+                    smTocController.remove(idx);
+                    mdTocController.remove(idx);
+                }
+            })
+            .on('ddarray.reindex', function(evt, domItemPrevIdxIdxTriples) {
+                evt.stopPropagation();
+                domItemPrevIdxIdxTriples.forEach(([domItem, previousIdx, newIdx]) => {
+                    $(domItem).find('.hidden-anchor').attr('id', 'att_' + newIdx.toString());
+                });
+            });
+        const evtReindex = function(evt, domItemPrevIdxIdxTriples) {
+            evt.stopPropagation();
+            domItemPrevIdxIdxTriples.forEach(([domItem, previousIdx, newIdx]) => {
+                $(domItem).find('a').attr('href', '#att_' + newIdx.toString());
+            });
+        };
+        smTocController.container.on('ddarray.reindex', evtReindex);
+        mdTocController.container.on('ddarray.reindex', evtReindex);
+    };
+
 }
 
 function Controller(dbxAppId) {
@@ -370,64 +447,6 @@ function Controller(dbxAppId) {
     };
 
 
-    self._setupAttackTOC = function() {
-        const tocSm = $('#toc_attacchi_sm').data('ddArrayController');
-        const tocMd = $('#toc_attacchi_md').data('ddArrayController');
-        $('#array_attacchi')
-            .on('ddarray.title', function(evt, item, title) {
-                evt.stopPropagation();
-                if (title.length == 0) {
-                    title = 'Attacco';
-                }
-                item.find('span.dd-dyn-title').text(title);
-                // Update the tocs too
-                const idx = Number.parseInt(item.attr('data-dd-index'));
-                tocSm.get(idx).find('a').text(title);
-                tocMd.get(idx).find('a').text(title);
-            })
-            .on('ddarray.insertion', function(evt, item) {
-                evt.stopPropagation();
-                const idx = Number.parseInt(item.attr('data-dd-index'));
-                item.find('.hidden-anchor').attr('id', 'att_' + idx.toString());
-                tocSm.append().find('a').attr('href', '#att_' + idx.toString());
-                tocMd.append().find('a').attr('href', '#att_' + idx.toString());
-            })
-            .on('ddarray.removal', function(evt, item) {
-                evt.stopPropagation();
-                const idx = Number.parseInt(item.attr('data-dd-index'));
-                tocSm.remove(tocSm.get(idx));
-                tocMd.remove(tocMd.get(idx));
-            })
-            .on('ddarray.reindex', function(evt, item, prev_idx, new_idx) {
-                evt.stopPropagation();
-                item.find('.hidden-anchor').attr('id', 'att_' + new_idx.toString());
-            });
-        const onReindex = function(evt, item, prev_idx, new_idx) {
-            evt.stopPropagation();
-            item.find('a').attr('href', '#att_' + new_idx.toString());
-        };
-        tocSm.container.on('ddarray.reindex', onReindex);
-        tocMd.container.on('ddarray.reindex', onReindex);
-    };
-
-    self._setupCustomDropdown = function() {
-        $('.input-group-prepend .dropdown-menu .dropdown-item').click(function(evt) {
-            evt.preventDefault();
-            const obj = $(this);
-            obj.closest('.input-group-prepend')
-                .find('input[type="text"]')
-                .val(obj.text())
-                .change();
-        });
-        $('.input-group-append .dropdown-menu .dropdown-item').click(function(evt) {
-            evt.preventDefault();
-            const obj = $(this);
-            obj.closest('.input-group-append')
-                .find('input[type="text"]')
-                .val(obj.text())
-                .change();
-        });
-    };
 
     self.notify = function(cls, text, auto_dismiss=-1) {
         const div = $('<div class="alert alert-dismissible sticky-top fade show" role="alert"></div>');
