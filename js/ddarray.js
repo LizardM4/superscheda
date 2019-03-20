@@ -30,6 +30,16 @@ class DDArray {
         return this._items.length;
     }
 
+    get(idx) {
+        if (idx < 0) {
+            idx += this.length;
+        }
+        if (idx < 0 || idx >= this.length) {
+            return null;
+        }
+        return this._items[idx];
+    }
+
     static getIndex(domItem) {
         const idx = parseInt(domItem.getAttribute('data-dd-index'));
         if (idx !== idx) {
@@ -131,6 +141,7 @@ class DDArray {
 
     append() {
         this._insert(this.length, 1);
+        return this.get(-1);
     }
 
     remove(itemOrIndex) {
