@@ -110,7 +110,7 @@ class DDGraph {
             },
             reindex: (evt, domItemPrevIdxIdxTriples) => {
                 this.formulaGraph.dynamicRecomputeFormulas = false;
-                const domItems = domItemPrevIdxIdxTriples.map(([domItem, previousIdx, Idx]) => domItem);
+                const domItems = domItemPrevIdxIdxTriples.map(([domItem, previousIdx, newIdx]) => domItem);
                 this.getNodeChildrenOfDOMElements($(domItems)).forEach(child => { child.reindexIfNeeded(); });
                 this.formulaGraph.recomputePendingFormulas(false);
                 this.formulaGraph.dynamicRecomputeFormulas = true;
