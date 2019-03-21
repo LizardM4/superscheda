@@ -380,15 +380,15 @@ class SuperschedaController {
     _setupDynamicTitles() {
         // Select all the containers which have a master which contain a direct descendant
         // which itself is a input.dd-dyn-title
-        const $containers = [];
-        const matches = $('[data-dd-array="master"] input.dd-dyn-title').each((_, input) => {
+        const controllers = [];
+        const matches = $('input.dd-dyn-title').each((_, input) => {
             // Find the corresponding container
-            $containers.push($(input).closest('[data-dd-array="container"]'));
+            controllers.push(DDArray.getController($(input)));
         });
 
         // Setup an event that upon insertion, bubbles an extra event for the title to appear
-        $containers.forEach(($container) => {
-            $container.on('ddarray.insertion', (evt, insertedItems) => {
+        controllers.forEach((controller) => {
+            controller.container.on('ddarray.insertion', (evt, insertedItems) => {
                 insertedItems.forEach(insertedItem => {
                     const $insertedItem = $(insertedItem);
                     $insertedItem
@@ -399,7 +399,7 @@ class SuperschedaController {
                                 .length === 0;
                         })
                         .change((changeEvt) => {
-                            $container.trigger('ddarray.title', [$insertedItem])
+                            controller.container.trigger('ddarray.title', [$insertedItem, changeEvt.target])
                         })
                         .change();
                 });
@@ -441,9 +441,9 @@ class SuperschedaController {
         const smTocController = DDArray.getController($('#toc_attacchi_sm'));
         const mdTocController = DDArray.getController($('#toc_attacchi_md'));
         $('#array_attacchi')
-            .on('ddarray.title', (evt, $item) => {
+            .on('ddarray.title', (evt, $item, input) => {
                 evt.stopPropagation();
-                let title = $item.val().trim();
+                let title = $(input).val().trim();
                 if (title.length === 0) {
                     title = 'Attacco';
                 }
