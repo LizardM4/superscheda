@@ -252,7 +252,7 @@ class DDGraph {
     */
     _getDOMNodeChildrenFilter($parents) {
         return (_, descendant) => {
-            const node = this._getNodeOfDOMElement(descendant);
+            const node = this.getNodeOfDOMElement(descendant);
             return node && node.obj.parentsUntil($parents, '[data-dd-path]').length === 0;
         };
     }
@@ -264,7 +264,7 @@ class DDGraph {
 
     @return A DDNode or null if the node has not been found.
     */
-    _getNodeOfDOMElement(domElement) {
+    getNodeOfDOMElement(domElement) {
         const path = domElement.getAttribute('data-dd-path');
         console.assert(path);
         return this.nodeByPath(path);
@@ -290,7 +290,7 @@ class DDGraph {
             .find('[data-dd-path]')
             .filter(this._getDOMNodeChildrenFilter($domElements));
         return $matchingDomElements.toArray().concat($directChildren.toArray())
-            .map(domElement => this._getNodeOfDOMElement(domElement));
+            .map(domElement => this.getNodeOfDOMElement(domElement));
     }
 
     /**
@@ -339,7 +339,7 @@ class DDGraph {
         if (candidates.length === 0) {
             return this.root;
         }
-        return this._getNodeOfDOMElement(candidates[0]);
+        return this.getNodeOfDOMElement(candidates[0]);
     }
 
     /**
