@@ -277,9 +277,14 @@ class DDSelectorInstance {
     }
 
     recacheMatchingNodes() {
-        this._matchingNodes = this.selector.forwardMatch(this.node, true);
-        if (!this._matchingNodes) {
-            this._matchingNodes = [];
+        const fwdMatchResults = this.selector.forwardMatch(this.node);
+        if (this._matchingNodes) {
+            this._matchingNodes.clear();
+        } else {
+            this._matchingNodes = new Set();
+        }
+        if (fwdMatchResults) {
+            fwdMatchResults.forEach(item => { this._matchingNodes.add(item); });
         }
     }
 
@@ -287,18 +292,16 @@ class DDSelectorInstance {
         if (this._matchingNodes === null) {
             this.recacheMatchingNodes();
         }
-        const idx = arrayBinarySearch(this._matchingNodes, node, DDSelector.nodeCompare);
-        console.assert(idx < 0);
-        this._matchingNodes.splice(-idx - 1, 0, node);
+        console.assert(!this._matchingNodes.has(node));
+        this._matchingNodes.add(node);
     }
 
     removeFromMatchingNodes(node) {
         if (this._matchingNodes === null) {
             return;
         }
-        const idx = arrayBinarySearch(this._matchingNodes, node, DDSelector.nodeCompare);
-        console.assert(idx >= 0);
-        this._matchingNodes.splice(idx, 1);
+        console.assert(this._matchingNodes.has(node));
+        this._matchingNodes.delete(node);
     }
 
     constructor(selector, node) {
@@ -399,12 +402,15 @@ class DDFormula {
         let select = this._argDefs[0];
         if (select instanceof DDSelectorInstance) {
             // Evaluate the selector
-            console.assert(select.matchingNodes.length === 1);
-            if (select.matchingNodes.length !== 1) {
+            console.assert(select.matchingNodes.size === 1);
+            if (select.matchingNodes.size !== 1) {
                 // Must be a unique node
                 return null;
             }
-            select = select.matchingNodes[0].formulaValue;
+            // Just extract any element of the set
+            select.matchingNodes.forEach(element => {
+                select = element.formulaValue;
+            });
             if (typeof select === 'string') {
                 select = select.toLowerCase();
             }
@@ -416,12 +422,17 @@ class DDFormula {
             // Does the selected path contain the selector
             if (argDef.selector.selectorParts.indexOf(select) >= 0) {
                 // Evaluate the selector
-                console.assert(argDef.matchingNodes.length === 1);
-                if (argDef.matchingNodes.length !== 1) {
+                console.assert(argDef.matchingNodes.size === 1);
+                if (argDef.matchingNodes.size !== 1) {
                     // Must be a unique node
                     return null;
                 }
-                return argDef.matchingNodes[0].formulaValue;
+                // Just extract any element of the set
+                let retval = null;
+                argDef.matchingNodes.forEach(element => {
+                    retval = element.formulaValue;
+                });
+                return retval;
             }
         }
         return null;
@@ -436,7 +447,7 @@ class DDFormula {
         const matchingNodes = new Set();
         this._argDefs.forEach(argDef => {
             if (argDef instanceof DDSelectorInstance) {
-                if (argDef.matchingNodes && argDef.matchingNodes.length > 0) {
+                if (argDef.matchingNodes && argDef.matchingNodes.size > 0) {
                     argDef.matchingNodes.forEach(item => { matchingNodes.add(item); });
                 }
             }
