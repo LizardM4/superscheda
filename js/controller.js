@@ -130,7 +130,7 @@ class SuperschedaController {
     autosave() {
         // Save everything before changing window
         if (this._hasLocalStorage) {
-            window.localStorage.setItem('_autosave', this._graph.dumpDataBag());
+            window.localStorage.setItem('_autosave', JSON.stringify(this._graph.dumpDataBag(), null, 4));
         }
     }
 
@@ -141,7 +141,8 @@ class SuperschedaController {
             if (toLoad && toLoad.length > 0) {
                 window.localStorage.removeItem('_autosave');
                 console.log('Reloading latest save.');
-                this._graph.loadDataBag(toLoad);
+                const jsonData = JSON.parse(toLoad);
+                this._graph.loadDataBag(jsonData);
                 this._postLoadSync();
             }
         }
@@ -250,7 +251,7 @@ class SuperschedaController {
         this._saveModal.on('show.bs.modal', () => {
             this._saveModal.find('a.btn[download]')
                 .attr('href', 'data:application/json;charset=utf-8,' +
-                    encodeURIComponent(this._graph.dumpDataBag()));
+                    encodeURIComponent(JSON.stringify(this._graph.dumpDataBag(), null, 4)));
         });
         this._saveModal.find('a.btn[download]').click(this._autosaveEvent);
     }
@@ -523,7 +524,7 @@ class SuperschedaController {
         this._dropbox.filesUpload({
                 path: path,
                 mode: 'overwrite',
-                contents: this.graph.dumpDataBag()
+                contents: this._graph.dumpDataBag()
             })
             .then((response) => {
                 this.notify('success', 'Salvato su \'' + path +'\'.', 5000);
@@ -545,7 +546,7 @@ class SuperschedaController {
     loadRemoteFile(name, postLoadAction=null) {
         console.log('Reloading remote file ' + name);
         $.getJSON(name, (jsonData) => {
-            this.graph.loadDataBag(jsonData);
+            this._graph.loadDataBag(jsonData);
             if (postLoadAction) {
                 postLoadAction(true);
             }
@@ -564,7 +565,7 @@ class SuperschedaController {
                 const blob = response.fileBlob;
                 const reader = new FileReader();
                 reader.addEventListener('loadend', () => {
-                    this.graph.loadDataBag(reader.result);
+                    this._graph.loadDataBag(JSON.parse(reader.result));
                     if (postLoadAction) {
                         postLoadAction(true);
                     }
