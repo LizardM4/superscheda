@@ -20,6 +20,7 @@
 import { timeIt } from './helper.js?v=%REV';
 import { DropboxExplorer, pathCombine } from './dbxexplorer.js?v=%REV';
 import { DDArray } from './ddarray.js?v=%REV';
+import { DDGraph } from './ddgraph.js?v=%REV';
 
 class SuperschedaController {
     constructor(dbxAppId) {
@@ -30,7 +31,7 @@ class SuperschedaController {
         this._saveExplorer = null;
         this._loadModal = null;
         this._loadExplorer = null;
-        this._graph = null;
+        this._graph = new DDGraph();
         this._autosaveEvent = () => { this.autosave(); };
     }
 
@@ -500,6 +501,7 @@ class SuperschedaController {
     setup() {
         this._saveModal = $('#save_to');
         this._loadModal = $('#load_from');
+        this._graph.loadNodesFromDom();
         this._initLocalStorage();
         this._retrieveAccessToken();
         // ^ will call _setupLoadModal and _setupSaveModal
