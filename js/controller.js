@@ -21,13 +21,6 @@ import { timeIt } from './helper.js?v=%REV';
 import { DropboxExplorer, pathCombine } from './dbxexplorer.js?v=%REV';
 import { DDArray } from './ddarray.js?v=%REV';
 
-// 1. self -> this
-// 2. $(this)
-// 3. var
-// 4. for (let i)
-// 5. function
-// 6. ==, !=
-
 class SuperschedaController {
     constructor(dbxAppId) {
         this._appId = dbxAppId;
@@ -153,6 +146,84 @@ class SuperschedaController {
         }
     }
 
+    notify(cls, text, autoDismiss=-1) {
+        const div = $('<div class="alert alert-dismissible sticky-top fade show" role="alert"></div>');
+        let icon = null;
+        switch(cls) {
+            case 'success':
+                icon = 'check';
+                break;
+            case 'warning':
+                icon = 'exclamation-triangle';
+                break;
+            case 'danger':
+                icon = 'exclamation-circle';
+                break;
+        }
+        div.addClass('alert-' + cls);
+        if (typeof text === 'string') {
+            div.text(text);
+        } else {
+            text.appendTo(div);
+        }
+        $('<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+            '<span aria-hidden="true">&times;</span>' +
+          '</button>').appendTo(div);
+        if (icon) {
+            $('<i class="fas fa-pull-left fa-2x"></i>').addClass('fa-' + icon).prependTo(div);
+        }
+        div.insertAfter('nav.navbar');
+        if (autoDismiss > 0) {
+            setTimeout(() => {
+                div.alert('close');
+            }, autoDismiss);
+        }
+        return div;
+    }
+
+
+    toggleWaiting(onOff, success=null) {
+        if (onOff) {
+            this._modalWaiting.modal('show');
+        } else if (success === null) {
+            this._modalWaiting.modal('hide');
+        } else {
+            const dialog = this._modalWaiting.find('div.modal-dialog');
+            dialog.empty();
+            if (success) {
+                $('<i class="fas fa-check fa-5x"></i>').appendTo(dialog);
+            } else {
+                $('<i class="fas fa-times fa-5x"></i>').appendTo(dialog);
+            }
+            setTimeout(() => {
+                this._modalWaiting.modal('hide');
+            }, 400);
+        }
+    }
+
+    _promptReady() {
+        const modal = $('#loading_modal');
+        // https://stackoverflow.com/a/9255507/1749822
+        modal.on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', (evt) => {
+            modal.off(evt);
+            modal.remove();
+        }).removeClass('show');
+    }
+
+    static getAutosortKey(arrayItem) {
+        const matches = $(arrayItem).find('input.dd-sort-key')
+            .filter((_, domElement) => {
+                return $(domElement)
+                    .parentsUntil(arrayItem, '[data-dd-array="container"]')
+                    .length === 0;
+            });
+        if (matches.length > 0) {
+            return matches.val().toString();
+        } else {
+            return '';
+        }
+    }
+
     _setupLogoutButton() {
         $('#btn_logout').click(() => {
             this._dropbox.authTokenRevoke();
@@ -212,7 +283,7 @@ class SuperschedaController {
                 this.toggleWaiting(true);
 
                 const path = pathCombine(this._saveExplorer.workDir, fileNameInput.val(), true);
-                this.saveDB(path, res => { this.toggleWaiting(false, res); });
+                this.saveToDropbox(path, res => { this.toggleWaiting(false, res); });
 
                 // Manually copy the path on the load dialog
                 this._loadExplorer.workDir = this._saveExplorer.workDir;
@@ -264,9 +335,8 @@ class SuperschedaController {
 
     _setupAnimatedChevrons() {
         // Find all the chevron buttons
-        const matches = $('div.card div.card-header button.close i.fas');
-        for (let i = 0; i < matches.length; i++) {
-            const $match = $($matches[i]);
+        $('div.card div.card-header button.close i.fas').forEach((_, match) => {
+            const $match = $(match);
             const $button = $match.parents('button');
             const $card = $button.parents('div.card');
             $card.on('hide.bs.collapse', () => {
@@ -291,7 +361,7 @@ class SuperschedaController {
                     }
                 });
             });
-        }
+        });
     }
 
     _setupWaitingModal() {
@@ -362,7 +432,7 @@ class SuperschedaController {
                 .val($obj.text())
                 .change();
         });
-    };
+    }
 
     _setupAttackTOC() {
         const smTocController = DDArray.getController($('#toc_attacchi_sm'));
@@ -380,7 +450,7 @@ class SuperschedaController {
                 $(smTocController.get(idx)).find('a').text(title);
                 $(mdTocController.get(idx)).find('a').text(title);
             })
-            .on('ddarray.insertion', function(evt, insertedItems) {
+            .on('ddarray.insertion', (evt, insertedItems) => {
                 evt.stopPropagation();
                 insertedItems.forEach(insertedItem => {
                     const idx = DDArray.getIndex(insertedItem);
@@ -389,7 +459,7 @@ class SuperschedaController {
                     $(mdTocController.append()).find('a').attr('href', '#att_' + idx.toString());
                 });
             })
-            .on('ddarray.removal', function(evt, removedItems) {
+            .on('ddarray.removal', (evt, removedItems) => {
                 evt.stopPropagation();
                 removedItems.forEach(removedItem => {
                     const idx = DDArray.getIndex(removedItem);
@@ -397,13 +467,13 @@ class SuperschedaController {
                     mdTocController.remove(idx);
                 }
             })
-            .on('ddarray.reindex', function(evt, domItemPrevIdxIdxTriples) {
+            .on('ddarray.reindex', (evt, domItemPrevIdxIdxTriples) => {
                 evt.stopPropagation();
                 domItemPrevIdxIdxTriples.forEach(([domItem, previousIdx, newIdx]) => {
                     $(domItem).find('.hidden-anchor').attr('id', 'att_' + newIdx.toString());
                 });
             });
-        const evtReindex = function(evt, domItemPrevIdxIdxTriples) {
+        const evtReindex = (evt, domItemPrevIdxIdxTriples) => {
             evt.stopPropagation();
             domItemPrevIdxIdxTriples.forEach(([domItem, previousIdx, newIdx]) => {
                 $(domItem).find('a').attr('href', '#att_' + newIdx.toString());
@@ -411,255 +481,103 @@ class SuperschedaController {
         };
         smTocController.container.on('ddarray.reindex', evtReindex);
         mdTocController.container.on('ddarray.reindex', evtReindex);
-    };
-
-}
-
-function Controller(dbxAppId) {
-
-
-
-
-
-
-
-
-
-
-    self.autosort = function(array) {
-        const compare = function(x, y) {
-          return $(x).find('.dd-sort-key[data-dd-id]').val().localeCompare(
-            $(y).find('.dd-sort-key[data-dd-id]').val()
-          );
-        };
-        $(array).data('ddArrayController').sort(compare);
-    };
-
-    self._setupAutosort = function() {
-        const matches = $('.dd-autosort[data-dd-id]');
-        for (let i = 0; i < matches.length; i++) {
-            const match = $(matches[i]);
-            const container = match.closest('[data-dd-array="container"]');
-            match.blur(function(evt) {
-                self.autosort(container);
-            });
-        }
-    };
-
-
-
-    self.notify = function(cls, text, auto_dismiss=-1) {
-        const div = $('<div class="alert alert-dismissible sticky-top fade show" role="alert"></div>');
-        let icon = null;
-        switch(cls) {
-        case 'success':
-            icon = 'check';
-            break;
-        case 'warning':
-            icon = 'exclamation-triangle';
-            break;
-        case 'danger':
-            icon = 'exclamation-circle';
-            break;
-        }
-        div.addClass('alert-' + cls);
-        if (text instanceof jQuery) {
-            text.appendTo(div);
-        } else {
-            div.text(text);
-        }
-        $('<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-            '<span aria-hidden="true">&times;</span>' +
-          '</button>').appendTo(div);
-        if (icon) {
-            $('<i class="fas fa-pull-left fa-2x"></i>').addClass('fa-' + icon).prependTo(div);
-        }
-        div.insertAfter('nav.navbar');
-        if (auto_dismiss > 0) {
-            setTimeout(function() {
-                div.alert('close');
-            }, auto_dismiss);
-        }
-        return div;
-    };
-
-    self._promptReady = function() {
-        const modal = $('#loading_modal');
-        // https://stackoverflow.com/a/9255507/1749822
-        modal.on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(e) {
-            modal.off(e);
-            modal.remove();
-        }).removeClass('show');
-    };
-
-    self._postLoadSync = function() {
-        self.formulasActive = false;
-        console.log('Data loaded.');
-        timeIt('Patching and loading data', function() {
-            if (self._needsPatching()) {
-                console.log('Data source needs patching.')
-                self._applyPatches();
-            }
-            self.updateForm();
-            self.refreshFormulas();
-        });
-        self.formulasActive = true;
-    };
-
-
-    self.setup = function() {
-        self._saveModal = $('#save_to');
-        self._loadModal = $('#load_from');
-        self._initLocalStorage();
-        self._retrieveAccessToken();
-        // ^ will call _setupLoadModal and _setupSaveModal
-        self._setupWaitingModal();
-        self._setupAnimatedChevrons();
-        self._setupDDPaths();
-        self._setupAutosort();
-        self._setupArrays();
-        self._setupDynamicTitles();
-        self._setupFormulas();
-        self._setupAttackTOC();
-        self._setupCustomDropdown();
-        self._setupDlButton();
-        self._setupLogoutButton();
-        self._setupAutosave();
-        self.loadAutosave();
-        self._promptReady();
-    };
-
-    self.updateHier = function() {
-        const matches = self._allControls();
-        for (let i = 0; i < matches.length; i++) {
-            const match = $(matches[i]);
-            self.data.set(match.attr('data-dd-path'), match.ddVal());
-        }
-        self._truncateAllHierArrays();
-    };
-
-    self.updateForm = function() {
-        self._resizeAllFormArrays();
-        timeIt('Updating form', function() {
-            const flatData = self.data.flatten();
-            const matches = self._allControls();
-            for (let i = 0; i < matches.length; i++) {
-                const match = $(matches[i]);
-                let val = flatData[match.attr('data-dd-path')];
-                if (typeof val === 'undefined') {
-                    val = null;
-                }
-                match.ddVal(val);
-                if (match.is('.dd-dyn-title, [data-dd-depth], #dd-page-title')) {
-                    // Trigger a change event because this manages a dynamic title.
-                    match.change();
-                }
-            }
-        });
-    };
-
-    self.toggleWaiting = function(on_off, success=null) {
-        if (on_off) {
-            self._modalWaiting.modal('show');
-        } else if (success === null) {
-            self._modalWaiting.modal('hide');
-        } else {
-            const dialog = self._modalWaiting.find('div.modal-dialog');
-            dialog.empty();
-            if (success) {
-                $('<i class="fas fa-check fa-5x"></i>').appendTo(dialog);
-            } else {
-                $('<i class="fas fa-times fa-5x"></i>').appendTo(dialog);
-            }
-            setTimeout(function() {
-                self._modalWaiting.modal('hide');
-            }, 400);
-        }
     }
 
-    self.saveDB = function(path, post_action=null) {
-        self.updateHier();
-        self._dropbox.filesUpload({
-            path: path,
-            mode: 'overwrite',
-            contents: self.data.dump()
-        })
-            .then(function(response) {
-                self.notify('success', 'Salvato su \'' + path +'\'.', 5000);
-                self.autosave();
-                if (post_action) {
-                    post_action(true);
+
+    _setupAutosort() {
+        $('.dd-sort-key').blur((evt) => {
+            const arrayController = DDArray.getController($(evt.target));
+            if (arrayController) {
+                arrayController.sort((a, b) => {
+                    return SuperschedaController.getAutosortKey(a)
+                        .localeCompare(SuperschedaController.getAutosortKey(b));
+                });
+            }
+        });
+    }
+
+
+    setup() {
+        this._saveModal = $('#save_to');
+        this._loadModal = $('#load_from');
+        this._initLocalStorage();
+        this._retrieveAccessToken();
+        // ^ will call _setupLoadModal and _setupSaveModal
+        this._setupWaitingModal();
+        this._setupAnimatedChevrons();
+        this._setupAutosort();
+        this._setupDynamicTitles();
+        this._setupAttackTOC();
+        this._setupCustomDropdown();
+        this._setupDlButton();
+        this._setupLogoutButton();
+        this._setupAutosave();
+        this.loadAutosave();
+        this._promptReady();
+    }
+
+
+    saveToDropbox(path, postSaveAction=null) {
+        this._dropbox.filesUpload({
+                path: path,
+                mode: 'overwrite',
+                contents: this.graph.dumpDataBag()
+            })
+            .then((response) => {
+                this.notify('success', 'Salvato su \'' + path +'\'.', 5000);
+                this.autosave();
+                if (postSaveAction) {
+                    postSaveAction(true);
                 }
             })
-            .catch(function(error) {
+            .catch((error) => {
                 console.log(error);
-                self.notify('danger', 'Impossibile salvare su Dropbox.');
-                if (post_action) {
-                    post_action(false);
+                this.notify('danger', 'Impossibile salvare su Dropbox.');
+                if (postSaveAction) {
+                    postSaveAction(false);
                 }
             });
-    };
+    }
 
-    self._needsPatching = function() {
-        return window.DDver && window.DDver.needsPatch(self.data);
-    };
 
-    self._applyPatches = function() {
-        if (!self._needsPatching()) {
-            return;
-        }
-        console.log('Loading data into form for patching.');
-        self.updateForm();
-        self.refreshFormulas(false);
-        timeIt('Patching', function() {
-            window.DDver.apply(self.data);
-        });
-        console.log('Successfully updated to version ' + window.DDver.getLatestVersionString());
-    };
-
-    self.loadRemote = function(name, post_action=null) {
+    loadRemoteFile(name, postLoadAction=null) {
         console.log('Reloading remote file ' + name);
-        $.getJSON(name, function(json_data) {
-            self.data.obj = json_data;
-            self._postLoadSync();
-            self.autosave();
-            if (post_action) {
-                post_action(true);
+        $.getJSON(name, (jsonData) => {
+            this.graph.loadDataBag(jsonData);
+            if (postLoadAction) {
+                postLoadAction(true);
             }
-        }).fail(function(jqxhr, textStatus, error) {
-            self.notify('danger', 'Error ' + error + ': ' + textStatus + '.');
-            if (post_action) {
-                post_action(false);
+        }).fail((jqxhr, textStatus, error) => {
+            this.notify('danger', 'Error ' + error + ': ' + textStatus + '.');
+            if (postLoadAction) {
+                postLoadAction(false);
             }
         });
-    };
+    }
 
-    self.loadDB = function(path, post_action=null) {
+    loadFromDropbox(path, postLoadAction=null) {
         console.log('Loading Dropbox file ' + path);
-        self._dropbox.filesDownload({path: path})
-            .then(function (response) {
+        this._dropbox.filesDownload({path: path})
+            .then((response) => {
                 const blob = response.fileBlob;
                 const reader = new FileReader();
-                reader.addEventListener('loadend', function() {
-                    self.data.load(reader.result);
-                    self._postLoadSync();
-                    self.autosave();
-                    if (post_action) {
-                        post_action(true);
+                reader.addEventListener('loadend', () => {
+                    this.graph.loadDataBag(reader.result);
+                    if (postLoadAction) {
+                        postLoadAction(true);
                     }
                 });
                 reader.readAsText(blob);
             })
-            .catch(function (error) {
-                self.notify('danger', 'Impossibile leggere da Dropbox.');
-                if (post_action) {
-                    post_action(false);
+            .catch((error) => {
+                this.notify('danger', 'Impossibile leggere da Dropbox.');
+                if (postLoadAction) {
+                    postLoadAction(false);
                 }
             });
-    };
+    }
 
-};
-
+}
 
 // https://stackoverflow.com/a/15191130/1749822
 $.fn.animateRotate = function(angle, duration, easing, complete) {
@@ -668,7 +586,7 @@ $.fn.animateRotate = function(angle, duration, easing, complete) {
     for (let i = 0; i < this.length; i++) {
         const e = this[i];
         args.complete = $.proxy(args.complete, e);
-        args.step = function(now) {
+        args.step = (now) => {
             $.style(e, 'transform', 'rotate(' + now + 'deg)');
             if (step) return step.apply(e, arguments);
         };
@@ -690,34 +608,8 @@ function parseQueryString() {
     return urlParams;
 }
 
-function _find_duplicates() {
-  const allDDPaths = [];
-  const duplicates = [];
-  const matches = $('[data-dd-path]');
-  for (let i = 0; i < matches.length; i++) {
-      allDDPaths.push($(matches[i]).attr('data-dd-path'));
-  }
-  allDDPaths.sort();
-  for (let i = 1; i < allDDPaths.length; ++i) {
-    if (allDDPaths[i - 1] == allDDPaths[i]) {
-      if (duplicates.length == 0 || duplicates[duplicates.length - 1] != allDDPaths[i]) {
-        duplicates.push(allDDPaths[i]);
-      }
-    }
-  }
-  if (duplicates.length == 0) {
-    DD.notify('success',
-      'There are ' + allDDPaths.length.toString() + ' identified unique controls. No duplicates.');
-  } else {
-    $('<pre></pre>').text(duplicates.join('\n')).appendTo(
-      DD.notify('danger',
-      'There are ' + allDDPaths.length.toString() + ' identified controls, ' + duplicates.length.toString() + ' of them are duplicated.')
-    );
-  }
-}
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
-
 function storageAvailable(type) {
     try {
         const storage = window[type],
@@ -726,7 +618,7 @@ function storageAvailable(type) {
         storage.removeItem(x);
         return true;
     }
-    catch(e) {
+    catch (e) {
         return e instanceof DOMException && (
             // everything except Firefox
             e.code === 22 ||
