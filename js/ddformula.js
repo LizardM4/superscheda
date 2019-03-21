@@ -647,19 +647,37 @@ class DDFormulaGraph {
     }
 
     get dynamicUpdateGraph() {
-        return this._dynamicUpdateGraph;
+        return this._dynamicUpdateGraph[this._dynamicUpdateGraph.length - 1];
     }
 
     set dynamicUpdateGraph(v) {
-        this._dynamicUpdateGraph = v;
+        this._dynamicUpdateGraph[this._dynamicUpdateGraph.length - 1] = v;
     }
 
     get dynamicRecomputeFormulas() {
-        return this._dynamicRecomputeFormulas;
+        return this._dynamicRecomputeFormulas[this._dynamicRecomputeFormulas.length - 1];;
     }
 
     set dynamicRecomputeFormulas(v) {
-        this._dynamicRecomputeFormulas = v;
+        this._dynamicRecomputeFormulas[this._dynamicRecomputeFormulas.length - 1] = v;
+    }
+
+    dynamicUpdateGraphPush(v) {
+        this._dynamicUpdateGraph.push(v);
+    }
+
+    dynamicUpdateGraphPop() {
+        console.assert(this._dynamicUpdateGraph.length > 1);
+        this._dynamicUpdateGraph.pop();
+    }
+
+    dynamicRecomputeFormulasPush(v) {
+        this._dynamicRecomputeFormulas.push(v);
+    }
+
+    dynamicRecomputeFormulasPop() {
+        console.assert(this._dynamicRecomputeFormulas.length > 1);
+        this._dynamicRecomputeFormulas.pop();
     }
 
     removeIsolatedNodes() {
@@ -673,9 +691,7 @@ class DDFormulaGraph {
 
     rebuild(recompute=true) {
         timeIt('Building formula graph', () => {
-            const oldDynamicUpdateGraph = this.dynamicUpdateGraph;
-            const oldDynamicRecomputeFormulas = this.dynamicRecomputeFormulas;
-            this.dynamicUpdateGraph = false;
+            this.dynamicUpdateGraphPush(false);
             Object.values(this._formulaNodes).forEach(formulaNode => {
                 formulaNode.successorSelInstances.clear();
             });
@@ -688,13 +704,12 @@ class DDFormulaGraph {
             this.removeIsolatedNodes();
             this._levelsOutdated = true;
             this._pendingFormulaUpdate.clear();
-            if (oldDynamicRecomputeFormulas || recompute) {
+            if (this.dynamicRecomputeFormulas || recompute) {
                 this.recomputeFormulas();
             } else {
                 this._getRoots().forEach(formulaNode => this._pendingFormulaUpdate.add(formulaNode));
             }
-            this.dynamicRecomputeFormulas = oldDynamicRecomputeFormulas;
-            this.dynamicUpdateGraph = oldDynamicUpdateGraph;
+            this.dynamicUpdateGraphPop();
         });
     }
 
@@ -928,8 +943,8 @@ class DDFormulaGraph {
 
     constructor() {
         this._selectorStorage = new DDSelectorStorage();
-        this._dynamicUpdateGraph = true;
-        this._dynamicRecomputeFormulas = true;
+        this._dynamicUpdateGraph = [true];
+        this._dynamicRecomputeFormulas = [true];
         this._pendingFormulaUpdate = new Set();
         this._formulaNodes = {};
         this._levelsOutdated = false;
