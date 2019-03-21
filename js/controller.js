@@ -523,7 +523,7 @@ class SuperschedaController {
         this._dropbox.filesUpload({
                 path: path,
                 mode: 'overwrite',
-                contents: this._graph.dumpDataBag()
+                contents: JSON.stringify(this._graph.dumpDataBag(), null, 4)
             })
             .then((response) => {
                 this.notify('success', 'Salvato su \'' + path +'\'.', 5000);
