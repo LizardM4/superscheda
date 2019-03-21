@@ -143,8 +143,10 @@ class SuperschedaController {
                 console.log('Reloading latest save.');
                 const jsonData = JSON.parse(toLoad);
                 this._graph.loadDataBag(jsonData);
+                return true;
             }
         }
+        return false;
     }
 
     notify(cls, text, autoDismiss=-1) {
@@ -515,7 +517,9 @@ class SuperschedaController {
         this._setupDlButton();
         this._setupLogoutButton();
         this._setupAutosave();
-        this.loadAutosave();
+        if (!this.loadAutosave()) {
+            this.loadRemoteFile('etc/default.json');
+        }
         this._promptReady();
     }
 
