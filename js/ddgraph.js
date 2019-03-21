@@ -921,7 +921,11 @@ class DDNode {
                 arrOrObj = [];
             }
             if (arrOrObj) {
-                arrOrObj.push(child);
+                if (!child.isArrayMaster) {
+                    arrOrObj.push(child);
+                }
+            } else if (child.isArrayMaster) {
+                return;
             } else {
                 arrOrObj = child;
             }
