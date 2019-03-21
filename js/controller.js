@@ -462,8 +462,9 @@ class SuperschedaController {
             })
             .on('ddarray.removal', (evt, removedItems) => {
                 evt.stopPropagation();
-                removedItems.forEach(removedItem => {
-                    const idx = DDArray.getIndex(removedItem);
+                const indicesToRemove = removedItems.map(removedItem => DDArray.getIndex(removedItem));
+                indicesToRemove.sort((a, b) => b - a);
+                indicesToRemove.forEach(idx => {
                     smTocController.remove(idx);
                     mdTocController.remove(idx);
                 });
