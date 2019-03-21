@@ -337,7 +337,7 @@ class SuperschedaController {
 
     _setupAnimatedChevrons() {
         // Find all the chevron buttons
-        $('div.card div.card-header button.close i.fas').forEach((_, match) => {
+        $('div.card div.card-header button.close i.fas').each((_, match) => {
             const $match = $(match);
             const $button = $match.parents('button');
             const $card = $button.parents('div.card');
@@ -467,7 +467,7 @@ class SuperschedaController {
                     const idx = DDArray.getIndex(removedItem);
                     smTocController.remove(idx);
                     mdTocController.remove(idx);
-                }
+                });
             })
             .on('ddarray.reindex', (evt, domItemPrevIdxIdxTriples) => {
                 evt.stopPropagation();
@@ -636,3 +636,5 @@ function storageAvailable(type) {
             storage.length !== 0;
     }
 }
+
+export { SuperschedaController };
