@@ -350,8 +350,10 @@ class DDFormula {
         return this._node;
     }
 
-    _evalSum() {
-        const args = this.evaluateArguments();
+    _evalSum(args=null) {
+        if (!args) {
+            args = this.evaluateArguments();
+        }
         if (args.length == 0) {
             return 0;
         }
