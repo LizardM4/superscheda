@@ -143,7 +143,6 @@ class SuperschedaController {
                 console.log('Reloading latest save.');
                 const jsonData = JSON.parse(toLoad);
                 this._graph.loadDataBag(jsonData);
-                this._postLoadSync();
             }
         }
     }
@@ -318,7 +317,7 @@ class SuperschedaController {
                 this.toggleWaiting(true);
                 const file = evt.target.getAttribute('data-file');
                 const path = pathCombine(this._loadExplorer.workDir, file, true);
-                this.loadDB(path, res => { this.toggleWaiting(false, res); });
+                this.loadFromDropbox(path, res => { this.toggleWaiting(false, res); });
                 // Manually copy the path on the save dialog
                 this._saveExplorer.workDir = this._loadExplorer.workDir;
                 // And also suggest the name
