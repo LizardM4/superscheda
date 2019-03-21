@@ -227,11 +227,13 @@ class DDArray {
     }
 
     static getController($domElement) {
-        const matches = $domElement.parents('[data-dd-array="container"]');
-        if (matches && matches.length > 0) {
-            return $(matches[0]).data('dd-array-controller');
+        if ($domElement.attr('data-dd-array') !== 'container') {
+            $domElement = $domElement.closest('[data-dd-array="container"]');
+            if ($domElement.attr('data-dd-array') !== 'container') {
+                return null;
+            }
         }
-        return null;
+        return $domElement.data('dd-array-controller');
     }
 }
 
