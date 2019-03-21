@@ -213,7 +213,7 @@ class SuperschedaController {
         }).removeClass('show');
     }
 
-    static getAutosortKey(arrayItem) {
+    _getAutosortKey(arrayItem) {
         const matches = $(arrayItem).find('input.dd-sort-key')
             .filter((_, domElement) => {
                 return $(domElement)
@@ -221,7 +221,12 @@ class SuperschedaController {
                     .length === 0;
             });
         if (matches.length > 0) {
-            return matches.val().toString();
+            const node = this._graph.getNodeOfDOMElement(matches[0]);
+            if (node) {
+                return node.value;
+            } else {
+                return matches.val().toString();
+            }
         } else {
             return '';
         }
@@ -493,8 +498,19 @@ class SuperschedaController {
             const arrayController = DDArray.getController($(evt.target));
             if (arrayController) {
                 arrayController.sort((a, b) => {
-                    return SuperschedaController.getAutosortKey(a)
-                        .localeCompare(SuperschedaController.getAutosortKey(b));
+                    a = this._getAutosortKey(a);
+                    b = this._getAutosortKey(b);
+                    if (typeof a === 'number' && typeof b === 'number') {
+                        return a - b;
+                    } else if (a === null && b !== null) {
+                        return -1
+                    } else if (a !== null && b === null) {
+                        return 1;
+                    } else if (a === b) {
+                        return 0;
+                    } else {
+                        return a.toString().localeCompare(b.toString());
+                    }
                 });
             }
         });
