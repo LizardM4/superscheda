@@ -221,6 +221,18 @@ nav#main_nav .nav-item .btn:not([disabled]) {
 }
 
 
+input[data-dd-formula]::placeholder {
+    color: #17a2b8!important;
+}
+
+input[data-dd-formula]:valid {
+  border-color: #17a2b8!important;
+}
+
+input[data-dd-formula]:invalid:not([placeholder]) {
+  border-color: #dc3545!important;
+}
+
 /* FORK ME RIBBON --------------------------------------------------------------------------*/
 
 

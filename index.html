@@ -2595,6 +2595,8 @@ You should have received a copy of the GNU General Public License
           }
         });
 
+        $('input[data-dd-formula]').prop('required', true);
+
         // Event for loading a new item
         $('#load_default').click((evt) => {
           // That's an 'a', so we need to prevent jumping to href="#"
