@@ -1060,9 +1060,7 @@ class DDNode {
             this.obj.val(v.toString());
         }
         this._recomputeFormulasIfNecessary();
-        // TODO Is this event really needed? Why can't I just call .change?
-        // TODO because the change event for custom checkboxes works in a weird way
-        this.obj.trigger('dd.changed');
+        this.obj.trigger('change', [this]);
     }
 
     get canBeInFormulaGraph() {
