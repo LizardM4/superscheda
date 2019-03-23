@@ -1030,7 +1030,11 @@ class DDNode {
     */
     _updateFormulaValue() {
         console.assert(this._holdsData);
-        this.obj.attr('placeholder', DDGraph.formatValue(this.type, this._formulaValue));
+        if (this._formulaValue === null) {
+            this.obj.removeAttr('placeholder');
+        } else {
+            this.obj.attr('placeholder', DDGraph.formatValue(this.type, this._formulaValue));
+        }
     }
 
     /**
