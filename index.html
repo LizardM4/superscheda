@@ -2637,6 +2637,21 @@ You should have received a copy of the GNU General Public License
             }
         });
 
+        // Autoexpand sections when clicking on the menu
+        $('#toc_sm a[href^="#"], #toc_md a[href^="#"').click((evt) => {
+          // Find the target
+          const $target = $(evt.target.getAttribute('href'));
+          if ($target.length > 0) {
+            // Ensure this is visible
+            if (!$target.is(':visible')) {
+              const $accordion = $target.closest('.collapse');
+              if ($accordion.length > 0) {
+                $accordion.collapse('show');
+              }
+            }
+          }
+        });
+
         window.DD = new SuperschedaController('h2jyx20rz9lbwiw');
         window.DD.setup();
 
