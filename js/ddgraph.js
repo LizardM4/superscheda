@@ -20,6 +20,7 @@
 import { DDArray } from './ddarray.js?v=%REV';
 import { DDFormula, DDFormulaGraph, DDSelectorStorage } from './ddformula.js?v=%REV';
 import { arrayCompare, arrayMultidimensionalPrefill, arrayBinarySearch, timeIt } from './helper.js?v=%REV';
+import { Versioner } from './versioning.js?v=%REV';
 
 const DDType = Object.freeze({
     INT:     Symbol('int'),
@@ -73,7 +74,14 @@ class DDGraph {
         this._selectorStorage = new DDSelectorStorage();
     }
 
-    loadDataBag(data) {
+    loadDataBag(data, versioning=true) {
+        if (versioning) {
+            if (Versioner.instance().needsPatch(data)) {
+                console.log('Data bag needs update.');
+                Versioner.instance().apply(this, data);
+            }
+            console.log('Up to date with latest version ' + Versioner.versionToString(Versioner.instance.latestVersion));
+        }
         this.formulaGraph.dynamicUpdateGraphPush(false);
         this.formulaGraph.dynamicRecomputeFormulasPush(false);
         timeIt('Loading data bag', () => {
@@ -86,7 +94,9 @@ class DDGraph {
 
     dumpDataBag() {
         return timeIt('Dumping data bag', () => {
-            return this.root.dumpDataBag();
+            const data = this.root.dumpDataBag();
+            Versioner.setDataBagVersion(Versioner.instance().latestVersion);
+            return data;
         });
     }
 

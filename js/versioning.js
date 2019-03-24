@@ -56,7 +56,7 @@ class Patch {
                 this.preLoadAction(dataBag);
             }
             if (this.postLoadAction) {
-                ddGraph.loadDataBag(dataBag);
+                ddGraph.loadDataBag(dataBag, false);
                 this.postLoadAction(ddGraph);
                 dataBag = ddGraph.dumpDataBag();
             }
@@ -216,7 +216,7 @@ Versioner.instance().addPatch('0.1.1', (dataBag) => {
     }
 });
 
-Versioner.instance().addPatch('0.1.4', null, (ddGraph) => {
+Versioner.instance().addPatch('0.1.5', null, (ddGraph) => {
     ddGraph.traverse((ddNode, dfsEvent) => {
         if (dfsEvent.ENTER) {
             if (ddNode.isArrayMaster) {
@@ -230,3 +230,5 @@ Versioner.instance().addPatch('0.1.4', null, (ddGraph) => {
         }
     });
 })
+
+export { Versioner };
