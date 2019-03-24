@@ -76,20 +76,20 @@ You should have received a copy of the GNU General Public License
       </a>
       <ul class="nav">
         <li class="nav-item">
-          <button class="btn btn-sm mr-1 btn-outline-primary p-2" id="load_default">
+          <button class="btn btn-sm mr-1 btn-outline-primary p-2" id="load_default" title="Nuovo personaggio" data-placement="bottom">
             <i class="fas fa-file-alt fa-fw fa-lg" aria-hidden="true"></i>
           </button>
         </li>
         <li class="nav-item">
-          <button disabled class="btn btn-sm mr-1 btn-outline-primary p-2" data-toggle="modal" data-target="#load_from">
+          <button disabled class="btn btn-sm mr-1 btn-outline-primary p-2" data-toggle="modal" data-target="#load_from" title="Apri personaggio" data-placement="bottom">
             <i class="fas fa-folder-open fa-fw fa-lg" aria-hidden="true"></i>
           </button>
         </li>
         <li class="nav-item">
-          <button disabled class="btn btn-sm mr-1 btn-outline-primary p-2" data-toggle="modal" data-target="#save_to"><i class="fas fa-save fa-fw fa-lg" aria-hidden="true"></i></button>
+          <button disabled class="btn btn-sm mr-1 btn-outline-primary p-2" data-toggle="modal" data-target="#save_to" title="Salva personaggio" data-placement="bottom"><i class="fas fa-save fa-fw fa-lg" aria-hidden="true"></i></button>
         </li>
         <li class="nav-item">
-          <button disabled id="btn_logout" class="btn btn-sm mr-1 btn-outline-danger p-2">
+          <button disabled id="btn_logout" data-placement="bottom" title="Scollega Dropbox" class="btn btn-sm mr-1 btn-outline-danger p-2">
             <i class="fas fa-sign-out-alt fa-fw fa-lg" aria-hidden="true"></i>
           </button>
         </li>
@@ -2651,6 +2651,8 @@ You should have received a copy of the GNU General Public License
             }
           }
         });
+
+        $('[title][data-placement]').tooltip();
 
         window.DD = new SuperschedaController('h2jyx20rz9lbwiw');
         window.DD.setup();
