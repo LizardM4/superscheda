@@ -15,5 +15,8 @@ rsync --archive \
       --exclude=LICENSE.txt \
       --delete \
       "$(pwd)/" "$1"
-      
-sed -e "s/%REV/${GIT_COMMIT}/g" -i "$1/index.html"
+
+REPLACE_CMD="s/%REV/${GIT_COMMIT}/g"
+
+find "$1/js/" -name \*.js -exec echo sed -e "$REPLACE_CMD" -i {} \;
+sed -e "$REPLACE_CMD" -i "$1/index.html"
