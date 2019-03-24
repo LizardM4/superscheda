@@ -357,7 +357,7 @@ class DDFormula {
         if (!args) {
             args = this.evaluateArguments();
         }
-        if (args.length == 0) {
+        if (args.length === 0) {
             return 0;
         }
         let retval = 0;
@@ -366,6 +366,21 @@ class DDFormula {
                 return null; // Cannot compute
             }
             retval += args[i];
+        }
+        return retval;
+    }
+
+    _evalMul() {
+        const args = this.evaluateArguments();
+        if (args.length === 0) {
+            return 1;
+        }
+        let retval = 1;
+        for (let i = 0; i < args.length; i++) {
+            if (typeof args[i] !== 'number') {
+                return null; // Cannot compute
+            }
+            retval *= args[i];
         }
         return retval;
     }
@@ -510,6 +525,7 @@ class DDFormula {
     evaluate() {
         switch (this._operator) {
             case 'sum': return this._evalSum(); break;
+            case 'mul': return this._evalMul(); break;
             case 'sel': return this._evalSel(); break;
             case 'mod': return this._evalMod(); break;
             case 'ref': return this._evalRef(); break;
