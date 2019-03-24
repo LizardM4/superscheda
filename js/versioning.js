@@ -216,7 +216,12 @@ Versioner.instance().addPatch('0.1.1', (dataBag) => {
     }
 });
 
-Versioner.instance().addPatch('0.1.5', null, (ddGraph) => {
+Versioner.instance().addPatch('0.1.6', (dataBag) => {
+    dataBag['punti_totali'] = objGet(dataBag, 'gradi', null, false);
+    delete dataBag['gradi'];
+});
+
+Versioner.instance().addPatch('0.2.0', null, (ddGraph) => {
     ddGraph.formulaGraph.dynamicRecomputeFormulasPush(false);
     ddGraph.root.traverse((ddNode, dfsEvent) => {
         if (dfsEvent === DFSEvent.ENTER) {
@@ -232,5 +237,6 @@ Versioner.instance().addPatch('0.1.5', null, (ddGraph) => {
     });
     ddGraph.formulaGraph.dynamicRecomputeFormulasPop();
 });
+
 
 export { Versioner };
