@@ -51,7 +51,7 @@ class Patch {
     }
 
     apply(ddGraph, dataBag) {
-        return timeIt('Applying patch ' + Versioner.versionToString(this.version), () {
+        return timeIt('Applying patch ' + Versioner.versionToString(this.version), () => {
             if (this.preLoadAction) {
                 this.preLoadAction(dataBag);
             }
@@ -217,8 +217,8 @@ Versioner.instance().addPatch('0.1.1', (dataBag) => {
 });
 
 Versioner.instance().addPatch('0.1.5', null, (ddGraph) => {
-    ddGraph.traverse((ddNode, dfsEvent) => {
-        if (dfsEvent.ENTER) {
+    ddGraph.root.traverse((ddNode, dfsEvent) => {
+        if (dfsEvent === DFSEvent.ENTER) {
             if (ddNode.isArrayMaster) {
                 return false;
             } else if (ddNode.hasFormula) {
@@ -229,6 +229,6 @@ Versioner.instance().addPatch('0.1.5', null, (ddGraph) => {
             }
         }
     });
-})
+});
 
 export { Versioner };
