@@ -1,5 +1,5 @@
 // Superscheda
-// Copyright (C) 2017-2018  Pietro Saccardi
+// Copyright (C) 2017-2019  Pietro Saccardi
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,157 +14,219 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
+'use strict';
+import { arrayCompare, arrayBinarySearch, timeIt } from './helper.js?v=%REV';
+import { DFSEvent } from './ddgraph.js?v=%REV';
 
-function parseVersion(str) {
-    if (str instanceof Array) {
-        return str;
-    } else if (typeof str === 'undefined' || str == null) {
-        return [0];
-    } else {
-        return str.split('.').map(x => parseInt(x))
+
+function objGet(obj, k, defaultValue, nullIsInvalid=false) {
+    const v = obj[k];
+    if (typeof v === 'undefined' || (nullIsInvalid && v === null)) {
+        return defaultValue;
     }
+    return v;
 }
 
-function strVersion(v) {
-    return v.map(x => x.toString()).join('.');
-}
-
-
-function compareVersion(l, r) {
-    if (!(l instanceof Array)) {
-        l = parseVersion(l);
+function objEnsure(obj, k, defaultValue, nullIsInvalid=false) {
+    const v = obj[k];
+    if (typeof v === 'undefined' || (nullIsInvalid && v === null)) {
+        obj[k] = defaultValue;
+        return defaultValue;
     }
-    if (!(r instanceof Array)) {
-        r = parseVersion(r);
-    }
-    for (var i = 0; i < Math.min(l.length, r.length); ++i) {
-        if (l[i] < r[i]) {
-            return -1;
-        } else if (l[i] > r[i]) {
-            return 1;
-        }
-    }
-    if (l.length < r.length) {
-        return -1;
-    } else if (l.length > r.length) {
-        return 1;
-    }
-    return 0;
+    return v;
 }
 
 
-function HierVersioning() {
-    var self = this;
+class Patch {
+    get version() {
+        return this._version;
+    }
 
-    self._patches = [];
+    get preLoadAction() {
+        return this._preLoadAction;
+    }
 
-    self.getVersion = function(hierarchy) {
-        return parseVersion(hierarchy.get('_version'));
-    };
+    get postLoadAction() {
+        return this._postLoadAction;
+    }
 
-    self._upperBound = function(version) {
-        // Can trivially improve this to log time
-        for (var i = 0; i < self._patches.length; i++) {
-            var patch_version = self._patches[i][0];
-            if (compareVersion(version, patch_version) < 0) {
-                return i;
+    apply(ddGraph, dataBag) {
+        return timeIt('Applying patch ' + Versioner.versionToString(this.version), () {
+            if (this.preLoadAction) {
+                this.preLoadAction(dataBag);
             }
-        }
-        return self._patches.length;
-    };
-
-    self.getLatestVersion = function() {
-        if (self._patches.length == 0) {
-            return [0];
-        }
-        return self._patches[self._patches.length - 1][0];
-    };
-
-    self.getLatestVersionString = function() {
-        return strVersion(self.getLatestVersion());
+            if (this.postLoadAction) {
+                ddGraph.loadDataBag(dataBag);
+                this.postLoadAction(ddGraph);
+                dataBag = ddGraph.dumpDataBag();
+            }
+            Versioner.setDataBagVersion(dataBag, this.version);
+            return dataBag;
+        });
     }
 
-    self.needsPatch = function(hierarchy) {
-        if (self._patches.length == 0) {
+    constructor(version, preLoadAction=null, postLoadAction=null) {
+        this._version = Versioner.versionParse(version);
+        this._preLoadAction = preLoadAction;
+        this._postLoadAction = postLoadAction;
+    }
+
+    static compare(l, r) {
+        return Versioner.versionCompare(l.version, r.version);
+    }
+}
+
+class Versioner {
+
+    static versionParse(str) {
+        if (str instanceof Array) {
+            return str;
+        } else if (typeof str === 'undefined' || str === null) {
+            return [0];
+        } else {
+            return str.split('.').map(x => parseInt(x))
+        }
+    }
+
+    static versionToString(v) {
+        return v.map(x => x.toString()).join('.');
+    }
+
+
+    static versionCompare(l, r) {
+        if (!(l instanceof Array)) {
+            l = Versioner.versionParse(l);
+        }
+        if (!(r instanceof Array)) {
+            r = Versioner.versionParse(r);
+        }
+        return arrayCompare(l, r);
+    }
+
+    static getDataBagVersion(dataBag) {
+        return Versioner.versionParse(objGet(dataBag, '_version', [0], true));
+    }
+
+    static setDataBagVersion(dataBag, version) {
+        dataBag['_version'] = Versioner.versionToString(version);
+    }
+
+    constructor() {
+        this._patches = [];
+    }
+
+    get length() {
+        return this._patches.length;
+    }
+
+    get latestVersion() {
+        if (this._patches.length === 0) {
+            return [0];
+        } else {
+            return this._patches[this.length - 1].version;
+        }
+    }
+
+    _upperBound(version) {
+        const dummyPatch = new Patch(version);
+        const idx = arrayBinarySearch(this._patches, dummyPatch, Patch.compare);
+        if (idx >= 0) {
+            // Found exactly the same patch
+            return idx + 1;
+        } else {
+            // Found the sorted insertion point
+            return -idx;
+        }
+    }
+
+    needsPatch(dataBag) {
+        if (this.length === 0) {
             return false;
         }
-        return compareVersion(self.getVersion(hierarchy), self._patches[self._patches.length - 1][0]) < 0;
-    };
+        return Versioner.versionCompare(Versioner.getDataBagVersion(dataBag), this.latestVersion) < 0;
+    }
 
-    self.apply = function(hierarchy) {
-        var v = self.getVersion(hierarchy);
-        var first_patch_idx = self._upperBound(v);
-        for (var i = first_patch_idx; i < self._patches.length; i++) {
-            var patch_fn = self._patches[i][1];
-            patch_fn(hierarchy);
+    addPatch(v, preLoadAction=null, postLoadAction=null) {
+        const p = new Patch(v, preLoadAction, postLoadAction);
+        const idx = arrayBinarySearch(this._patches, p, Patch.compare);
+        console.assert(idx < 0);
+        this._patches.splice(-idx - 1, 0, p);
+    }
+
+    apply(ddGraph, dataBag) {
+        const v = Versioner.getDataBagVersion(dataBag);
+        const firstPatchIdx = this._upperBound(v);
+        for (let i = firstPatchIdx; i < this.length; ++i) {
+            dataBag = this._patches[i].apply(ddGraph, dataBag);
         }
-        hierarchy.set('_version', self.getLatestVersionString());
-    };
+        return dataBag;
+    }
 
-    self.addPatch = function(version, fn) {
-        version = parseVersion(version);
-        var insertion_idx = self._upperBound(version);
-        self._patches.splice(insertion_idx, 0, [version, fn]);
-    };
+    static instance() {
+        return _versioner;
+    }
 
 }
 
-DDver = new HierVersioning()
+const _versioner = new Versioner();
 
 
-DDver.addPatch('0.0.9', function(h) {
-    var bugfix = function(notAnArray) {
-        var realArray = [];
-        for (var i = 0; i < notAnArray['length']; ++i) {
+Versioner.instance().addPatch('0.0.9', (dataBag) => {
+    const bugfix = (notAnArray) => {
+        const realArray = [];
+        for (let i = 0; i < notAnArray['length']; ++i) {
             realArray.push(notAnArray[i.toString()]);
         }
         return realArray;
     };
-    var skillTricks = h.get('skill_tricks');
+    const skillTricks = dataBag['skill_tricks'];
     if (skillTricks instanceof Object) {
         console.log('Skill tricks have the bug.');
-        h.set('skill_tricks', bugfix(skillTricks))
+        dataBag['skill_tricks'] = bugfix(skillTricks);
     }
-    var privileges = h.get('privilegi');
+    const privileges = dataBag['privilegi'];
     if (privileges instanceof Object) {
         console.log('Privileges have the bug.');
-        h.set('privilegi', bugfix(privileges))
+        dataBag['privilegi'] = bugfix(privileges);
     }
 });
 
-DDver.addPatch('0.1', function(h) {
+Versioner.instance().addPatch('0.1', (dataBag) => {
     console.log('Migrating skill tricks to talents.');
-    var skillTricks = h.get('skill_tricks');
-    if (skillTricks != null) {
-        var talents = h.ensure('talenti');
+    const skillTricks = dataBag['skill_tricks'];
+    if (Array.isArray(skillTricks)) {
+        const talents = objEnsure(dataBag, 'talenti', [], true);
         console.log('Got ' + talents.length.toString() + ' talents, appending ' + skillTricks.length.toString() + ' skill tricks.');
         talents.splice(talents.length, 0, ...skillTricks);
         console.log('Got now ' + talents.length + ' talents.');
     }
-    h.remove('skill_tricks');
+    delete dataBag['skill_tricks'];
 });
 
-DDver.addPatch('0.1.1', function(h) {
-    for (var i = 0; i < h.get('attacchi').length; i++) {
-        var path_base = 'attacchi[' + i.toString() + '].tiro_colpire.';
-        var wrong_path = path_base + 'chierico_talenti';
-        var right_path = path_base + 'critico_talenti';
-        var critic_talents = h.get(wrong_path);
-        if (critic_talents) {
-            console.log('Migrating "talenti per il chierico" for attack no. ' + i.toString());
-            h.set(right_path, critic_talents);
-        }
-        h.remove(wrong_path);
+Versioner.instance().addPatch('0.1.1', (dataBag) => {
+    const attacks = dataBag['attacchi'];
+    if (Array.isArray(attacks)) {
+        attacks.forEach(attack => {
+            const rollToHit = attack['tiro_colpire'];
+            if (rollToHit instanceof Object) {
+                rollToHit['critico_talenti'] = objGet(rollToHit, 'chierico_talenti', null, false);
+                delete rollToHit['chierico_talenti'];
+            }
+        });
     }
 });
 
-DDver.addPatch('0.1.4', function(h) {
-    $('[data-dd-path][data-dd-formula]').each(function(idx, obj) {
-        obj = $(obj);
-        let ddPath = obj.attr('data-dd-path');
-        if (obj.attr('placeholder') == obj.val()) {
-            console.log('Replacing value for ' + ddPath + ' with precomputed default.');
-            h.set(ddPath, null);
+Versioner.instance().addPatch('0.1.4', null, (ddGraph) => {
+    ddGraph.traverse((ddNode, dfsEvent) => {
+        if (dfsEvent.ENTER) {
+            if (ddNode.isArrayMaster) {
+                return false;
+            } else if (ddNode.hasFormula) {
+                if (ddNode.formulaValue === ddNode.value) {
+                    console.log('Replacing value for ' + ddNode.path + ' with precomputed default.');
+                    ddNode.value = null;
+                }
+            }
         }
     });
 })
