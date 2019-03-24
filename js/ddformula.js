@@ -406,18 +406,26 @@ class DDFormula {
 
     _evalMod() {
         const args = this.evaluateArguments();
-        if (args.length <= 1) {
+        if (args.length <= 2) {
             return 0;
         }
+        const mode = args.shift();
         const div = args.shift();
         if (typeof div !== 'number') {
             return null;
         }
-        const tot = this._evalSum(args);
+        let tot = this._evalSum(args);
         if (tot === null) {
             return null;
         }
-        return Math.floor(tot / div);
+        tot = Math.floor(tot / div);
+        switch (mode) {
+            case 'any': break;
+            case 'pos': tot = Math.max(0, tot); break;
+            case 'neg': tot = Math.min(0, tot); break;
+            default: return null; break;
+        }
+        return tot;
     }
 
     _evalSel() {
