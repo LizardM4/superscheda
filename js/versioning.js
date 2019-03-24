@@ -217,6 +217,7 @@ Versioner.instance().addPatch('0.1.1', (dataBag) => {
 });
 
 Versioner.instance().addPatch('0.1.5', null, (ddGraph) => {
+    ddGraph.formulaGraph.dynamicRecomputeFormulasPush(false);
     ddGraph.root.traverse((ddNode, dfsEvent) => {
         if (dfsEvent === DFSEvent.ENTER) {
             if (ddNode.isArrayMaster) {
@@ -229,6 +230,7 @@ Versioner.instance().addPatch('0.1.5', null, (ddGraph) => {
             }
         }
     });
+    ddGraph.formulaGraph.dynamicRecomputeFormulasPop();
 });
 
 export { Versioner };
