@@ -1075,6 +1075,10 @@ class DDNode {
         return this.canBeInFormulaGraph && this.graph.formulaGraph.hasFormulaNode(this);
     }
 
+    get hasFormula() {
+        return this._formula !== null && this.isInFormulaGraph;
+    }
+
     _recomputeFormulasIfNecessary() {
         if (this.graph.formulaGraph.dynamicRecomputeFormulas && this.isInFormulaGraph) {
             this.graph.formulaGraph.recomputeFormulas(this, false);
