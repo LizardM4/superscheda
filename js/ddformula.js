@@ -370,6 +370,31 @@ class DDFormula {
         return retval;
     }
 
+    _evalCondSumMul() {
+        const args = this.evaluateArguments();
+        if (args.length < 1) {
+            return null;
+        }
+        const mul = args.shift();
+        if (typeof mul !== 'number') {
+            return null;
+        }
+        const classCond = args.splice(0, Math.floor(args.length / 2));
+        if (classCond.length !== args.length) {
+            return null;
+        }
+        let sum = 0;
+        for (let i = 0; i < classCond.length; ++i) {
+            if (typeof classCond[i] !== 'boolean') {
+                return null;
+            } else if (typeof args[i] !== 'number') {
+                return null;
+            }
+            sum += (classCond[i] ? args[i] : mul * args[i]);
+        }
+        return sum;
+    }
+
     _evalRef() {
         const args = this.evaluateArguments();
         console.assert(args.length === 1);
@@ -480,6 +505,7 @@ class DDFormula {
             case 'sel': return this._evalSel(); break;
             case 'mod': return this._evalMod(); break;
             case 'ref': return this._evalRef(); break;
+            case 'cond_sum_mul': return this._evalCondSumMul(); break;
             default:
                 console.assert(false);
                 return null;

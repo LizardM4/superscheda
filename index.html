@@ -1945,6 +1945,10 @@ You should have received a copy of the GNU General Public License
                     <input type="text" class="form-control" data-dd-id="gradi">
                   </div>
                   <div class="col-md-2 col-6">
+                    <div class="text-truncate"><label class="col-form-label">Totale punti spesi:</label></div>
+                    <input type="text" class="form-control" data-dd-id="tot_gradi" data-dd-formula="cond_sum_mul 2 /abilita[-1].di_classe /abilita[-1].gradi">
+                  </div>
+                  <div class="col-md-2 col-6">
                     <label class="col-form-label">Modificatori:</label>
                     <button type="button" class="btn btn-secondary d-block w-100" id="toggle_abilities_modifier">
                       <span class="toggle-inactive">Mostra</span>
@@ -2594,8 +2598,6 @@ You should have received a copy of the GNU General Public License
             $('#array_abilita').removeClass('always-stripe');
           }
         });
-
-        $('input[data-dd-formula]').prop('required', true);
 
         // Event for loading a new item
         $('#load_default').click((evt) => {
