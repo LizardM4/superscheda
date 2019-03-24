@@ -226,11 +226,11 @@ input[data-dd-formula]::placeholder {
     color: #17a2b8!important;
 }
 
-input[data-dd-formula]:valid {
+input[data-dd-formula]:not(.dd-void) {
   border-color: #17a2b8!important;
 }
 
-input[data-dd-formula]:invalid:not([placeholder]) {
+input.dd-void[data-dd-formula]:not([placeholder]) {
   border-color: #dc3545!important;
 }
 

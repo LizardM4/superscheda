@@ -705,7 +705,7 @@ class DDNode {
     }
 
     /**
-    Sets the value of the control. This will trigger a `dd.changed` event on the corresponding DOM
+    Sets the value of the control. This will trigger a `change` event on the corresponding DOM
     element.
     */
     set value(v) {
@@ -1144,6 +1144,11 @@ class DDNode {
         this._type = DDGraph.inferType(this.obj);
         // Setup on change event
         this.obj.change((evt) => {
+            if (this.isVoid) {
+                this.obj.addClass('dd-void');
+            } else {
+                this.obj.removeClass('dd-void');
+            }
             this._recomputeFormulasIfNecessary();
             evt.stopPropagation();
         });
