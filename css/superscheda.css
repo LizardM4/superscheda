@@ -176,6 +176,7 @@ navbar.*/
 
 /*Sticky TOC, but right below the navbar*/
 .sticky-toc {
+  position: -webkit-sticky!important;
   position: sticky!important;
   top: 4rem;
   max-height: calc(100vh - 4rem);
