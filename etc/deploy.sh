@@ -18,5 +18,5 @@ rsync --archive \
 
 REPLACE_CMD="s/%REV/${GIT_COMMIT}/g"
 
-find "$1/js/" -name \*.js -exec echo sed -e "$REPLACE_CMD" -i {} \;
+find "$1/js/" -name \*.js -exec sed -e "$REPLACE_CMD" -i {} \;
 sed -e "$REPLACE_CMD" -i "$1/index.html"
