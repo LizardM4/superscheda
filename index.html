@@ -1877,7 +1877,7 @@ You should have received a copy of the GNU General Public License
                             </select>
                           </div>
                           <div class="col-2">
-                            <input type="text" class="form-control form-control-sm" data-dd-id="livello">
+                            <input type="text" class="form-control form-control-sm" data-dd-type="int" data-dd-id="livello">
                           </div>
                           <div class="col-2">
                             <input type="text" class="form-control form-control-sm" data-dd-id="riferimento">
@@ -1938,7 +1938,7 @@ You should have received a copy of the GNU General Public License
                 <div class="form-row">
                   <div class="col-md-2 col-6">
                     <div class="text-truncate"><label class="col-form-label">Grado max:</label></div>
-                    <input type="text" class="form-control" data-dd-id="grado_max">
+                    <input type="text" class="form-control" data-dd-type="int" data-dd-id="grado_max">
                   </div>
                   <div class="col-md-2 col-6">
                     <div class="text-truncate"><label class="col-form-label">Gradi:</label></div>
@@ -2222,7 +2222,7 @@ You should have received a copy of the GNU General Public License
                       </div>
                       <div class="col-md-1 col-3">
                         <label class="col-form-label col-form-label-sm d-md-none">Liv</label>
-                        <input type="text" class="form-control form-control-sm" data-dd-id="liv">
+                        <input type="text" class="form-control form-control-sm" data-dd-type="int" data-dd-id="liv">
                       </div>
                       <div class="col-md-1 col-3">
                         <label class="col-form-label col-form-label-sm d-md-none">Rif</label>
@@ -2230,11 +2230,11 @@ You should have received a copy of the GNU General Public License
                       </div>
                       <div class="col-md-1 col-3">
                         <label class="col-form-label col-form-label-sm d-md-none">Preparati</label>
-                        <input type="text" class="form-control form-control-sm" data-dd-id="preparati">
+                        <input type="text" class="form-control form-control-sm" data-dd-type="int" data-dd-id="preparati">
                       </div>
                       <div class="col-md-1 col-3">
                         <label class="col-form-label col-form-label-sm d-md-none">Usati</label>
-                        <input type="text" class="form-control form-control-sm" data-dd-id="usati">
+                        <input type="text" class="form-control form-control-sm" data-dd-type="int" data-dd-id="usati">
                       </div>
                     </div>
                     <div class="col-auto form-row align-items-center justify-content-center">
@@ -2286,7 +2286,7 @@ You should have received a copy of the GNU General Public License
                   <div class="col-md-2 col-4">
                     <label class="col-form-label">Leggero</label>
                     <div class="input-group">
-                      <input type="text" data-dd-id="leggero" class="text-right form-control">
+                      <input type="text" data-dd-type="float" data-dd-id="leggero" class="text-right form-control">
                       <div class="input-group-append">
                         <span class="input-group-text">kg</span>
                       </div>
@@ -2295,7 +2295,7 @@ You should have received a copy of the GNU General Public License
                   <div class="col-md-2 col-4">
                     <label class="col-form-label">Medio</label>
                     <div class="input-group">
-                      <input type="text" data-dd-id="medio" class="text-right form-control">
+                      <input type="text" data-dd-type="float" data-dd-id="medio" class="text-right form-control">
                       <div class="input-group-append">
                         <span class="input-group-text">kg</span>
                       </div>
@@ -2304,7 +2304,7 @@ You should have received a copy of the GNU General Public License
                   <div class="col-md-2 col-4">
                     <label class="col-form-label">Pesante</label>
                     <div class="input-group">
-                      <input type="text" data-dd-id="pesante" class="text-right form-control">
+                      <input type="text" data-dd-type="float" data-dd-id="pesante" class="text-right form-control">
                       <div class="input-group-append">
                         <span class="input-group-text">kg</span>
                       </div>
@@ -2313,7 +2313,7 @@ You should have received a copy of the GNU General Public License
                   <div class="col-md-2 col-4 text-truncate">
                     <label class="col-form-label">Soll. sopra la testa</label>
                     <div class="input-group">
-                      <input type="text" data-dd-id="sopra_testa" class="text-right form-control" aria-describedby="aiuto_sopra_testa">
+                      <input type="text" data-dd-type="float" data-dd-formula="ref /carico.pesante" data-dd-id="sopra_testa" class="text-right form-control" aria-describedby="aiuto_sopra_testa">
                       <div class="input-group-append">
                         <span class="input-group-text">kg</span>
                       </div>
@@ -2323,7 +2323,7 @@ You should have received a copy of the GNU General Public License
                   <div class="col-md-2 col-4 text-truncate">
                     <label class="col-form-label">Soll. dal terreno</label>
                     <div class="input-group">
-                      <input type="text" data-dd-id="dal_terreno" class="text-right form-control" aria-describedby="aiuto_dal_terreno">
+                      <input type="text" data-dd-type="float" data-dd-formula="mul 2 /carico.pesante" data-dd-id="dal_terreno" class="text-right form-control" aria-describedby="aiuto_dal_terreno">
                       <div class="input-group-append">
                         <span class="input-group-text">kg</span>
                       </div>
@@ -2333,7 +2333,7 @@ You should have received a copy of the GNU General Public License
                   <div class="col-md-2 col-4 text-truncate">
                     <label class="col-form-label">Sping. o trasc.</label>
                     <div class="input-group">
-                      <input type="text" data-dd-id="sping_trasc" class="text-right form-control" aria-describedby="aiuto_spingere_trascinare">
+                      <input type="text" data-dd-type="float" data-dd-formula="mul 5 /carico.pesante" data-dd-id="sping_trasc" class="text-right form-control" aria-describedby="aiuto_spingere_trascinare">
                       <div class="input-group-append">
                         <span class="input-group-text">kg</span>
                       </div>
@@ -2348,7 +2348,7 @@ You should have received a copy of the GNU General Public License
                   <div class="col-md-2 col-4">
                     <label class="col-form-label">Base</label>
                     <div class="input-group">
-                      <input type="text" data-dd-id="base" class="text-right form-control">
+                      <input type="text" data-dd-type="float" data-dd-id="base" class="text-right form-control">
                       <div class="input-group-append">
                         <span class="input-group-text">m</span>
                       </div>
@@ -2357,7 +2357,7 @@ You should have received a copy of the GNU General Public License
                   <div class="col-md-2 col-4">
                     <label class="col-form-label">Armatura</label>
                     <div class="input-group">
-                      <input type="text" data-dd-id="armatura" class="text-right form-control">
+                      <input type="text" data-dd-type="float" data-dd-id="armatura" class="text-right form-control">
                       <div class="input-group-append">
                         <span class="input-group-text">m</span>
                       </div>
@@ -2366,7 +2366,7 @@ You should have received a copy of the GNU General Public License
                   <div class="col-md-2 col-4">
                     <label class="col-form-label">Correre</label>
                     <div class="input-group">
-                      <input type="text" data-dd-id="correre" class="text-right form-control">
+                      <input type="text" data-dd-type="float" data-dd-id="correre" class="text-right form-control">
                       <div class="input-group-append">
                         <span class="input-group-text">m</span>
                       </div>
@@ -2375,7 +2375,7 @@ You should have received a copy of the GNU General Public License
                   <div class="col-md-2 col-4">
                     <label class="col-form-label">Nuotare</label>
                     <div class="input-group">
-                      <input type="text" data-dd-id="nuotare" class="text-right form-control">
+                      <input type="text" data-dd-type="float" data-dd-id="nuotare" class="text-right form-control">
                       <div class="input-group-append">
                         <span class="input-group-text">m</span>
                       </div>
@@ -2384,7 +2384,7 @@ You should have received a copy of the GNU General Public License
                   <div class="col-md-2 col-4">
                     <label class="col-form-label">Scalare</label>
                     <div class="input-group">
-                      <input type="text" data-dd-id="scalare" class="text-right form-control">
+                      <input type="text" data-dd-type="float" data-dd-id="scalare" class="text-right form-control">
                       <div class="input-group-append">
                         <span class="input-group-text">m</span>
                       </div>
@@ -2393,7 +2393,7 @@ You should have received a copy of the GNU General Public License
                   <div class="col-md-2 col-4">
                     <label class="col-form-label">Volare</label>
                     <div class="input-group">
-                      <input type="text" data-dd-id="volare" class="text-right form-control">
+                      <input type="text" data-dd-type="float" data-dd-id="volare" class="text-right form-control">
                       <div class="input-group-append">
                         <span class="input-group-text">m</span>
                       </div>
@@ -2462,7 +2462,7 @@ You should have received a copy of the GNU General Public License
                   </div>
                   <div class="col-md-4 col-6">
                     <div class="text-truncate"><label class="col-form-label">Penalità armatura</label></div>
-                    <input type="text" data-dd-id="penalita_armatura" class="text-right form-control">
+                    <input type="text" data-dd-type="int" data-dd-id="penalita_armatura" class="text-right form-control">
                   </div>
                   <div class="col-md-4 col-6">
                     <div class="text-truncate"><label class="col-form-label">Penalità nuotare</label></div>
@@ -2485,7 +2485,7 @@ You should have received a copy of the GNU General Public License
                 <div data-dd-array="container">
                   <div class="form-row pb-1" data-dd-array="master" data-dd-id="denaro_preziosi">
                     <div class="col-2">
-                      <input type="text" class="form-control form-control-sm" data-dd-id="quantita">
+                      <input type="text" class="form-control form-control-sm" data-dd-type="int" data-dd-id="quantita">
                     </div>
                     <div class="col">
                       <input type="text" class="form-control form-control-sm" data-dd-id="oggetto">
