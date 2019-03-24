@@ -17,13 +17,46 @@
 
 'use strict';
 
-const _debug = true;
 let _timeItCnt = 0;
+const _intRgx = /^[+-]?\d+$/;
+// Locale: detect decimal separator. Disabled because it seems browsers ignore locale.
+// const _localeDecimalSeparator = (1.5).toLocaleString().substring(1, 2);
+// const _localeDecimalSeparatorRgx = new RegExp(escapeRegExp(_localeDecimalSeparator), 'g');
+// const _floatRgx = new RegExp(
+//     '^[+-]?(\\d+(' + escapeRegExp(_localeDecimalSeparator) +
+//         '\\d*)?|' + escapeRegExp(_localeDecimalSeparator) +
+//             '\\d+)([eE][+-]?\\d+)?$');
+const _floatRgx = /^[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?$/;
+
+
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
+function stringStrip(str) {
+    return str.replace(/\s/g, '');
+}
+
+function strictParseInt(str) {
+    str = stringStrip(str);
+    if (_intRgx.test(str)) {
+        return Number.parseInt(str);
+    }
+    return NaN;
+}
+
+function strictParseFloat(str) {
+    str = stringStrip(str);
+    if (_floatRgx.test(str)) {
+        // Locale: normalize for parsing. Disabled because it seems browsers ignore locale.
+        // str = str.replace(_localeDecimalSeparatorRgx, '.');
+        // str = str.replace(/[^0-9eE+-.]/g, '');
+        return Number.parseFloat(str);
+    }
+    return NaN;
+}
 
 function timeIt(desc, body) {
-    if (!_debug) {
-        return body();
-    }
     const start = performance.now();
     _timeItCnt++;
     console.log('>'.repeat(_timeItCnt) + ' ' + desc + '...');
@@ -32,7 +65,6 @@ function timeIt(desc, body) {
     console.log('>'.repeat(_timeItCnt) + ' ' + desc + ' took ' + Math.round(end - start).toString() + 'ms');
     _timeItCnt--;
     return retval;
-
 }
 
 // https://stackoverflow.com/a/29018745/1749822
@@ -105,4 +137,4 @@ function arrayMultidimensionalPrefill(size, dims, defaultValue=null) {
 }
 
 
-export { arrayCompare, arrayMultidimensionalPrefill, arrayBinarySearch, timeIt };
+export { arrayCompare, arrayMultidimensionalPrefill, arrayBinarySearch, timeIt, strictParseInt, strictParseFloat };

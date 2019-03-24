@@ -19,7 +19,7 @@
 
 import { DDArray } from './ddarray.js?v=%REV';
 import { DDFormula, DDFormulaGraph, DDSelectorStorage } from './ddformula.js?v=%REV';
-import { arrayCompare, arrayMultidimensionalPrefill, arrayBinarySearch, timeIt } from './helper.js?v=%REV';
+import { arrayCompare, arrayMultidimensionalPrefill, arrayBinarySearch, timeIt, strictParseInt, strictParseFloat } from './helper.js?v=%REV';
 import { Versioner } from './versioning.js?v=%REV';
 
 const DDType = Object.freeze({
@@ -471,42 +471,29 @@ class DDGraph {
     @param nullIfInvalid If true, the method returns null when it detects an invalid value.
     */
     static castRawValue(type, rawValue, nullIfInvalid=false) {
-        const intRgx = /^[+-]?\d+$/;
-        const floatRgx = /^[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?$/;
-        const strip  = (str) => { return str.replace(/\s/g, ''); };
         if (DDGraph.testVoid(type, rawValue)) {
             return null;
         }
         switch (type) {
             case DDType.INT: {
-                    const strippedRawValue = strip(rawValue);
-                    if (intRgx.test(strippedRawValue)) {
-                        const intValue = parseInt(rawValue);
-                        if (intValue !== intValue) {
-                            if (nullIfInvalid) {
-                                return null;
-                            }
-                        } else {
-                            return intValue;
+                    const intValue = strictParseInt(rawValue);
+                    if (intValue !== intValue) {
+                        if (nullIfInvalid) {
+                            return null;
                         }
-                    } else if (nullIfInvalid) {
-                        return null;
+                    } else {
+                        return intValue;
                     }
                 }
                 break;
             case DDType.FLOAT: {
-                    const strippedRawValue = strip(rawValue);
-                    if (floatRgx.test(strippedRawValue)) {
-                        const floatValue = parseFloat(rawValue);
-                        if (floatValue !== floatValue) {
-                            if (nullIfInvalid) {
-                                return null;
-                            }
-                        } else {
-                            return floatValue;
+                    const floatValue = strictParseFloat(rawValue);
+                    if (floatValue !== floatValue) {
+                        if (nullIfInvalid) {
+                            return null;
                         }
-                    } else if (nullIfInvalid) {
-                        return null;
+                    } else {
+                        return floatValue;
                     }
                 }
                 break;
@@ -532,8 +519,13 @@ class DDGraph {
     */
     static formatValue(type, value) {
         switch (type) {
-            case DDType.INT:
             case DDType.FLOAT:
+                // Locale: correctly cast numbers. Disabled because it seems browsers ignore locale.
+                // if (typeof value === 'number') {
+                //     return value.toLocaleString();
+                // }
+                // break;
+            case DDType.INT:
             case DDType.STRING:
                 // Just cast to string
                 break;
