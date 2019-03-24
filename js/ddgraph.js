@@ -471,29 +471,42 @@ class DDGraph {
     @param nullIfInvalid If true, the method returns null when it detects an invalid value.
     */
     static castRawValue(type, rawValue, nullIfInvalid=false) {
+        const intRgx = /^[+-]?\d+$/;
+        const floatRgx = /^[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?$/;
+        const strip  = (str) => { return str.replace(/\s/g, ''); };
         if (DDGraph.testVoid(type, rawValue)) {
             return null;
         }
         switch (type) {
             case DDType.INT: {
-                    const intValue = parseInt(rawValue);
-                    if (intValue !== intValue) {
-                        if (nullIfInvalid) {
-                            return null;
+                    const strippedRawValue = strip(rawValue);
+                    if (intRgx.test(strippedRawValue)) {
+                        const intValue = parseInt(rawValue);
+                        if (intValue !== intValue) {
+                            if (nullIfInvalid) {
+                                return null;
+                            }
+                        } else {
+                            return intValue;
                         }
-                    } else {
-                        return intValue;
+                    } else if (nullIfInvalid) {
+                        return null;
                     }
                 }
                 break;
             case DDType.FLOAT: {
-                    const floatValue = parseFloat(rawValue);
-                    if (floatValue !== floatValue) {
-                        if (nullIfInvalid) {
-                            return null;
+                    const strippedRawValue = strip(rawValue);
+                    if (floatRgx.test(strippedRawValue)) {
+                        const floatValue = parseFloat(rawValue);
+                        if (floatValue !== floatValue) {
+                            if (nullIfInvalid) {
+                                return null;
+                            }
+                        } else {
+                            return floatValue;
                         }
-                    } else {
-                        return floatValue;
+                    } else if (nullIfInvalid) {
+                        return null;
                     }
                 }
                 break;
