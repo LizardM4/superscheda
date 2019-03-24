@@ -2428,7 +2428,7 @@ You should have received a copy of the GNU General Public License
                     </div>
                     <div class="col-3 col-md-2">
                       <div class="input-group input-group-sm">
-                        <input type="text" data-dd-id="peso" class="text-right form-control form-control-sm">
+                        <input type="text" data-dd-type="float" data-dd-id="peso" class="text-right form-control form-control-sm">
                         <div class="input-group-append">
                           <span class="input-group-text">kg</span>
                         </div>
@@ -2454,7 +2454,7 @@ You should have received a copy of the GNU General Public License
                   <div class="col-md-4 col-12">
                     <div class="text-truncate"><label class="col-form-label">Totale peso trasportato</label></div>
                     <div class="input-group">
-                      <input type="text" data-dd-id="peso_tot" class="text-right form-control">
+                      <input type="text" data-dd-type="float" data-dd-formula="sum /equipaggiamento[-1].peso" data-dd-id="peso_tot" class="text-right form-control">
                       <div class="input-group-append">
                         <span class="input-group-text">kg</span>
                       </div>
