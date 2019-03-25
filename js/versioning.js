@@ -46,29 +46,29 @@ class Patch {
         return this._preLoadAction;
     }
 
-    get postLoadAction() {
-        return this._postLoadAction;
+    get newFormulaFilters() {
+        return this._newFormulaFilters;
     }
 
-    apply(ddGraph, dataBag) {
+    apply(dataBag) {
         return timeIt('Applying patch ' + Versioner.versionToString(this.version), () => {
             if (this.preLoadAction) {
                 this.preLoadAction(dataBag);
-            }
-            if (this.postLoadAction) {
-                ddGraph.loadDataBag(dataBag, false);
-                this.postLoadAction(ddGraph);
-                dataBag = ddGraph.dumpDataBag();
             }
             Versioner.setDataBagVersion(dataBag, this.version);
             return dataBag;
         });
     }
 
-    constructor(version, preLoadAction=null, postLoadAction=null) {
+    constructor(version, preLoadAction=null, newFormulaFilters=null) {
         this._version = Versioner.versionParse(version);
         this._preLoadAction = preLoadAction;
-        this._postLoadAction = postLoadAction;
+        if (newFormulaFilters === null) {
+            newFormulaFilters = [];
+        } else if (!Array.isArray(newFormulaFilters)) {
+            newFormulaFilters = [newFormulaFilters];
+        }
+        this._newFormulaFilters = newFormulaFilters;
     }
 
     static compare(l, r) {
@@ -146,18 +146,69 @@ class Versioner {
         return Versioner.versionCompare(Versioner.getDataBagVersion(dataBag), this.latestVersion) < 0;
     }
 
-    addPatch(v, preLoadAction=null, postLoadAction=null) {
-        const p = new Patch(v, preLoadAction, postLoadAction);
+    addPatch(v, preLoadAction=null, newFormulaFilters=null) {
+        const p = new Patch(v, preLoadAction, newFormulaFilters);
         const idx = arrayBinarySearch(this._patches, p, Patch.compare);
         console.assert(idx < 0);
         this._patches.splice(-idx - 1, 0, p);
     }
 
+    static _testFormulaFilter(ddNode, filter) {
+        if (typeof filter === 'string') {
+            return ddNode.path === filter;
+        } else if (filter instanceof RegExp) {
+            return filter.test(ddNode.path);
+        } else if (typeof filter === 'boolean') {
+            return filter;
+        } else {
+            return filter(ddNode);
+        }
+    }
+
+    static _replaceWithFormulas(ddGraph, newFormulaFilters) {
+        ddGraph.formulaGraph.dynamicRecomputeFormulasPush(false);
+        ddGraph.root.traverse((ddNode, dfsEvent) => {
+            if (dfsEvent === DFSEvent.ENTER) {
+                if (ddNode.isArrayMaster) {
+                    return false;
+                } else if (ddNode.hasFormula && !ddNode.isVoid && ddNode._formulaValue === ddNode.value) {
+                    // Test if any matcher knows this node
+                    let replace = false;
+                    newFormulaFilters.forEach(filter => {
+                        if (Versioner._testFormulaFilter(ddNode, filter)) {
+                            replace = true;
+                        }
+                    });
+                    if (replace) {
+                        console.log('Replacing ' + ddNode.path);
+                        ddNode.value = null;
+                    } else {
+                        console.log('Skipping ' + ddNode.path);
+                    }
+                }
+            }
+        });
+        ddGraph.formulaGraph.dynamicRecomputeFormulasPop();
+    }
+
     apply(ddGraph, dataBag) {
         const v = Versioner.getDataBagVersion(dataBag);
         const firstPatchIdx = this._upperBound(v);
+        const newFormulaFilters = [];
         for (let i = firstPatchIdx; i < this.length; ++i) {
-            dataBag = this._patches[i].apply(ddGraph, dataBag);
+            dataBag = this._patches[i].apply(dataBag);
+            if (this._patches[i].newFormulaFilters) {
+                // Collect formula filters
+                newFormulaFilters.splice(-1, 0, ...this._patches[i].newFormulaFilters);
+            }
+        }
+        if (newFormulaFilters.length > 0) {
+            timeIt('Applying formula suggestions', () => {
+                ddGraph.loadDataBag(dataBag, false);
+                Versioner._replaceWithFormulas(ddGraph, newFormulaFilters);
+                dataBag = ddGraph.dumpDataBag();
+            });
+
         }
         return dataBag;
     }
@@ -221,22 +272,7 @@ Versioner.instance().addPatch('0.1.6', (dataBag) => {
     delete dataBag['gradi'];
 });
 
-Versioner.instance().addPatch('0.2.0', null, (ddGraph) => {
-    ddGraph.formulaGraph.dynamicRecomputeFormulasPush(false);
-    ddGraph.root.traverse((ddNode, dfsEvent) => {
-        if (dfsEvent === DFSEvent.ENTER) {
-            if (ddNode.isArrayMaster) {
-                return false;
-            } else if (ddNode.hasFormula) {
-                if (ddNode.formulaValue === ddNode.value) {
-                    console.log('Replacing value for ' + ddNode.path + ' with precomputed default.');
-                    ddNode.value = null;
-                }
-            }
-        }
-    });
-    ddGraph.formulaGraph.dynamicRecomputeFormulasPop();
-});
+Versioner.instance().addPatch('0.2.0', null, true);
 
 
 export { Versioner };
