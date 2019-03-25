@@ -274,5 +274,6 @@ Versioner.instance().addPatch('0.1.6', (dataBag) => {
 
 Versioner.instance().addPatch('0.2.0', null, true);
 
+Versioner.instance().addPatch('0.2.1', null, 'penalita_nuotare');
 
 export { Versioner };
