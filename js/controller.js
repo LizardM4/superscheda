@@ -33,6 +33,21 @@ class SuperschedaController {
         this._loadExplorer = null;
         this._graph = new DDGraph();
         this._autosaveEvent = () => { this.autosave(); };
+        this._autosortCompareFn = (a, b) => {
+            a = this._getAutosortKey(a);
+            b = this._getAutosortKey(b);
+            if (typeof a === 'number' && typeof b === 'number') {
+                return a - b;
+            } else if (a === null && b !== null) {
+                return -1
+            } else if (a !== null && b === null) {
+                return 1;
+            } else if (a === b) {
+                return 0;
+            } else {
+                return a.toString().localeCompare(b.toString());
+            }
+        };
     }
 
     _initLocalStorage() {
@@ -143,6 +158,7 @@ class SuperschedaController {
                 console.log('Reloading latest save.');
                 const jsonData = JSON.parse(toLoad);
                 this._graph.loadDataBag(jsonData);
+                this.autosort();
                 return true;
             }
         }
@@ -494,25 +510,26 @@ class SuperschedaController {
 
 
     _setupAutosort() {
-        $('.dd-sort-key').blur((evt) => {
+        $('.dd-sort-key').blur((evt, ddNode) => {
+            // If ddNode is set, this is a programmatic change.
+            // This means that we may be loading data. Postpone any sorting.
+            if (ddNode) {
+                return;
+            }
             const arrayController = DDArray.getController($(evt.target));
             if (arrayController) {
-                arrayController.sort((a, b) => {
-                    a = this._getAutosortKey(a);
-                    b = this._getAutosortKey(b);
-                    if (typeof a === 'number' && typeof b === 'number') {
-                        return a - b;
-                    } else if (a === null && b !== null) {
-                        return -1
-                    } else if (a !== null && b === null) {
-                        return 1;
-                    } else if (a === b) {
-                        return 0;
-                    } else {
-                        return a.toString().localeCompare(b.toString());
-                    }
-                });
+                arrayController.sort(this._autosortCompareFn);
             }
+        });
+    }
+
+    autosort() {
+        const sortableArrayControllers = new Set();
+        $('.dd-sort-key').each((_, domElement) => {
+            sortableArrayControllers.add(DDArray.getController($(domElement)));
+        });
+        sortableArrayControllers.forEach(controller => {
+            controller.sort(this._autosortCompareFn);
         });
     }
 
@@ -567,6 +584,7 @@ class SuperschedaController {
         console.log('Reloading remote file ' + name);
         $.getJSON(name, (jsonData) => {
             this._graph.loadDataBag(jsonData);
+            this.autosort();
             if (postLoadAction) {
                 postLoadAction(true);
             }
@@ -586,6 +604,7 @@ class SuperschedaController {
                 const reader = new FileReader();
                 reader.addEventListener('loadend', () => {
                     this._graph.loadDataBag(JSON.parse(reader.result));
+                    this.autosort();
                     if (postLoadAction) {
                         postLoadAction(true);
                     }
