@@ -2638,7 +2638,7 @@ You should have received a copy of the GNU General Public License
         });
 
         // Autoexpand sections when clicking on the menu
-        $('#toc_sm a[href^="#"], #toc_md a[href^="#"').click((evt) => {
+        $('#toc_sm a[href^="#"], #toc_md a[href^="#"]').click((evt) => {
           // Find the target
           const $target = $(evt.target.getAttribute('href'));
           if ($target.length > 0) {
