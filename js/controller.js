@@ -204,6 +204,7 @@ class SuperschedaController {
     toggleWaiting(onOff, success=null) {
         if (onOff) {
             // The display block and z-index wil be removed by the event in setupWaitingModal
+            this._modalWaitingBackdrop.find('video')[0].play();
             this._modalWaitingBackdrop.css('z-index', 1040);
             this._modalWaiting.css('display', 'block').addClass('show');
             this._modalWaitingBackdrop.addClass('show');
@@ -395,6 +396,7 @@ class SuperschedaController {
                     this._modalWaiting.css('display', 'none');
                     this._modalWaitingBackdrop.css('z-index', 0);
                     this._modalWaitingBody.removeClass('show');
+                    this._modalWaitingBackdrop.find('video')[0].pause();
                 }
             }
         });
