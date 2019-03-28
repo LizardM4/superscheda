@@ -327,11 +327,22 @@ You should have received a copy of the GNU General Public License
       </a>
     </div>
 
-
-    <div class="modal fade" tabindex="-1" role="dialog" id="waiting" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-backdrop fade show" id="waiting-backdrop" style="display: block;">
       <div class="my-0 h-100 d-flex align-items-center justify-content-center">
-        <div class="modal-dialog text-light" role="document">
-          <i class="fas fa-spinner fa-pulse fa-5x"></i>
+        <div class="modal-dialog" role="document">
+          <video autoplay loop muted playsinline>
+            <source src="img/icosa.webm" type="video/webm">
+            <source src="img/icosa.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade show" tabindex="-1" role="dialog" id="waiting" aria-hidden="false" data-backdrop="static" data-keyboard="false" style="display: block;">
+      <div class="my-0 h-100 d-flex align-items-center justify-content-center">
+        <div class="modal-dialog" role="document">
+          <p class="text-light">
+            <i class="fas fa-check fa-5x fade"></i>
+          </p>
         </div>
       </div>
     </div>
@@ -2560,16 +2571,27 @@ You should have received a copy of the GNU General Public License
       </div>
     </div>
 
-
-     <div class="modal-backdrop fade show" id="loading_modal">
-      <div class="my-0 h-100 d-flex align-items-center justify-content-center">
-        <div class="modal-dialog text-light" role="document">
-          Caricamento...
-        </div>
-      </div>
-    </div>
     <script type="module">
       import { SuperschedaController } from './js/controller.js?v=%REV';
+
+      const $video = $('video');
+      const conditionallyChooseBackdrop = () => {
+        if ($video[0].currentSrc) {
+          if ($video[0].currentSrc.endsWith('webm'))  {
+            console.log('Playing WEBM with Alpha channel.');
+            // Can improve the video to be fully visible and use webm alpha
+            $video.closest('.modal-backdrop').addClass('full-opc');
+          } else {
+            console.log('Playing fallback MP4.');
+          }
+        }
+      };
+      if ($video[0].currentSrc) {
+        conditionallyChooseBackdrop();
+      } else {
+        $video.on('loadeddata', conditionallyChooseBackdrop);
+      }
+
       $(() => {
 
         const $window = $(window);

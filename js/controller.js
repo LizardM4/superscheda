@@ -203,30 +203,27 @@ class SuperschedaController {
 
     toggleWaiting(onOff, success=null) {
         if (onOff) {
-            this._modalWaiting.modal('show');
+            // The display block and z-index wil be removed by the event in setupWaitingModal
+            this._modalWaitingBackdrop.css('z-index', 1040);
+            this._modalWaiting.css('display', 'block').addClass('show');
+            this._modalWaitingBackdrop.addClass('show');
         } else if (success === null) {
-            this._modalWaiting.modal('hide');
+            this._modalWaiting.removeClass('show');
+            this._modalWaitingBackdrop.removeClass('show');
         } else {
-            const dialog = this._modalWaiting.find('div.modal-dialog');
-            dialog.empty();
             if (success) {
-                $('<i class="fas fa-check fa-5x"></i>').appendTo(dialog);
+                this._modalWaitingBody.removeClass('fa-times').addClass('fa-check').addClass('show');
             } else {
-                $('<i class="fas fa-times fa-5x"></i>').appendTo(dialog);
+                this._modalWaitingBody.removeClass('fa-check').addClass('fa-times').addClass('show');
             }
             setTimeout(() => {
-                this._modalWaiting.modal('hide');
+                this.toggleWaiting(false);
             }, 400);
         }
     }
 
     _promptReady() {
-        const modal = $('#loading_modal');
-        // https://stackoverflow.com/a/9255507/1749822
-        modal.on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', (evt) => {
-            modal.off(evt);
-            modal.remove();
-        }).removeClass('show');
+        this.toggleWaiting(false);
     }
 
     _getAutosortKey(arrayItem) {
@@ -390,11 +387,16 @@ class SuperschedaController {
 
     _setupWaitingModal() {
         this._modalWaiting = $('#waiting');
-        this._modalWaiting.on('hidden.bs.modal', () => {
-            // Reset the content
-            const dialog = this._modalWaiting.find('div.modal-dialog');
-            dialog.empty();
-            $('<i class="fas fa-spinner fa-pulse fa-5x"></i>').appendTo(dialog);
+        this._modalWaitingBackdrop = $('#waiting-backdrop');
+        this._modalWaitingBody = this._modalWaiting.find('p > i.fas');
+        this._modalWaiting.on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', (evt) => {
+            if (evt.target === this._modalWaiting[0]){
+                if (!this._modalWaiting.hasClass('show')) {
+                    this._modalWaiting.css('display', 'none');
+                    this._modalWaitingBackdrop.css('z-index', 0);
+                    this._modalWaitingBody.removeClass('show');
+                }
+            }
         });
     }
 
