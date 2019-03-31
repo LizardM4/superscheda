@@ -93,10 +93,6 @@ striped.*/
 .btn-custom-checkbox:not(.active) .toggle-active {
   display: none!important;
 }
-/*Unchecked text has lower opacity*/
-.btn-custom-checkbox:not(.active) .toggle-inactive {
-  opacity: 0.5;
-}
 
 /* INPUT GROUP DROPDOWN --------------------------------------------------------------------*/
 
@@ -137,10 +133,24 @@ box, otherwise we would need to set the value of an input or fetch the text of a
   border-color: rgb(206, 212, 218);
   color: rgb(73, 80, 87);
 }
-.btn-addon:focus {
+.btn-addon:focus, .btn-addon.focus, .btn-group > .btn-addon:focus, .btn-group > .btn-addon.focus {
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
   border-color: rgb(128, 189, 255);
+  z-index: 3;
 }
+
+.btn-addon.active, .btn-addon.active input {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: #fff;
+}
+.btn-addon.active:focus, .btn-addon.active.focus, .btn-group > .btn-addon.active:focus, .btn-group > .btn-addon.active.focus {
+  box-shadow: 0 0 0 .2rem rgba(130,138,145,.5);
+  background-color: #6c757d;
+  border-color: #6c757d;
+  z-index: 3;
+}
+
 /*This little trick makes two adjacent L/R borders overlap, in such a way that they look like
 a single separating border. When one control is lifted above the other, the effect is not
 disrupted.*/
