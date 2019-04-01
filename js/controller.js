@@ -17,7 +17,7 @@
 
 'use strict';
 
-import { timeIt } from './helper.js?v=%REV';
+import { timeIt, arrayCompare } from './helper.js?v=%REV';
 import { DropboxExplorer, pathCombine } from './dbxexplorer.js?v=%REV';
 import { DDArray } from './ddarray.js?v=%REV';
 import { DDGraph } from './ddgraph.js?v=%REV';
@@ -44,6 +44,8 @@ class SuperschedaController {
                 return 1;
             } else if (a === b) {
                 return 0;
+            } else if (Array.isArray(a) && Array.isArray(b)) {
+                return arrayCompare(a, b);
             } else {
                 return a.toString().localeCompare(b.toString());
             }
@@ -228,21 +230,37 @@ class SuperschedaController {
     }
 
     _getAutosortKey(arrayItem) {
-        const matches = $(arrayItem).find('input.dd-sort-key')
+        let matches = $(arrayItem).find('.dd-sort-key')
             .filter((_, domElement) => {
                 return $(domElement)
                     .parentsUntil(arrayItem, '[data-dd-array="container"]')
                     .length === 0;
             });
         if (matches.length > 0) {
-            const node = this._graph.getNodeOfDOMElement(matches[0]);
-            if (node) {
-                return node.value;
-            } else {
-                return matches.val().toString();
+            matches = matches.toArray().map(domElement => $(domElement));
+            // Sort by key order
+            matches.sort((a, b) => {
+                const retval = parseInt(a.attr('data-dd-sort-key-index')) - parseInt(b.attr('data-dd-sort-key-index'));
+                if (retval !== retval) {
+                    return 0;
+                }
+                return retval;
+            });
+            // Map each key element to its value
+            const keys = matches.map($match => {
+                const node = this._graph.getNodeOfDOMElement($match[0]);
+                if (node) {
+                    return node.value;
+                } else {
+                    return matches.val().toString();
+                }
+            });
+            if (keys.length === 1) {
+                return keys[0];
             }
+            return keys;
         } else {
-            return '';
+            return null;
         }
     }
 
