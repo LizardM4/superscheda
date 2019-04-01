@@ -108,6 +108,7 @@ class DDArray {
             $(newItems).insertAfter(insertAfter);
             this.container.trigger('ddarray.insertion', [newItems]);
         }
+        return newItems;
     }
 
     _remove(idx, numDeleted=1) {
@@ -140,8 +141,7 @@ class DDArray {
     }
 
     append() {
-        this._insert(this.length, 1);
-        return this.get(-1);
+        return this._insert(this.length, 1)[0];;
     }
 
     remove(itemOrIndex) {
