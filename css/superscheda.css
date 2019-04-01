@@ -94,6 +94,20 @@ striped.*/
   display: none!important;
 }
 
+/* CUSTOM SPELL MAGIC  ---------------------------------------------------------------------*/
+
+.dd-if-spell-ready, .dd-if-spell-known, .dd-if-spell-used {
+  display: none!important;
+}
+.dd-spell-ready .dd-if-spell-ready, .dd-spell-known .dd-if-spell-known, .dd-spell-used .dd-if-spell-used {
+  display: inline-block!important;
+}
+
+.dd-spell-ready:first-of-type {
+  border: 1px solid red;
+}
+
+
 /* INPUT GROUP DROPDOWN --------------------------------------------------------------------*/
 
 /*Patch the dropdown buttons in the input group to look like some simple input group span*/

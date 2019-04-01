@@ -2208,7 +2208,7 @@ You should have received a copy of the GNU General Public License
                 <div class="d-none d-md-block">
                   <div class="form-row pr-custom">
                     <div class="col">
-                      <label class="col-form-label col-form-label-sm">Incantesimo</label>
+                      <label class="col-form-label col-form-label-sm">Incantesimo · Componenti</label>
                     </div>
                     <div class="col-2 text-truncate">
                       <label class="col-form-label col-form-label-sm">Dominio/Scuola</label>
@@ -2219,40 +2219,112 @@ You should have received a copy of the GNU General Public License
                     <div class="col-1">
                       <label class="col-form-label col-form-label-sm">Rif</label>
                     </div>
-                    <div class="col-1 text-truncate">
-                      <label class="col-form-label col-form-label-sm">Preparati</label>
-                    </div>
-                    <div class="col-1">
-                      <label class="col-form-label col-form-label-sm">Usati</label>
+                    <div class="col-2 text-truncate">
+                      <label class="col-form-label col-form-label-sm">Prepara/Usa</label>
                     </div>
                   </div>
                 </div>
                 <div data-dd-array="container">
                   <div class="form-row pb-1 striped" data-dd-array="master" data-dd-id="incantesimi">
                     <div class="col form-row">
-                      <div class="col-md col-8">
-                        <label class="col-form-label col-form-label-sm d-md-none">Incantesimo</label>
-                        <input type="text" class="form-control form-control-sm" data-dd-id="incantesimo">
+                      <div class="col-md col-12">
+                        <label class="col-form-label col-form-label-sm d-md-none">Incantesimo · Componenti</label>
+                        <div class="input-group input-group-sm">
+                          <input type="text" class="form-control form-control-sm" data-dd-id="incantesimo">
+                          <div data-dd-id="componenti" class="input-group-append btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-sm btn-addon">
+                              <input type="checkbox" data-dd-id="materiale">
+                              <i class="fas fa-mortar-pestle fa-lg fa-fw"></i>
+                            </label>
+                            <label class="btn btn-sm btn-addon">
+                              <input type="checkbox" data-dd-id="verbale">
+                              <i class="fas fa-comment-dots fa-lg fa-fw"></i>
+                            </label>
+                            <label class="btn btn-sm btn-addon">
+                              <input type="checkbox" data-dd-id="somatica">
+                              <i class="fas fa-praying-hands fa-lg fa-fw"></i>
+                            </label>
+                            <label class="btn btn-sm btn-addon">
+                              <input type="checkbox" data-dd-id="focus">
+                              <i class="fas fa-bullseye fa-lg fa-fw"></i>
+                            </label>
+                          </div>
+                        </div>
                       </div>
                       <div class="col-md-2 col-4">
                         <label class="col-form-label col-form-label-sm d-md-none">Dominio/Scuola</label>
-                        <input type="text" class="form-control form-control-sm" data-dd-id="dominio_scuola">
+                        <select class="custom-select custom-select-sm" data-dd-id="dominio_scuola">
+                          <option value="universale" selected>Universale</option>
+                          <optgroup label="Scuole">
+                              <option value="abiurazione">Abiurazione</option>
+                              <option value="ammaliamento">Ammaliamento</option>
+                              <option value="divinazione">Divinazione</option>
+                              <option value="evocazione">Evocazione</option>
+                              <option value="convocazione">Evo/convocazione</option>
+                              <option value="richiamo">Evo/richiamo</option>
+                              <option value="guarigione">Evo/guarigione</option>
+                              <option value="teletrasporto">Evo/teletrasporto</option>
+                              <option value="creazione">Evo/creazione</option>
+                              <option value="illusione">Illusione</option>
+                              <option value="allucinazione">Ill/allucinazione</option>
+                              <option value="finzione">Ill/finzione</option>
+                              <option value="mascheramento">Ill/mascheramento</option>
+                              <option value="ombra">Ill/ombra</option>
+                              <option value="trama">Ill/trama</option>
+                              <option value="invocazione">Invocazione</option>
+                              <option value="necromanzia">Necromanzia</option>
+                              <option value="trasmutazione">Trasmutazione</option>
+                          </optgroup>
+                          <optgroup label="Domini">
+                              <option value="acqua">Acqua</option>
+                              <option value="animale">Animale</option>
+                              <option value="aria">Aria</option>
+                              <option value="bene">Bene</option>
+                              <option value="caos">Caos</option>
+                              <option value="conoscenza">Conoscenza</option>
+                              <option value="distruzione">Distruzione</option>
+                              <option value="fortuna">Fortuna</option>
+                              <option value="forza">Forza</option>
+                              <option value="fuoco">Fuoco</option>
+                              <option value="guarigione">Guarigione</option>
+                              <option value="guerra">Guerra</option>
+                              <option value="inganno">Inganno</option>
+                              <option value="legge">Legge</option>
+                              <option value="magia">Magia</option>
+                              <option value="male">Male</option>
+                              <option value="morte">Morte</option>
+                              <option value="protezione">Protezione</option>
+                              <option value="sole">Sole</option>
+                              <option value="terra">Terra</option>
+                              <option value="vegetale">Vegetale</option>
+                              <option value="viaggio">Viaggio</option>
+                          </optgroup>
+
+                        </select>
                       </div>
                       <div class="col-md-1 col-3">
                         <label class="col-form-label col-form-label-sm d-md-none">Liv</label>
-                        <input type="text" class="form-control form-control-sm" data-dd-type="int" data-dd-id="liv">
+                        <input type="text" class="form-control form-control-sm dd-sort-key" data-dd-sort-key-index="1" data-dd-type="int" data-dd-id="liv">
                       </div>
                       <div class="col-md-1 col-3">
                         <label class="col-form-label col-form-label-sm d-md-none">Rif</label>
                         <input type="text" class="form-control form-control-sm" data-dd-id="rif">
                       </div>
-                      <div class="col-md-1 col-3">
-                        <label class="col-form-label col-form-label-sm d-md-none">Preparati</label>
-                        <input type="text" class="form-control form-control-sm" data-dd-type="int" data-dd-id="preparati">
-                      </div>
-                      <div class="col-md-1 col-3">
-                        <label class="col-form-label col-form-label-sm d-md-none">Usati</label>
-                        <input type="text" class="form-control form-control-sm" data-dd-type="int" data-dd-id="usati">
+                      <div class="col-md-2 col">
+                        <select data-dd-id="preparazione" class="dd-sort-key d-none" data-dd-sort-key-index="0">
+                          <option data-dd-contextual-class="dd-spell-known" value="" selected>Conosciuto</option>
+                          <option data-dd-contextual-class="dd-spell-ready" value="preparato">Preparato</option>
+                          <option data-dd-contextual-class="dd-spell-used" value="usato">Usato</option>
+                        </select>
+                        <button class="btn btn-secondary btn-sm dd-if-spell-known">
+                          <i class="fas fa-hourglass-start fa-lg fa-fw"></i>
+                        </button>
+                        <button class="btn btn-secondary btn-sm dd-if-spell-ready">
+                          <i class="fas fa-bolt fa-lg fa-fw"></i>
+                        </button>
+                        <button class="btn btn-secondary btn-sm dd-if-spell-used">
+                          <i class="fas fa-recycle fa-lg fa-fw"></i>
+                        </button>
                       </div>
                     </div>
                     <div class="col-auto form-row align-items-center justify-content-center">
@@ -2672,6 +2744,23 @@ You should have received a copy of the GNU General Public License
               }
             }
           }
+        });
+
+        // Transfer classes to spell array items
+        $('[data-dd-id="incantesimi"][data-dd-array="master"] select[data-dd-id="preparazione"]').change((evt) => {
+          const $select = $(evt.target);
+          const $item = $select.closest('[data-dd-array="item"]');
+          if ($item.length === 0) {
+            return;
+          }
+          $select.find('option').each((_, option) => {
+            option = $(option);
+            if (option.is(':selected'))  {
+              $item.addClass(option.attr('data-dd-contextual-class'));
+            } else {
+              $item.removeClass(option.attr('data-dd-contextual-class'));
+            }
+          });
         });
 
         $('[title][data-placement]').tooltip();
