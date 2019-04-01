@@ -103,8 +103,37 @@ striped.*/
   display: inline-block!important;
 }
 
-.dd-spell-ready:first-of-type {
-  border: 1px solid red;
+.dd-spell-known + .dd-spell-ready::before,
+.dd-spell-ready + .dd-spell-used::before,
+.dd-spell-known::before {
+  display: block;
+  margin-top: 1rem !important;
+  font-size: 1rem;
+  margin-bottom: .5rem;
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.2;
+  color: inherit;
+}
+.dd-spell-used select, .dd-spell-used .input-group, .dd-spell-used input {
+  opacity: 0.5;
+}
+.dd-spell-used .input-group input {
+  opacity: 1;
+}
+
+.dd-spell-known::before {
+  content: "Incantesimi conosciuti";
+}
+.dd-spell-known ~ .dd-spell-known::before {
+  content: none;
+}
+
+.dd-spell-known + .dd-spell-ready::before {
+  content: "Incantesimi preparati";
+}
+.dd-spell-ready + .dd-spell-used::before {
+  content: "Incantesimi usati";
 }
 
 
