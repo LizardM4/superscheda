@@ -36,28 +36,28 @@ last column on the right (spacing rules for controls and labels are different.)*
 striped is marked as such. For normal devices, make it striped only if marked with always
 striped.*/
 @media (max-width: 767px) {
-  .striped {
+  .striped, .inner-striped > * {
     border-top: 1px solid #e9ecef;
     padding-left: 0.3rem;
     padding-right: 0.3rem;
   }
-  .striped:nth-of-type(odd) {
+  .striped:nth-of-type(odd), .inner-striped:nth-of-type(odd) > * {
     background-color: rgba(0, 0, 0, .05);
   }
-  .striped:last-of-type {
+  .striped:last-of-type, .striped:last-of-type > * {
     border-bottom: 1px solid #e9ecef;
   }
 }
 
-.always-stripe .striped {
+.always-stripe .striped, .always-stripe .inner-striped > * {
   border-top: 1px solid #e9ecef;
   padding-left: 0.3rem;
   padding-right: 0.3rem;
 }
-.always-stripe .striped:nth-of-type(odd) {
+.always-stripe .striped:nth-of-type(odd), .always-stripe .inner-striped:nth-of-type(odd) > * {
   background-color: rgba(0, 0, 0, .05);
 }
-.always-stripe .striped:last-of-type {
+.always-stripe .striped:last-of-type, .always-stripe .inner-striped:last-of-type > * {
   border-bottom: 1px solid #e9ecef;
 }
 
