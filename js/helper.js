@@ -105,9 +105,9 @@ function arrayCompare(l, r) {
         return 0;
     }
     for (let i = 0; i < Math.min(l.length, r.length); ++i) {
-        if (l[i] < r[i]) {
+        if (l[i] < r[i] || (l[i] === null && r[i] !== null)) {
             return -1;
-        } else if (l[i] > r[i]) {
+        } else if (l[i] > r[i] || (l[i] !== null && r[i] === null)) {
             return 1;
         }
         console.assert(l[i] === r[i]);
