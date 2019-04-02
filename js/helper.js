@@ -105,12 +105,23 @@ function arrayCompare(l, r) {
         return 0;
     }
     for (let i = 0; i < Math.min(l.length, r.length); ++i) {
-        if (l[i] < r[i] || (l[i] === null && r[i] !== null)) {
+        if (l[i] === null && r[i] !== null) {
             return -1;
-        } else if (l[i] > r[i] || (l[i] !== null && r[i] === null)) {
+        } else if (l[i] !== null && r[i] === null) {
             return 1;
         }
-        console.assert(l[i] === r[i]);
+        if (typeof l[i] === typeof r[i]) {
+            if (l[i] < r[i]) {
+                return -1;
+            } else if (l[i] > r[i]) {
+                return 1;
+            }
+        } else {
+            const result = l[i].toString().localeCompare(r[i].toString());
+            if (result != 0) {
+                return result;
+            }
+        }
     }
     if (l.length < r.length) {
         return -1;
