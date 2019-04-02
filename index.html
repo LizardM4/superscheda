@@ -2148,17 +2148,30 @@ You should have received a copy of the GNU General Public License
                   </tr></thead>
                   <tbody>
                     <tr>
+                      <th scope="row" class="text-truncate">Max conosciuti</th>
+                      <td><input type="text" data-dd-id="max_conosciuti[0]" class="form-control form-control-sm text-right" data-dd-type="int"></td>
+                      <td><input type="text" data-dd-id="max_conosciuti[1]" class="form-control form-control-sm text-right" data-dd-type="int"></td>
+                      <td><input type="text" data-dd-id="max_conosciuti[2]" class="form-control form-control-sm text-right" data-dd-type="int"></td>
+                      <td><input type="text" data-dd-id="max_conosciuti[3]" class="form-control form-control-sm text-right" data-dd-type="int"></td>
+                      <td><input type="text" data-dd-id="max_conosciuti[4]" class="form-control form-control-sm text-right" data-dd-type="int"></td>
+                      <td><input type="text" data-dd-id="max_conosciuti[5]" class="form-control form-control-sm text-right" data-dd-type="int"></td>
+                      <td><input type="text" data-dd-id="max_conosciuti[6]" class="form-control form-control-sm text-right" data-dd-type="int"></td>
+                      <td><input type="text" data-dd-id="max_conosciuti[7]" class="form-control form-control-sm text-right" data-dd-type="int"></td>
+                      <td><input type="text" data-dd-id="max_conosciuti[8]" class="form-control form-control-sm text-right" data-dd-type="int"></td>
+                      <td><input type="text" data-dd-id="max_conosciuti[9]" class="form-control form-control-sm text-right" data-dd-type="int"></td>
+                    </tr>
+                    <tr>
                       <th scope="row" class="text-truncate">Conosciuti</th>
-                      <td><input type="text" data-dd-id="conosciuti[0]" class="form-control form-control-sm text-right" data-dd-type="int"></td>
-                      <td><input type="text" data-dd-id="conosciuti[1]" class="form-control form-control-sm text-right" data-dd-type="int"></td>
-                      <td><input type="text" data-dd-id="conosciuti[2]" class="form-control form-control-sm text-right" data-dd-type="int"></td>
-                      <td><input type="text" data-dd-id="conosciuti[3]" class="form-control form-control-sm text-right" data-dd-type="int"></td>
-                      <td><input type="text" data-dd-id="conosciuti[4]" class="form-control form-control-sm text-right" data-dd-type="int"></td>
-                      <td><input type="text" data-dd-id="conosciuti[5]" class="form-control form-control-sm text-right" data-dd-type="int"></td>
-                      <td><input type="text" data-dd-id="conosciuti[6]" class="form-control form-control-sm text-right" data-dd-type="int"></td>
-                      <td><input type="text" data-dd-id="conosciuti[7]" class="form-control form-control-sm text-right" data-dd-type="int"></td>
-                      <td><input type="text" data-dd-id="conosciuti[8]" class="form-control form-control-sm text-right" data-dd-type="int"></td>
-                      <td><input type="text" data-dd-id="conosciuti[9]" class="form-control form-control-sm text-right" data-dd-type="int"></td>
+                      <td><input type="text" data-dd-id="conosciuti[0]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 0 '' /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="conosciuti[1]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 1 '' /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="conosciuti[2]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 2 '' /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="conosciuti[3]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 3 '' /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="conosciuti[4]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 4 '' /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="conosciuti[5]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 5 '' /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="conosciuti[6]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 6 '' /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="conosciuti[7]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 7 '' /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="conosciuti[8]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 8 '' /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="conosciuti[9]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 9 '' /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
                     </tr>
                     <tr>
                       <th scope="row" class="text-truncate">CD Salv</th>
@@ -2198,6 +2211,32 @@ You should have received a copy of the GNU General Public License
                       <td><input type="text" data-dd-id="bonus[7]" class="form-control form-control-sm text-right" data-dd-type="int"></td>
                       <td><input type="text" data-dd-id="bonus[8]" class="form-control form-control-sm text-right" data-dd-type="int"></td>
                       <td><input type="text" data-dd-id="bonus[9]" class="form-control form-control-sm text-right" data-dd-type="int"></td>
+                    </tr>
+                    <tr>
+                      <th scope="row" class="text-truncate">Preparati</th>
+                      <td><input type="text" data-dd-id="preparati[0]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 0 preparato /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="preparati[1]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 1 preparato /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="preparati[2]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 2 preparato /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="preparati[3]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 3 preparato /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="preparati[4]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 4 preparato /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="preparati[5]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 5 preparato /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="preparati[6]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 6 preparato /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="preparati[7]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 7 preparato /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="preparati[8]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 8 preparato /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="preparati[9]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 9 preparato /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                    </tr>
+                    <tr>
+                      <th scope="row" class="text-truncate">Usati</th>
+                      <td><input type="text" data-dd-id="usati[0]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 0 usato /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="usati[1]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 1 usato /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="usati[2]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 2 usato /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="usati[3]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 3 usato /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="usati[4]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 4 usato /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="usati[5]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 5 usato /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="usati[6]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 6 usato /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="usati[7]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 7 usato /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="usati[8]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 8 usato /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
+                      <td><input type="text" data-dd-id="usati[9]" class="form-control form-control-sm text-right" data-dd-type="int" data-dd-formula="count_spells 9 usato /incantesimi[-1].liv /incantesimi[-1].preparazione"></td>
                     </tr>
                   </tbody>
                 </table>
