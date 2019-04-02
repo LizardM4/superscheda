@@ -126,7 +126,7 @@ striped.*/
 .dd-spell-known::before {
   content: "Incantesimi conosciuti";
 }
-.dd-spell-known ~ .dd-spell-known::before {
+.dd-spell-known[data-dd-array="item"] ~ .dd-spell-known::before {
   content: none;
 }
 
@@ -136,6 +136,11 @@ striped.*/
 .dd-spell-ready + .dd-spell-used::before,
 .dd-spell-known + .dd-spell-used::before {
   content: "Incantesimi usati";
+}
+
+/* DAT class */
+.dd-spell-known[data-dd-array="item"] ~ .dd-spell-known .dd-hide-if-not-first-spell-of-type, .dd-spell-ready[data-dd-array="item"] ~ .dd-spell-ready .dd-hide-if-not-first-spell-of-type, .dd-spell-used[data-dd-array="item"] ~ .dd-spell-used .dd-hide-if-not-first-spell-of-type {
+  display: none!important;
 }
 
 
