@@ -104,6 +104,7 @@ striped.*/
 }
 
 .dd-spell-known + .dd-spell-ready::before,
+.dd-spell-known + .dd-spell-used::before,
 .dd-spell-ready + .dd-spell-used::before,
 .dd-spell-known::before {
   display: block;
@@ -132,7 +133,8 @@ striped.*/
 .dd-spell-known + .dd-spell-ready::before {
   content: "Incantesimi preparati";
 }
-.dd-spell-ready + .dd-spell-used::before {
+.dd-spell-ready + .dd-spell-used::before,
+.dd-spell-known + .dd-spell-used::before {
   content: "Incantesimi usati";
 }
 
