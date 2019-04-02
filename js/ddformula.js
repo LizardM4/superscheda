@@ -410,6 +410,33 @@ class DDFormula {
         return sum;
     }
 
+    _evalCountSpells() {
+        const args = this.evaluateArguments();
+        if (args.length < 2) {
+            return null;
+        }
+        const lev = args.shift();
+        if (typeof lev !== 'number') {
+            return null;
+        }
+        const preparation = args.shift();
+        const levels = args.splice(0, Math.floor(args.length / 2));
+        if (levels.length !== args.length) {
+            return null;
+        }
+        let count = 0;
+        for (let i = 0; i < levels.length; ++i) {
+            if (typeof levels[i] !== 'number') {
+                return null;
+            }
+            if (levels[i] !== lev || args[i] !== preparation) {
+                continue;
+            }
+            ++count;
+        }
+        return count;
+    }
+
     _evalRef() {
         const args = this.evaluateArguments();
         console.assert(args.length === 1);
@@ -530,6 +557,7 @@ class DDFormula {
             case 'mod': return this._evalMod(); break;
             case 'ref': return this._evalRef(); break;
             case 'cond_sum_mul': return this._evalCondSumMul(); break;
+            case 'count_spells': return this._evalCountSpells(); break;
             default:
                 console.assert(false);
                 return null;
