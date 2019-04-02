@@ -581,7 +581,10 @@ class DDFormula {
                 if (num === num) {
                     this._argDefs[i] = num;
                 }
-                // Keep it as string
+                // Keep it as string. Except if it's the empty string
+                if (arg === "''" || arg == '""') {
+                    this._argDefs[i] = '';
+                }
             }
         }
     }
