@@ -297,4 +297,10 @@ Versioner.instance().addPatch('0.2.2', (dataBag) => {
     }
 });
 
+Versioner.instance().addPatch('0.2.3', (dataBag) => {
+    const spellStats = dataBag['stat_incantesimi'];
+    spellStats['max_conosciuti'] = spellStats['conosciuti'];
+    spellStats['conosciuti'] = null;
+});
+
 export { Versioner };
