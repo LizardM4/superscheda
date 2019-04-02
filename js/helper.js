@@ -148,4 +148,13 @@ function arrayMultidimensionalPrefill(size, dims, defaultValue=null) {
 }
 
 
-export { arrayCompare, arrayMultidimensionalPrefill, arrayBinarySearch, timeIt, strictParseInt, strictParseFloat };
+function dictShallowCopy(dict) {
+    const retval = {};
+    Object.keys(dict).forEach(key => {
+        retval[key] = dict[key];
+    });
+    return retval;
+}
+
+
+export { arrayCompare, arrayMultidimensionalPrefill, arrayBinarySearch, timeIt, strictParseInt, strictParseFloat, dictShallowCopy };
