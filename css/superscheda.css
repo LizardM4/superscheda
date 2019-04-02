@@ -97,10 +97,10 @@ striped.*/
 /* CUSTOM SPELL MAGIC  ---------------------------------------------------------------------*/
 
 .dd-if-spell-ready, .dd-if-spell-known, .dd-if-spell-used {
-  display: none!important;
+  display: none;
 }
 .dd-spell-ready .dd-if-spell-ready, .dd-spell-known .dd-if-spell-known, .dd-spell-used .dd-if-spell-used {
-  display: inline-block!important;
+  display: inline-block;
 }
 
 .dd-spell-known + .dd-spell-ready::before,

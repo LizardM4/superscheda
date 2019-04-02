@@ -530,6 +530,54 @@ class SuperschedaController {
         mdTocController.container.on('ddarray.reindex', evtReindex);
     }
 
+    _setupSpells() {
+        // Transfer classes to spell array items
+        this._graph.nodeByPath('incantesimi[-1].preparazione').obj.change((evt) => {
+          const selectNode = this._graph.getNodeOfDOMElement(evt.target);
+          const arrayItem = selectNode.parent;
+          selectNode.obj.find('option').each((_, option) => {
+            option = $(option);
+            if (option.is(':selected'))  {
+              arrayItem.obj.addClass(option.attr('data-dd-contextual-class'));
+            } else {
+              arrayItem.obj.removeClass(option.attr('data-dd-contextual-class'));
+            }
+          });
+        });
+
+        // Apply new status when clicking on button
+        this._graph.nodeByPath('incantesimi[-1]').obj.find('button').each((_, btn) => {
+            btn = $(btn);
+            if (btn.hasClass('dd-if-spell-known')) {
+                // Prepare button
+                btn.click((evt) => {
+                    const parentSpellNode = this._graph.findParentNode($(evt.target));
+                    const controller = DDArray.getController(parentSpellNode.obj);
+                    const newSpellNode = this._graph.getNodeOfDOMElement(controller.append());
+                    newSpellNode.loadDataBag(parentSpellNode.dumpDataBag());
+                    newSpellNode.childById('preparazione').value = 'preparato';
+                    controller.sort(this._autosortCompareFn);
+                });
+            } else if (btn.hasClass('dd-if-spell-ready')) {
+                // Use button
+                btn.click((evt) => {
+                    const parentSpellNode = this._graph.findParentNode($(evt.target));
+                    const controller = DDArray.getController(parentSpellNode.obj);
+                    parentSpellNode.childById('preparazione').value = 'usato';
+                    controller.sort(this._autosortCompareFn);
+                });
+            } else if (btn.hasClass('dd-if-spell-used')) {
+                // Reprepare button
+                btn.click((evt) => {
+                    const parentSpellNode = this._graph.findParentNode($(evt.target));
+                    const controller = DDArray.getController(parentSpellNode.obj);
+                    parentSpellNode.childById('preparazione').value = 'preparato';
+                    controller.sort(this._autosortCompareFn);
+                });
+            }
+        });
+    }
+
 
     _setupAutosort() {
         $('.dd-sort-key').change((evt, ddNode) => {
@@ -566,6 +614,7 @@ class SuperschedaController {
         this._setupWaitingModal();
         this._setupAnimatedChevrons();
         this._setupAutosort();
+        this._setupSpells();
         this._setupDynamicTitles();
         this._setupAttackTOC();
         this._setupCustomDropdown();
