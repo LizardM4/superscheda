@@ -15,7 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 'use strict';
-import { arrayCompare, arrayBinarySearch, timeIt } from './helper.js?v=%REV';
+import { arrayCompare, arrayBinarySearch, timeIt, dictShallowCopy } from './helper.js?v=%REV';
 import { DFSEvent } from './ddgraph.js?v=%REV';
 
 
@@ -275,5 +275,26 @@ Versioner.instance().addPatch('0.1.6', (dataBag) => {
 Versioner.instance().addPatch('0.2.0', null, true);
 
 Versioner.instance().addPatch('0.2.1', null, 'penalita_nuotare');
+
+Versioner.instance().addPatch('0.2.2', (dataBag) => {
+    const spells = dataBag['incantesimi'];
+    if (Array.isArray(spells)) {
+        const toAdd = [];
+        spells.forEach(spell => {
+            if (spell['preparati'] > 0) {
+                const copy = dictShallowCopy(spell);
+                copy['preparazione'] = 'preparato';
+                toAdd.push(copy);
+            }
+            if (spell['usati'] > 0) {
+                const copy = dictShallowCopy(spell);
+                copy['preparazione'] = 'usato';
+                toAdd.push(copy);
+            }
+            spell['preparazione'] = null;
+        });
+        spells.splice(-1, 0, ...toAdd);
+    }
+});
 
 export { Versioner };
