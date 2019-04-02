@@ -580,7 +580,7 @@ class SuperschedaController {
 
 
     _setupAutosort() {
-        $('.dd-sort-key').change((evt, ddNode) => {
+        $('.dd-sort-key').blur((evt, ddNode) => {
             // If ddNode is set, this is a programmatic change.
             // This means that we may be loading data. Postpone any sorting.
             if (ddNode) {
