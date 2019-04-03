@@ -158,29 +158,32 @@ class DDArray {
         const reindexedItems = this._reindex(0, true);
         // Sort them in such a way that the new index is always the lowest
         reindexedItems.sort((a, b) => a[2] - b[2]);
-        // Modify the position in the container.
-        let j = 0;
-        for (let i = 0; i < this.length; ++i) {
-            // Advance as much as possible the reindexed item index until we find some operation to do
-            while (j < reindexedItems.length && reindexedItems[j][2] < i) {
-                ++j;
+        if (reindexedItems.length > 0) {
+            this.container.trigger('ddarray.reindex', [reindexedItems]);
+            // Modify the position in the container.
+            let j = 0;
+            for (let i = 0; i < this.length; ++i) {
+                // Advance as much as possible the reindexed item index until we find some operation to do
+                while (j < reindexedItems.length && reindexedItems[j][2] < i) {
+                    ++j;
+                }
+                if (j >= reindexedItems.length) {
+                    break; // Nothing more to do
+                }
+                const [domItem, previousIdx, newIdx] = reindexedItems[j];
+                if (newIdx > i) {
+                    // Skip to the next event
+                    i = newIdx - 1;
+                    continue;
+                }
+                console.assert(i === newIdx);
+                console.assert(domItem === this._items[i]);
+                // This element is located somewhere else in the dom and needs to be brought at
+                // position newIdx. We know that up to newIdx, the order in the dom matches the
+                // order in _items.
+                const insertAfter = newIdx > 0 ? this._items[newIdx - 1] : this.master;
+                $(domItem).insertAfter(insertAfter);
             }
-            if (j >= reindexedItems.length) {
-                break; // Nothing more to do
-            }
-            const [domItem, previousIdx, newIdx] = reindexedItems[j];
-            if (newIdx > i) {
-                // Skip to the next event
-                i = newIdx - 1;
-                continue;
-            }
-            console.assert(i === newIdx);
-            console.assert(domItem === this._items[i]);
-            // This element is located somewhere else in the dom and needs to be brought at
-            // position newIdx. We know that up to newIdx, the order in the dom matches the
-            // order in _items.
-            const insertAfter = newIdx > 0 ? this._items[newIdx - 1] : this.master;
-            $(domItem).insertAfter(insertAfter);
         }
     }
 
@@ -225,6 +228,8 @@ class DDArray {
             });
         });
     }
+
+    // TODO there seems to be a bug with _insert(0, 1);
 
     static getController($domElement) {
         if ($domElement.attr('data-dd-array') !== 'container') {
