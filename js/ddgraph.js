@@ -232,8 +232,10 @@ class DDGraph {
     @param updatedNode node with a new path.
     */
     _updateNode(oldPath, updatedNode) {
-        console.assert(this._nodesByPath[oldPath] === updatedNode);
-        delete this._nodesByPath[oldPath];
+        // This condition is not necessarily true, because some other node may have take that node's id.
+        if (this._nodesByPath[oldPath] === updatedNode) {            // It
+            delete this._nodesByPath[oldPath];
+        }
         this._nodesByPath[updatedNode.path] = updatedNode;
     }
 
@@ -814,8 +816,10 @@ class DDNode {
     */
     _updateChild(oldId, updatedChild) {
         console.assert(!this.holdsData);
-        console.assert(this._childById[oldId] === updatedChild);
-        delete this._childById[oldId]
+        // This condition is not necessarily true, because some other node may have take that node's id.
+        if (this._childById[oldId] === updatedChild) {            // It
+            delete this._childById[oldId];
+        }
         this._childById[updatedChild.id] = updatedChild;
         // The data loading routine relies on the children being sorted
         // as it processes first array masters to resize the array appropriately, and
