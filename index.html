@@ -2711,10 +2711,11 @@ You should have received a copy of the GNU General Public License
 
         const $window = $(window);
 
-        $('.btn-custom-checkbox input[type="checkbox"]').change((evt, ddNode) => {
+
+        $('.btn-group-toggle label input[type="checkbox"], .btn-custom-checkbox input[type="checkbox"]').change((evt, ddNode) => {
           if (ddNode) {
             const $input = $(evt.target);
-            const $label = $input.closest('.btn-custom-checkbox');
+            const $label = $input.closest('.btn-custom-checkbox, label');
             // Manually toggle the button
             if ($input.is(':checked')) {
               $label.addClass('active');
