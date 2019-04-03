@@ -223,8 +223,10 @@ class DDSelector {
 
     _updateNodeUsingSelector(oldPath, updatedNode) {
         const selInstance = this._instances[oldPath];
-        console.assert(selInstance.node === updatedNode);
-        delete this._instances[oldPath];
+        // Another node may have taken the place of the old path
+        if  (selInstance.node === updatedNode) {
+            delete this._instances[oldPath];
+        }
         this._instances[updatedNode.path] = selInstance;
     }
 
