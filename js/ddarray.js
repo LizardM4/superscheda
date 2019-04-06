@@ -144,6 +144,10 @@ class DDArray {
         return this._insert(this.length, 1)[0];;
     }
 
+    prepend() {
+        return this._insert(0, 1)[0];;
+    }
+
     remove(itemOrIndex) {
         if (typeof itemOrIndex !== 'number') {
             itemOrIndex = this._items.indexOf(itemOrIndex);
@@ -219,6 +223,8 @@ class DDArray {
             // Adders
             DDArray.getDirectChildrenArrays(controller.container, 'append')
                 .click(() => { controller.append(); });
+            DDArray.getDirectChildrenArrays(controller.container, 'prepend')
+                .click(() => { controller.prepend(); });
             // Custom events
             ['insertion', 'removal', 'reindex'].forEach(evtName => {
                 const handler = customEvents[evtName];
