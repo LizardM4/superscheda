@@ -281,15 +281,19 @@ Versioner.instance().addPatch('0.2.2', (dataBag) => {
     if (Array.isArray(spells)) {
         const toAdd = [];
         spells.forEach(spell => {
-            if (spell['preparati'] > 0) {
-                const copy = dictShallowCopy(spell);
-                copy['preparazione'] = 'preparato';
-                toAdd.push(copy);
+            if (typeof spell['preparati'] === 'number' && spell['preparati'] > 0) {
+                for (let i = 0; i < spell['preparati']; ++i) {
+                    const copy = dictShallowCopy(spell);
+                    copy['preparazione'] = 'preparato';
+                    toAdd.push(copy);
+                }
             }
-            if (spell['usati'] > 0) {
-                const copy = dictShallowCopy(spell);
-                copy['preparazione'] = 'usato';
-                toAdd.push(copy);
+            if (typeof spell['usati'] === 'number' && spell['usati'] > 0) {
+                for (let i = 0; i < spell['usati']; ++i) {
+                    const copy = dictShallowCopy(spell);
+                    copy['preparazione'] = 'usato';
+                    toAdd.push(copy);
+                }
             }
             spell['preparazione'] = null;
         });
