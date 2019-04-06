@@ -1,308 +1,680 @@
 {
-    "nome": null,
-    "razza": null,
+    "abilita": [
+        {
+            "acquisita": false,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Des",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Acrobazia",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": false,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Car",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Addestrare animali",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": true,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Int",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Artigianato ()",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": true,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Des",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Artista della fuga",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": true,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Sag",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Ascoltare",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": true,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Car",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Camuffare",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": true,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Des",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Cavalcare",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": true,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Int",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Cercare",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": true,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Cos",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Concentrazione",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": false,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Int",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Conoscenze ()",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": false,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Int",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Decifrare scritture",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": true,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Car",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Diplomazia",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": false,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Int",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Disattivare congegni",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": true,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Des",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Equilibrio",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": true,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Int",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Falsificare",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": true,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Sag",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Guarire",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": true,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Car",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Intimidire",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": true,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Car",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Intrattenere ()",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": true,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Des",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Muoversi silenziosamente",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": true,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Des",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Nascondersi",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": true,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "For",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Nuotare",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": true,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Sag",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Osservare",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": true,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Sag",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Percepire intenzioni",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": false,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Sag",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Professione ()",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": true,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Car",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Raccogliere informazioni",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": true,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Car",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Raggirare",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": false,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Des",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Rapidità di mano",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": true,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "For",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Saltare",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": false,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Int",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Sapienza magica",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": true,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "For",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Scalare",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": false,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Des",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Scassinare serrature",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": true,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Sag",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Sopravvivenza",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": true,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Des",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Utilizzare corde",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": false,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Car",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Utilizzare oggetti magici",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        },
+        {
+            "acquisita": true,
+            "archetipo": [
+                null,
+                null
+            ],
+            "b_sinergia": null,
+            "chiave": "Int",
+            "di_classe": false,
+            "gradi": null,
+            "mod_c": null,
+            "nome": "Valutare",
+            "oggetto": null,
+            "razza": null,
+            "sinergia": null,
+            "talento": null,
+            "totale": null,
+            "vari": null
+        }
+    ],
+    "allineamento": null,
+    "altezza": null,
     "archetipo": [
         null,
         null
     ],
-    "giocatore": null,
-    "classe": [
-        null,
-        null,
-        null
-    ],
-    "png": {
-        "classe": [
-            null,
-            null,
-            null,
-            null
-        ]
-    },
-    "taglia": "media",
-    "altezza": null,
-    "peso": null,
-    "occhi": null,
-    "capelli": null,
-    "pelle": null,
-    "eta": null,
-    "sesso": "n",
-    "segni_particolari": null,
-    "divinita": null,
-    "allineamento": null,
-    "caratteristiche": {
-        "for": {
-            "tiro_base": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "livello": null,
-            "magia": null,
-            "varie": [
-                null,
-                null
-            ],
-            "tot": null,
-            "temp": null,
-            "mod_tot": null,
-            "mod_temp": null
-        },
-        "des": {
-            "tiro_base": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "livello": null,
-            "magia": null,
-            "varie": [
-                null,
-                null
-            ],
-            "tot": null,
-            "temp": null,
-            "mod_tot": null,
-            "mod_temp": null
-        },
-        "cos": {
-            "tiro_base": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "livello": null,
-            "magia": null,
-            "varie": [
-                null,
-                null
-            ],
-            "tot": null,
-            "temp": null,
-            "mod_tot": null,
-            "mod_temp": null
-        },
-        "int": {
-            "tiro_base": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "livello": null,
-            "magia": null,
-            "varie": [
-                null,
-                null
-            ],
-            "tot": null,
-            "temp": null,
-            "mod_tot": null,
-            "mod_temp": null
-        },
-        "sag": {
-            "tiro_base": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "livello": null,
-            "magia": null,
-            "varie": [
-                null,
-                null
-            ],
-            "tot": null,
-            "temp": null,
-            "mod_tot": null,
-            "mod_temp": null
-        },
-        "car": {
-            "tiro_base": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "livello": null,
-            "magia": null,
-            "varie": [
-                null,
-                null
-            ],
-            "tot": null,
-            "temp": null,
-            "mod_tot": null,
-            "mod_temp": null
-        }
-    },
-    "tiro_salvezza": {
-        "tempra_cos": {
-            "mod": null,
-            "classe": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "magia": null,
-            "varie": [
-                null,
-                null
-            ],
-            "mod_speciali": null,
-            "tot": null
-        },
-        "tempra_des": {
-            "mod": null,
-            "classe": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "magia": null,
-            "varie": [
-                null,
-                null
-            ],
-            "mod_speciali": null,
-            "tot": null
-        },
-        "riflessi_des": {
-            "mod": null,
-            "classe": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "magia": null,
-            "varie": [
-                null,
-                null
-            ],
-            "mod_speciali": null,
-            "tot": null
-        },
-        "volonta_sag": {
-            "mod": null,
-            "classe": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "magia": null,
-            "varie": [
-                null,
-                null
-            ],
-            "mod_speciali": null,
-            "tot": null
-        },
-        "volonta_car": {
-            "mod": null,
-            "classe": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "magia": null,
-            "varie": [
-                null,
-                null
-            ],
-            "mod_speciali": null,
-            "tot": null
-        },
-        "volonta_int": {
-            "mod": null,
-            "classe": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "magia": null,
-            "varie": [
-                null,
-                null
-            ],
-            "mod_speciali": null,
-            "tot": null
-        }
-    },
-    "sa_leggere": false,
-    "note": null,
-    "dado_vita": {
-        "razza": null,
-        "classe": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        ],
-        "tot": null
-    },
-    "classe_armatura": {
-        "armatura": null,
-        "scudo": null,
-        "des": null,
-        "taglia": null,
-        "armatura_naturale": null,
-        "deviazione": null,
-        "cognitivo": null,
-        "varie": [
-            null,
-            null
-        ],
-        "tot": null,
-        "temp": null,
-        "tot_temp": null
-    },
-    "contatto": {
-        "armatura": null,
-        "scudo": null,
-        "des": null,
-        "taglia": null,
-        "armatura_naturale": null,
-        "deviazione": null,
-        "cognitivo": null,
-        "varie": [
-            null,
-            null
-        ],
-        "tot": null,
-        "temp": null,
-        "tot_temp": null
-    },
-    "colto_alla_sprovvista": {
-        "armatura": null,
-        "scudo": null,
-        "des": null,
-        "taglia": null,
-        "armatura_naturale": null,
-        "deviazione": null,
-        "cognitivo": null,
-        "varie": [
-            null,
-            null
-        ],
-        "tot": null,
-        "temp": null,
-        "tot_temp": null
-    },
+    "att_opportunita": null,
+    "attacchi": null,
+    "background": null,
     "bonus_att_base": {
         "att": [
             null,
@@ -313,116 +685,162 @@
         ],
         "att_opportunita": null
     },
-    "iniziativa": {
-        "des": null,
-        "talento": null,
-        "varie": [
-            null,
-            null
-        ],
-        "tot": null
-    },
-    "punti_ferita": {
-        "tot": null,
-        "temp": null
-    },
-    "resistenza_incantesimi": {
-        "tot": null,
-        "temp": null
-    },
-    "resistenza_danno": {
-        "tot_tipo": [
-            null,
-            null,
-            null,
-            null
-        ],
-        "migl_tot": null
-    },
-    "lotta": {
-        "bonus_att_base": null,
-        "for": null,
-        "taglia": null,
-        "talento": null,
-        "magia": null,
-        "varie": [
-            null,
-            null
-        ],
-        "tot": null
-    },
-    "att_opportunita": null,
-    "grado_max": null,
-    "gradi": null,
-    "stat_incantesimi": {
-        "conosciuti": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        ],
-        "cd_salvezza": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        ],
-        "al_giorno": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        ],
-        "bonus": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        ]
+    "capelli": null,
+    "caratteristiche": {
+        "car": {
+            "archetipo": [
+                null,
+                null
+            ],
+            "livello": null,
+            "magia": null,
+            "mod_temp": null,
+            "mod_tot": null,
+            "razza": null,
+            "temp": null,
+            "tiro_base": null,
+            "tot": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        "cos": {
+            "archetipo": [
+                null,
+                null
+            ],
+            "livello": null,
+            "magia": null,
+            "mod_temp": null,
+            "mod_tot": null,
+            "razza": null,
+            "temp": null,
+            "tiro_base": null,
+            "tot": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        "des": {
+            "archetipo": [
+                null,
+                null
+            ],
+            "livello": null,
+            "magia": null,
+            "mod_temp": null,
+            "mod_tot": null,
+            "razza": null,
+            "temp": null,
+            "tiro_base": null,
+            "tot": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        "for": {
+            "archetipo": [
+                null,
+                null
+            ],
+            "livello": null,
+            "magia": null,
+            "mod_temp": null,
+            "mod_tot": null,
+            "razza": null,
+            "temp": null,
+            "tiro_base": null,
+            "tot": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        "int": {
+            "archetipo": [
+                null,
+                null
+            ],
+            "livello": null,
+            "magia": null,
+            "mod_temp": null,
+            "mod_tot": null,
+            "razza": null,
+            "temp": null,
+            "tiro_base": null,
+            "tot": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        "sag": {
+            "archetipo": [
+                null,
+                null
+            ],
+            "livello": null,
+            "magia": null,
+            "mod_temp": null,
+            "mod_tot": null,
+            "razza": null,
+            "temp": null,
+            "tiro_base": null,
+            "tot": null,
+            "varie": [
+                null,
+                null
+            ]
+        }
     },
     "carico": {
+        "dal_terreno": null,
         "leggero": null,
         "medio": null,
         "pesante": null,
         "sopra_testa": null,
-        "dal_terreno": null,
         "sping_trasc": null
     },
-    "velocita": {
-        "base": null,
+    "classe": [
+        null,
+        null,
+        null
+    ],
+    "classe_armatura": {
         "armatura": null,
-        "correre": null,
-        "nuotare": null,
-        "scalare": null,
-        "volare": null
+        "armatura_naturale": null,
+        "cognitivo": null,
+        "des": null,
+        "deviazione": null,
+        "scudo": null,
+        "taglia": null,
+        "temp": null,
+        "tot": null,
+        "tot_temp": null,
+        "varie": [
+            null,
+            null
+        ]
     },
-    "peso_tot": null,
-    "penalita_armatura": null,
-    "penalita_nuotare": null,
+    "colto_alla_sprovvista": {
+        "armatura": null,
+        "armatura_naturale": null,
+        "cognitivo": null,
+        "des": null,
+        "deviazione": null,
+        "scudo": null,
+        "taglia": null,
+        "temp": null,
+        "tot": null,
+        "tot_temp": null,
+        "varie": [
+            null,
+            null
+        ]
+    },
     "competenze": [
         {
             "attivo": false,
@@ -449,707 +867,327 @@
             "nome": "Scudi"
         }
     ],
+    "contatto": {
+        "armatura": null,
+        "armatura_naturale": null,
+        "cognitivo": null,
+        "des": null,
+        "deviazione": null,
+        "scudo": null,
+        "taglia": null,
+        "temp": null,
+        "tot": null,
+        "tot_temp": null,
+        "varie": [
+            null,
+            null
+        ]
+    },
+    "dado_vita": {
+        "classe": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        ],
+        "razza": null,
+        "tot": null
+    },
+    "denaro_preziosi": null,
+    "divinita": null,
+    "equipaggiamento": null,
+    "eta": null,
+    "giocatore": null,
+    "grado_max": null,
+    "incantesimi": null,
+    "iniziativa": {
+        "des": null,
+        "talento": null,
+        "tot": null,
+        "varie": [
+            null,
+            null
+        ]
+    },
     "linguaggi": [
         {
             "attivo": false,
             "nome": "Comune"
         }
     ],
+    "lotta": {
+        "bonus_att_base": null,
+        "for": null,
+        "magia": null,
+        "taglia": null,
+        "talento": null,
+        "tot": null,
+        "varie": [
+            null,
+            null
+        ]
+    },
+    "nome": null,
+    "note": null,
+    "occhi": null,
+    "ogg_protettivo": null,
+    "pelle": null,
+    "penalita_armatura": null,
+    "penalita_nuotare": null,
+    "peso": null,
+    "peso_tot": null,
+    "png": {
+        "classe": [
+            null,
+            null,
+            null,
+            null
+        ]
+    },
+    "privilegi": null,
+    "punti_ferita": {
+        "temp": null,
+        "tot": null
+    },
+    "punti_spesi": null,
+    "punti_totali": null,
+    "razza": null,
+    "resistenza_danno": {
+        "migl_tot": null,
+        "tot_tipo": [
+            null,
+            null,
+            null,
+            null
+        ]
+    },
+    "resistenza_incantesimi": {
+        "temp": null,
+        "tot": null
+    },
+    "sa_leggere": false,
+    "segni_particolari": null,
+    "sesso": "n",
+    "stat_incantesimi": {
+        "al_giorno": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        ],
+        "bonus": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        ],
+        "cd_salvezza": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        ],
+        "conosciuti": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        ],
+        "max_conosciuti": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        ],
+        "preparati": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        ],
+        "usati": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        ]
+    },
+    "taglia": "media",
+    "talenti": null,
+    "tiro_salvezza": {
+        "riflessi_des": {
+            "archetipo": [
+                null,
+                null
+            ],
+            "classe": null,
+            "magia": null,
+            "mod": null,
+            "mod_speciali": null,
+            "razza": null,
+            "tot": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        "tempra_cos": {
+            "archetipo": [
+                null,
+                null
+            ],
+            "classe": null,
+            "magia": null,
+            "mod": null,
+            "mod_speciali": null,
+            "razza": null,
+            "tot": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        "tempra_des": {
+            "archetipo": [
+                null,
+                null
+            ],
+            "classe": null,
+            "magia": null,
+            "mod": null,
+            "mod_speciali": null,
+            "razza": null,
+            "tot": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        "volonta_car": {
+            "archetipo": [
+                null,
+                null
+            ],
+            "classe": null,
+            "magia": null,
+            "mod": null,
+            "mod_speciali": null,
+            "razza": null,
+            "tot": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        "volonta_int": {
+            "archetipo": [
+                null,
+                null
+            ],
+            "classe": null,
+            "magia": null,
+            "mod": null,
+            "mod_speciali": null,
+            "razza": null,
+            "tot": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        "volonta_sag": {
+            "archetipo": [
+                null,
+                null
+            ],
+            "classe": null,
+            "magia": null,
+            "mod": null,
+            "mod_speciali": null,
+            "razza": null,
+            "tot": null,
+            "varie": [
+                null,
+                null
+            ]
+        }
+    },
+    "velocita": {
+        "armatura": null,
+        "base": null,
+        "correre": null,
+        "nuotare": null,
+        "scalare": null,
+        "volare": null
+    },
     "visione": [
         {
             "attivo": false,
-            "nome": "Crepuscolare",
-            "distanza": null
+            "distanza": null,
+            "nome": "Crepuscolare"
         },
         {
             "attivo": false,
-            "nome": "Scurovisione",
-            "distanza": null
+            "distanza": null,
+            "nome": "Scurovisione"
         },
         {
             "attivo": false,
-            "nome": "Visione del Vero",
-            "distanza": null
+            "distanza": null,
+            "nome": "Visione del Vero"
         },
         {
             "attivo": false,
-            "nome": "Vista cieca",
-            "distanza": null
+            "distanza": null,
+            "nome": "Vista cieca"
         }
     ],
-    "ogg_protettivo": [],
-    "attacchi": [],
-    "talenti": [],
-    "privilegi": [],
-    "abilita": [
-        {
-            "acquisita": false,
-            "nome": "Acrobazia",
-            "di_classe": false,
-            "chiave": "Des",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": false,
-            "nome": "Addestrare animali",
-            "di_classe": false,
-            "chiave": "Car",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "nome": "Artigianato ()",
-            "di_classe": false,
-            "chiave": "Int",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "nome": "Artista della fuga",
-            "di_classe": false,
-            "chiave": "Des",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "nome": "Ascoltare",
-            "di_classe": false,
-            "chiave": "Sag",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "nome": "Camuffare",
-            "di_classe": false,
-            "chiave": "Car",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "nome": "Cavalcare",
-            "di_classe": false,
-            "chiave": "Des",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "nome": "Cercare",
-            "di_classe": false,
-            "chiave": "Int",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "nome": "Concentrazione",
-            "di_classe": false,
-            "chiave": "Cos",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": false,
-            "nome": "Conoscenze ()",
-            "di_classe": false,
-            "chiave": "Int",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": false,
-            "nome": "Decifrare scritture",
-            "di_classe": false,
-            "chiave": "Int",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "nome": "Diplomazia",
-            "di_classe": false,
-            "chiave": "Car",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": false,
-            "nome": "Disattivare congegni",
-            "di_classe": false,
-            "chiave": "Int",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "nome": "Equilibrio",
-            "di_classe": false,
-            "chiave": "Des",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "nome": "Falsificare",
-            "di_classe": false,
-            "chiave": "Int",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "nome": "Guarire",
-            "di_classe": false,
-            "chiave": "Sag",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "nome": "Intimidire",
-            "di_classe": false,
-            "chiave": "Car",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "nome": "Intrattenere ()",
-            "di_classe": false,
-            "chiave": "Car",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "nome": "Muoversi silenziosamente",
-            "di_classe": false,
-            "chiave": "Des",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "nome": "Nascondersi",
-            "di_classe": false,
-            "chiave": "Des",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "nome": "Nuotare",
-            "di_classe": false,
-            "chiave": "For",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "nome": "Osservare",
-            "di_classe": false,
-            "chiave": "Sag",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "nome": "Percepire intenzioni",
-            "di_classe": false,
-            "chiave": "Sag",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": false,
-            "nome": "Professione ()",
-            "di_classe": false,
-            "chiave": "Sag",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "nome": "Raccogliere informazioni",
-            "di_classe": false,
-            "chiave": "Car",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "nome": "Raggirare",
-            "di_classe": false,
-            "chiave": "Car",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": false,
-            "nome": "Rapidità di mano",
-            "di_classe": false,
-            "chiave": "Des",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "nome": "Saltare",
-            "di_classe": false,
-            "chiave": "For",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": false,
-            "nome": "Sapienza magica",
-            "di_classe": false,
-            "chiave": "Int",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "nome": "Scalare",
-            "di_classe": false,
-            "chiave": "For",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": false,
-            "nome": "Scassinare serrature",
-            "di_classe": false,
-            "chiave": "Des",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "nome": "Sopravvivenza",
-            "di_classe": false,
-            "chiave": "Sag",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "nome": "Utilizzare corde",
-            "di_classe": false,
-            "chiave": "Des",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": false,
-            "nome": "Utilizzare oggetti magici",
-            "di_classe": false,
-            "chiave": "Car",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "nome": "Valutare",
-            "di_classe": false,
-            "chiave": "Int",
-            "mod_c": null,
-            "gradi": null,
-            "totale": null,
-            "razza": null,
-            "archetipo": [
-                null,
-                null
-            ],
-            "sinergia": null,
-            "b_sinergia": null,
-            "talento": null,
-            "oggetto": null,
-            "vari": null
-        }
-    ],
-    "incantesimi": [],
-    "equipaggiamento": [],
-    "denaro_preziosi": [],
-    "_version": "0.1.4"
+    "_version": "0.2.3"
 }
