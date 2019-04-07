@@ -143,6 +143,16 @@ striped.*/
   display: none!important;
 }
 
+/* TMP MOD ACTIVATOR -----------------------------------------------------------------------*/
+
+.dd-tmp {
+  opacity: 0.5;
+}
+
+.dd-tmp-on .dd-tmp {
+  opacity: 1.0;
+}
+
 
 /* INPUT GROUP DROPDOWN --------------------------------------------------------------------*/
 
