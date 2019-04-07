@@ -1140,6 +1140,9 @@ class DDNode {
         this._type = DDGraph.inferType(this.obj);
         // Setup on change event
         this.obj.change((evt) => {
+            if (evt.target !== this.obj[0]) {
+                return;
+            }
             if (this.isVoid) {
                 this.obj.addClass('dd-void');
             } else {
