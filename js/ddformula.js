@@ -606,14 +606,19 @@ class DDFormula {
             if (arg.startsWith('/') || arg.startsWith('./')) {
                 this._argDefs[i] = selectorStorage.createAndRegisterSelector(arg, this.node, i);
             } else {
-                // Try casting to number
-                const num = Number(arg);
-                if (num === num) {
-                    this._argDefs[i] = num;
-                }
-                // Keep it as string. Except if it's the empty string
-                if (arg === "''" || arg == '""') {
+                if (arg === 'true') {
+                    this._argDefs[i] = true;
+                } else if (arg === 'false') {
+                    this._argDefs[i] = false;
+                } else if (arg === "''" || arg == '""') {
+                    // Keep it as string. Except if it's the empty string
                     this._argDefs[i] = '';
+                } else {
+                    // Try casting to number
+                    const num = Number(arg);
+                    if (num === num) {
+                        this._argDefs[i] = num;
+                    }
                 }
             }
         }
