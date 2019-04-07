@@ -628,8 +628,8 @@ class DDFormulaNode {
         return (this._nodeOrFormula instanceof DDFormula) ? this._nodeOrFormula : null;
     }
     set formula(v) {
-        console.assert(!(this._nodeOrFormula instanceof DDFormula));
-        console.assert(this._nodeOrFormula === v.node);
+        console.assert((this._nodeOrFormula instanceof DDFormula) === (v === null));
+        console.assert(v === null || this._nodeOrFormula === v.node);
         this._nodeOrFormula = v;
     }
     _rebuildPredecessors(recacheFromScratch=false) {
@@ -913,12 +913,13 @@ class DDFormulaGraph {
 
     removeFormulaNode(node) {
         if (node._formulaNode) {
+            if (node._formulaNode.formula) {
+                node._formulaNode.formula._remove();
+                node._formulaNode.formula = null;
+            }
             if (this.dynamicUpdateGraph) {
                 this._levelsOutdated = true;
-                if (node._formulaNode.formula) {
-                    this._removeFromPredecessorsOfNode(node._formulaNode);
-                    node._formulaNode.formula._remove();
-                }
+                this._removeFromPredecessorsOfNode(node._formulaNode);
                 this._detachFormulaNodeFromSuccessors(node._formulaNode);
             }
             this._pendingFormulaUpdate.delete(node._formulaNode);
