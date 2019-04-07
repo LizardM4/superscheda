@@ -355,10 +355,8 @@ class DDFormula {
         return this._node;
     }
 
-    _evalSum(args=null) {
-        if (!args) {
-            args = this.evaluateArguments();
-        }
+    _evalSum() {
+        const args = this.evaluateArguments();
         if (args.length === 0) {
             return 0;
         }
@@ -458,9 +456,19 @@ class DDFormula {
         if (typeof div !== 'number') {
             return null;
         }
-        let tot = this._evalSum(args);
-        if (tot === null) {
-            return null;
+        let tot = 0;
+        for (let i = 0; i < args.length; i++) {
+            // If you find a boolean, make it conditionally activate or deactivate the next modifier
+            if (typeof args[i] === 'boolean') {
+                ++i;
+                if (!args[i - 1]) {
+                    continue;
+                }
+            }
+            if (typeof args[i] !== 'number') {
+                return null; // Cannot compute
+            }
+            tot += args[i];
         }
         tot = Math.floor(tot / div);
         switch (mode) {
