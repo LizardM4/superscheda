@@ -1452,190 +1452,97 @@ You should have received a copy of the GNU General Public License
               <div class="card-body" data-dd-array="container" id="array_attacchi">
                 <div class="card" data-dd-array="master" data-dd-id="attacchi" role="tab">
                   <div class="card-body">
-                    <h6 class="card-title">
+                    <h6 class="card-title clearfix">
                       <span class="hidden-anchor"></span>
                       <span class="dd-dyn-title">Attacco</span>
-                      <button type="button" class="close text-danger" data-dd-array="remove" aria-label="Remove">
-                        <i class="fas fa-minus-square" aria-hidden="true"></i>
+                      <button type="button" class="btn btn-danger float-right" data-dd-array="remove" aria-label="Remove">
+                        Elimina
                       </button>
                     </h6>
                     <div class="form-row">
-                      <div class="col-md-8 col-12">
-                        <label class="col-form-label">Nome/descrizione</label>
-                        <input type="text" class="form-control dd-dyn-title" data-dd-id="nome">
+                      <div class="col-md-6 col-12">
+                        <label class="col-form-label">Competente · Nome/descrizione</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend btn-group-toggle" data-toggle="buttons">
+                            <span class="btn btn-addon btn-custom-checkbox" tabindex="0">
+                              <input type="checkbox" data-dd-id="competente">
+                              <i class="far fa-square fa-fw fa-lg toggle-inactive" aria-hidden="true"></i>
+                              <i class="far fa-check-square fa-fw fa-lg toggle-active" aria-hidden="true"></i>
+                            </span>
+                          </div>
+                          <input type="text" class="form-control dd-dyn-title" data-dd-id="nome">
+                        </div>
                       </div>
-                      <div class="col-md-2 col-6">
-                        <label class="col-form-label">Tipo</label>
+                      <div class="col-md-3 col-6">
+                        <div class="text-truncate"><label class="col-form-label">Tipo/sottotipo</label></div>
                         <select class="custom-select" data-dd-id="tipo">
-                          <option value="mischia" selected>In mischia</option>
-                          <option value="distanza">A distanza</option>
-                          <option value="senza_armi">Senz'armi</option>
+                          <option value="senza_armi" selected>Senz'armi</option>
+                          <option value="mischia_semplice">Mischia/semplice</option>
+                          <option value="mischia_da_guerra">Mischia/da guerra</option>
+                          <option value="mischia_esotico">Mischia/esotico</option>
+                          <option value="lancio_semplice">Lancio/semplice</option>
+                          <option value="lancio_da_guerra">Lancio/da guerra</option>
+                          <option value="lancio_esotico">Lancio/esotico</option>
+                          <option value="tiro_semplice">Tiro/semplice</option>
+                          <option value="tiro_da_guerra">Tiro/da guerra</option>
+                          <option value="tiro_esotico">Tiro/esotico</option>
                         </select>
                       </div>
-                      <div class="col-md-2 col-6">
-                        <div class="text-truncate"><label class="col-form-label">Punti ferita</label></div>
-                        <input type="text" class="form-control" data-dd-id="punti_ferita">
+                      <div class="col-md-3 col-6">
+                        <div class="text-truncate"><label class="col-form-label">Taglia</label></div>
+                        <select class="custom-select" data-dd-id="taglia">
+                          <option value="colossale">Colossale</option>
+                          <option value="mastodontica">Mastodontica</option>
+                          <option value="enorme">Enorme</option>
+                          <option value="grande">Grande</option>
+                          <option value="media" selected>Media</option>
+                          <option value="piccola">Piccola</option>
+                          <option value="minuscola">Minuscola</option>
+                        </select>
                       </div>
                     </div>
                     <div class="form-row">
-                      <div class="col-md-2 col-4">
-                        <div class="text-truncate"><label class="col-form-label">Peso</label></div>
-                        <input type="text" class="form-control" data-dd-id="peso">
+                      <div class="col-md-3 col-6">
+                        <label class="col-form-label">Gittata</label>
+                        <div class="input-group">
+                          <input type="text" data-dd-type="float" class="form-control text-right" data-dd-id="gittata">
+                          <div class="input-group-append">
+                            <span class="input-group-text">m</span>
+                          </div>
+                        </div>
                       </div>
-                      <div class="col-md-2 col-4">
-                        <div class="text-truncate"><label class="col-form-label">Taglia ogg.</label></div>
-                        <input type="text" class="form-control" data-dd-id="taglia_oggetto">
+                      <div class="col-md-3 col-6">
+                        <label class="col-form-label">Critico</label>
+                        <input type="text" class="form-control" data-dd-id="critico">
                       </div>
-                      <div class="col-md-2 col-4">
-                        <div class="text-truncate"><label class="col-form-label">CA arma</label></div>
-                        <input type="text" class="form-control" data-dd-id="ca_arma">
-                      </div>
-                      <div class="col-md-2 col-4">
-                        <div class="text-truncate"><label class="col-form-label">Materiale</label></div>
-                        <input type="text" class="form-control" data-dd-id="materiale">
-                      </div>
-                      <div class="col-md-2 col-4">
-                        <div class="text-truncate"><label class="col-form-label">Durezza</label></div>
-                        <input type="text" class="form-control" data-dd-id="durezza">
-                      </div>
-                      <div class="col-md-2 col-4">
-                        <div class="text-truncate"><label class="col-form-label">Prezzo</label></div>
-                        <input type="text" class="form-control" data-dd-id="prezzo">
-                      </div>
-                    </div>
-                    <div class="form-row">
-                      <div class="col-md-2 col-4">
-                        <div class="text-truncate"><label class="col-form-label">Munizioni</label></div>
-                        <input type="text" class="form-control" data-dd-id="munizioni">
-                      </div>
-                      <div class="col-md-2 col-4">
-                        <div class="text-truncate"><label class="col-form-label">Quantità</label></div>
-                        <input type="text" class="form-control" data-dd-id="quantita">
-                      </div>
-                      <div class="col-md-2 col-4">
-                        <div class="text-truncate"><label class="col-form-label">Portata/gittata</label></div>
-                        <input type="text" class="form-control" data-dd-id="portata">
-                      </div>
-                      <div class="col-md-2 col-4">
-                        <div class="text-truncate"><label class="col-form-label">Tipo dell'arma</label></div>
-                        <input type="text" class="form-control" data-dd-id="tipo_arma">
-                      </div>
-                      <div class="col-md-2 col-4">
-                        <div class="text-truncate"><label class="col-form-label">Aura</label></div>
-                        <input type="text" class="form-control" data-dd-id="aura">
-                      </div>
-                      <div class="col-md-2 col-4">
-                        <div class="text-truncate"><label class="col-form-label">Scuola</label></div>
-                        <input type="text" class="form-control" data-dd-id="scuola">
+                      <div class="col-md-6 col-12 text-center">
+                        <div class="custom-control custom-checkbox mt-md-4 pt-3">
+                          <input type="checkbox" class="custom-control-input" data-dd-id="bonus_arco_mani">
+                          <label class="custom-control-label text-left align-text-top mt-md-1">Arco composito/a una mano e mezza</label>
+                          <!-- TODO this needs to be set up -->
+                          <!-- TODO check form-inline -->
+                        </div>
                       </div>
                     </div>
 
                     <div class="row mt-3">
-                      <div class="col-md-6 separatable" data-dd-id="tiro_colpire">
-                        <h6>Tiro per colpire</h6>
+                      <div class="col-md-6 separatable">
+                        <h6>Munizioni</h6>
                         <div class="form-row">
-                          <div class="col-3">
-                            <div class="text-truncate"><label class="col-form-label col-form-label-sm">Mod effett</label></div>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="mod_eff">
-                          </div>
-                          <div class="col-3">
-                            <label class="col-form-label col-form-label-sm">Mod</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="mod">
-                          </div>
-                          <div class="col-6">
-                            <label class="col-form-label col-form-label-sm">Caratteristica</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="caratteristica">
-                          </div>
-                        </div>
-                        <div class="form-row" data-dd-id="mod_razziali">
-                          <div class="col-2">
-                            <label class="col-form-label col-form-label-sm">Mod</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="mod">
-                          </div>
-                          <div class="col-10">
-                            <label class="col-form-label col-form-label-sm">Modificatori razziali</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="nome">
-                          </div>
-                        </div>
-                        <div class="form-row" data-dd-id="mod_magici">
-                          <div class="col-2">
-                            <label class="col-form-label col-form-label-sm">Mod</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="mod">
-                          </div>
-                          <div class="col-10">
-                            <label class="col-form-label col-form-label-sm">Modificatori magici</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="nome">
-                          </div>
-                        </div>
-                        <div class="form-row" data-dd-id="mod_vv[0]">
-                          <div class="col-2">
-                            <label class="col-form-label col-form-label-sm">Mod</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="mod">
-                          </div>
-                          <div class="col-10">
-                            <label class="col-form-label col-form-label-sm">Modificatori vari 1</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="nome">
-                          </div>
-                        </div>
-                        <div class="form-row" data-dd-id="mod_vv[1]">
-                          <div class="col-2">
-                            <label class="col-form-label col-form-label-sm">Mod</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="mod">
-                          </div>
-                          <div class="col-10">
-                            <label class="col-form-label col-form-label-sm">Modificatori vari 2</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="nome">
-                          </div>
-                        </div>
-                        <div class="form-row">
-                          <div class="col-2">
-                            <div class="text-truncate"><label class="col-form-label col-form-label-sm">M&nbsp;taglia</label></div>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="mod_taglia">
-                          </div>
-                          <div class="col-10">
-                            <label class="col-form-label col-form-label-sm">Talenti per il critico</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="critico_talenti">
-                          </div>
-                        </div>
-                        <div class="form-row">
-                          <div class="col-2">
-                            <label class="col-form-label col-form-label-sm">BAB</label>
-                            <input type="text" class="form-control form-control-sm" readonly value="Att 1">
-                          </div>
-                          <div class="col-10">
-                            <label class="col-form-label col-form-label-sm">Modificatori VV Critico</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="mod_critico">
-                          </div>
-                        </div>
-                        <div class="form-row">
-                          <div class="col-4">
-                            <label class="col-form-label col-form-label-sm">Tot</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="tot">
-                          </div>
-                          <div class="col-4">
-                            <label class="col-form-label col-form-label-sm">Tot Spec</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="tot_spec">
-                          </div>
-                          <div class="col-4">
-                            <label class="col-form-label col-form-label-sm">Critico</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="critico">
-                          </div>
-                        </div>
-                        <div class="form-row">
-                          <div class="col-2 text-truncate">
-                            <label class="col-form-label col-form-label-sm">Mod</label>
+                          <div class="col-8 text-truncate">
+                            <label class="col-form-label col-form-label-sm">Munizione</label>
                           </div>
                           <div class="col text-truncate">
-                            <label class="col-form-label col-form-label-sm">Talenti</label>
+                            <label class="col-form-label col-form-label-sm">Qtà</label>
                           </div>
                         </div>
                         <div data-dd-array="container">
-                          <div class="form-row pb-1" data-dd-array="master" data-dd-id="mod_talenti">
-                            <div class="col-2">
-                              <input type="text" class="form-control form-control-sm" data-dd-id="mod">
+                          <div class="form-row pb-1" data-dd-array="master" data-dd-id="munizioni">
+                            <div class="col-8">
+                              <input type="text" class="form-control form-control-sm" data-dd-id="nome">
                             </div>
                             <div class="col">
-                              <input type="text" class="form-control form-control-sm" data-dd-id="nome">
+                              <input type="text" data-dd-type="int" class="form-control form-control-sm" data-dd-id="quantita">
                             </div>
                             <div class="col-auto form-row align-items-center justify-content-center">
                               <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
@@ -1644,7 +1551,7 @@ You should have received a copy of the GNU General Public License
                             </div>
                           </div>
                           <p class="mb-2 text-muted text-center form-text array-placeholder">
-                            <small>Nessun modificatore talenti.</small>
+                            <small>Nessuna munizione.</small>
                           </p>
                           <p class="form-text text-center">
                             <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
@@ -1653,107 +1560,37 @@ You should have received a copy of the GNU General Public License
                           </p>
                         </div>
                       </div>
-                      <div class="col-md-6" data-dd-id="tiro_danni">
-                        <h6>Tiro per i danni</h6>
+                      <div class="col-md-6">
+                        <h6>Danni</h6>
                         <div class="form-row">
-                          <div class="col-3">
-                            <div class="text-truncate"><label class="col-form-label col-form-label-sm">Mod effett</label></div>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="mod_eff">
-                          </div>
-                          <div class="col-3">
-                            <label class="col-form-label col-form-label-sm">Mod</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="mod">
-                          </div>
-                          <div class="col-6">
-                            <label class="col-form-label col-form-label-sm">Caratteristica</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="caratteristica">
-                          </div>
-                        </div>
-                        <div class="form-row" data-dd-id="mod_razziali">
-                          <div class="col-2">
-                            <label class="col-form-label col-form-label-sm">Mod</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="mod">
-                          </div>
-                          <div class="col-10">
-                            <label class="col-form-label col-form-label-sm">Modificatori razziali</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="nome">
-                          </div>
-                        </div>
-                        <div class="form-row" data-dd-id="mod_magici">
-                          <div class="col-2">
-                            <label class="col-form-label col-form-label-sm">Mod</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="mod">
-                          </div>
-                          <div class="col-10">
-                            <label class="col-form-label col-form-label-sm">Modificatori magici</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="nome">
-                          </div>
-                        </div>
-                        <div class="form-row" data-dd-id="mod_vv[0]">
-                          <div class="col-2">
-                            <label class="col-form-label col-form-label-sm">Mod</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="mod">
-                          </div>
-                          <div class="col-10">
-                            <label class="col-form-label col-form-label-sm">Modificatori vari 1</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="nome">
-                          </div>
-                        </div>
-                        <div class="form-row" data-dd-id="mod_vv[1]">
-                          <div class="col-2">
-                            <label class="col-form-label col-form-label-sm">Mod</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="mod">
-                          </div>
-                          <div class="col-10">
-                            <label class="col-form-label col-form-label-sm">Modificatori vari 2</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="nome">
-                          </div>
-                        </div>
-                        <div class="form-row">
-                          <div class="col-2">
-                            <label class="col-form-label col-form-label-sm">Tot</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="tot">
-                          </div>
-                          <div class="col-10">
-                            <label class="col-form-label col-form-label-sm">Danni speciali 1</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="danni_speciali[0]">
-                          </div>
-                        </div>
-                        <div class="form-row">
-                          <div class="col-2">
-                            <div class="text-truncate"><label class="col-form-label col-form-label-sm">Tipo&nbsp;danni</label></div>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="tipo_speciali">
-                          </div>
-                          <div class="col-10">
-                            <label class="col-form-label col-form-label-sm">Danni speciali 2</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="danni_speciali[1]">
-                          </div>
-                        </div>
-                        <div class="form-row">
-                          <div class="col-2">
-                            <div class="text-truncate"><label class="col-form-label col-form-label-sm">D&nbsp;non&nbsp;Let</label></div>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="d_non_let">
-                          </div>
-                          <div class="col-10">
-                            <label class="col-form-label col-form-label-sm">Danni speciali 3</label>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="danni_speciali[2]">
-                          </div>
-                        </div>
-                        <div class="form-row">
-                          <div class="col-2 text-truncate">
-                            <label class="col-form-label col-form-label-sm">Mod</label>
-                          </div>
                           <div class="col text-truncate">
-                            <label class="col-form-label col-form-label-sm">Talenti</label>
+                            <label class="col-form-label col-form-label-sm">Tipo danni · Dado</label>
                           </div>
                         </div>
                         <div data-dd-array="container">
-                          <div class="form-row pb-1" data-dd-array="master" data-dd-id="mod_talenti">
-                            <div class="col-2">
-                              <input type="text" class="form-control form-control-sm" data-dd-id="mod">
-                            </div>
+                          <div class="form-row pb-1" data-dd-array="master" data-dd-id="danni">
                             <div class="col">
-                              <input type="text" class="form-control form-control-sm" data-dd-id="nome">
+                              <div class="input-group input-group-sm">
+                                <div data-dd-id="tipo" class="input-group-prepend btn-group btn-group-toggle" data-toggle="buttons">
+                                  <label class="btn btn-sm btn-addon">
+                                    <input type="checkbox" data-dd-id="non_letali">
+                                    <i class="fas fa-mortar-pestle fa-lg fa-fw"></i>
+                                  </label>
+                                  <label class="btn btn-sm btn-addon">
+                                    <input type="checkbox" data-dd-id="perforanti">
+                                    <i class="fas fa-comment-dots fa-lg fa-fw"></i>
+                                  </label>
+                                  <label class="btn btn-sm btn-addon">
+                                    <input type="checkbox" data-dd-id="contundenti">
+                                    <i class="fas fa-praying-hands fa-lg fa-fw"></i>
+                                  </label>
+                                  <label class="btn btn-sm btn-addon">
+                                    <input type="checkbox" data-dd-id="taglienti">
+                                    <i class="fas fa-bullseye fa-lg fa-fw"></i>
+                                  </label>
+                                </div>
+                                <input type="text" class="form-control form-control-sm" data-dd-id="dado">
+                              </div>
                             </div>
                             <div class="col-auto form-row align-items-center justify-content-center">
                               <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
@@ -1762,7 +1599,7 @@ You should have received a copy of the GNU General Public License
                             </div>
                           </div>
                           <p class="mb-2 text-muted text-center form-text array-placeholder">
-                            <small>Nessun modificatore talenti.</small>
+                            <small>Nessun danno.</small>
                           </p>
                           <p class="form-text text-center">
                             <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
@@ -1772,12 +1609,213 @@ You should have received a copy of the GNU General Public License
                         </div>
                       </div>
                     </div>
-                    <div>
-                      <label class="col-form-label">Capacità magiche e note:</label>
-                      <textarea class="form-control" data-dd-id="note"></textarea>
+
+                    <div class="row">
+                      <div class="col-md-6 separatable">
+                        <h6>
+                          <div class="form-inline justify-content-between">
+                            Tiro per colpire
+                            <input type="text" class="form-control form-control-sm w-25" data-dd-type="int" data-dd-id="tiro_colpire_tot">
+                          </div>
+                        </h6>
+                      </div>
+                      <div class="col-md-6">
+                        <h6>
+                          <div class="form-inline justify-content-between">
+                            Tiro per i danni
+                            <input type="text" class="form-control form-control-sm w-25" data-dd-type="int" data-dd-id="tiro_danni_tot">
+                          </div>
+                        </h6>
+                      </div>
                     </div>
+
+                    <div class="bg-light zigzag-top zigzag-bottom">
+
+                      <div id="attackCollapse" class="collapse show">
+                        <div class="row">
+                          <div class="col-md-6 separatable" data-dd-id="tiro_colpire">
+                            <div class="form-row">
+                              <div class="col-3 col-sm-2 text-truncate">
+                                <label class="col-form-label col-form-label-sm">Mod</label>
+                              </div>
+                              <div class="col text-truncate">
+                                <label class="col-form-label col-form-label-sm">Nome</label>
+                              </div>
+                            </div>
+                            <div class="form-row pb-1">
+                              <div class="col-3 col-sm-2">
+                                <input data-dd-id="mod_c" data-dd-formula="sel ./car_chiave /caratteristiche.for.mod_temp /caratteristiche.des.mod_temp /caratteristiche.cos.mod_temp /caratteristiche.int.mod_temp /caratteristiche.sag.mod_temp /caratteristiche.car.mod_temp" type="text" class="form-control form-control-sm" data-dd-type="int">
+                              </div>
+                              <div class="col-auto form-inline pl-2">
+                                <label class="col-form-label col-form-label-sm">Car. chiave:</label>
+                              </div>
+                              <div class="col">
+                                <select class="custom-select custom-select-sm" data-dd-id="car_chiave">
+                                  <option value="for">For</option>
+                                  <option value="des" selected>Des</option>
+                                  <option value="int">Int</option>
+                                  <option value="sag">Sag</option>
+                                  <option value="car">Car</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="form-row pb-1">
+                              <div class="col-3 col-sm-2">
+                                <input type="text" data-dd-type="int" class="form-control form-control-sm" data-dd-id="bab_att1"  data-dd-formula="ref /bonus_att_base.att[0]">
+                              </div>
+                              <div class="col pl-2">
+                                <label class="col-form-label col-form-label-sm">BAB 1&ordm; Att</label>
+                              </div>
+                            </div>
+                            <div data-dd-array="container">
+                              <div class="form-row pb-1" data-dd-array="master" data-dd-id="modificatori">
+                                <div class="col-3 col-sm-2">
+                                  <input type="text" data-dd-type="int" class="form-control form-control-sm" data-dd-id="mod">
+                                </div>
+                                <div class="col">
+                                  <input type="text" class="form-control form-control-sm" data-dd-id="nome">
+                                </div>
+                                <div class="col-auto form-row align-items-center justify-content-center">
+                                  <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
+                                    <i class="fas fa-minus-square" aria-hidden="true"></i>
+                                  </button>
+                                </div>
+                              </div>
+                              <p class="mb-2 text-muted text-center form-text array-placeholder">
+                                <small>Nessun modificatore.</small>
+                              </p>
+                              <p class="form-text text-center">
+                                <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
+                                  <i class="fas fa-plus-square" aria-hidden="true"></i>
+                                </button>
+                              </p>
+                            </div>
+                          </div>
+
+                          <div class="col-md-6" data-dd-id="tiro_danni">
+                            <div class="form-row">
+                              <div class="col-3 col-sm-2 text-truncate">
+                                <label class="col-form-label col-form-label-sm">Mod</label>
+                              </div>
+                              <div class="col text-truncate">
+                                <label class="col-form-label col-form-label-sm">Nome</label>
+                              </div>
+                            </div>
+                            <div class="form-row pb-1">
+                              <div class="col-3 col-sm-2">
+                                <input data-dd-id="mod_c" data-dd-formula="sel ./car_chiave /caratteristiche.for.mod_temp /caratteristiche.des.mod_temp /caratteristiche.cos.mod_temp /caratteristiche.int.mod_temp /caratteristiche.sag.mod_temp /caratteristiche.car.mod_temp" type="text" class="form-control form-control-sm" data-dd-type="int">
+                              </div>
+                              <div class="col-auto form-inline pl-2">
+                                <label class="col-form-label col-form-label-sm">Car. chiave:</label>
+                              </div>
+                              <div class="col">
+                                <select class="custom-select custom-select-sm" data-dd-id="car_chiave">
+                                  <option value="for">For</option>
+                                  <option value="des" selected>Des</option>
+                                  <option value="int">Int</option>
+                                  <option value="sag">Sag</option>
+                                  <option value="car">Car</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div data-dd-array="container">
+                              <div class="form-row pb-1" data-dd-array="master" data-dd-id="modificatori">
+                                <div class="col-3 col-sm-2">
+                                  <input type="text" data-dd-type="int" class="form-control form-control-sm" data-dd-id="mod">
+                                </div>
+                                <div class="col">
+                                  <input type="text" class="form-control form-control-sm" data-dd-id="nome">
+                                </div>
+                                <div class="col-auto form-row align-items-center justify-content-center">
+                                  <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
+                                    <i class="fas fa-minus-square" aria-hidden="true"></i>
+                                  </button>
+                                </div>
+                              </div>
+                              <p class="mb-2 text-muted text-center form-text array-placeholder">
+                                <small>Nessun modificatore.</small>
+                              </p>
+                              <p class="form-text text-center">
+                                <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
+                                  <i class="fas fa-plus-square" aria-hidden="true"></i>
+                                </button>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-6 separatable">
+                            <div class="form-row">
+                              <div class="col-4">
+                                <label class="col-form-label col-form-label-sm">CA arma</label>
+                                <input type="text" class="form-control form-control-sm" data-dd-type="int" data-dd-id="ca_arma">
+                              </div>
+                              <div class="col-4">
+                                <label class="col-form-label col-form-label-sm">Materiale</label>
+                                <input type="text" class="form-control form-control-sm" data-dd-id="materiale">
+                              </div>
+                              <div class="col-4">
+                                <label class="col-form-label col-form-label-sm">Durezza</label>
+                                <input type="text" class="form-control form-control-sm" data-dd-id="durezza">
+                              </div>
+                              <div class="col-4">
+                                <label class="col-form-label col-form-label-sm">Aura</label>
+                                <input type="text" class="form-control form-control-sm" data-dd-id="aura">
+                              </div>
+                              <div class="col-4">
+                                <label class="col-form-label col-form-label-sm">Scuola</label>
+                                <input type="text" class="form-control form-control-sm" data-dd-id="scuola">
+                              </div>
+                              <div class="col-4">
+                                <label class="col-form-label col-form-label-sm">Prezzo</label>
+                                <input type="text" class="form-control form-control-sm" data-dd-id="prezzo">
+                              </div>
+                              <div class="col-4">
+                                <label class="col-form-label col-form-label-sm">Punti ferita</label>
+                                <input type="text" class="form-control form-control-sm" data-dd-type="int" data-dd-id="punti_ferita">
+                              </div>
+                              <div class="col-4">
+                                <label class="col-form-label col-form-label-sm">Peso</label>
+                                <div class="input-group input-group-sm">
+                                  <input type="text" class="form-control form-control-sm" data-dd-type="float" data-dd-id="peso">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text">kg</span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-4">
+                                <label class="col-form-label col-form-label-sm">Taglia ogg.</label>
+                                <select class="custom-select custom-select-sm" data-dd-id="taglia_oggetto">
+                                  <option value="colossale">Colossale</option>
+                                  <option value="mastodontica">Mastodontica</option>
+                                  <option value="enorme">Enorme</option>
+                                  <option value="grande">Grande</option>
+                                  <option value="media" selected>Media</option>
+                                  <option value="piccola">Piccola</option>
+                                  <option value="minuscola">Minuscola</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <label class="col-form-label col-form-label-sm">Capacità magiche e note:</label>
+                            <textarea class="form-control form-control-sm w-100" style="height: 9.7rem;" data-dd-id="note"></textarea>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="text-center">
+                        <button class="btn btn-secondary" data-toggle="collapse" data-target="#attackCollapse" aria-expanded="true" aria-controls="attackCollapse">
+                          <i class="fas fa-angle-double-down"></i>
+                        </button>
+                      </div>
+
+                    </div>
+
                   </div>
                 </div>
+
                 <p class="text-muted text-center array-placeholder">
                   Nessun attacco.
                 </p>
