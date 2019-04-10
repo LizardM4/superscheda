@@ -2774,19 +2774,19 @@ You should have received a copy of the GNU General Public License
         });
 
         // Event for activating/deactivating the details of the abilities
-        $('#toggle_abilities_modifier').click((evt) => {
-          const $obj = $(evt.target);
-          const tActive = $obj.find('.toggle-active');
-          const tInactive = $obj.find('.toggle-inactive');
-          const curState = tActive.hasClass('d-none');
+        const $abilitiesMod = $('#toggle_abilities_modifier');
+        const $expandAbilities = $abilitiesMod.find('.toggle-active');
+        const $collapseAbilities = $abilitiesMod.find('.toggle-inactive');
+        $abilitiesMod.click((evt) => {
+          const curState = $expandAbilities.hasClass('d-none');
           if (curState) {
-            tInactive.addClass('d-none');
-            tActive.removeClass('d-none');
+            $collapseAbilities.addClass('d-none');
+            $expandAbilities.removeClass('d-none');
             $('.extra-mods').removeClass('d-none');
             $('#array_abilita').addClass('always-stripe');
           } else {
-            tInactive.removeClass('d-none');
-            tActive.addClass('d-none');
+            $collapseAbilities.removeClass('d-none');
+            $expandAbilities.addClass('d-none');
             $('.extra-mods').addClass('d-none');
             $('#array_abilita').removeClass('always-stripe');
           }
