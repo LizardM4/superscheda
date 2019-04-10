@@ -482,7 +482,7 @@ class SuperschedaController {
         });
     }
 
-    _setupAttackTOC() {
+    _setupDynamicAttacks() {
         const smTocController = DDArray.getController($('#toc_attacchi_sm'));
         const mdTocController = DDArray.getController($('#toc_attacchi_md'));
         $('#array_attacchi')
@@ -531,25 +531,18 @@ class SuperschedaController {
                         const $icon = $collapser.find('i');
                         $collapsible.on('hide.bs.collapse', () => {
                             $collapser.prop('disabled', true);
-                            $icon.animateRotate(180, {
-                                complete: () => {
-                                    $collapser.prop('disabled', false);
-                                    $icon.css('transform', '')
-                                        .removeClass('fa-angle-double-up')
-                                        .addClass('fa-angle-double-down');
-                                }
-                            });
+                        });
+                        $collapsible.on('hidden.bs.collapse', () => {
+                            $collapser.prop('disabled', false);
+                            $icon.removeClass('fa-angle-double-up')
+                                 .addClass('fa-angle-double-down');
                         });
                         $collapsible.on('show.bs.collapse', () => {
                             $collapser.prop('disabled', true);
-                            $icon.animateRotate(180, {
-                                complete: () => {
-                                    $collapser.prop('disabled', false);
-                                    $icon.css('transform', '')
-                                        .removeClass('fa-angle-double-down')
-                                        .addClass('fa-angle-double-up');
-                                }
-                            });
+                        });
+                        $collapsible.on('shown.bs.collapse', () => {
+                            $icon.removeClass('fa-angle-double-down')
+                                 .addClass('fa-angle-double-up');
                         });
                     }
                 });
@@ -665,7 +658,7 @@ class SuperschedaController {
         this._setupAutosort();
         this._setupSpells();
         this._setupDynamicTitles();
-        this._setupAttackTOC();
+        this._setupDynamicAttacks();
         this._setupCustomDropdown();
         this._setupDlButton();
         this._setupLogoutButton();
