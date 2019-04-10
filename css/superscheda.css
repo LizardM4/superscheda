@@ -314,16 +314,16 @@ input.dd-void[data-dd-formula]:not([placeholder]) {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-
-.zigzag-top {
+.zigzag-top-bottom {
   position: relative;
   padding-top: 1rem;
-}
-.zigzag-bottom {
-  position: relative;
   padding-bottom: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-left: -1rem;
+  margin-right: -1rem;
 }
-.zigzag-top:before {
+.zigzag-top-bottom:before {
   background: linear-gradient(-135deg, #ffffff .5rem, transparent 0), linear-gradient(135deg, #ffffff .5rem, transparent 0);
   background-position: left-top;
   background-repeat: repeat-x;
@@ -336,7 +336,7 @@ input.dd-void[data-dd-formula]:not([placeholder]) {
   width: 100%;
   height: 1rem;
 }
-.zigzag-bottom:after {
+.zigzag-top-bottom:after {
   background: linear-gradient(-45deg, #ffffff .5rem, transparent 0), linear-gradient(45deg, #ffffff .5rem, transparent 0);
   background-position: left-top;
   background-repeat: repeat-x;
