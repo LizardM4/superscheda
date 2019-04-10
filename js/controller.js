@@ -22,6 +22,8 @@ import { DropboxExplorer, pathCombine } from './dbxexplorer.js?v=%REV';
 import { DDArray } from './ddarray.js?v=%REV';
 import { DDGraph } from './ddgraph.js?v=%REV';
 
+let _uniqueCnt = 0;
+
 class SuperschedaController {
     constructor(dbxAppId) {
         this._appId = dbxAppId;
@@ -500,9 +502,23 @@ class SuperschedaController {
                 evt.stopPropagation();
                 insertedItems.forEach(insertedItem => {
                     const idx = DDArray.getIndex(insertedItem);
-                    $(insertedItem).find('.hidden-anchor').attr('id', 'att_' + idx.toString());
+                    insertedItem = $(insertedItem)
+                    insertedItem.find('.hidden-anchor').attr('id', 'att_' + idx.toString());
                     $(smTocController.append()).find('a').attr('href', '#att_' + idx.toString());
                     $(mdTocController.append()).find('a').attr('href', '#att_' + idx.toString());
+                    insertedItem.find('.custom-checkbox').each((_, chkDiv) => {
+                        // Find the label and the input
+                        chkDiv = $(chkDiv);
+                        const $input = chkDiv.children('input[type="checkbox"]:not(id)');
+                        const $label = chkDiv.children('label:not([for])');
+                        if ($input.length === 1 && $label.length === 1) {
+                            // Setup a pair of for/id items
+                            ++_uniqueCnt;
+                            const inputId = 'chk_' + _uniqueCnt.toString();
+                            $input.attr('id', inputId);
+                            $label.attr('for', inputId);
+                        }
+                    });
                 });
             })
             .on('ddarray.removal', (evt, removedItems) => {
