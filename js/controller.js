@@ -519,6 +519,39 @@ class SuperschedaController {
                             $label.attr('for', inputId);
                         }
                     });
+                    // Set up analogously the collapsible element
+                    const $collapsible = insertedItem.find('.collapse');
+                    const $collapser = insertedItem.find('[data-toggle="collapse"]');
+                    if ($collapsible.length === 1 && $collapser.length === 1) {
+                        ++_uniqueCnt;
+                        const collapseId = 'collapse_' + _uniqueCnt.toString();
+                        $collapsible.attr('id', collapseId);
+                        $collapser.attr('data-target', '#' + collapseId);
+                        // And turn the icon
+                        const $icon = $collapser.find('i');
+                        $collapsible.on('hide.bs.collapse', () => {
+                            $collapser.prop('disabled', true);
+                            $icon.animateRotate(180, {
+                                complete: () => {
+                                    $collapser.prop('disabled', false);
+                                    $icon.css('transform', '')
+                                        .removeClass('fa-angle-double-up')
+                                        .addClass('fa-angle-double-down');
+                                }
+                            });
+                        });
+                        $collapsible.on('show.bs.collapse', () => {
+                            $collapser.prop('disabled', true);
+                            $icon.animateRotate(180, {
+                                complete: () => {
+                                    $collapser.prop('disabled', false);
+                                    $icon.css('transform', '')
+                                        .removeClass('fa-angle-double-down')
+                                        .addClass('fa-angle-double-up');
+                                }
+                            });
+                        });
+                    }
                 });
             })
             .on('ddarray.removal', (evt, removedItems) => {
