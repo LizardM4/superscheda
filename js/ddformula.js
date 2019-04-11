@@ -446,6 +446,36 @@ class DDFormula {
         return args[0];
     }
 
+    _evalSizeMod() {
+        const args = this.evaluateArguments();
+        console.assert(args.length === 1);
+        if (args.length !== 1 || typeof args[0] !== 'string') {
+            return null;
+        }
+        const sz = args[0].toLowerCase();
+        switch (sz) {
+            case "colossale":
+                return -8;
+            case "mastodontica":
+                return -4;
+            case "enorme":
+                return -2;
+            case "grande":
+                return -1;
+            case "media":
+                return 0;
+            case "piccola":
+                return 1;
+            case "minuscola":
+                return 2;
+            case "minuta":
+                return 4;
+            case "piccolissima":
+                return 8;
+        }
+        return null;
+    }
+
     _evalMod() {
         const args = this.evaluateArguments();
         if (args.length <= 2) {
@@ -568,6 +598,7 @@ class DDFormula {
             case 'ref': return this._evalRef(); break;
             case 'cond_sum_mul': return this._evalCondSumMul(); break;
             case 'count_spells': return this._evalCountSpells(); break;
+            case 'size_mod': return this._evalSizeMod(); break;
             default:
                 console.assert(false);
                 return null;
