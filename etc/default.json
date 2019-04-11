@@ -673,7 +673,42 @@
         null
     ],
     "att_opportunita": null,
-    "attacchi": null,
+    "attacchi": [
+        {
+            "aura": null,
+            "bonus_arco_mani": false,
+            "ca_arma": null,
+            "competente": true,
+            "critico": "×2",
+            "danni": null,
+            "durezza": null,
+            "gittata": null,
+            "materiale": null,
+            "munizioni": null,
+            "nome": "Colpo senz'armi",
+            "note": null,
+            "peso": null,
+            "prezzo": null,
+            "punti_ferita": null,
+            "scuola": null,
+            "taglia": "media",
+            "taglia_oggetto": "media",
+            "tipo": "senza_armi",
+            "tiro_colpire": {
+                "bab": null,
+                "car_chiave": "for",
+                "mod_c": null,
+                "modificatori": null
+            },
+            "tiro_colpire_tot": null,
+            "tiro_danni": {
+                "car_chiave": "for",
+                "mod_c": null,
+                "modificatori": null
+            },
+            "tiro_danni_tot": null
+        }
+    ],
     "background": null,
     "bonus_att_base": {
         "att": [
@@ -794,7 +829,8 @@
                 null,
                 null
             ]
-        }
+        },
+        "tmp_active": false
     },
     "carico": {
         "dal_terreno": null,
@@ -1189,5 +1225,5 @@
             "nome": "Vista cieca"
         }
     ],
-    "_version": "0.2.3"
+    "_version": "0.2.4"
 }
