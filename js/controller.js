@@ -25,6 +25,11 @@ import { DDGraph } from './ddgraph.js?v=%REV';
 let _uniqueCnt = 0;
 
 class SuperschedaController {
+
+    get graph() {
+        return this._graph;
+    }
+
     constructor(dbxAppId) {
         this._appId = dbxAppId;
         this._dropbox = null;
@@ -149,7 +154,7 @@ class SuperschedaController {
     autosave() {
         // Save everything before changing window
         if (this._hasLocalStorage) {
-            window.localStorage.setItem('_autosave', JSON.stringify(this._graph.dumpDataBag(), null, 4));
+            window.localStorage.setItem('_autosave', JSON.stringify(this.graph.dumpDataBag(), null, 4));
         }
     }
 
@@ -161,7 +166,7 @@ class SuperschedaController {
                 window.localStorage.removeItem('_autosave');
                 console.log('Reloading latest save.');
                 const jsonData = JSON.parse(toLoad);
-                this._graph.loadDataBag(jsonData);
+                this.graph.loadDataBag(jsonData);
                 this.autosort();
                 return true;
             }
@@ -250,7 +255,7 @@ class SuperschedaController {
             });
             // Map each key element to its value
             const keys = matches.map($match => {
-                const node = this._graph.getNodeOfDOMElement($match[0]);
+                const node = this.graph.getNodeOfDOMElement($match[0]);
                 if (node) {
                     return node.value;
                 } else {
@@ -291,7 +296,7 @@ class SuperschedaController {
         this._saveModal.on('show.bs.modal', () => {
             this._saveModal.find('a.btn[download]')
                 .attr('href', 'data:application/json;charset=utf-8,' +
-                    encodeURIComponent(JSON.stringify(this._graph.dumpDataBag(), null, 4)));
+                    encodeURIComponent(JSON.stringify(this.graph.dumpDataBag(), null, 4)));
         });
         this._saveModal.find('a.btn[download]').click(this._autosaveEvent);
     }
@@ -574,8 +579,8 @@ class SuperschedaController {
 
     _setupSpells() {
         // Transfer classes to spell array items
-        this._graph.nodeByPath('incantesimi[-1].preparazione').obj.change((evt) => {
-          const selectNode = this._graph.getNodeOfDOMElement(evt.target);
+        this.graph.nodeByPath('incantesimi[-1].preparazione').obj.change((evt) => {
+          const selectNode = this.graph.getNodeOfDOMElement(evt.target);
           const arrayItem = selectNode.parent;
           selectNode.obj.find('option').each((_, option) => {
             option = $(option);
@@ -588,14 +593,14 @@ class SuperschedaController {
         });
 
         // Apply new status when clicking on button
-        this._graph.nodeByPath('incantesimi[-1]').obj.find('button').each((_, btn) => {
+        this.graph.nodeByPath('incantesimi[-1]').obj.find('button').each((_, btn) => {
             btn = $(btn);
             if (btn.hasClass('dd-if-spell-known')) {
                 // Prepare button
                 btn.click((evt) => {
-                    const parentSpellNode = this._graph.findParentNode($(evt.target));
+                    const parentSpellNode = this.graph.findParentNode($(evt.target));
                     const controller = DDArray.getController(parentSpellNode.obj);
-                    const newSpellNode = this._graph.getNodeOfDOMElement(controller.append());
+                    const newSpellNode = this.graph.getNodeOfDOMElement(controller.append());
                     newSpellNode.loadDataBag(parentSpellNode.dumpDataBag());
                     newSpellNode.childById('preparazione').value = 'preparato';
                     controller.sort(this._autosortCompareFn);
@@ -603,7 +608,7 @@ class SuperschedaController {
             } else if (btn.hasClass('dd-if-spell-ready')) {
                 // Use button
                 btn.click((evt) => {
-                    const parentSpellNode = this._graph.findParentNode($(evt.target));
+                    const parentSpellNode = this.graph.findParentNode($(evt.target));
                     const controller = DDArray.getController(parentSpellNode.obj);
                     parentSpellNode.childById('preparazione').value = 'usato';
                     controller.sort(this._autosortCompareFn);
@@ -611,7 +616,7 @@ class SuperschedaController {
             } else if (btn.hasClass('dd-if-spell-used')) {
                 // Reprepare button
                 btn.click((evt) => {
-                    const parentSpellNode = this._graph.findParentNode($(evt.target));
+                    const parentSpellNode = this.graph.findParentNode($(evt.target));
                     const controller = DDArray.getController(parentSpellNode.obj);
                     parentSpellNode.childById('preparazione').value = 'preparato';
                     controller.sort(this._autosortCompareFn);
@@ -649,7 +654,7 @@ class SuperschedaController {
     setup() {
         this._saveModal = $('#save_to');
         this._loadModal = $('#load_from');
-        this._graph.loadNodesFromDom();
+        this.graph.loadNodesFromDom();
         this._initLocalStorage();
         this._retrieveAccessToken();
         // ^ will call _setupLoadModal and _setupSaveModal
@@ -674,7 +679,7 @@ class SuperschedaController {
         this._dropbox.filesUpload({
                 path: path,
                 mode: 'overwrite',
-                contents: JSON.stringify(this._graph.dumpDataBag(), null, 4)
+                contents: JSON.stringify(this.graph.dumpDataBag(), null, 4)
             })
             .then((response) => {
                 this.notify('success', 'Salvato su \'' + path +'\'.', 5000);
@@ -696,7 +701,7 @@ class SuperschedaController {
     loadRemoteFile(name, postLoadAction=null) {
         console.log('Reloading remote file ' + name);
         $.getJSON(name, (jsonData) => {
-            this._graph.loadDataBag(jsonData);
+            this.graph.loadDataBag(jsonData);
             this.autosort();
             if (postLoadAction) {
                 postLoadAction(true);
@@ -716,7 +721,7 @@ class SuperschedaController {
                 const blob = response.fileBlob;
                 const reader = new FileReader();
                 reader.addEventListener('loadend', () => {
-                    this._graph.loadDataBag(JSON.parse(reader.result));
+                    this.graph.loadDataBag(JSON.parse(reader.result));
                     this.autosort();
                     if (postLoadAction) {
                         postLoadAction(true);
