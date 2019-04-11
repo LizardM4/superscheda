@@ -454,23 +454,23 @@ class DDFormula {
         }
         const sz = args[0].toLowerCase();
         switch (sz) {
-            case "colossale":
+            case 'colossale':
                 return -8;
-            case "mastodontica":
+            case 'mastodontica':
                 return -4;
-            case "enorme":
+            case 'enorme':
                 return -2;
-            case "grande":
+            case 'grande':
                 return -1;
-            case "media":
+            case 'media':
                 return 0;
-            case "piccola":
+            case 'piccola':
                 return 1;
-            case "minuscola":
+            case 'minuscola':
                 return 2;
-            case "minuta":
+            case 'minuta':
                 return 4;
-            case "piccolissima":
+            case 'piccolissima':
                 return 8;
         }
         return null;
