@@ -307,4 +307,196 @@ Versioner.instance().addPatch('0.2.3', (dataBag) => {
     spellStats['conosciuti'] = null;
 });
 
+
+function safeParseInt(v) {
+    if (typeof v === 'undefined' || v === null) {
+        return null;
+    }
+    const n = parseInt(v);
+    if (n === n) {
+        return n;
+    }
+    return v;
+}
+
+function safeParseFloat(v) {
+    if (typeof v === 'undefined' || v === null) {
+        return null;
+    }
+    const n = parseFloat(v);
+    if (n === n) {
+        return n;
+    }
+    return v;
+}
+
+
+function _migrateAttack(d) {
+    const convType = Object.freeze({'null': null, 'mischia': 'mischia_', 'distanza': 'tiro_', 'senza_armi': 'senza_armi'});
+    const convSize = Object.freeze({
+        '-8': 'colossale',
+        '-4': 'mastodontica',
+        '-2': 'enorme',
+        '-1': 'grande',
+        '0': 'media',
+        '1': 'piccola',
+        '2': 'minuscola',
+        '4': 'minuta',
+        '8': 'piccolissima'
+    });
+
+    d['competente'] = true;
+
+    d['gittata'] = safeParseInt(objGet(d, 'portata', null));
+    delete d['portata'];
+
+    d['peso'] = safeParseInt(objGet(d, 'peso', null));
+
+    if (objGet(d, 'munizioni', null) !== null) {
+        d['munizioni'] = [{
+            'nome': objGet(d, 'munizioni', null),
+            'quantita': safeParseInt(objGet(d, 'quantita', null))
+        }];
+    } else {
+        d['munizioni'] = null;
+    }
+    delete d['quantita'];
+
+    const attackRoll = objGet(d, 'tiro_colpire');
+    const damageRoll = objGet(d, 'tiro_danni');
+
+    let newType = convType[objGet(d, 'tipo', null)];
+    if (newType !== null && newType[newType.length - 1] === '_') {
+        const weaponType = objGet(d, 'tipo_arma', '').toString().toLowerCase();
+        if (weaponType.indexOf('guerra') >= 0) {
+            newType += 'da_guerra';
+        } else if (weaponType.indexOf('esotic') >= 0) {
+            newType += 'esotico';
+        } else {
+            newType += 'semplice';
+        }
+    }
+    d['tipo'] = newType;
+
+    d['taglia'] = convSize[safeParseInt(objGet(attackRoll, 'mod_taglia', 0, true))];
+    delete attackRoll['mod_taglia'];
+
+    d['taglia_oggetto'] = objGet(d, 'taglia_oggetto', 'media', true).toLowerCase();
+    if (d['taglia_oggetto'] === '') {
+        d['taglia_oggetto'] = 'media';
+    }
+
+    attackRoll['car_chiave'] = objGet(attackRoll, 'caratteristica', 'des', true).toLowerCase().substring(0, 3);
+    delete attackRoll['caratteristica'];
+
+    damageRoll['car_chiave'] = objGet(damageRoll, 'caratteristica', 'des', true).toLowerCase().substring(0, 3);
+    delete damageRoll['caratteristica'];
+
+    d['critico'] = objGet(attackRoll, 'critico', null);
+    delete attackRoll['critico'];
+
+    delete attackRoll['critico_talenti'];
+
+    attackRoll['mod_c'] = safeParseInt(objGet(attackRoll, 'mod_eff', null));
+    if (attackRoll['mod_c'] === null) {
+        attackRoll['mod_c'] = safeParseInt(objGet(attackRoll, 'mod', null));
+    }
+    delete attackRoll['mod'];
+    delete attackRoll['mod_eff'];
+
+    damageRoll['mod_c'] = safeParseInt(objGet(damageRoll, 'mod', null));
+    delete damageRoll['mod'];
+
+    attackRoll['modificatori'] = objGet(attackRoll, 'mod_vv', []);
+    delete attackRoll['mod_vv'];
+
+    damageRoll['modificatori'] = objGet(attackRoll, 'mod_vv', []);
+    delete damageRoll['mod_vv'];
+
+    console.assert(Array.isArray(attackRoll['modificatori']));
+    console.assert(Array.isArray(damageRoll['modificatori']));
+
+    if (objGet(attackRoll, 'mod_talenti', null) !== null) {
+        attackRoll['modificatori'].push({'mod': null, 'nome': objGet(attackRoll, 'mod_talenti', null)});
+    }
+    delete attackRoll['mod_talenti'];
+
+    if (objGet(damageRoll, 'mod_talenti', null) !== null) {
+        damageRoll['modificatori'].push({'mod': null, 'nome': objGet(damageRoll, 'mod_talenti', null)});
+    }
+    delete damageRoll['mod_talenti'];
+
+    delete attackRoll['mod_critico'];
+
+    attackRoll['modificatori'].push(objGet(attackRoll, 'mod_magici', null));
+    attackRoll['modificatori'].push(objGet(attackRoll, 'mod_razziali', null));
+    delete attackRoll['mod_magici'];
+    delete attackRoll['mod_razziali'];
+
+    damageRoll['modificatori'].push(objGet(damageRoll, 'mod_magici', null));
+    damageRoll['modificatori'].push(objGet(damageRoll, 'mod_razziali', null));
+    delete damageRoll['mod_magici'];
+    delete damageRoll['mod_razziali'];
+
+    d['tiro_colpire_tot'] = safeParseInt(objGet(attackRoll, 'tot', null));
+    if (d['tiro_colpire_tot'] === null) {
+        d['tiro_colpire_tot'] = safeParseInt(objGet(attackRoll, 'tot_spec', null));
+    }
+    delete attackRoll['tot'];
+
+    d['tiro_danni_tot'] = safeParseInt(objGet(damageRoll, 'mod_eff', null));
+    delete damageRoll['mod_eff'];
+
+
+    delete damageRoll['danni_speciali'];
+
+    const potentialType = (objGet(damageRoll, 'tipo_speciali', '', true) + objGet(d, 'tipo_arma', '', true)).toLowerCase();
+    d['danni'] = [{
+        'dado': objGet(damageRoll, 'tot', null),
+        'tipo': {
+            'contundenti': (potentialType.indexOf('contund') >= 0),
+            'non_letali': (potentialType.indexOf('letal') >= 0) || (objGet(damageRoll, 'd_non_let', null) !== null),
+            'perforanti': (potentialType.indexOf('perf') >= 0),
+            'taglienti': (potentialType.indexOf('tagl') >= 0)
+        }
+    }];
+
+    delete damageRoll['tipo_speciali'];
+    delete damageRoll['d_non_let'];
+
+    delete d['tipo_arma'];
+
+    // Filter mods
+    const modFilter = (dMod) => {
+        if (dMod === null) {
+            return false;
+        }
+        const modV = objGet(dMod, 'mod', null);
+        if (modV === null) {
+            return false;
+        }
+        if (modV === '' && objGet(dMod, 'nome', '', true) === '') {
+            return false;
+        }
+        const modIntV = parseInt(modV);
+        if (modIntV === modIntV && modIntV === 0) {
+            return false;
+        }
+        return true;
+    };
+
+    attackRoll['modificatori'] = attackRoll['modificatori'].filter(modFilter);
+    damageRoll['modificatori'] = damageRoll['modificatori'].filter(modFilter);
+}
+
+
+Versioner.instance().addPatch('0.2.4', (dataBag) => {
+        const attacks = objGet(dataBag, 'attacchi', null);
+        if (Array.isArray(attacks)) {
+            attacks.forEach(d => _migrateAttack(d));
+        }
+    },
+    /attacchi\[\d+\].+/
+);
+
 export { Versioner };
