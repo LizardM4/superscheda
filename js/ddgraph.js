@@ -402,6 +402,10 @@ class DDGraph {
         return $obj.is('input[data-dd-id], select[data-dd-id], textarea[data-dd-id]');
     }
 
+    static isHiddenNode($obj) {
+        return $obj.is('input[type="hidden"]');
+    }
+
     /**
     Returns the expected specific type associated to a given DOM element.
 
@@ -770,6 +774,7 @@ class DDNode {
         this._idx = null;
         this._isCheckbox = false;
         this._holdsData = false;
+        this._hidden = false;
         this._formulaValue = null;
         this._type = DDType.NONE;
         this._formula = null;
@@ -931,6 +936,9 @@ class DDNode {
     _collectChildrenByIdWithoutIndices() {
         let retval = {};
         this.children.forEach(child => {
+            if (child._hidden) {
+                return;
+            }
             let arrOrObj = retval[child.baseId];
             if (arrOrObj) {
                 if (!Array.isArray(arrOrObj)) {
@@ -1137,6 +1145,7 @@ class DDNode {
         [this._baseId, this._extraIndices] = DDGraph.parseIndicesFromId(this.obj.attr('data-dd-id'));
         this._isCheckbox = (this.obj.attr('type') === 'checkbox');
         this._holdsData = DDGraph.holdsData(this.obj);
+        this._hidden = DDGraph.isHiddenNode(this.obj);
         this._type = DDGraph.inferType(this.obj);
         // Setup on change event
         this.obj.change((evt) => {
