@@ -540,13 +540,14 @@ class SuperschedaController {
                         $collapsible.on('hidden.bs.collapse', () => {
                             $collapser.prop('disabled', false);
                             $icon.removeClass('fa-angle-double-up')
-                                 .addClass('fa-angle-double-down');
+                                 .addClass('fa-ellipsis-h');
                         });
                         $collapsible.on('show.bs.collapse', () => {
                             $collapser.prop('disabled', true);
                         });
                         $collapsible.on('shown.bs.collapse', () => {
-                            $icon.removeClass('fa-angle-double-down')
+                            $collapser.prop('disabled', false);
+                            $icon.removeClass('fa-ellipsis-h')
                                  .addClass('fa-angle-double-up');
                         });
                     }
