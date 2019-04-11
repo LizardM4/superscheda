@@ -1545,7 +1545,14 @@ You should have received a copy of the GNU General Public License
                               <input type="text" class="form-control form-control-sm" data-dd-id="nome">
                             </div>
                             <div class="col">
-                              <input type="text" data-dd-type="int" class="form-control form-control-sm" data-dd-id="quantita">
+                              <div class="input-group input-group-sm">
+                                <input type="text" data-dd-type="int" class="form-control form-control-sm" data-dd-id="quantita">
+                                <div class="input-group-append">
+                                  <button class="btn btn-sm btn-addon dd-fire-btn">
+                                    <i class="fas fa-fire"></i>
+                                  </button>
+                                </div>
+                              </div>
                             </div>
                             <div class="col-auto form-row align-items-center justify-content-center">
                               <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
@@ -2833,6 +2840,17 @@ You should have received a copy of the GNU General Public License
                 $window.scroll();
               }
             }
+        });
+
+        $('.dd-fire-btn').click((evt) => {
+          const $btn = $(evt.target);
+          const $qty = $btn.closest('.input-group').find('input[data-dd-id="quantita"]');
+          if ($qty.length > 0) {
+            const node = window.DD.graph.getNodeOfDOMElement($qty[0]);
+            if (node && typeof node.value === 'number') {
+              node.value = Math.max(0, node.value - 1);
+            }
+          }
         });
 
         // Autoexpand sections when clicking on the menu
