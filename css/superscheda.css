@@ -156,9 +156,6 @@ striped.*/
   color: #000;
   background-color: #dae0e5;
 }
-.dropdown-toggle:hover input[type="text"] {
-  color: #000;
-}
 .btn-addon, .btn-addon input {
   background-color: rgb(233, 236, 239);
   border-color: rgb(206, 212, 218);
@@ -185,12 +182,12 @@ striped.*/
 /*This little trick makes two adjacent L/R borders overlap, in such a way that they look like
 a single separating border. When one control is lifted above the other, the effect is not
 disrupted.*/
-.input-group .input-group-prepend:first-child .btn-addon:not(.dropdown-toggle),
-.input-group .input-group-append:first-child .btn-addon:not(.dropdown-toggle) {
+.input-group .input-group-prepend:first-child .btn-addon,
+.input-group .input-group-append:first-child .btn-addon {
   margin-right: -1px!important;
 }
-.input-group .input-group-prepend:last-child .btn-addon:not(.dropdown-toggle),
-.input-group .input-group-append:last-child .btn-addon:not(.dropdown-toggle) {
+.input-group .input-group-prepend:last-child .btn-addon,
+.input-group .input-group-append:last-child .btn-addon {
   margin-left: -1px!important;
 }
 
