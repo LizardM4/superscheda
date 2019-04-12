@@ -68,11 +68,6 @@ striped.*/
   }
 }
 
-/*Custom spacing between attack cards*/
-#array_attacchi [data-dd-id="attacchi"][data-dd-array="item"] + [data-dd-id="attacchi"][data-dd-array="item"] {
-  margin-top: 0.3rem;
-}
-
 /* CUSTOM CHECKBOXES -----------------------------------------------------------------------*/
 
 /*Clear spacing around custom checkboxes, such as the ones in the abilities*/
