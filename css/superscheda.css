@@ -156,30 +156,6 @@ striped.*/
 
 /* INPUT GROUP DROPDOWN --------------------------------------------------------------------*/
 
-/*Patch the dropdown buttons in the input group to look like some simple input group span*/
-.input-group-sm .dropdown-item {
-  font-size: .875rem;
-  line-height: 1.5;
-  padding: .25rem 1rem;
-}
-/*Reduce the spacing a little bit in the dropdown menu*/
-.input-group-sm .dropdown-menu {
-  padding-top: .25rem;
-  padding-bottom: .25rem;
-  min-width: 5rem;
-}
-/*Place textbox and make it look like a label; the items of the dropdown will fill the value
-of this. This has two advantages: first we may make it readwrite, and this gives us a combo
-box, otherwise we would need to set the value of an input or fetch the text of a span.*/
-.dropdown-toggle input[type="text"] {
-  display: inline-block;
-  padding: 0;
-  margin: 0;
-  border: none;
-  min-width: unset;
-  width: 1.8rem;
-  background: none;
-}
 /*Patch the colors to make them look like a normal label or an active txtbox*/
 .btn-addon:hover {
   color: #000;

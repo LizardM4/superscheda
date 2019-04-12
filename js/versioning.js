@@ -499,4 +499,15 @@ Versioner.instance().addPatch('0.2.4', (dataBag) => {
     /attacchi\[\d+\].+/
 );
 
+Versioner.instance().addPatch('0.2.5', (dataBag) => {
+    if (Array.isArray(dataBag['abilita'])) {
+        dataBag['abilita'].forEach(ability => {
+            const key = objGet(ability, 'chiave', null);
+            if (key !== null) {
+                ability['chiave'] = key.toLowerCase();
+            }
+        });
+    }
+});
+
 export { Versioner };

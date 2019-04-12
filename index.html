@@ -2082,19 +2082,14 @@ You should have received a copy of the GNU General Public License
                         <div class="col-md-2 col-6">
                           <label class="col-form-label col-form-label-sm d-md-none">Car chiave · Mod C</label>
                           <div class="input-group input-group-sm">
-                            <div class="input-group-prepend">
-                              <span tabindex="0" class="btn btn-sm btn-addon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
-                                <input data-dd-id="chiave" type="text" readonly class="form-control-plaintext" value="For">
-                              </span>
-                              <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">For</a>
-                                <a class="dropdown-item" href="#">Des</a>
-                                <a class="dropdown-item" href="#">Cos</a>
-                                <a class="dropdown-item" href="#">Int</a>
-                                <a class="dropdown-item" href="#">Sag</a>
-                                <a class="dropdown-item" href="#">Car</a>
-                              </div>
-                            </div>
+                            <select class="custom-select custom-select-sm" data-dd-id="chiave">
+                              <option value="for" selected>For</option>
+                              <option value="des">Des</option>
+                              <option value="int">Int</option>
+                              <option value="cos">Cos</option>
+                              <option value="sag">Sag</option>
+                              <option value="car">Car</option>
+                            </select>
                             <input data-dd-id="mod_c" data-dd-formula="sel ./chiave /caratteristiche.for.mod_temp /caratteristiche.des.mod_temp /caratteristiche.cos.mod_temp /caratteristiche.int.mod_temp /caratteristiche.sag.mod_temp /caratteristiche.car.mod_temp" type="text" class="form-control form-control-sm" data-dd-type="int">
                           </div>
                         </div>

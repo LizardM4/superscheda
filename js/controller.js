@@ -468,25 +468,6 @@ class SuperschedaController {
         });
     }
 
-    _setupCustomDropdown() {
-        $('.input-group-prepend .dropdown-menu .dropdown-item').click((evt) => {
-            evt.preventDefault();
-            const $obj = $(evt.target);
-            $obj.closest('.input-group-prepend')
-                .find('input[type="text"]')
-                .val($obj.text())
-                .change();
-        });
-        $('.input-group-append .dropdown-menu .dropdown-item').click((evt) => {
-            evt.preventDefault();
-            const $obj = $(evt.target);
-            $obj.closest('.input-group-append')
-                .find('input[type="text"]')
-                .val($obj.text())
-                .change();
-        });
-    }
-
     _setupDynamicAttacks() {
         const smTocController = DDArray.getController($('#toc_attacchi_sm'));
         const mdTocController = DDArray.getController($('#toc_attacchi_md'));
@@ -665,7 +646,6 @@ class SuperschedaController {
         this._setupSpells();
         this._setupDynamicTitles();
         this._setupDynamicAttacks();
-        this._setupCustomDropdown();
         this._setupDlButton();
         this._setupLogoutButton();
         this._setupAutosave();
