@@ -927,10 +927,9 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row pb-1" data-dd-array="master" data-dd-id="competenze">
                         <div class="input-group input-group-sm col">
                           <div class="input-group-prepend btn-group-toggle" data-toggle="buttons">
-                            <span class="btn btn-addon btn-custom-checkbox" tabindex="0">
+                            <span class="btn btn-addon px-1" tabindex="0">
                               <input type="checkbox" data-dd-id="attivo">
-                              <i class="far fa-square fa-fw fa-lg toggle-inactive" aria-hidden="true"></i>
-                              <i class="far fa-check-square fa-fw fa-lg toggle-active" aria-hidden="true"></i>
+                              <label class="fa dd-custom-check dd-fa-check fa-fw fa-lg"></label>
                             </span>
                           </div>
                           <input type="text" class="form-control" data-dd-id="nome">
@@ -969,10 +968,9 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row pb-1" data-dd-array="master" data-dd-id="linguaggi">
                         <div class="input-group input-group-sm col">
                           <div class="input-group-prepend btn-group-toggle" data-toggle="buttons">
-                            <span class="btn btn-addon btn-custom-checkbox" tabindex="0">
+                            <span class="btn btn-addon px-1" tabindex="0">
                               <input type="checkbox" data-dd-id="attivo">
-                              <i class="far fa-square fa-fw fa-lg toggle-inactive" aria-hidden="true"></i>
-                              <i class="far fa-check-square fa-fw fa-lg toggle-active" aria-hidden="true"></i>
+                              <label class="fa dd-custom-check dd-fa-check fa-fw fa-lg"></label>
                             </span>
                           </div>
                           <input type="text" class="form-control" data-dd-id="nome">
@@ -1009,10 +1007,9 @@ You should have received a copy of the GNU General Public License
                         <div class="col form-row">
                           <div class="input-group input-group-sm col-8">
                             <div class="input-group-prepend btn-group-toggle" data-toggle="buttons">
-                              <span class="btn btn-addon btn-custom-checkbox" tabindex="0">
+                              <span class="btn btn-addon px-1" tabindex="0">
                                 <input type="checkbox" data-dd-id="attivo">
-                                <i class="far fa-square fa-fw fa-lg toggle-inactive" aria-hidden="true"></i>
-                                <i class="far fa-check-square fa-fw fa-lg toggle-active" aria-hidden="true"></i>
+                                <label class="fa dd-custom-check dd-fa-check fa-fw fa-lg"></label>
                               </span>
                             </div>
                             <input type="text" class="form-control" data-dd-id="nome">
@@ -1467,10 +1464,9 @@ You should have received a copy of the GNU General Public License
                         <label class="col-form-label">Competente · Nome/descrizione</label>
                         <div class="input-group">
                           <div class="input-group-prepend btn-group-toggle" data-toggle="buttons">
-                            <span class="btn btn-addon btn-custom-checkbox" tabindex="0">
+                            <span class="btn btn-addon px-1" tabindex="0">
                               <input type="checkbox" data-dd-id="competente">
-                              <i class="far fa-square fa-fw fa-lg toggle-inactive" aria-hidden="true"></i>
-                              <i class="far fa-check-square fa-fw fa-lg toggle-active" aria-hidden="true"></i>
+                              <label class="fa dd-custom-check dd-fa-check fa-fw fa-lg"></label>
                             </span>
                           </div>
                           <input type="text" class="form-control dd-dyn-title" data-dd-id="nome">
@@ -1579,28 +1575,28 @@ You should have received a copy of the GNU General Public License
                         </div>
                         <div data-dd-array="container">
                           <div class="form-row pb-1" data-dd-array="master" data-dd-id="danni">
-                            <div class="col">
-                              <div class="input-group input-group-sm">
-                                <div data-dd-id="tipo" class="input-group-prepend btn-group btn-group-toggle" data-toggle="buttons">
-                                  <label class="btn btn-sm btn-addon py-0">
-                                    <input type="checkbox" data-dd-id="non_letali">
-                                    <i class="dd-icon dd-icon-protest" aria-hidden="true"></i>
-                                  </label>
-                                  <label class="btn btn-sm btn-addon py-0">
-                                    <input type="checkbox" data-dd-id="perforanti">
-                                    <i class="dd-icon dd-icon-quiver" aria-hidden="true"></i>
-                                  </label>
-                                  <label class="btn btn-sm btn-addon py-0">
-                                    <input type="checkbox" data-dd-id="contundenti">
-                                    <i class="dd-icon dd-icon-mace" aria-hidden="true"></i>
-                                  </label>
-                                  <label class="btn btn-sm btn-addon py-0">
-                                    <input type="checkbox" data-dd-id="taglienti">
-                                    <i class="dd-icon dd-icon-sword" aria-hidden="true"></i>
-                                  </label>
-                                </div>
-                                <input type="text" class="form-control form-control-sm" data-dd-id="dado">
+                            <div class="col-auto">
+                              <div data-dd-id="tipo" class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-sm btn-outline-secondary">
+                                  <input type="checkbox" data-dd-id="non_letali">
+                                  <i class="dd-icon dd-icon-protest" aria-hidden="true"></i>
+                                </label>
+                                <label class="btn btn-sm btn-outline-secondary">
+                                  <input type="checkbox" data-dd-id="perforanti">
+                                  <i class="dd-icon dd-icon-quiver" aria-hidden="true"></i>
+                                </label>
+                                <label class="btn btn-sm btn-outline-secondary">
+                                  <input type="checkbox" data-dd-id="contundenti">
+                                  <i class="dd-icon dd-icon-mace" aria-hidden="true"></i>
+                                </label>
+                                <label class="btn btn-sm btn-outline-secondary">
+                                  <input type="checkbox" data-dd-id="taglienti">
+                                  <i class="dd-icon dd-icon-sword" aria-hidden="true"></i>
+                                </label>
                               </div>
+                            </div>
+                            <div class="col">
+                              <input type="text" class="form-control form-control-sm" data-dd-id="dado">
                             </div>
                             <div class="col-auto form-row align-items-center justify-content-center">
                               <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
@@ -2027,8 +2023,7 @@ You should have received a copy of the GNU General Public License
                   <div class="col-md-2 col-6">
                     <label class="col-form-label">Modificatori:</label>
                     <button type="button" class="btn btn-secondary d-block w-100" id="toggle_abilities_modifier">
-                      <span class="toggle-inactive">Mostra</span>
-                      <span class="toggle-active d-none">Nascondi</span>
+                      Mostra
                     </button>
                   </div>
                 </div>
@@ -2061,20 +2056,16 @@ You should have received a copy of the GNU General Public License
                           <label class="col-form-label col-form-label-sm d-md-none">Acquisita · Nome · Di classe</label>
                           <div class="input-group input-group-sm">
                             <div class="input-group-prepend btn-group-toggle" data-toggle="buttons">
-                              <span class="btn btn-addon btn-custom-checkbox" tabindex="0">
+                              <span class="btn btn-addon px-1" tabindex="0">
                                 <input type="checkbox" data-dd-id="acquisita">
-                                <i class="far fa-square fa-fw fa-lg toggle-inactive" aria-hidden="true"></i>
-                                <i class="far fa-check-square fa-fw fa-lg toggle-active" aria-hidden="true"></i>
+                                <label class="fa dd-custom-check dd-fa-check fa-fw fa-lg"></label>
                               </span>
                             </div>
                             <input data-dd-id="nome" type="text" class="form-control form-control-sm dd-sort-key">
                             <div class="input-group-append btn-group-toggle" data-toggle="buttons">
-                              <span class="btn btn-addon btn-custom-checkbox" tabindex="0">
+                              <span class="btn btn-addon px-1" tabindex="0">
                                 <input type="checkbox" data-dd-id="di_classe">
-                                <i class="far fa-square fa-fw fa-lg toggle-inactive" aria-hidden="true"></i>
-                                <i class="far fa-check-square fa-fw fa-lg toggle-active" aria-hidden="true"></i>
-                                <i class="fas fa-copyright fa-lg toggle-active" aria-hidden="true"></i>
-                                <i class="fas fa-copyright fa-lg toggle-inactive" aria-hidden="true"></i>
+                                <label class="fa dd-custom-check fa-copyright dd-class fa-fw fa-lg"></label>
                               </span>
                             </div>
                           </div>
@@ -2776,35 +2767,32 @@ You should have received a copy of the GNU General Public License
         });
 
 
-        $('.btn-group-toggle label input[type="checkbox"], .btn-custom-checkbox input[type="checkbox"]').change((evt, ddNode) => {
+        $('.btn-group-toggle input[type="checkbox"]').change((evt, ddNode) => {
           if (ddNode) {
             const $input = $(evt.target);
-            const $label = $input.closest('.btn-custom-checkbox, label');
+            const $labelOrBtn = $input.closest('label, .btn');
             // Manually toggle the button
             if ($input.is(':checked')) {
-              $label.addClass('active');
+              $labelOrBtn.addClass('active');
             } else {
-              $label.removeClass('active');
+              $labelOrBtn.removeClass('active');
             }
           }
         });
 
         // Event for activating/deactivating the details of the abilities
         const $abilitiesMod = $('#toggle_abilities_modifier');
-        const $expandAbilities = $abilitiesMod.find('.toggle-active');
-        const $collapseAbilities = $abilitiesMod.find('.toggle-inactive');
         $abilitiesMod.click((evt) => {
-          const curState = $expandAbilities.hasClass('d-none');
-          if (curState) {
-            $collapseAbilities.addClass('d-none');
-            $expandAbilities.removeClass('d-none');
+          const $extraMods = $('.extra-mods');
+          const $abilitiesArray = $('#array_abilita');
+          if ($extraMods.hasClass('d-none')) {
             $('.extra-mods').removeClass('d-none');
             $('#array_abilita').addClass('always-stripe');
+            $abilitiesMod.text('Nascondi');
           } else {
-            $collapseAbilities.removeClass('d-none');
-            $expandAbilities.addClass('d-none');
             $('.extra-mods').addClass('d-none');
             $('#array_abilita').removeClass('always-stripe');
+            $abilitiesMod.text('Mostra');
           }
         });
 

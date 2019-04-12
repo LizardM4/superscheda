@@ -70,23 +70,23 @@ striped.*/
 
 /* CUSTOM CHECKBOXES -----------------------------------------------------------------------*/
 
-/*Clear spacing around custom checkboxes, such as the ones in the abilities*/
-.input-group-prepend .btn.btn-addon.btn-custom-checkbox,
-.input-group-append .btn.btn-addon.btn-custom-checkbox {
-  margin: 0;
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
+.dd-custom-check.fa {
+  margin-bottom: 0rem;
+  padding: 0rem;
 }
-/*Hide the original checkbox; we will check it through the label*/
-.btn-custom-checkbox input[type="checkbox"] {
-  display: none!important;
+input[type="checkbox"] ~ .dd-custom-check.fa:before {
+  font-weight: 400;
 }
-/*Hide the (un)checked-only text*/
-.btn-custom-checkbox.active .toggle-inactive {
-  display: none!important;
+input[type="checkbox"]:checked ~ .dd-custom-check.fa:before {
+  font-weight: 900;
 }
-.btn-custom-checkbox:not(.active) .toggle-active {
-  display: none!important;
+
+input[type="checkbox"] ~ .dd-custom-check.fa.dd-fa-check:before {
+  content: "\f0c8";
+}
+
+input[type="checkbox"]:checked ~ .dd-custom-check.fa.dd-fa-check:before {
+  content: "\f14a";
 }
 
 /* CUSTOM SPELL MAGIC  ---------------------------------------------------------------------*/
@@ -149,46 +149,22 @@ striped.*/
 }
 
 
-/* INPUT GROUP DROPDOWN --------------------------------------------------------------------*/
+/* CUSTOMIZED BUTTONS ----------------------------------------------------------------------*/
 
-/*Patch the colors to make them look like a normal label or an active txtbox*/
+.btn-addon {
+  color: #495057;
+  border-color: #ced4da;
+  background-color: #e9ecef;
+}
+
 .btn-addon:hover {
   color: #000;
-  background-color: #dae0e5;
-}
-.btn-addon, .btn-addon input {
-  background-color: rgb(233, 236, 239);
-  border-color: rgb(206, 212, 218);
-  color: rgb(73, 80, 87);
-}
-.btn-addon:focus, .btn-addon.focus, .btn-group > .btn-addon:focus, .btn-group > .btn-addon.focus {
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
-  border-color: rgb(128, 189, 255);
-  z-index: 3;
+  background-color: #ced4da;
 }
 
-.btn-addon.active, .btn-addon.active input {
-  background-color: #6c757d;
-  border-color: #6c757d;
-  color: #fff;
-}
-.btn-addon.active:focus, .btn-addon.active.focus, .btn-group > .btn-addon.active:focus, .btn-group > .btn-addon.active.focus {
-  box-shadow: 0 0 0 .2rem rgba(130,138,145,.5);
-  background-color: #6c757d;
-  border-color: #6c757d;
-  z-index: 3;
-}
-
-/*This little trick makes two adjacent L/R borders overlap, in such a way that they look like
-a single separating border. When one control is lifted above the other, the effect is not
-disrupted.*/
-.input-group .input-group-prepend:first-child .btn-addon,
-.input-group .input-group-append:first-child .btn-addon {
-  margin-right: -1px!important;
-}
-.input-group .input-group-prepend:last-child .btn-addon,
-.input-group .input-group-append:last-child .btn-addon {
-  margin-left: -1px!important;
+.btn-addon:focus, .btn-addon.focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  border-color: #80bdff;
 }
 
 /* LAYOUT ----------------------------------------------------------------------------------*/
