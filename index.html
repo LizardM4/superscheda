@@ -63,9 +63,7 @@ You should have received a copy of the GNU General Public License
     <link rel="stylesheet" href="css/superscheda.css?v=%REV">
     <link rel="stylesheet" href="css/damage-type.css?v=%REV">
 
-    <style>
-
-    </style>
+    <script src="static/js/Sortable.min.js" type="text/javascript" integrity="sha384-3FVBPC6KVc/qhio8Uvc2RHtrjsSjJYANs9BGxxxi3J/ueXJO4ZB2BUu2kURd6FDI"></script>
   </head>
   <body data-spy="scroll" data-target=".dd-nav-toc">
     <nav class="navbar sticky-top navbar-light bg-light" id="main_nav">
@@ -2604,10 +2602,17 @@ You should have received a copy of the GNU General Public License
                     <label class="col-form-label col-form-label-sm">Peso</label>
                   </div>
                 </div>
-                <div data-dd-array="container">
+                <div data-dd-array="container" id="equipment_list">
                   <div class="form-row pb-1" data-dd-array="master" data-dd-id="equipaggiamento">
                     <div class="col">
-                      <input type="text" class="form-control form-control-sm" data-dd-id="oggetto">
+                      <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            <i class="fas fa-lg fa-sort text-muted"></i>
+                          </div>
+                        </div>
+                        <input type="text" class="form-control form-control-sm" data-dd-id="oggetto">
+                      </div>
                     </div>
                     <div class="col-2">
                       <input type="text" class="form-control form-control-sm" data-dd-id="riferimento">
@@ -2727,7 +2732,10 @@ You should have received a copy of the GNU General Public License
                 <a href="https://getbootstrap.com" target="_blank">Bootstrap</a>, &copy; 2011-2018 The Bootstrap Authors, &copy; 2011-2018 Twitter, Inc., rilasciato sotto <a href="https://github.com/twbs/bootstrap/blob/master/LICENSE" target="_blank">licenza MIT</a>.
               </li>
               <li>
-                Superscheda usa <a href="https://jquery.com">jQuery</a>, &copy; JS Foundation e altri contributor, rilasciato  sotto <a href="https://github.com/jquery/jquery/blob/master/LICENSE.txt" target="_blank">licenza MIT</a>.
+                <a href="https://jquery.com">jQuery</a>, &copy; JS Foundation e altri contributor, rilasciato  sotto <a href="https://github.com/jquery/jquery/blob/master/LICENSE.txt" target="_blank">licenza MIT</a>.
+              </li>
+              <li>
+                <a href="https://sortablejs.github.io/Sortable/" target="_blank">SortableJS</a>, rilasciato sotto <a href="https://github.com/SortableJS/Sortable#mit-license" target="_blank">licenza MIT</a>.
               </li>
             </ul>
           </footer>
@@ -2744,6 +2752,7 @@ You should have received a copy of the GNU General Public License
 
     <script type="module">
       import { SuperschedaController } from './js/controller.js?v=%REV';
+      import { DDArray } from './js/ddarray.js?v=%REV';
 
       const $video = $('video');
       const conditionallyChooseBackdrop = () => {
@@ -2875,6 +2884,17 @@ You should have received a copy of the GNU General Public License
 
         window.DD = new SuperschedaController('h2jyx20rz9lbwiw');
         window.DD.setup();
+
+
+        const $equipList = $('#equipment_list');
+        const equipController = DDArray.getController($equipList);
+        window.DDEquip = new Sortable($equipList[0], {
+          draggable: '[data-dd-array="item"]',
+          handle: '.fa-sort',
+          onEnd: (evt) => {
+            equipController.reindexFromDOM();
+          }
+        });
 
         // Activate the TOCs
         $(window).resize();
