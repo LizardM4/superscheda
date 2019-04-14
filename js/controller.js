@@ -413,7 +413,7 @@ class SuperschedaController {
 
     _setupWaitingModal() {
         this._modalWaiting = $('#waiting');
-        this._modalWaitingBackdrop = $('#waiting-backdrop');
+        this._modalWaitingBackdrop = $('#waiting_backdrop');
         this._modalWaitingBody = this._modalWaiting.find('p > i.fas');
         this._modalWaiting.on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', (evt) => {
             if (evt.target === this._modalWaiting[0]){
@@ -469,9 +469,9 @@ class SuperschedaController {
     }
 
     _setupDynamicAttacks() {
-        const smTocController = DDArray.getController($('#toc_attacchi_sm'));
-        const mdTocController = DDArray.getController($('#toc_attacchi_md'));
-        $('#array_attacchi')
+        const smTocController = DDArray.getController($('#toc_attacks_sm'));
+        const mdTocController = DDArray.getController($('#toc_attacks_md'));
+        $('#attacks_list')
             .on('ddarray.title', (evt, $item, input) => {
                 evt.stopPropagation();
                 let title = $(input).val().trim();
