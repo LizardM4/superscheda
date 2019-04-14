@@ -70,22 +70,22 @@ striped.*/
 
 /* CUSTOM CHECKBOXES -----------------------------------------------------------------------*/
 
-.dd-custom-check.fa {
+.dd-custom-check .fa {
   margin-bottom: 0rem;
   padding: 0rem;
 }
-input[type="checkbox"] ~ .dd-custom-check.fa:before {
+.dd-custom-check input[type="checkbox"] ~ .fa:before {
   font-weight: 400;
 }
-input[type="checkbox"]:checked ~ .dd-custom-check.fa:before {
+.dd-custom-check input[type="checkbox"]:checked ~ .fa:before {
   font-weight: 900;
 }
 
-input[type="checkbox"] ~ .dd-custom-check.fa.dd-fa-check:before {
+.dd-custom-check input[type="checkbox"] ~ .fa.dd-fa-check:before {
   content: "\f0c8";
 }
 
-input[type="checkbox"]:checked ~ .dd-custom-check.fa.dd-fa-check:before {
+.dd-custom-check input[type="checkbox"]:checked ~ .fa.dd-fa-check:before {
   content: "\f14a";
 }
 
@@ -148,12 +148,33 @@ input[type="checkbox"]:checked ~ .dd-custom-check.fa.dd-fa-check:before {
   opacity: 1.0;
 }
 
-
 /* CUSTOMIZED BUTTONS ----------------------------------------------------------------------*/
+
+
+.btn-addon:focus, .btn-addon.focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  border-color: #80bdff;
+  border-left-width: 1px;
+}
+.btn-group .btn-addon:focus, .btn-group .btn-addon.focus {
+  z-index: 3;
+}
+.btn-group .btn-addon + .btn-addon {
+  border-left-width: 0px;
+  margin-left: 0px;
+}
+.btn-group .btn-addon:not(:last-child) {
+  border-right-width: 0px;
+  margin-right: 0px;
+}
+.btn-addon {
+  border-color: #ced4da;
+}
+
+
 
 .btn-addon {
   color: #495057;
-  border-color: #ced4da;
   background-color: #e9ecef;
 }
 
@@ -162,10 +183,26 @@ input[type="checkbox"]:checked ~ .dd-custom-check.fa.dd-fa-check:before {
   background-color: #ced4da;
 }
 
-.btn-addon:focus, .btn-addon.focus {
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-  border-color: #80bdff;
+.btn-addon:active {
+  background-color: #a8b3be;
 }
+
+
+
+.btn-addon:not(.dd-custom-check).active {
+  color: #f3f5f6;
+  background-color: #6c757d;
+}
+
+.btn-addon:not(.dd-custom-check).active:hover {
+  color: #fff;
+  background-color: #495057;
+}
+
+.btn-addon:not(.dd-custom-check).active:active {
+  background-color: #32383c;
+}
+
 
 /* LAYOUT ----------------------------------------------------------------------------------*/
 

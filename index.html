@@ -927,9 +927,9 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row pb-1" data-dd-array="master" data-dd-id="competenze">
                         <div class="input-group input-group-sm col">
                           <div class="input-group-prepend btn-group-toggle" data-toggle="buttons">
-                            <span class="btn btn-addon px-1" tabindex="0">
+                            <span class="btn btn-addon dd-custom-check px-1" tabindex="0">
                               <input type="checkbox" data-dd-id="attivo">
-                              <label class="fa dd-custom-check dd-fa-check fa-fw fa-lg"></label>
+                              <label class="fa dd-fa-check fa-fw fa-lg"></label>
                             </span>
                           </div>
                           <input type="text" class="form-control" data-dd-id="nome">
@@ -968,9 +968,9 @@ You should have received a copy of the GNU General Public License
                       <div class="form-row pb-1" data-dd-array="master" data-dd-id="linguaggi">
                         <div class="input-group input-group-sm col">
                           <div class="input-group-prepend btn-group-toggle" data-toggle="buttons">
-                            <span class="btn btn-addon px-1" tabindex="0">
+                            <span class="btn btn-addon dd-custom-check px-1" tabindex="0">
                               <input type="checkbox" data-dd-id="attivo">
-                              <label class="fa dd-custom-check dd-fa-check fa-fw fa-lg"></label>
+                              <label class="fa dd-fa-check fa-fw fa-lg"></label>
                             </span>
                           </div>
                           <input type="text" class="form-control" data-dd-id="nome">
@@ -1007,9 +1007,9 @@ You should have received a copy of the GNU General Public License
                         <div class="col form-row">
                           <div class="input-group input-group-sm col-8">
                             <div class="input-group-prepend btn-group-toggle" data-toggle="buttons">
-                              <span class="btn btn-addon px-1" tabindex="0">
+                              <span class="btn btn-addon dd-custom-check px-1" tabindex="0">
                                 <input type="checkbox" data-dd-id="attivo">
-                                <label class="fa dd-custom-check dd-fa-check fa-fw fa-lg"></label>
+                                <label class="fa dd-fa-check fa-fw fa-lg"></label>
                               </span>
                             </div>
                             <input type="text" class="form-control" data-dd-id="nome">
@@ -1464,9 +1464,9 @@ You should have received a copy of the GNU General Public License
                         <label class="col-form-label">Competente · Nome/descrizione</label>
                         <div class="input-group">
                           <div class="input-group-prepend btn-group-toggle" data-toggle="buttons">
-                            <span class="btn btn-addon px-1" tabindex="0">
+                            <span class="btn btn-addon dd-custom-check px-1" tabindex="0">
                               <input type="checkbox" data-dd-id="competente">
-                              <label class="fa dd-custom-check dd-fa-check fa-fw fa-lg"></label>
+                              <label class="fa dd-fa-check fa-fw fa-lg"></label>
                             </span>
                           </div>
                           <input type="text" class="form-control dd-dyn-title" data-dd-id="nome">
@@ -1575,28 +1575,28 @@ You should have received a copy of the GNU General Public License
                         </div>
                         <div data-dd-array="container">
                           <div class="form-row pb-1" data-dd-array="master" data-dd-id="danni">
-                            <div class="col-auto">
-                              <div data-dd-id="tipo" class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-sm btn-outline-secondary">
-                                  <input type="checkbox" data-dd-id="non_letali">
-                                  <i class="dd-icon dd-icon-protest" aria-hidden="true"></i>
-                                </label>
-                                <label class="btn btn-sm btn-outline-secondary">
-                                  <input type="checkbox" data-dd-id="perforanti">
-                                  <i class="dd-icon dd-icon-quiver" aria-hidden="true"></i>
-                                </label>
-                                <label class="btn btn-sm btn-outline-secondary">
-                                  <input type="checkbox" data-dd-id="contundenti">
-                                  <i class="dd-icon dd-icon-mace" aria-hidden="true"></i>
-                                </label>
-                                <label class="btn btn-sm btn-outline-secondary">
-                                  <input type="checkbox" data-dd-id="taglienti">
-                                  <i class="dd-icon dd-icon-sword" aria-hidden="true"></i>
-                                </label>
-                              </div>
-                            </div>
                             <div class="col">
-                              <input type="text" class="form-control form-control-sm" data-dd-id="dado">
+                              <div class="input-group">
+                                <div data-dd-id="tipo" class="btn-group btn-group-toggle input-group-prepend" data-toggle="buttons">
+                                  <label class="btn btn-sm btn-addon">
+                                    <input type="checkbox" data-dd-id="non_letali">
+                                    <i class="dd-icon dd-icon-protest" aria-hidden="true"></i>
+                                  </label>
+                                  <label class="btn btn-sm btn-addon">
+                                    <input type="checkbox" data-dd-id="perforanti">
+                                    <i class="dd-icon dd-icon-quiver" aria-hidden="true"></i>
+                                  </label>
+                                  <label class="btn btn-sm btn-addon">
+                                    <input type="checkbox" data-dd-id="contundenti">
+                                    <i class="dd-icon dd-icon-mace" aria-hidden="true"></i>
+                                  </label>
+                                  <label class="btn btn-sm btn-addon">
+                                    <input type="checkbox" data-dd-id="taglienti">
+                                    <i class="dd-icon dd-icon-sword" aria-hidden="true"></i>
+                                  </label>
+                                </div>
+                                <input type="text" class="form-control form-control-sm" data-dd-id="dado">
+                              </div>
                             </div>
                             <div class="col-auto form-row align-items-center justify-content-center">
                               <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
@@ -2056,16 +2056,16 @@ You should have received a copy of the GNU General Public License
                           <label class="col-form-label col-form-label-sm d-md-none">Acquisita · Nome · Di classe</label>
                           <div class="input-group input-group-sm">
                             <div class="input-group-prepend btn-group-toggle" data-toggle="buttons">
-                              <span class="btn btn-addon px-1" tabindex="0">
+                              <span class="btn btn-addon dd-custom-check px-1" tabindex="0">
                                 <input type="checkbox" data-dd-id="acquisita">
-                                <label class="fa dd-custom-check dd-fa-check fa-fw fa-lg"></label>
+                                <label class="fa dd-fa-check fa-fw fa-lg"></label>
                               </span>
                             </div>
                             <input data-dd-id="nome" type="text" class="form-control form-control-sm dd-sort-key">
                             <div class="input-group-append btn-group-toggle" data-toggle="buttons">
-                              <span class="btn btn-addon px-1" tabindex="0">
+                              <span class="btn btn-addon pb-0 mb-0 px-1" tabindex="0">
                                 <input type="checkbox" data-dd-id="di_classe">
-                                <label class="fa dd-custom-check fa-copyright dd-class fa-fw fa-lg"></label>
+                                <label class="fa fa-copyright dd-class fa-fw fa-lg"></label>
                               </span>
                             </div>
                           </div>
