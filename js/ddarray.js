@@ -132,6 +132,14 @@ class DDArray {
         }
     }
 
+    reindexFromDOM() {
+        this._items = this._collectItems();
+        const reindexedItems = this._reindex(0, true);
+        if (reindexedItems.length > 0) {
+            this.container.trigger('ddarray.reindex', [reindexedItems]);
+        }
+    }
+
     resize(reqSize) {
         if (this.length > reqSize) {
             this._remove(reqSize, this.length - reqSize);
