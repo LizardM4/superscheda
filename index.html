@@ -1461,20 +1461,20 @@ You should have received a copy of the GNU General Public License
                     </h6>
                     <div class="form-row">
                       <div class="col-md-6 col-12">
-                        <label class="col-form-label">Competente · Nome/descrizione</label>
-                        <div class="input-group">
+                        <label class="col-form-label col-form-label-sm">Competente · Nome/descrizione</label>
+                        <div class="input-group input-group-sm">
                           <div class="input-group-prepend btn-group-toggle" data-toggle="buttons">
                             <span class="btn btn-addon dd-custom-check px-1" tabindex="0">
                               <input type="checkbox" data-dd-id="competente">
                               <label class="fa dd-fa-check fa-fw fa-lg"></label>
                             </span>
                           </div>
-                          <input type="text" class="form-control dd-dyn-title" data-dd-id="nome">
+                          <input type="text" class="form-control form-control-sm dd-dyn-title" data-dd-id="nome">
                         </div>
                       </div>
                       <div class="col-md-3 col-6">
-                        <div class="text-truncate"><label class="col-form-label">Tipo/sottotipo</label></div>
-                        <select class="custom-select" data-dd-id="tipo">
+                        <div class="text-truncate"><label class="col-form-label col-form-label-sm">Tipo/sottotipo</label></div>
+                        <select class="custom-select custom-select-sm" data-dd-id="tipo">
                           <option value="senza_armi" selected>Senz'armi</option>
                           <option value="mischia_semplice">Mischia/semplice</option>
                           <option value="mischia_da_guerra">Mischia/da guerra</option>
@@ -1488,8 +1488,8 @@ You should have received a copy of the GNU General Public License
                         </select>
                       </div>
                       <div class="col-md-3 col-6">
-                        <div class="text-truncate"><label class="col-form-label">Taglia</label></div>
-                        <select class="custom-select" data-dd-id="taglia">
+                        <div class="text-truncate"><label class="col-form-label col-form-label-sm">Taglia</label></div>
+                        <select class="custom-select custom-select-sm" data-dd-id="taglia">
                           <option value="colossale">Colossale</option>
                           <option value="mastodontica">Mastodontica</option>
                           <option value="enorme">Enorme</option>
@@ -1504,20 +1504,20 @@ You should have received a copy of the GNU General Public License
                     </div>
                     <div class="form-row">
                       <div class="col-md-3 col-6">
-                        <label class="col-form-label">Gittata</label>
-                        <div class="input-group">
-                          <input type="text" data-dd-type="float" class="form-control text-right" data-dd-id="gittata">
+                        <label class="col-form-label col-form-label-sm">Gittata</label>
+                        <div class="input-group input-group-sm">
+                          <input type="text" data-dd-type="float" class="form-control form-control-sm text-right" data-dd-id="gittata">
                           <div class="input-group-append">
                             <span class="input-group-text">m</span>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-3 col-6">
-                        <label class="col-form-label">Critico</label>
-                        <input type="text" class="form-control" data-dd-id="critico">
+                        <label class="col-form-label col-form-label-sm">Critico</label>
+                        <input type="text" class="form-control form-control-sm" data-dd-id="critico">
                       </div>
                       <div class="col-md-6 col-12 form-inline pt-4">
-                        <div class="custom-control custom-checkbox mt-md-3 ml-2">
+                        <div class="custom-control custom-checkbox mt-2">
                           <input type="checkbox" class="custom-control-input" data-dd-id="bonus_arco_mani">
                           <label class="custom-control-label text-left">Arco composito / 1&frac12; mano</label>
                         </div>
@@ -1643,6 +1643,9 @@ You should have received a copy of the GNU General Public License
                         <div class="row">
                           <div class="col-md-6 separatable" data-dd-id="tiro_colpire">
                             <div class="form-row">
+                              <div class="col-12 d-md-none">
+                                <h6>Modificatori al tiro per colpire</h6>
+                              </div>
                               <div class="col-3 col-sm-2 text-truncate">
                                 <label class="col-form-label col-form-label-sm">Mod</label>
                               </div>
@@ -1703,6 +1706,9 @@ You should have received a copy of the GNU General Public License
 
                           <div class="col-md-6" data-dd-id="tiro_danni">
                             <div class="form-row">
+                              <div class="col-12 d-md-none">
+                                <h6>Modificatori al tiro per i danni</h6>
+                              </div>
                               <div class="col-3 col-sm-2 text-truncate">
                                 <label class="col-form-label col-form-label-sm">Mod</label>
                               </div>
@@ -1755,6 +1761,9 @@ You should have received a copy of the GNU General Public License
                         </div>
 
                         <div class="row">
+                          <div class="col-12 d-md-none">
+                            <h6>Varie</h6>
+                          </div>
                           <div class="col-md-6 separatable">
                             <div class="form-row">
                               <div class="col-4">
