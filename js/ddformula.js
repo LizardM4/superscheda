@@ -957,14 +957,14 @@ class DDFormulaGraph {
 
     removeFormulaNode(node) {
         if (node._formulaNode) {
-            if (node._formulaNode.formula) {
-                node._formulaNode.formula._remove();
-                node._formulaNode.formula = null;
-            }
             if (this.dynamicUpdateGraph) {
                 this._levelsOutdated = true;
                 this._removeFromPredecessorsOfNode(node._formulaNode);
                 this._detachFormulaNodeFromSuccessors(node._formulaNode);
+            }
+            if (node._formulaNode.formula) {
+                node._formulaNode.formula._remove();
+                node._formulaNode.formula = null;
             }
             this._pendingFormulaUpdate.delete(node._formulaNode);
             const idx = this._formulaNodes.indexOf(node._formulaNode);
