@@ -501,11 +501,19 @@ Versioner.instance().addPatch('0.2.4', (dataBag) => {
 
 Versioner.instance().addPatch('0.2.5', (dataBag) => {
     if (Array.isArray(dataBag['abilita'])) {
-        dataBag['abilita'].forEach(ability => {
-            const key = objGet(ability, 'chiave', null);
+        dataBag['abilita'].forEach(skill => {
+            const key = objGet(skill, 'chiave', null);
             if (key !== null) {
-                ability['chiave'] = key.toLowerCase();
+                skill['chiave'] = key.toLowerCase();
             }
+        });
+    }
+});
+
+Versioner.instance().addPatch('0.2.6', (dataBag) => {
+    if (Array.isArray(dataBag['equipaggiamento'])) {
+        dataBag['equipaggiamento'].forEach(equip => {
+            equip['quantita'] = 1;
         });
     }
 });

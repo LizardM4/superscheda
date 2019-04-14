@@ -2418,7 +2418,7 @@ You should have received a copy of the GNU General Public License
                           <label class="col-form-label col-form-label-sm d-md-none">Rif</label>
                           <input type="text" class="form-control form-control-sm" data-dd-id="rif">
                         </div>
-                        <div class="col-md-1 col pr-3">
+                        <div class="col-md-1 col pr-lg-3">
                           <label class="col-form-label col-form-label-sm d-md-none dd-if-spell-known">Prepara</label>
                           <label class="col-form-label col-form-label-sm d-md-none dd-if-spell-ready">Usa</label>
                           <label class="col-form-label col-form-label-sm d-md-none dd-if-spell-used">Riprepara</label>
@@ -2614,6 +2614,9 @@ You should have received a copy of the GNU General Public License
                   <div class="col-3 col-md-2">
                     <label class="col-form-label col-form-label-sm">Peso</label>
                   </div>
+                  <div class="col-2">
+                    <label class="col-form-label col-form-label-sm">Qtà</label>
+                  </div>
                 </div>
                 <div data-dd-array="container" id="equipment_list">
                   <div class="form-row pb-1" data-dd-array="master" data-dd-id="equipaggiamento">
@@ -2638,6 +2641,10 @@ You should have received a copy of the GNU General Public License
                         </div>
                       </div>
                     </div>
+                    <div class="col-2">
+                      <input type="text" class="form-control form-control-sm" data-dd-id="quantita" data-dd-type="float">
+                      <input type="hidden" data-dd-id="tot_peso" data-dd-type="float" data-dd-formula="mul ./peso ./quantita">
+                    </div>
                     <div class="col-auto form-row align-items-center justify-content-center">
                       <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
                         <i class="fas fa-minus-square" aria-hidden="true"></i>
@@ -2658,7 +2665,7 @@ You should have received a copy of the GNU General Public License
                   <div class="col-md-4 col-12">
                     <div class="text-truncate"><label class="col-form-label">Totale peso trasportato</label></div>
                     <div class="input-group">
-                      <input type="text" data-dd-type="float" data-dd-formula="sum /equipaggiamento[-1].peso" data-dd-id="peso_tot" class="text-right form-control">
+                      <input type="text" data-dd-type="float" data-dd-formula="sum /equipaggiamento[-1].tot_peso" data-dd-id="peso_tot" class="text-right form-control">
                       <div class="input-group-append">
                         <span class="input-group-text">kg</span>
                       </div>
