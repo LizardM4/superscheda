@@ -1259,4 +1259,4 @@ class DDNode {
 
 }
 
-export { DDGraph, DDNode, DFSEvent };
+export { DDGraph, DDNode, DFSEvent, DDType };
