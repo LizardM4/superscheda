@@ -7,7 +7,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Des",
+            "chiave": "des",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -26,7 +26,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Car",
+            "chiave": "car",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -45,7 +45,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Int",
+            "chiave": "int",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -64,7 +64,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Des",
+            "chiave": "des",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -83,7 +83,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Sag",
+            "chiave": "sag",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -102,7 +102,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Car",
+            "chiave": "car",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -121,7 +121,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Des",
+            "chiave": "des",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -140,7 +140,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Int",
+            "chiave": "int",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -159,7 +159,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Cos",
+            "chiave": "cos",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -178,7 +178,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Int",
+            "chiave": "int",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -197,7 +197,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Int",
+            "chiave": "int",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -216,7 +216,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Car",
+            "chiave": "car",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -235,7 +235,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Int",
+            "chiave": "int",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -254,7 +254,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Des",
+            "chiave": "des",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -273,7 +273,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Int",
+            "chiave": "int",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -292,7 +292,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Sag",
+            "chiave": "sag",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -311,7 +311,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Car",
+            "chiave": "car",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -330,7 +330,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Car",
+            "chiave": "car",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -349,7 +349,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Des",
+            "chiave": "des",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -368,7 +368,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Des",
+            "chiave": "des",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -387,7 +387,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "For",
+            "chiave": "for",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -406,7 +406,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Sag",
+            "chiave": "sag",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -425,7 +425,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Sag",
+            "chiave": "sag",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -444,7 +444,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Sag",
+            "chiave": "sag",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -463,7 +463,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Car",
+            "chiave": "car",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -482,7 +482,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Car",
+            "chiave": "car",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -501,7 +501,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Des",
+            "chiave": "des",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -520,7 +520,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "For",
+            "chiave": "for",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -539,7 +539,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Int",
+            "chiave": "int",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -558,7 +558,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "For",
+            "chiave": "for",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -577,7 +577,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Des",
+            "chiave": "des",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -596,7 +596,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Sag",
+            "chiave": "sag",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -615,7 +615,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Des",
+            "chiave": "des",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -634,7 +634,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Car",
+            "chiave": "car",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -653,7 +653,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "Int",
+            "chiave": "int",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -673,42 +673,7 @@
         null
     ],
     "att_opportunita": null,
-    "attacchi": [
-        {
-            "aura": null,
-            "bonus_arco_mani": false,
-            "ca_arma": null,
-            "competente": true,
-            "critico": "×2",
-            "danni": null,
-            "durezza": null,
-            "gittata": null,
-            "materiale": null,
-            "munizioni": null,
-            "nome": "Colpo senz'armi",
-            "note": null,
-            "peso": null,
-            "prezzo": null,
-            "punti_ferita": null,
-            "scuola": null,
-            "taglia": "media",
-            "taglia_oggetto": "media",
-            "tipo": "senza_armi",
-            "tiro_colpire": {
-                "bab": null,
-                "car_chiave": "for",
-                "mod_c": null,
-                "modificatori": null
-            },
-            "tiro_colpire_tot": null,
-            "tiro_danni": {
-                "car_chiave": "for",
-                "mod_c": null,
-                "modificatori": null
-            },
-            "tiro_danni_tot": null
-        }
-    ],
+    "attacchi": null,
     "background": null,
     "bonus_att_base": {
         "att": [
@@ -1082,6 +1047,18 @@
             null,
             null
         ],
+        "totale": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        ],
         "usati": [
             null,
             null,
@@ -1225,5 +1202,5 @@
             "nome": "Vista cieca"
         }
     ],
-    "_version": "0.2.4"
+    "_version": "0.2.6"
 }
