@@ -1542,7 +1542,7 @@ You should have received a copy of the GNU General Public License
                               <div class="input-group input-group-sm">
                                 <input type="text" data-dd-type="int" class="form-control form-control-sm" data-dd-id="quantita">
                                 <div class="input-group-append">
-                                  <button class="btn btn-sm btn-addon dd-fire-btn">
+                                  <button class="btn btn-sm btn-addon" data-dd-increment="-1">
                                     <i class="fas fa-fire"></i>
                                   </button>
                                 </div>
@@ -2642,7 +2642,17 @@ You should have received a copy of the GNU General Public License
                       </div>
                     </div>
                     <div class="col-2">
-                      <input type="text" class="form-control form-control-sm" data-dd-id="quantita" data-dd-type="float">
+                      <div class="input-group input-group-sm">
+                        <input type="text" class="form-control form-control-sm" data-dd-id="quantita" data-dd-type="float">
+                        <div class="input-group-append btn-group">
+                          <button class="btn btn-smp btn-addon p-1" data-dd-increment="1">
+                            <i class="fas fa-plus fa-sm"></i>
+                          </button>
+                          <button class="btn btn-smp btn-addon p-1" data-dd-increment="-1">
+                            <i class="fas fa-minus fa-sm"></i>
+                          </button>
+                        </div>
+                      </div>
                       <input type="hidden" data-dd-id="tot_peso" data-dd-type="float" data-dd-formula="mul ./peso ./quantita">
                     </div>
                     <div class="col-auto form-row align-items-center justify-content-center">
@@ -2872,17 +2882,6 @@ You should have received a copy of the GNU General Public License
             } else if (!$mainNav.is(':visible')) {
               $mainNav.slideDown(200);
             }
-        });
-
-        $('.dd-fire-btn').click((evt) => {
-          const $btn = $(evt.target);
-          const $qty = $btn.closest('.input-group').find('input[data-dd-id="quantita"]');
-          if ($qty.length > 0) {
-            const node = window.DD.graph.getNodeOfDOMElement($qty[0]);
-            if (node && typeof node.value === 'number') {
-              node.value = Math.max(0, node.value - 1);
-            }
-          }
         });
 
         // Autoexpand sections when clicking on the menu

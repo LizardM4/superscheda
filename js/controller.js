@@ -20,7 +20,7 @@
 import { timeIt, arrayCompare } from './helper.js?v=%REV';
 import { DropboxExplorer, pathCombine } from './dbxexplorer.js?v=%REV';
 import { DDArray } from './ddarray.js?v=%REV';
-import { DDGraph } from './ddgraph.js?v=%REV';
+import { DDGraph, DDType } from './ddgraph.js?v=%REV';
 
 let _uniqueCnt = 0;
 
@@ -468,6 +468,27 @@ class SuperschedaController {
         });
     }
 
+    _setupDynamicIncrementers() {
+        $('[data-dd-increment]').click((evt) => {
+            const $target = $(evt.target).closest('.btn');
+            const $inputs = $target.closest('.input-group')
+                .find('input[data-dd-path][data-dd-type]:not([type="hidden"])');
+            const node = window.DD.graph.getNodeOfDOMElement($inputs[0]);
+            if (node && typeof node.value === 'number') {
+                let increment = $target.attr('data-dd-increment');
+                if (node.type === DDType.FLOAT) {
+                    increment = parseFloat(increment);
+                } else {
+                    increment = parseInt(increment);
+                }
+                const newValue = node.value + increment;
+                if (typeof newValue === 'number' && newValue === newValue) {
+                    node.value = newValue;
+                }
+            }
+        });
+    }
+
     _setupDynamicAttacks() {
         const smTocController = DDArray.getController($('#toc_attacks_sm'));
         const mdTocController = DDArray.getController($('#toc_attacks_md'));
@@ -646,6 +667,7 @@ class SuperschedaController {
         this._setupSpells();
         this._setupDynamicTitles();
         this._setupDynamicAttacks();
+        this._setupDynamicIncrementers();
         this._setupDlButton();
         this._setupLogoutButton();
         this._setupAutosave();
