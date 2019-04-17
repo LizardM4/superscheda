@@ -1,0 +1,49 @@
+/*Set the size of the ribbon, on small and big devices.*/
+@media (max-width: 767px) {
+  .forkme-ribbon .forkme-ribbon-background {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .forkme-ribbon .forkme-ribbon-background {
+    width: 5.6rem;
+    height: 5.6rem;
+  }
+}
+
+/*Fix the position and the z-index of all the components of the ribbon*/
+.forkme-ribbon .forkme-ribbon-background, .forkme-ribbon .forkme-ribbon-text {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+}
+
+/*The background is a skewed linear gradient; need to set the right origin.*/
+.forkme-ribbon .forkme-ribbon-background {
+  background: linear-gradient(90deg, #28a745, #1e7e34);
+  transform: skewX(-45deg);
+  transform-origin: 0% 100%;
+  box-shadow: -0.1rem 0 1rem rgba(0, 0, 0, 0.4);
+}
+
+/*The foreground has a top, dashed border, a box and text shadow and is rotated by 45 deg.*/
+.forkme-ribbon .forkme-ribbon-text {
+  transform: translate(50%, 0%) rotate(-45deg);
+  transform-origin: 50% 100%;
+  text-align: center;
+  border-top-style: dashed;
+  border-top-width: thin;
+  border-top-color: #f8f9fa;
+  padding-right: 10rem;
+  padding-left: 10rem;
+  padding-top: .15rem;
+  padding-bottom: 0.7rem;
+  color: #f8f9fa;
+  box-shadow: 0 0.1rem 0.2rem 0.1rem rgba(0, 0, 0, 0.5);
+  text-shadow: 0.05rem -0.05rem rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+  overflow: hidden;
+}
