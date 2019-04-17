@@ -26,8 +26,12 @@
   },
   "homepage": "https://dd.5p4k.me",
   "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/plugin-transform-runtime": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
     "@fortawesome/fontawesome-svg-core": "^1.2.17",
     "@fortawesome/free-solid-svg-icons": "^5.8.1",
+    "babel-loader": "^8.0.5",
     "bootstrap": "^4.3.1",
     "clean-webpack-plugin": "^2.0.1",
     "css-loader": "^2.1.1",

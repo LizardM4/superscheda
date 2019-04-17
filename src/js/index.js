@@ -11,3 +11,7 @@ library.add(faCamera);
 dom.watch();
 
 console.log('Hello webpack');
+
+const sth = (a) => 2 * a;
+
+console.log(sth(22));
