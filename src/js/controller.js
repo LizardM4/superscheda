@@ -32,8 +32,7 @@ class SuperschedaController {
         return this._graph;
     }
 
-    constructor(dbxAppId) {
-        this._appId = dbxAppId;
+    constructor() {
         this._dropbox = null;
         this._hasLocalStorage = true;
         this._saveModal = null;
@@ -59,9 +58,26 @@ class SuperschedaController {
                 return a.toString().localeCompare(b.toString());
             }
         };
+
+        this._initDOM();  // Must come first.
+
+        this._initDownloadBtn();
+        this._initArrayAutosort();
+        this._initSpells();
+        this._initAttacks();
+        this._initGUIAnimatedChevrons();
+        this._initGUIDynamicTitles();
+        this._initGUIDynamicIncrementers();
+
+        this._detectLocalStorage();
+
+        this._initAutosave();
+        if (!this.loadAutosave()) {
+            this.loadRemoteFile('etc/default.json');
+        }
     }
 
-    _initLocalStorage() {
+    _detectLocalStorage() {
         this._hasLocalStorage = storageAvailable('localStorage');
         if (this._hasLocalStorage) {
             // Did we already open this?
@@ -88,44 +104,18 @@ class SuperschedaController {
         }
     }
 
-    _retrieveAccessToken(dbxConstructor) {
-        // Try to get the access token from the local storage
-        let accessToken = null;
-        let appId = null;
-        if (this._hasLocalStorage) {
-            // Use the app id for versioning; forget the token if needed
-            accessToken = window.localStorage.getItem('access_token');
-            appId = window.localStorage.getItem('app_id');
-        }
-        if (!accessToken || appId !== this._appId) {
-            accessToken = null;
-            const parms = parseQueryString();
-            if ('access_token' in parms) {
-                accessToken = parms['access_token'];
-            }
-        }
-        if (accessToken) {
-            this._dropbox = dbxConstructor({accessToken: accessToken});
-            // Test if this dropbox works
-            this._dropbox.usersGetCurrentAccount()
-                .then(() => { this._setHasDropbox(true, dbxConstructor); })
-                .catch(() => { this._setHasDropbox(false, dbxConstructor); });
-        } else {
-            this._setHasDropbox(false, dbxConstructor);
-        }
-    }
-
-    _setHasDropbox(hasDbx, dbxConstructor) {
+    _dbxCompleteSetup(appId, hasDbx, dbxConstructor) {
         if (hasDbx) {
             $('body').addClass('has-dbx');
             $('#btn_logout').prop('disabled', false);
             if (this._hasLocalStorage) {
                 // Save the access token
                 window.localStorage.setItem('access_token', this._dropbox.getAccessToken());
-                window.localStorage.setItem('app_id', this._appId);
+                window.localStorage.setItem('app_id', appId);
             }
-            this._setupSaveModal();
-            this._setupLoadModal();
+            this._dbxSetupSaveToDialog();
+            this._dbxSetupLoadFromDialog();
+            this._dbxSetupLogoff();
         } else {
             if (this._hasLocalStorage) {
                 // Forget the access token if any
@@ -234,10 +224,6 @@ class SuperschedaController {
         }
     }
 
-    _promptReady() {
-        this.toggleWaiting(false);
-    }
-
     _getAutosortKey(arrayItem) {
         let matches = $(arrayItem).find('.dd-sort-key')
             .filter((_, domElement) => {
@@ -273,7 +259,7 @@ class SuperschedaController {
         }
     }
 
-    _setupLogoutButton() {
+    _dbxSetupLogoff() {
         $('#btn_logout').click(() => {
             this._dropbox.authTokenRevoke();
             this.autosave();
@@ -286,7 +272,7 @@ class SuperschedaController {
         });
     }
 
-    _setupAutosave() {
+    _initAutosave() {
         const autosaveInterval = 1000 * 60;
         if (this._hasLocalStorage) {
             $(window).bind('unload', this._autosaveEvent);
@@ -294,7 +280,7 @@ class SuperschedaController {
         setInterval(this._autosaveEvent, autosaveInterval);
     }
 
-    _setupDlButton() {
+    _initDownloadBtn() {
         this._saveModal.on('show.bs.modal', () => {
             this._saveModal.find('a.btn[download]')
                 .attr('href', 'data:application/json;charset=utf-8,' +
@@ -303,7 +289,7 @@ class SuperschedaController {
         this._saveModal.find('a.btn[download]').click(this._autosaveEvent);
     }
 
-    _setupSaveModal() {
+    _dbxSetupSaveToDialog() {
         const saveForm = this._saveModal.find('form');
         const fileNameInput = saveForm.find('input');
 
@@ -352,7 +338,7 @@ class SuperschedaController {
         });
     };
 
-    _setupLoadModal() {
+    _dbxSetupLoadFromDialog() {
         // Setup dropbox explorer
         this._loadExplorer = new DropboxExplorer(
             this._dropbox,
@@ -382,7 +368,7 @@ class SuperschedaController {
         });
     }
 
-    _setupAnimatedChevrons() {
+    _initGUIAnimatedChevrons() {
         // Find all the chevron buttons
         $('div.card div.card-header button.close i.fas').each((_, match) => {
             const $match = $(match);
@@ -413,8 +399,11 @@ class SuperschedaController {
         });
     }
 
-    _setupWaitingModal() {
+    _initDOM() {
         this._modalWaiting = $('#waiting');
+        this._saveModal = $('#save_to');
+        this._loadModal = $('#load_from');
+
         this._modalWaitingBackdrop = $('#waiting_backdrop');
         this._modalWaitingBody = this._modalWaiting.find('p > i.fas');
         this._modalWaiting.on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', (evt) => {
@@ -427,12 +416,15 @@ class SuperschedaController {
                 }
             }
         });
+
+        this.graph.loadNodesFromDom();
     }
 
-    _setupDynamicTitles() {
+    _initGUIDynamicTitles() {
         // Select all the containers which have a master which contain a direct descendant
         // which itself is a input.dd-dyn-title
         const controllers = [];
+        // TODO there is no need to collect these
         const matches = $('input.dd-dyn-title').each((_, input) => {
             // Find the corresponding container
             controllers.push(DDArray.getController($(input)));
@@ -470,7 +462,7 @@ class SuperschedaController {
         });
     }
 
-    _setupDynamicIncrementers() {
+    _initGUIDynamicIncrementers() {
         $('[data-dd-increment]').click((evt) => {
             const $target = $(evt.target).closest('.btn');
             const $inputs = $target.closest('.input-group')
@@ -491,7 +483,7 @@ class SuperschedaController {
         });
     }
 
-    _setupDynamicAttacks() {
+    _initAttacks() {
         const smTocController = DDArray.getController($('#toc_attacks_sm'));
         const mdTocController = DDArray.getController($('#toc_attacks_md'));
         $('#attacks_list')
@@ -582,7 +574,7 @@ class SuperschedaController {
         mdTocController.container.on('ddarray.reindex', evtReindex);
     }
 
-    _setupSpells() {
+    _initSpells() {
         // Transfer classes to spell array items
         this.graph.nodeByPath('incantesimi[-1].preparazione').obj.change((evt) => {
           const selectNode = this.graph.getNodeOfDOMElement(evt.target);
@@ -631,7 +623,7 @@ class SuperschedaController {
     }
 
 
-    _setupAutosort() {
+    _initArrayAutosort() {
         $('.dd-sort-key').blur((evt, ddNode) => {
             // If ddNode is set, this is a programmatic change.
             // This means that we may be loading data. Postpone any sorting.
@@ -655,29 +647,31 @@ class SuperschedaController {
         });
     }
 
-
-    setup(dbxConstructor) {
-        this._saveModal = $('#save_to');
-        this._loadModal = $('#load_from');
-        this.graph.loadNodesFromDom();
-        this._initLocalStorage();
-        // TODO move this at the very end
-        this._retrieveAccessToken(dbxConstructor);
-        // ^ will call _setupLoadModal and _setupSaveModal
-        this._setupWaitingModal();
-        this._setupAnimatedChevrons();
-        this._setupAutosort();
-        this._setupSpells();
-        this._setupDynamicTitles();
-        this._setupDynamicAttacks();
-        this._setupDynamicIncrementers();
-        this._setupDlButton();
-        this._setupLogoutButton();
-        this._setupAutosave();
-        if (!this.loadAutosave()) {
-            this.loadRemoteFile('etc/default.json');
+    setupDropbox(appId, dbxConstructor) {
+        // Try to get the access token from the local storage
+        let accessToken = null;
+        let storedAppId = null;
+        if (this._hasLocalStorage) {
+            // Use the app id for versioning; forget the token if needed
+            accessToken = window.localStorage.getItem('access_token');
+            storedAppId = window.localStorage.getItem('app_id');
         }
-        this._promptReady();
+        if (!accessToken || storedAppId !== appId) {
+            accessToken = null;
+            const parms = parseQueryString();
+            if ('access_token' in parms) {
+                accessToken = parms['access_token'];
+            }
+        }
+        if (accessToken) {
+            this._dropbox = dbxConstructor({accessToken: accessToken});
+            // Test if this dropbox works
+            this._dropbox.usersGetCurrentAccount()
+                .then(() => { this._dbxCompleteSetup(true, dbxConstructor); })
+                .catch(() => { this._dbxCompleteSetup(false, dbxConstructor); });
+        } else {
+            this._dbxCompleteSetup(false, dbxConstructor);
+        }
     }
 
 

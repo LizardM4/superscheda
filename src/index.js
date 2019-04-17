@@ -30,7 +30,7 @@ async function prepareControllerAndDropbox(appId) {
     const [controller, fetch, Dropbox] = await Promise.all([
         import(/* webpackChunkName: "controller", webpackPreload: true */
             './js/controller.js').then(
-            ({SuperschedaController: SuperschedaController}) => new SuperschedaController(appId)),
+            ({SuperschedaController: SuperschedaController}) => new SuperschedaController()),
         import(/* webpackChunkName: "fetch",   webpackPrefetch: true */
             'isomorphic-fetch').then(
             ({default: fetch}) => fetch),
@@ -43,7 +43,8 @@ async function prepareControllerAndDropbox(appId) {
         return new Dropbox(args);
     };
     window.DD = controller;
-    DD.setup(dbxFactory);
+    DD.setupDropbox(appId, dbxFactory);
+    DD.toggleWaiting(false);
     return DD;
 }
 
