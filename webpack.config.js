@@ -51,7 +51,7 @@ module.exports = {
       },
       {
         test: /\.hbs$/,
-        use: ['handlebars-loader', 'extract-loader', 'html-loader'],
+        use: ['handlebars-template-loader'],
       },
       {
         test: /\.svg$/,
