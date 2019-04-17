@@ -21,7 +21,6 @@ import { timeIt, arrayCompare, parseQueryString, storageAvailable, pathCombine }
 import { DropboxExplorer } from './dbxexplorer.js';
 import { DDArray } from './ddarray.js';
 import { DDGraph, DDType } from './ddgraph.js';
-import { Dropbox } from 'dropbox';
 import './jquery_animaterotate.js';
 import $ from 'jquery';
 
@@ -33,8 +32,9 @@ class SuperschedaController {
         return this._graph;
     }
 
-    constructor(dbxAppId) {
+    constructor(dbxAppId, dbxConstructor) {
         this._appId = dbxAppId;
+this._dbxConstructor = dbxConstructor
         this._dropbox = null;
         this._hasLocalStorage = true;
         this._saveModal = null;
@@ -106,7 +106,7 @@ class SuperschedaController {
             }
         }
         if (accessToken) {
-            this._dropbox = new Dropbox.Dropbox({accessToken: accessToken});
+            this._dropbox = this._dbxConstructor({accessToken: accessToken});
             // Test if this dropbox works
             this._dropbox.usersGetCurrentAccount()
                 .then(() => { this._setHasDropbox(true); })
@@ -135,7 +135,7 @@ class SuperschedaController {
                 $('.btn-dbx-login').click(this._autosaveEvent);
             }
             // Fall back on a client-id base dbx
-            this._dropbox = new Dropbox.Dropbox({clientId: this._appId});
+            this._dropbox = this._dbxConstructor({clientId: this._appId});
             // Generate  the authentication url
             let url = null;
             if (window.location.hostname === 'localhost') {
