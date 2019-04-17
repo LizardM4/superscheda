@@ -17,6 +17,8 @@
 
 'use strict';
 
+import { jQuery as $ } from 'jquery';
+
 class DDArray {
     get container() {
         return this._container;

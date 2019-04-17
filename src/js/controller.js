@@ -17,10 +17,12 @@
 
 'use strict';
 
-import { timeIt, arrayCompare } from './helper.js';
-import { DropboxExplorer, pathCombine } from './dbxexplorer.js';
+import { timeIt, arrayCompare, parseQueryString, storageAvailable, pathCombine } from './helper.js';
+import { DropboxExplorer } from './dbxexplorer.js';
 import { DDArray } from './ddarray.js';
 import { DDGraph, DDType } from './ddgraph.js';
+import { Dropbox } from 'dropbox';
+import './jquery_animaterotate.js';
 
 let _uniqueCnt = 0;
 
@@ -740,61 +742,6 @@ class SuperschedaController {
             });
     }
 
-}
-
-// https://stackoverflow.com/a/15191130/1749822
-$.fn.animateRotate = function(angle, duration, easing, complete) {
-    const args = $.speed(duration, easing, complete);
-    const step = args.step;
-    for (let i = 0; i < this.length; i++) {
-        const e = this[i];
-        args.complete = $.proxy(args.complete, e);
-        args.step = (now) => {
-            $.style(e, 'transform', 'rotate(' + now + 'deg)');
-            if (step) return step.apply(e, arguments);
-        };
-        $({deg: 0}).animate({deg: angle}, args);
-    }
-};
-
-// https://stackoverflow.com/a/2880929/1749822
-function parseQueryString() {
-    const pl = /\+/g;  // Regex for replacing addition symbol with a space
-    const search = /([^&=]+)=?([^&]*)/g;
-    const decode = function (s) { return decodeURIComponent(s.replace(pl, ' ')); };
-    const query = window.location.hash.substring(1);
-    let match = null;
-    const urlParams = {};
-    while (match = search.exec(query)) {
-        urlParams[decode(match[1])] = decode(match[2]);
-    }
-    return urlParams;
-}
-
-
-// https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
-function storageAvailable(type) {
-    try {
-        const storage = window[type],
-            x = '__storage_test__';
-        storage.setItem(x, x);
-        storage.removeItem(x);
-        return true;
-    }
-    catch (e) {
-        return e instanceof DOMException && (
-            // everything except Firefox
-            e.code === 22 ||
-            // Firefox
-            e.code === 1014 ||
-            // test name field too, because code might not be present
-            // everything except Firefox
-            e.name === 'QuotaExceededError' ||
-            // Firefox
-            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
-            // acknowledge QuotaExceededError only if there's something already stored
-            storage.length !== 0;
-    }
 }
 
 export { SuperschedaController };

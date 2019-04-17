@@ -43,21 +43,8 @@ and name is the filename.
 */
 'use strict';
 
-function pathCombine(path, file, absolute=true) {
-    return pathNormalize(path.split('/').concat([file]), absolute);
-}
-
-function pathNormalize(path, absolute=true) {
-    if (!Array.isArray(path)) {
-        path = path.split('/');
-    }
-    path = path.filter(piece => piece.length > 0).join('/');
-    if (absolute) {
-        path = '/' + path;
-    }
-    return path;
-}
-
+import { jQuery as $ } from 'jquery';
+import { pathCombine, pathNormalize } from './helper.js';
 
 class DropboxExplorer {
     constructor(dbx, explorer, fileClickEvent, entryFilter=null) {
@@ -244,4 +231,4 @@ class DropboxExplorer {
     }
 }
 
-export { DropboxExplorer, pathCombine, pathNormalize };
+export { DropboxExplorer };

@@ -157,4 +157,73 @@ function dictShallowCopy(dict) {
 }
 
 
-export { arrayCompare, arrayMultidimensionalPrefill, arrayBinarySearch, timeIt, strictParseInt, strictParseFloat, dictShallowCopy };
+function pathCombine(path, file, absolute=true) {
+    return pathNormalize(path.split('/').concat([file]), absolute);
+}
+
+function pathNormalize(path, absolute=true) {
+    if (!Array.isArray(path)) {
+        path = path.split('/');
+    }
+    path = path.filter(piece => piece.length > 0).join('/');
+    if (absolute) {
+        path = '/' + path;
+    }
+    return path;
+}
+
+
+// https://stackoverflow.com/a/2880929/1749822
+function parseQueryString() {
+    const pl = /\+/g;  // Regex for replacing addition symbol with a space
+    const search = /([^&=]+)=?([^&]*)/g;
+    const decode = function (s) { return decodeURIComponent(s.replace(pl, ' ')); };
+    const query = window.location.hash.substring(1);
+    let match = null;
+    const urlParams = {};
+    while (match = search.exec(query)) {
+        urlParams[decode(match[1])] = decode(match[2]);
+    }
+    return urlParams;
+}
+
+
+// https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
+function storageAvailable(type) {
+    try {
+        const storage = window[type],
+            x = '__storage_test__';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+    }
+    catch (e) {
+        return e instanceof DOMException && (
+            // everything except Firefox
+            e.code === 22 ||
+            // Firefox
+            e.code === 1014 ||
+            // test name field too, because code might not be present
+            // everything except Firefox
+            e.name === 'QuotaExceededError' ||
+            // Firefox
+            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+            // acknowledge QuotaExceededError only if there's something already stored
+            storage.length !== 0;
+    }
+}
+
+
+export {
+    arrayCompare,
+    arrayMultidimensionalPrefill,
+    arrayBinarySearch,
+    timeIt,
+    strictParseInt,
+    strictParseFloat,
+    dictShallowCopy,
+    pathCombine,
+    pathNormalize,
+    parseQueryString,
+    storageAvailable
+};
