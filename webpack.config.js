@@ -4,14 +4,15 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const MediaQueryPlugin = require('media-query-plugin');
+const SriPlugin = require('webpack-subresource-integrity');
 
 module.exports = {
   entry: './src/js/index.js',
   mode: 'development',
   output: {
     path: Path.resolve(__dirname, 'dist'),
-    filename: 'js/[name].[hash].js'
+    filename: 'js/[name].[hash].js',
+    crossOriginLoading: 'anonymous'
   },
   optimization: {
     minimizer: [new TerserJSPlugin(), new OptimizeCSSAssetsPlugin()],
@@ -25,22 +26,18 @@ module.exports = {
     new HtmlWebpackPlugin({
       hash: false,
       inject: false,
-      template: './src/index.hbs',
+      template: './src/index.ejs',
     }),
     new MiniCssExtractPlugin({
      filename: 'css/[name].[hash].css',
     }),
-    new MediaQueryPlugin({})
+    new SriPlugin({hashFuncNames: ['sha256', 'sha384']})
   ],
   module: {
     rules: [
       {
         test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          MediaQueryPlugin.loader
-        ]
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
@@ -50,8 +47,8 @@ module.exports = {
         }]
       },
       {
-        test: /\.hbs$/,
-        use: ['handlebars-template-loader'],
+        test: /\.ejs$/,
+        use: ['ejs-loader', 'extract-loader', 'html-loader'],
       },
       {
         test: /\.svg$/,

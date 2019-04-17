@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>{{ htmlWebpackPlugin.options.title }}</title>
-{{# each htmlWebpackPlugin.files.css }}
-  <link rel="stylesheet" href="{{ this }}">
-{{/ each }}
-{{# each htmlWebpackPlugin.files.extracted.css }}
-  <link rel="stylesheet" href="{{ this.file }}" media="{{ this.query }}">
-{{/ each }}
+  <title><%= htmlWebpackPlugin.options.title %></title>
+<% for (let index in htmlWebpackPlugin.files.css) { %>
+  <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.css[index] %>" integrity="<%= htmlWebpackPlugin.files.cssIntegrity[index] %>" crossorigin="<%= webpackConfig.output.crossOriginLoading %>">
+<% } %>
 </head>
 <body>
   <img src="img/superscheda.svg" alt="Scheda D&amp;D 3.5" style="height: 2.3rem;" class="align-middle">
@@ -23,11 +20,8 @@
       </div>
     </a>
   </div>
-{{# each htmlWebpackPlugin.files.js }}
-  <script src="{{ this }}"></script>
-{{/ each}}
-{{# each htmlWebpackPlugin.files.extracted.js }}
-  <script src="{{ this.file }}"></script>
-{{/ each}}
+<% for (let index in htmlWebpackPlugin.files.js) { %>
+  <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.js[index] %>" integrity="<%= htmlWebpackPlugin.files.jsIntegrity[index] %>" crossorigin="<%= webpackConfig.output.crossOriginLoading %>">
+<% } %>
 </body>
 </html>
