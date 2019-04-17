@@ -8,7 +8,7 @@ const SriPlugin = require('webpack-subresource-integrity');
 
 module.exports = {
   entry: './src/index.js',
-  mode: 'development',
+  mode: 'production',
   output: {
     path: Path.resolve(__dirname, 'dist'),
     filename: 'js/[name].[hash].js',
@@ -84,7 +84,7 @@ module.exports = {
            loader: 'babel-loader',
            options: {
              presets: ['@babel/preset-env'],
-             plugins: ['@babel/plugin-transform-runtime']
+             plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-syntax-dynamic-import']
            }
          }
        }

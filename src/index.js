@@ -6,7 +6,7 @@ import 'bootstrap';
 import { Sortable } from 'sortablejs';
 import { Dropbox } from 'dropbox';
 
-import './js/controller';
+import('./js/controller').then(controller => console.log(controller));
 
 
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
