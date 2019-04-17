@@ -8,7 +8,7 @@ module.exports = {
   mode: 'development',
   output: {
     path: Path.resolve(__dirname, 'dist'),
-    filename: '[name].[chunkhash].js'
+    filename: '[name].[hash].js'
   },
   devtool: 'source-map',
   devServer: {
@@ -17,11 +17,11 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      hash: true,
+      hash: false,
       template: './src/index.html',
     }),
     new MiniCssExtractPlugin({
-     filename: '[name].[contenthash].css'
+     filename: 'css/[name].[hash].css',
     })
   ],
   module: {
@@ -32,15 +32,28 @@ module.exports = {
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
-        use: ['file-loader']
+        use: [{
+            loader: 'file-loader',
+            options: {name: '[name].[hash].[ext]', outputPath: 'webfonts'}
+        }]
       },
       {
         test: /\.html$/,
         use: ['html-loader'],
       },
       {
-        test: /\.(svg|mp4|webm)$/,
-        use: ['file-loader']
+        test: /\.svg$/,
+        use: [{
+            loader: 'file-loader',
+            options: {name: '[name].[hash].[ext]', outputPath: 'img'}
+        }]
+      },
+      {
+        test: /\.(mp4|webm)$/,
+        use: [{
+            loader: 'file-loader',
+            options: {name: '[name].[hash].[ext]', outputPath: 'media'}
+        }]
       }
     ]
   }
