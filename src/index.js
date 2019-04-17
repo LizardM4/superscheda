@@ -60,10 +60,81 @@ import './css/forkme.css';
 import './css/bootstrap.scss';
 
 
-// import { library, dom } from '@fortawesome/fontawesome-svg-core';
-// import { faCamera } from '@fortawesome/free-solid-svg-icons';
-// library.add(faCamera);
-// dom.watch();
+import { library, dom } from '@fortawesome/fontawesome-svg-core';
+import { faFile, faFolder } from '@fortawesome/free-regular-svg-icons';
+import { faDropbox, faGitlab } from '@fortawesome/free-brands-svg-icons';
+import {
+    faAngleDoubleUp,
+    faBars,
+    faBolt,
+    faBullseye,
+    faCheck,
+    faChevronCircleDown,
+    faChevronCircleUp,
+    faCommentDots,
+    faCopyright,
+    faDownload,
+    faEllipsisH,
+    faFileAlt,
+    faFire,
+    faFolderOpen,
+    faHourglassStart,
+    faMinus,
+    faMinusSquare,
+    faMortarPestle,
+    faPlus,
+    faPlusSquare,
+    faPrayingHands,
+    faPullLeft,
+    faRecycle,
+    faSave,
+    faShieldAlt,
+    faSignOutAlt,
+    faSort,
+    faSpin,
+    faSyncAlt,
+    faTimes
+} from '@fortawesome/free-solid-svg-icons';
+
+library.add(
+    faFile,
+    faFolder,
+    faDropbox,
+    faGitlab,
+    faAngleDoubleUp,
+    faBars,
+    faBolt,
+    faBullseye,
+    faCheck,
+    faChevronCircleDown,
+    faChevronCircleUp,
+    faCommentDots,
+    faCopyright,
+    faDownload,
+    faDropbox,
+    faEllipsisH,
+    faFileAlt,
+    faFire,
+    faFolderOpen,
+    faGitlab,
+    faHourglassStart,
+    faMinus,
+    faMinusSquare,
+    faMortarPestle,
+    faPlus,
+    faPlusSquare,
+    faPrayingHands,
+    faPullLeft,
+    faRecycle,
+    faSave,
+    faShieldAlt,
+    faSignOutAlt,
+    faSort,
+    faSpin,
+    faSyncAlt,
+    faTimes
+);
+dom.watch();
 
 // console.log('Hello webpack');
 
