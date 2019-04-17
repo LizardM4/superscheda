@@ -8,7 +8,7 @@ module.exports = {
   mode: 'development',
   output: {
     path: Path.resolve(__dirname, 'dist'),
-    filename: '[name].[hash].js'
+    filename: 'js/[name].[hash].js'
   },
   devtool: 'source-map',
   devServer: {
