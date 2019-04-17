@@ -51,6 +51,18 @@ module.exports = {
         use: ['ejs-loader', 'extract-loader', 'html-loader'],
       },
       {
+        test: /\.scss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {plugins: () => [require('precss'), require('autoprefixer')]}
+          },
+          'sass-loader'
+        ],
+      },
+      {
         test: /\.svg$/,
         use: [{
             loader: 'file-loader',
