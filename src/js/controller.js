@@ -23,6 +23,7 @@ import { DDArray } from './ddarray.js';
 import { DDGraph, DDType } from './ddgraph.js';
 import { Dropbox } from 'dropbox';
 import './jquery_animaterotate.js';
+import $ from 'jquery';
 
 let _uniqueCnt = 0;
 

@@ -43,7 +43,7 @@ and name is the filename.
 */
 'use strict';
 
-import { jQuery as $ } from 'jquery';
+import $ from 'jquery';
 import { pathCombine, pathNormalize } from './helper.js';
 
 class DropboxExplorer {

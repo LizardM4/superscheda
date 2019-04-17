@@ -17,7 +17,7 @@
 
 'use strict';
 
-import { jQuery } from 'jquery';
+import jQuery from 'jquery';
 
 // https://stackoverflow.com/a/15191130/1749822
 jQuery.fn.extend({

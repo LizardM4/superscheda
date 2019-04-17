@@ -21,7 +21,7 @@ import { DDArray } from './ddarray.js';
 import { DDFormula, DDFormulaGraph, DDSelectorStorage } from './ddformula.js';
 import { arrayCompare, arrayMultidimensionalPrefill, arrayBinarySearch, timeIt, strictParseInt, strictParseFloat } from './helper.js';
 import { Versioner } from './versioning.js';
-import { jQuery as $ } from 'jquery';
+import $ from 'jquery';
 
 const DDType = Object.freeze({
     INT:     Symbol('int'),
