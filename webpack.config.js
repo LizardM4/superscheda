@@ -2,6 +2,8 @@ const Path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TerserJSPlugin = require('terser-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
   entry: './src/js/index.js',
@@ -9,6 +11,9 @@ module.exports = {
   output: {
     path: Path.resolve(__dirname, 'dist'),
     filename: 'js/[name].[hash].js'
+  },
+  optimization: {
+    minimizer: [new TerserJSPlugin(), new OptimizeCSSAssetsPlugin()],
   },
   devtool: 'source-map',
   devServer: {
