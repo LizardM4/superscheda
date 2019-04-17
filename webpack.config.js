@@ -7,7 +7,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const SriPlugin = require('webpack-subresource-integrity');
 
 module.exports = {
-  entry: './src/js/index.js',
+  entry: './src/index.js',
   mode: 'development',
   output: {
     path: Path.resolve(__dirname, 'dist'),
