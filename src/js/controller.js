@@ -108,10 +108,10 @@ class SuperschedaController {
             this._dropbox = dbxConstructor({accessToken: accessToken});
             // Test if this dropbox works
             this._dropbox.usersGetCurrentAccount()
-                .then(() => { this._setHasDropbox(true); })
-                .catch(() => { this._setHasDropbox(false); });
+                .then(() => { this._setHasDropbox(true, dbxConstructor); })
+                .catch(() => { this._setHasDropbox(false, dbxConstructor); });
         } else {
-            this._setHasDropbox(false);
+            this._setHasDropbox(false, dbxConstructor);
         }
     }
 
