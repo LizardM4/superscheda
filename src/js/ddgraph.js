@@ -17,10 +17,10 @@
 
 'use strict';
 
-import { DDArray } from './ddarray.js?v=%REV';
-import { DDFormula, DDFormulaGraph, DDSelectorStorage } from './ddformula.js?v=%REV';
-import { arrayCompare, arrayMultidimensionalPrefill, arrayBinarySearch, timeIt, strictParseInt, strictParseFloat } from './helper.js?v=%REV';
-import { Versioner } from './versioning.js?v=%REV';
+import { DDArray } from './ddarray.js';
+import { DDFormula, DDFormulaGraph, DDSelectorStorage } from './ddformula.js';
+import { arrayCompare, arrayMultidimensionalPrefill, arrayBinarySearch, timeIt, strictParseInt, strictParseFloat } from './helper.js';
+import { Versioner } from './versioning.js';
 
 const DDType = Object.freeze({
     INT:     Symbol('int'),

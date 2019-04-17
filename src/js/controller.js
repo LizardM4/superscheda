@@ -17,10 +17,10 @@
 
 'use strict';
 
-import { timeIt, arrayCompare } from './helper.js?v=%REV';
-import { DropboxExplorer, pathCombine } from './dbxexplorer.js?v=%REV';
-import { DDArray } from './ddarray.js?v=%REV';
-import { DDGraph, DDType } from './ddgraph.js?v=%REV';
+import { timeIt, arrayCompare } from './helper.js';
+import { DropboxExplorer, pathCombine } from './dbxexplorer.js';
+import { DDArray } from './ddarray.js';
+import { DDGraph, DDType } from './ddgraph.js';
 
 let _uniqueCnt = 0;
 

@@ -15,8 +15,8 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 'use strict';
-import { arrayCompare, arrayBinarySearch, timeIt, dictShallowCopy } from './helper.js?v=%REV';
-import { DFSEvent } from './ddgraph.js?v=%REV';
+import { arrayCompare, arrayBinarySearch, timeIt, dictShallowCopy } from './helper.js';
+import { DFSEvent } from './ddgraph.js';
 
 
 function objGet(obj, k, defaultValue, nullIsInvalid=false) {

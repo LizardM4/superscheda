@@ -17,8 +17,8 @@
 
 'use strict';
 
-import { DDGraph, DFSEvent } from './ddgraph.js?v=%REV';
-import { arrayBinarySearch, timeIt } from './helper.js?v=%REV';
+import { DDGraph, DFSEvent } from './ddgraph.js';
+import { arrayBinarySearch, timeIt } from './helper.js';
 
 class DDSelector {
     get isRelative() {
