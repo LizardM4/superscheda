@@ -7,8 +7,8 @@ module.exports = {
   entry: './src/js/index.js',
   mode: 'development',
   output: {
-    filename: 'superscheda.js',
-    path: Path.resolve(__dirname, 'dist')
+    path: Path.resolve(__dirname, 'dist'),
+    filename: '[name].[chunkhash].js'
   },
   devtool: 'source-map',
   devServer: {
@@ -19,10 +19,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       hash: true,
       template: './src/index.html',
-      filename: 'index.html'
     }),
     new MiniCssExtractPlugin({
-      filename: 'superscheda.css'
+     filename: '[name].[contenthash].css'
     })
   ],
   module: {
@@ -34,6 +33,10 @@ module.exports = {
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
         use: ['file-loader']
+      },
+      {
+        test: /\.html$/,
+        use: ['html-loader'],
       },
       {
         test: /\.(svg|mp4|webm)$/,
