@@ -32,9 +32,8 @@ class SuperschedaController {
         return this._graph;
     }
 
-    constructor(dbxAppId, dbxConstructor) {
+    constructor(dbxAppId) {
         this._appId = dbxAppId;
-this._dbxConstructor = dbxConstructor
         this._dropbox = null;
         this._hasLocalStorage = true;
         this._saveModal = null;
@@ -89,7 +88,7 @@ this._dbxConstructor = dbxConstructor
         }
     }
 
-    _retrieveAccessToken() {
+    _retrieveAccessToken(dbxConstructor) {
         // Try to get the access token from the local storage
         let accessToken = null;
         let appId = null;
@@ -106,7 +105,7 @@ this._dbxConstructor = dbxConstructor
             }
         }
         if (accessToken) {
-            this._dropbox = this._dbxConstructor({accessToken: accessToken});
+            this._dropbox = dbxConstructor({accessToken: accessToken});
             // Test if this dropbox works
             this._dropbox.usersGetCurrentAccount()
                 .then(() => { this._setHasDropbox(true); })
@@ -116,7 +115,7 @@ this._dbxConstructor = dbxConstructor
         }
     }
 
-    _setHasDropbox(hasDbx) {
+    _setHasDropbox(hasDbx, dbxConstructor) {
         if (hasDbx) {
             $('body').addClass('has-dbx');
             $('#btn_logout').prop('disabled', false);
@@ -135,7 +134,7 @@ this._dbxConstructor = dbxConstructor
                 $('.btn-dbx-login').click(this._autosaveEvent);
             }
             // Fall back on a client-id base dbx
-            this._dropbox = this._dbxConstructor({clientId: this._appId});
+            this._dropbox = dbxConstructor({clientId: this._appId});
             // Generate  the authentication url
             let url = null;
             if (window.location.hostname === 'localhost') {
@@ -657,12 +656,13 @@ this._dbxConstructor = dbxConstructor
     }
 
 
-    setup() {
+    setup(dbxConstructor) {
         this._saveModal = $('#save_to');
         this._loadModal = $('#load_from');
         this.graph.loadNodesFromDom();
         this._initLocalStorage();
-        this._retrieveAccessToken();
+        // TODO move this at the very end
+        this._retrieveAccessToken(dbxConstructor);
         // ^ will call _setupLoadModal and _setupSaveModal
         this._setupWaitingModal();
         this._setupAnimatedChevrons();
