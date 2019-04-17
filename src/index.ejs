@@ -3,9 +3,6 @@
 <head>
   <meta charset="utf-8">
   <title><%= htmlWebpackPlugin.options.title %></title>
-<% for (let index in htmlWebpackPlugin.files.css) { %>
-  <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.css[index] %>" integrity="<%= htmlWebpackPlugin.files.cssIntegrity[index] %>" crossorigin="<%= webpackConfig.output.crossOriginLoading %>">
-<% } %>
 </head>
 <body>
   <div>
@@ -24,8 +21,5 @@
       </div>
     </a>
   </div>
-<% for (let index in htmlWebpackPlugin.files.js) { %>
-  <script src="<%= htmlWebpackPlugin.files.js[index] %>" integrity="<%= htmlWebpackPlugin.files.jsIntegrity[index] %>" crossorigin="<%= webpackConfig.output.crossOriginLoading %>"></script>
-<% } %>
 </body>
 </html>

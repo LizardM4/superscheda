@@ -26,7 +26,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       hash: false,
-      inject: false,
+      inject: true,
       template: './src/index.ejs',
     }),
     new MiniCssExtractPlugin({
