@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
   <title><%= htmlWebpackPlugin.options.title %></title>
 <% for (let index in htmlWebpackPlugin.files.css) { %>
   <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.css[index] %>" integrity="<%= htmlWebpackPlugin.files.cssIntegrity[index] %>" crossorigin="<%= webpackConfig.output.crossOriginLoading %>">
 <% } %>
 </head>
 <body>
+  <div>
+    <i class="fas fa-camera"></i>
+  </div>
   <img src="img/superscheda.svg" alt="Scheda D&amp;D 3.5" style="height: 2.3rem;" class="align-middle">
   <div class="forkme-ribbon">
     <a href="https://gitlab.com/5p4k/superscheda" target="_blank">
@@ -21,7 +25,7 @@
     </a>
   </div>
 <% for (let index in htmlWebpackPlugin.files.js) { %>
-  <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.js[index] %>" integrity="<%= htmlWebpackPlugin.files.jsIntegrity[index] %>" crossorigin="<%= webpackConfig.output.crossOriginLoading %>">
+  <script src="<%= htmlWebpackPlugin.files.js[index] %>" integrity="<%= htmlWebpackPlugin.files.jsIntegrity[index] %>" crossorigin="<%= webpackConfig.output.crossOriginLoading %>"></script>
 <% } %>
 </body>
 </html>
