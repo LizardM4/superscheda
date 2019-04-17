@@ -16,6 +16,7 @@ module.exports = {
   },
   optimization: {
     minimizer: [new TerserJSPlugin(), new OptimizeCSSAssetsPlugin()],
+    splitChunks: {chunks: 'all'}
   },
   devtool: 'source-map',
   devServer: {
