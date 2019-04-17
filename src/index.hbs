@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Superscheda</title>
+  <title>{{ htmlWebpackPlugin.options.title }}</title>
+{{# each htmlWebpackPlugin.files.css }}
+  <link rel="stylesheet" href="{{ this }}">
+{{/ each }}
+{{# each htmlWebpackPlugin.files.extracted.css }}
+  <link rel="stylesheet" href="{{ this.file }}" media="{{ this.query }}">
+{{/ each }}
 </head>
 <body>
   <img src="img/superscheda.svg" alt="Scheda D&amp;D 3.5" style="height: 2.3rem;" class="align-middle">
@@ -17,5 +23,11 @@
       </div>
     </a>
   </div>
+{{# each htmlWebpackPlugin.files.js }}
+  <script src="{{ this }}"></script>
+{{/ each}}
+{{# each htmlWebpackPlugin.files.extracted.js }}
+  <script src="{{ this.file }}"></script>
+{{/ each}}
 </body>
 </html>

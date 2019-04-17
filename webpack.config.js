@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const MediaQueryPlugin = require('media-query-plugin');
 
 module.exports = {
   entry: './src/js/index.js',
@@ -23,17 +24,23 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       hash: false,
-      template: './src/index.html',
+      inject: false,
+      template: './src/index.hbs',
     }),
     new MiniCssExtractPlugin({
      filename: 'css/[name].[hash].css',
-    })
+    }),
+    new MediaQueryPlugin({})
   ],
   module: {
     rules: [
       {
         test: /\.css$/,
-        use: [{loader: MiniCssExtractPlugin.loader}, 'css-loader']
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          MediaQueryPlugin.loader
+        ]
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
@@ -43,8 +50,8 @@ module.exports = {
         }]
       },
       {
-        test: /\.html$/,
-        use: ['html-loader'],
+        test: /\.hbs$/,
+        use: ['handlebars-loader', 'extract-loader', 'html-loader'],
       },
       {
         test: /\.svg$/,
