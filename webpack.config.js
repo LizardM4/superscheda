@@ -8,7 +8,7 @@ const SriPlugin = require('webpack-subresource-integrity');
 
 module.exports = {
   entry: './src/index.js',
-  mode: 'production',
+  mode: 'development',
   output: {
     path: Path.resolve(__dirname, 'dist'),
     filename: 'js/[name].[contenthash].js',
@@ -49,7 +49,12 @@ module.exports = {
       },
       {
         test: /\.html$/,
-        use: 'html-loader',
+        use: {
+          loader: 'html-loader',
+          options: {
+            attrs: ['img:src', 'source:src']
+          }
+        }
       },
       {
         test: /\.scss$/,
