@@ -27,7 +27,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       hash: false,
       inject: true,
-      template: './src/index.ejs',
+      template: './src/index.html',
     }),
     new MiniCssExtractPlugin({
      filename: 'css/[name].[contenthash].css',
@@ -48,8 +48,8 @@ module.exports = {
         }]
       },
       {
-        test: /\.ejs$/,
-        use: ['ejs-loader', 'extract-loader', 'html-loader'],
+        test: /\.html$/,
+        use: 'html-loader',
       },
       {
         test: /\.scss$/,
