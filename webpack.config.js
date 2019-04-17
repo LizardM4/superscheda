@@ -1,33 +1,39 @@
-const path = require('path');
+const Path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './src/index.html',
+  entry: './src/js/index.js',
   mode: 'development',
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    filename: 'superscheda.js',
+    path: Path.resolve(__dirname, 'dist')
   },
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   devServer: {
     contentBase: './dist'
   },
   plugins: [
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      hash: true,
+      template: './src/index.html',
+      filename: 'index.html'
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'superscheda.css'
+    })
   ],
   module: {
     rules: [
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        use: [{loader: MiniCssExtractPlugin.loader}, 'css-loader']
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
         use: ['file-loader']
-      },
-      {
-        test: /\.html$/,
-        use: ['file-loader?name=[name].[ext]', 'extract-loader', 'html-loader']
       },
       {
         test: /\.(svg|mp4|webm)$/,
