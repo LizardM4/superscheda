@@ -16,36 +16,42 @@
 //
 
 'use strict';
+
 // Shim Promises on older browsers
 import 'es6-promise/auto';
 
-const appId = 'h2jyx20rz9lbwiw';
+// Lazily load bootstrap
+const bootstrapPromise = import(/* webpackChunkName: "controller", webpackPreload: true */
+    'bootstrap');
 
-const superschedaPromise = import(
-    /* webpackChunkName: "controller", webpackPreload: true */ './js/controller'
-).then(({SuperschedaController: SuperschedaController}) => {
-    return new SuperschedaController(appId);
-});
+const APPID = 'h2jyx20rz9lbwiw';
 
-// Import fetch for Dropbox to use
-const fetchAndDbxPromise = Promise.all([
-    import(/* webpackChunkName: "fetch",   webpackPrefetch: true */ 'isomorphic-fetch'),
-    import(/* webpackChunkName: "dropbox", webpackPrefetch: true */ 'dropbox')
-]);
-
-
-// This function constructs Dropbox using the given fetch function only when available,
-// otherwise waits.
-async function dbxFactory(args) {
-    const [{default: fetch}, {Dropbox: Dropbox}] = await fetchAndDbxPromise;
-    args.fetch = fetch;
-    return new Dropbox(args);
-};
+async function prepareControllerAndDropbox(appId) {
+    const [controller, fetch, Dropbox] = await Promise.all([
+        import(/* webpackChunkName: "controller", webpackPreload: true */
+            './js/controller.js').then(
+            ({SuperschedaController: SuperschedaController}) => new SuperschedaController(appId)),
+        import(/* webpackChunkName: "fetch",   webpackPrefetch: true */
+            'isomorphic-fetch').then(
+            ({default: fetch}) => fetch),
+        import(/* webpackChunkName: "dropbox", webpackPrefetch: true */
+            'dropbox').then(
+            ({Dropbox: Dropbox}) => Dropbox),
+    ]);
+    const dbxFactory = (args) => {
+        args.fetch = fetch;
+        return new Dropbox(args);
+    };
+    window.DD = controller;
+    DD.setup(dbxFactory);
+    return DD;
+}
 
 window.addEventListener('load', (evt) => {
-    superschedaPromise.then(DD => {
-        DD.setup(dbxFactory);
-    });
+    // Make sure bootstrap is also loaded before starting to poke at the setup
+    bootstrapPromise.then(
+        () => prepareControllerAndDropbox(APPID)
+    );
 });
 
 import './css/damagetype.css';
@@ -63,8 +69,6 @@ import './css/bootstrap.scss';
 // const sth = (a) => 2 * a;
 
 // console.log(sth(22));
-
-// import 'bootstrap';
 // import { Sortable } from 'sortablejs';
 
 
