@@ -124,13 +124,11 @@ library.add(
     faPlus,
     faPlusSquare,
     faPrayingHands,
-    faPullLeft,
     faRecycle,
     faSave,
     faShieldAlt,
     faSignOutAlt,
     faSort,
-    faSpin,
     faSyncAlt,
     faTimes
 );
@@ -146,3 +144,6 @@ dom.watch();
 
 // dbxFactory({a: 52});
 
+
+
+// praying hands and sort
