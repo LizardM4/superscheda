@@ -21,7 +21,7 @@ import { timeIt, arrayCompare, parseQueryString, storageAvailable, pathCombine }
 import { DropboxExplorer } from './dbxexplorer.js';
 import { DDArray } from './ddarray.js';
 import { DDGraph, DDType } from './ddgraph.js';
-import './jquery_animaterotate.js';
+import './jquery-animaterotate.js';
 import $ from 'jquery';
 
 let _uniqueCnt = 0;
