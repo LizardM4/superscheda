@@ -40,7 +40,6 @@ async function prepareControllerAndDropbox(appId) {
     ]);
     const dbxFactory = (args) => {
         args.fetch = fetch;
-        console.log('Constructing dropbox with args ', args);
         return new Dropbox(args);
     };
     window.DD = controller;

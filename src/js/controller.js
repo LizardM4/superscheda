@@ -124,7 +124,7 @@ class SuperschedaController {
                 $('.btn-dbx-login').click(this._autosaveEvent);
             }
             // Fall back on a client-id base dbx
-            this._dropbox = dbxConstructor({clientId: this._appId});
+            this._dropbox = dbxConstructor({clientId: appId});
             // Generate  the authentication url
             let url = null;
             if (window.location.hostname === 'localhost') {
@@ -667,10 +667,10 @@ class SuperschedaController {
             this._dropbox = dbxConstructor({accessToken: accessToken});
             // Test if this dropbox works
             this._dropbox.usersGetCurrentAccount()
-                .then(() => { this._dbxCompleteSetup(true, dbxConstructor); })
-                .catch(() => { this._dbxCompleteSetup(false, dbxConstructor); });
+                .then(() => { this._dbxCompleteSetup(appId, true, dbxConstructor); })
+                .catch(() => { this._dbxCompleteSetup(appId, false, dbxConstructor); });
         } else {
-            this._dbxCompleteSetup(false, dbxConstructor);
+            this._dbxCompleteSetup(appId, false, dbxConstructor);
         }
     }
 
