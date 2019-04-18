@@ -40,6 +40,7 @@ async function prepareControllerAndDropbox(appId) {
     ]);
     const dbxFactory = (args) => {
         args.fetch = fetch;
+        console.log('Constructing dropbox with args ', args);
         return new Dropbox(args);
     };
     window.DD = controller;
@@ -95,6 +96,7 @@ import {
     faSyncAlt,
     faTimes
 } from '@fortawesome/free-solid-svg-icons';
+import { fpMace, fpProtest, fpQuiver, fpSword } from './js/fa-freepik.js';
 
 library.add(
     faFile,
@@ -130,7 +132,11 @@ library.add(
     faSignOutAlt,
     faSort,
     faSyncAlt,
-    faTimes
+    faTimes,
+    fpMace,
+    fpProtest,
+    fpQuiver,
+    fpSword
 );
 dom.watch();
 
