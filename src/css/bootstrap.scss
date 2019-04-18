@@ -1,1 +1,46 @@
+// Superscheda
+// Copyright (C) 2017-2019  Pietro Saccardi
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//
+
 @import "~bootstrap/scss/bootstrap";
+
+.btn-addon {
+  @include button-variant(
+    $input-group-addon-bg,
+    $input-group-addon-border-color
+  );
+}
+
+.btn-group .btn-addon {
+  @include button-variant(
+    $input-group-addon-bg,
+    $input-group-addon-border-color,
+    $active-background: darken($input-group-addon-bg, 35%),
+    $active-border: darken($input-group-addon-border-color, 37.5%)
+  );
+
+  &:focus,
+  &.focus {
+    z-index: 3;
+    // TODO This shadow or the default one?
+    box-shadow: 0 0 0 $btn-focus-width $input-btn-focus-color;
+  }
+}
+
+
+
+
+
