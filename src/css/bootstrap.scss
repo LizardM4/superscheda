@@ -17,11 +17,20 @@
 
 @import "~bootstrap/scss/bootstrap";
 
+@mixin button-override-contour {
+  &:focus,
+  &.focus {
+    box-shadow: 0 0 0 $btn-focus-width $input-btn-focus-color;
+  }
+}
+
 .btn-addon {
   @include button-variant(
     $input-group-addon-bg,
     $input-group-addon-border-color
   );
+
+  @include button-override-contour;
 }
 
 .btn-group .btn-addon {
@@ -32,15 +41,24 @@
     $active-border: darken($input-group-addon-border-color, 37.5%)
   );
 
+  @include button-override-contour;
+
+  // Patch the z-index to put in evidence the border
   &:focus,
   &.focus {
-    z-index: 3;
-    // TODO This shadow or the default one?
-    box-shadow: 0 0 0 $btn-focus-width $input-btn-focus-color;
+    z-index: 4;
   }
+
+  &:not(:disabled):not(.disabled):active,
+  &:not(:disabled):not(.disabled).active {
+    z-index: 3;
+  }
+
+  &:not(:disabled):not(.disabled):active:focus,
+  &:not(:disabled):not(.disabled).active.focus,
+  &:not(:disabled):not(.disabled):active:focus,
+  &:not(:disabled):not(.disabled).active.focus {
+    z-index: 5;
+  }
+
 }
-
-
-
-
-
