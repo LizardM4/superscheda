@@ -61,7 +61,7 @@ import './css/bootstrap.scss';
 
 
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
-import { faFile, faFolder } from '@fortawesome/free-regular-svg-icons';
+import { faFile, faFolder, faSquare } from '@fortawesome/free-regular-svg-icons';
 import { faDropbox, faGitlab } from '@fortawesome/free-brands-svg-icons';
 import {
     faAngleDoubleUp,
@@ -69,6 +69,7 @@ import {
     faBolt,
     faBullseye,
     faCheck,
+    faCheckSquare,
     faChevronCircleDown,
     faChevronCircleUp,
     faCommentDots,
@@ -107,6 +108,7 @@ library.add(
     faBolt,
     faBullseye,
     faCheck,
+    faCheckSquare,
     faChevronCircleDown,
     faChevronCircleUp,
     faCommentDots,
@@ -130,6 +132,7 @@ library.add(
     faShieldAlt,
     faSignOutAlt,
     faSort,
+    faSquare,
     faSyncAlt,
     faTimes,
     fpMace,
