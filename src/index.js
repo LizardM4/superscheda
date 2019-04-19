@@ -55,9 +55,9 @@ window.addEventListener('load', (evt) => {
     );
 });
 
-import './css/damagetype.css';
-import './css/forkme.css';
 import './css/bootstrap.scss';
+import './css/btn-custom-checkbox.css';
+import './css/fork-me-ribbon.css';
 
 
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
