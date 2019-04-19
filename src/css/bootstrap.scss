@@ -145,3 +145,7 @@
 .btn-custom-check input[type="checkbox"]:checked ~ [data-checkbox="unchecked"] {
   display: none !important;
 }
+
+.btn-custom-check input[type="checkbox"] {
+  display: none !important;
+}
