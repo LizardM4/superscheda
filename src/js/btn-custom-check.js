@@ -20,8 +20,14 @@
 import $ from 'jquery';
 
 const Selector = {
-  BTN_CUSTOM_CHECK: '.btn-custom-check',
-  CHECKBOX        : 'input[type="checkbox"]',
+  BTN_CUSTOM_CHECK    : '.btn-custom-check',
+  CHECKBOX            : 'input[type="checkbox"]',
+  BTN_GROUP_TOGGLE    : '.btn-group-toggle',
+  TOGGLE_ACTIVE_TARGET: 'label'
+};
+
+const Classes = {
+  ACTIVE: 'active'
 };
 
 $(() => {
@@ -31,4 +37,23 @@ $(() => {
       .find(Selector.CHECKBOX);
     $check.prop('checked', !$check.is(':checked'));
   });
+});
+
+
+
+$(Selector.BTN_GROUP_TOGGLE + ' ' + Selector.CHECKBOX)
+.change((evt, ddNode) => {
+  // In case of a programmatic change, make sure the "active"
+  // class is in sync with the value of the checkbox
+  if (!ddNode) {
+    return;
+  }
+  const $check = $(evt.target);
+  const $activableTarget = $check.closest(Selector.TOGGLE_ACTIVE_TARGET);
+  // Manually toggle the button
+  if ($check.is(':checked')) {
+    $activableTarget.addClass(Classes.ACTIVE);
+  } else {
+    $activableTarget.removeClass(Classes.ACTIVE);
+  }
 });
