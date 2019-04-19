@@ -42,23 +42,98 @@
   );
 
   @include button-override-contour;
+}
 
-  // Patch the z-index to put in evidence the border
-  &:focus,
-  &.focus {
+
+// Patch the z-index to put in evidence the border.
+// Order: normal -> hover -> active -> active & hover -> focus
+//         -> active & focus -> active & focus & hover
+
+.btn-group .btn-addon {
+
+  z-index: 1;
+
+
+  &:hover{
     z-index: 2;
   }
 
   &:not(:disabled):not(.disabled):active,
   &:not(:disabled):not(.disabled).active {
-    z-index: 1;
+    z-index: 3;
+  }
+
+  &:not(:disabled):not(.disabled):active:hover,
+  &:not(:disabled):not(.disabled).active:hover {
+    z-index: 4;
+  }
+
+  &:focus,
+  &.focus {
+    z-index: 5;
   }
 
   &:not(:disabled):not(.disabled):active:focus,
   &:not(:disabled):not(.disabled).active.focus,
   &:not(:disabled):not(.disabled):active:focus,
   &:not(:disabled):not(.disabled).active.focus {
-    z-index: 3;
+    z-index: 6;
   }
 
+  &:not(:disabled):not(.disabled):active:focus:hover,
+  &:not(:disabled):not(.disabled).active.focus:hover,
+  &:not(:disabled):not(.disabled):active:focus:hover,
+  &:not(:disabled):not(.disabled).active.focus:hover {
+    z-index: 7;
+  }
+
+
+}
+
+// We need 4 states before "focus", so we need to lift by 2 the
+// default z-indices set by bootstrap
+.input-group {
+
+
+  > .form-control,
+  > .custom-select,
+  > .custom-file .custom-file-input ~ .custom-file-label {
+    z-index: 0;
+  }
+
+  > .custom-file .custom-file-input {
+    z-index: 0;
+  }
+
+  > .form-control:focus,
+  > .custom-select:focus,
+  > .custom-file .custom-file-input:focus ~ .custom-file-label {
+    z-index: 5;
+  }
+
+  > .custom-file .custom-file-input:focus {
+    z-index: 5;
+  }
+}
+
+.input-group-prepend,
+.input-group-append {
+  .btn {
+    z-index: 1;
+
+    &:focus {
+      z-index: 5;
+    }
+  }
+}
+
+
+// Custom checkbox with Fontawesome icons
+
+.btn-custom-check input[type="checkbox"]:not(:checked) ~ [data-checkbox="checked"] {
+  display: none !important;
+}
+
+.btn-custom-check input[type="checkbox"]:checked ~ [data-checkbox="unchecked"] {
+  display: none !important;
 }
