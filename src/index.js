@@ -21,8 +21,12 @@
 import 'es6-promise/auto';
 
 // Lazily load bootstrap
-const bootstrapPromise = import(/* webpackChunkName: "controller", webpackPreload: true */
-    'bootstrap');
+const bootstrapPromise = Promise.all([
+    import(/* webpackChunkName: "bootstrap", webpackPreload: true */
+        'bootstrap'),
+    import(/* webpackChunkName: "btn-custom-check", webpackPreload: true */
+        './js/btn-custom-check.js')
+]);
 
 const APPID = 'h2jyx20rz9lbwiw';
 
@@ -56,7 +60,7 @@ window.addEventListener('load', (evt) => {
 });
 
 import './css/bootstrap.scss';
-import './css/btn-custom-checkbox.css';
+import './css/btn-custom-check.css';
 import './css/fork-me-ribbon.css';
 
 
