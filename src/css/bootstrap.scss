@@ -46,19 +46,19 @@
   // Patch the z-index to put in evidence the border
   &:focus,
   &.focus {
-    z-index: 4;
+    z-index: 2;
   }
 
   &:not(:disabled):not(.disabled):active,
   &:not(:disabled):not(.disabled).active {
-    z-index: 3;
+    z-index: 1;
   }
 
   &:not(:disabled):not(.disabled):active:focus,
   &:not(:disabled):not(.disabled).active.focus,
   &:not(:disabled):not(.disabled):active:focus,
   &:not(:disabled):not(.disabled).active.focus {
-    z-index: 5;
+    z-index: 3;
   }
 
 }
