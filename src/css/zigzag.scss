@@ -1,0 +1,51 @@
+// Superscheda
+// Copyright (C) 2017-2019  Pietro Saccardi
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+.zigzag-top-bottom {
+  position: relative;
+  padding-top: #{$spacer};
+  padding-bottom: #{$spacer};
+  padding-left: #{$spacer};
+  padding-right: #{$spacer};
+  margin-left: -#{$spacer};
+  margin-right: -#{$spacer};
+}
+.zigzag-top-bottom::before,
+.zigzag-top-bottom::after {
+  background-position: left-top;
+  content: " ";
+  display: block;
+  position: absolute;
+  left: 0px;
+  width: 100%;
+  height: #{$spacer};
+}
+.zigzag-top-bottom::before {
+  background: linear-gradient(-135deg, #{$white} #{0.5 * $spacer}, transparent 0), linear-gradient(135deg, #{$white} #{0.5 * $spacer}, transparent 0);
+  background-repeat: repeat-x;
+  background-size: #{$spacer} #{$spacer};
+  top: 0px;
+}
+.zigzag-top-bottom::after {
+  background: linear-gradient(-45deg, #{$white} #{0.5 * $spacer}, transparent 0), linear-gradient(45deg, #{$white} #{0.5 * $spacer}, transparent 0);
+  background-repeat: repeat-x;
+  background-size: #{$spacer} #{$spacer};
+  bottom: 0px;
+}
