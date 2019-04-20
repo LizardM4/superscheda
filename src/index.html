@@ -2229,8 +2229,8 @@
                     <i class="fas fa-plus-square" aria-hidden="true"></i>
                   </button>
                 </p>
-                <div data-dd-array="master" data-dd-id="incantesimi" class="inner-striped dd-spell-known">
-                  <div class="d-none d-md-block dd-hide-if-not-first-spell-of-type">
+                <div data-dd-array="master" data-dd-id="incantesimi" class="inner-striped spell-known">
+                  <div class="d-none d-md-block d-only-if-first-spell">
                     <div class="form-row pr-custom">
                       <div class="col">
                         <label class="col-form-label col-form-label-sm">Incantesimo · Componenti M, V, S, F</label>
@@ -2335,21 +2335,21 @@
                         <input type="text" class="form-control form-control-sm" data-dd-id="rif">
                       </div>
                       <div class="col-md-1 col pr-lg-3">
-                        <label class="col-form-label col-form-label-sm d-md-none dd-if-spell-known">Prepara</label>
-                        <label class="col-form-label col-form-label-sm d-md-none dd-if-spell-ready">Usa</label>
-                        <label class="col-form-label col-form-label-sm d-md-none dd-if-spell-used">Riprepara</label>
+                        <label class="col-form-label col-form-label-sm d-md-none d-inline-block-if-spell-known">Prepara</label>
+                        <label class="col-form-label col-form-label-sm d-md-none d-inline-block-if-spell-ready">Usa</label>
+                        <label class="col-form-label col-form-label-sm d-md-none d-inline-block-if-spell-used">Riprepara</label>
                         <select data-dd-id="preparazione" class="dd-sort-key d-none" data-dd-sort-key-index="0">
-                          <option data-dd-contextual-class="dd-spell-known" value="" selected>Conosciuto</option>
-                          <option data-dd-contextual-class="dd-spell-ready" value="preparato">Preparato</option>
-                          <option data-dd-contextual-class="dd-spell-used" value="usato">Usato</option>
+                          <option data-dd-contextual-class="spell-known" value="" selected>Conosciuto</option>
+                          <option data-dd-contextual-class="spell-ready" value="preparato">Preparato</option>
+                          <option data-dd-contextual-class="spell-used" value="usato">Usato</option>
                         </select>
-                        <button class="btn btn-addon w-100 btn-sm dd-if-spell-known">
+                        <button class="btn btn-addon w-100 btn-sm d-inline-block-if-spell-known">
                           <i class="fas fa-hourglass-start fa-lg fa-fw"></i>
                         </button>
-                        <button class="btn btn-addon w-100 btn-sm dd-if-spell-ready">
+                        <button class="btn btn-addon w-100 btn-sm d-inline-block-if-spell-ready">
                           <i class="fas fa-bolt fa-lg fa-fw"></i>
                         </button>
-                        <button class="btn btn-addon w-100 btn-sm dd-if-spell-used">
+                        <button class="btn btn-addon w-100 btn-sm d-inline-block-if-spell-used">
                           <i class="fas fa-recycle fa-lg fa-fw"></i>
                         </button>
                       </div>

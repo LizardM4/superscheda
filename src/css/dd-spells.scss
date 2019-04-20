@@ -1,0 +1,90 @@
+// Superscheda
+// Copyright (C) 2017-2019  Pietro Saccardi
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+$spell-statuses: (
+    known: "Incantesimi conosciuti",
+    ready: "Incantesimi preparati",
+    used : "Incantesimi usati"
+);
+
+$spell-last-opacity: 0.5;
+
+// ----------------------------------------------------------------
+
+
+// This mixin mimicks the h6 behavior for the ::before element used
+// in the spells.
+@mixin as-h6 {
+  margin-bottom: $headings-margin-bottom;
+  font-family: $headings-font-family;
+  font-weight: $headings-font-weight;
+  line-height: $headings-line-height;
+  color: $headings-color;
+  @include font-size($h6-font-size);
+}
+
+$all-spell-header-rules: ();
+$d-none-rules: ();
+$d-none-imp-rules: ();
+$d-inline-block-rules: ();
+
+@each $status, $description in $spell-statuses {
+    :not(.spell-#{$status}) + .spell-#{$status}::before,
+    :not([data-dd-array="item"]) + .spell-#{$status}::before {
+        content: "#{$description}";
+        $all-spell-header-rules: join($all-spell-header-rules, (#{&}), "comma");
+    }
+    $d-none-rules: append($d-none-rules,
+        ".d-inline-block-if-spell-#{$status}",
+        "comma");
+    $d-none-imp-rules: append($d-none-imp-rules,
+        "[data-dd-array=\"item\"].spell-#{$status} + .spell-#{$status} .d-only-if-first-spell",
+        "comma");
+    $d-inline-block-rules: append($d-inline-block-rules,
+        ".spell-#{$status} .d-inline-block-if-spell-#{$status}",
+        "comma");
+}
+
+#{$all-spell-header-rules} {
+    @include as-h6;
+    margin-top: $spacer;
+}
+
+#{$d-none-rules} {
+  display: none;
+}
+
+#{$d-none-imp-rules} {
+  display: none !important;
+}
+
+#{$d-inline-block-rules} {
+  display: inline-block;
+}
+
+// Hide the form controls in the last class
+.spell-#{nth(map-keys($spell-statuses), length($spell-statuses))} {
+    & .form-control,
+    & .input-group .btn,
+    & .custom-select {
+        opacity: $spell-last-opacity;
+    }
+}

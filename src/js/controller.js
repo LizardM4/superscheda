@@ -592,7 +592,7 @@ class SuperschedaController {
         // Apply new status when clicking on button
         this.graph.nodeByPath('incantesimi[-1]').obj.find('button').each((_, btn) => {
             btn = $(btn);
-            if (btn.hasClass('dd-if-spell-known')) {
+            if (btn.hasClass('d-inline-block-if-spell-known')) {
                 // Prepare button
                 btn.click((evt) => {
                     const parentSpellNode = this.graph.findParentNode($(evt.target));
@@ -602,7 +602,7 @@ class SuperschedaController {
                     newSpellNode.childById('preparazione').value = 'preparato';
                     controller.sort(this._autosortCompareFn);
                 });
-            } else if (btn.hasClass('dd-if-spell-ready')) {
+            } else if (btn.hasClass('d-inline-block-if-spell-ready')) {
                 // Use button
                 btn.click((evt) => {
                     const parentSpellNode = this.graph.findParentNode($(evt.target));
@@ -610,7 +610,7 @@ class SuperschedaController {
                     parentSpellNode.childById('preparazione').value = 'usato';
                     controller.sort(this._autosortCompareFn);
                 });
-            } else if (btn.hasClass('dd-if-spell-used')) {
+            } else if (btn.hasClass('d-inline-block-if-spell-used')) {
                 // Reprepare button
                 btn.click((evt) => {
                     const parentSpellNode = this.graph.findParentNode($(evt.target));
