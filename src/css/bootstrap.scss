@@ -17,3 +17,8 @@
 
 @import "~bootstrap/scss/bootstrap";
 @import "btn-addon.scss";
+@import "navbar-helper.scss";
+
+.pr-3p5 {
+    padding-right: (1.25 * $spacer);
+}
