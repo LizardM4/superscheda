@@ -66,6 +66,8 @@ import './css/dd-array.css';
 import './css/dd-spells.scss';
 import './css/dd-formula.scss';
 import './css/zigzag.scss';
+import './css/dbx-helper.scss';
+import './css/navbar-helper.scss';
 
 
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
