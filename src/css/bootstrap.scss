@@ -22,3 +22,7 @@
 .pr-3p5 {
     padding-right: (1.25 * $spacer);
 }
+
+.table input[type="text"] {
+  min-width: 3rem;
+}
