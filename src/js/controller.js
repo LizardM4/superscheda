@@ -61,7 +61,7 @@ class SuperschedaController {
 
         this._initDOM();  // Must come first.
 
-        this._initDownloadBtn();
+        this._initDlNewBtns();
         this._initArrayAutosort();
         this._initSpells();
         this._initAttacks();
@@ -280,13 +280,22 @@ class SuperschedaController {
         setInterval(this._autosaveEvent, autosaveInterval);
     }
 
-    _initDownloadBtn() {
+    _initDlNewBtns() {
         this._saveModal.on('show.bs.modal', () => {
             this._saveModal.find('a.btn[download]')
                 .attr('href', 'data:application/json;charset=utf-8,' +
                     encodeURIComponent(JSON.stringify(this.graph.dumpDataBag(), null, 4)));
         });
         this._saveModal.find('a.btn[download]').click(this._autosaveEvent);
+
+        $('#load_default').click((evt) => {
+          // That's an 'a', so we need to prevent jumping to href="#"
+          evt.preventDefault();
+          evt.stopPropagation();
+          this.toggleWaiting(true);
+          this.loadRemoteFile('etc/default.json', (res) => { this.toggleWaiting(false, res); });
+        });
+
     }
 
     _dbxSetupSaveToDialog() {

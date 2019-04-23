@@ -17,6 +17,12 @@
 
 'use strict';
 
+const APPID = 'h2jyx20rz9lbwiw';
+
+// -------------------------------------------------------------------------------------------------
+// DEPENDENCIES AND LAZY IMPORTS
+// -------------------------------------------------------------------------------------------------
+
 // Shim Promises on older browsers
 import 'es6-promise/auto';
 
@@ -31,7 +37,14 @@ const bootstrapPromise = Promise.all([
 const jQueryPromise = import(/* webpackChunkName: "jquery", webpackPreload: true */
     'jquery');
 
-const APPID = 'h2jyx20rz9lbwiw';
+const sortablePromise = import(/* webpackChunkName: "sortablejs", webpackPreload: true */
+    'sortablejs');
+
+import { DDArray } from './js/ddarray.js';
+ 
+// -------------------------------------------------------------------------------------------------
+// MAIN SETUP
+// -------------------------------------------------------------------------------------------------
 
 async function prepareControllerAndDropbox(appId) {
     const [controller, fetch, Dropbox] = await Promise.all([
@@ -51,16 +64,126 @@ async function prepareControllerAndDropbox(appId) {
     };
     window.DD = controller;
     DD.setupDropbox(appId, dbxFactory);
+
+    // Setup sorting in the array elements
+    Promise.all([sortablePromise, jQueryPromise])
+    .then(([sortableModule, jQueryModule]) => {
+        const Sortable = sortableModule.default;
+        const $ = jQueryModule.default;
+        // ---
+        const $equipList = $('#equipment_list');
+        const equipController = DDArray.getController($equipList);
+        $equipList.data('sortable', new Sortable($equipList[0], {
+            draggable: '[data-dd-array="item"]',
+            handle: '.fa-sort',
+            onEnd: (evt) => {
+                equipController.reindexFromDOM();
+            }
+        }));
+    });
+
     DD.toggleWaiting(false);
     return DD;
 }
 
+// This needs to be set up as soon as possible. We want the real initialization to start as soon as
+// all the parts are in place.
+
 window.addEventListener('load', (evt) => {
     // Make sure bootstrap is also loaded before starting to poke at the setup
-    bootstrapPromise.then(
-        () => prepareControllerAndDropbox(APPID)
-    );
+    jQueryPromise
+    .then(({default: $}) => {
+
+        const $window = $(window);
+
+        // Toggle temporary modifiers classes (influences opacity of controls)
+        $('#chk_tmp_mod').change((evt, ddNode) => {
+            if ($(evt.target).is(':checked')) {
+                $('table[data-dd-id="caratteristiche"]').addClass('dd-tmp-on');
+            } else {
+                $('table[data-dd-id="caratteristiche"]').removeClass('dd-tmp-on');
+            }
+        });
+
+        // Event for activating/deactivating the details of the abilities
+        const $skillsMod = $('#toggle_skills');
+        $skillsMod.click((evt) => {
+            const $extraMods = $('.extra-mods');
+            const $skillsArray = $('#skills_list');
+            if ($extraMods.hasClass('d-none')) {
+                $('.extra-mods').removeClass('d-none');
+                $('#skills_list').addClass('always-stripe');
+                $skillsMod.text('Nascondi');
+            } else {
+                $('.extra-mods').addClass('d-none');
+                $('#skills_list').removeClass('always-stripe');
+                $skillsMod.text('Mostra');
+            }
+        });
+
+        // Toggle the dd-nav-toc class that drives the toc; having multiple TOCs
+        // causes some not to trigger, so we toggle between one and the other.
+        // Since we are at it, let's also hide the top bar if the size is too small
+        const $mainNav = $('#main_nav');
+        $window.resize(() => {
+            if ($window.width() >= 768) {
+                if (!$('#toc_md').is('.dd-nav-toc')) {
+                    $('#toc_md').addClass('dd-nav-toc');
+                    $('#toc_sm').removeClass('dd-nav-toc');
+                    // You need both these for scrollspy to refresh properly
+                    $('body').scrollspy('refresh');
+                    $window.scroll();
+                }
+            } else {
+                if (!$('#toc_sm').is('.dd-nav-toc')) {
+                    $('#toc_md').removeClass('dd-nav-toc');
+                    $('#toc_sm').addClass('dd-nav-toc');
+                    // You need both these for scrollspy to refresh properly
+                    $('body').scrollspy('refresh');
+                    $window.scroll();
+                }
+            }
+            if ($window.height() < 2 * $mainNav.outerHeight()) {
+                if ($mainNav.is(':visible')) {
+                    $mainNav.slideUp(200);
+                }
+            } else if (!$mainNav.is(':visible')) {
+                $mainNav.slideDown(200);
+            }
+        });
+
+        // Autoexpand sections when clicking on the menu
+        $('#toc_sm a[href^="#"], #toc_md a[href^="#"]').click((evt) => {
+            // Find the target
+            const $target = $(evt.target.getAttribute('href'));
+            if ($target.length > 0) {
+                // Ensure this is visible
+                if (!$target.is(':visible')) {
+                    const $accordion = $target.closest('.collapse');
+                    if ($accordion.length > 0) {
+                        $accordion.collapse('show');
+                    }
+                }
+            }
+        });
+
+        // Activate the TOCs
+        $window.resize();
+
+        // Setup all the tooltips
+        $('[title][data-placement]').tooltip();
+    })
+    .then(() => {
+        bootstrapPromise.then(
+            () => prepareControllerAndDropbox(APPID)
+        );
+    });
+
 });
+
+// -------------------------------------------------------------------------------------------------
+// ALL CSS STYLES
+// -------------------------------------------------------------------------------------------------
 
 import './css/bootstrap.scss';
 import './css/btn-custom-check.css';
@@ -72,6 +195,9 @@ import './css/zigzag.scss';
 import './css/dbx-helper.scss';
 import './css/navbar-helper.scss';
 
+// -------------------------------------------------------------------------------------------------
+// FONTAWESOME
+// -------------------------------------------------------------------------------------------------
 
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
 import { faFile, faFolder, faSquare } from '@fortawesome/free-regular-svg-icons';
@@ -155,6 +281,12 @@ library.add(
 );
 dom.watch();
 
+// -------------------------------------------------------------------------------------------------
+// MISC
+// -------------------------------------------------------------------------------------------------
+
+// Improve the video appearence if webm+alpha is supported.
+
 jQueryPromise.then(({default: $}) => {
     const $video = $('video');
     const conditionallyChooseBackdrop = () => {
@@ -175,17 +307,3 @@ jQueryPromise.then(({default: $}) => {
     }
 });
 
-
-// console.log('Hello webpack');
-
-// const sth = (a) => 2 * a;
-
-// console.log(sth(22));
-// import { Sortable } from 'sortablejs';
-
-
-// dbxFactory({a: 52});
-
-
-
-// praying hands and sort
