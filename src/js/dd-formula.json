@@ -17,7 +17,7 @@
 
 'use strict';
 
-import { DDGraph, DFSEvent } from './ddgraph.js';
+import { DDGraph, DFSEvent } from './dd-graph.js';
 import { arrayBinarySearch, timeIt } from './helper.js';
 
 class DDSelector {

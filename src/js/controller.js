@@ -18,9 +18,9 @@
 'use strict';
 
 import { timeIt, arrayCompare, parseQueryString, storageAvailable, pathCombine } from './helper.js';
-import { DropboxExplorer } from './dbxexplorer.js';
-import { DDArray } from './ddarray.js';
-import { DDGraph, DDType } from './ddgraph.js';
+import { DropboxExplorer } from './dbx-explorer.js';
+import { DDArray } from './dd-array.js';
+import { DDGraph, DDType } from './dd-graph.js';
 import './jquery-animaterotate.js';
 import $ from 'jquery';
 

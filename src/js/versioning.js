@@ -17,7 +17,7 @@
 'use strict';
 
 import { arrayCompare, arrayBinarySearch, timeIt, dictShallowCopy } from './helper.js';
-import { DFSEvent } from './ddgraph.js';
+import { DFSEvent } from './dd-graph.js';
 
 
 function objGet(obj, k, defaultValue, nullIsInvalid=false) {

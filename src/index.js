@@ -40,7 +40,7 @@ const jQueryPromise = import(/* webpackChunkName: "jquery", webpackPreload: true
 const sortablePromise = import(/* webpackChunkName: "sortablejs", webpackPreload: true */
     'sortablejs');
 
-import { DDArray } from './js/ddarray.js';
+import { DDArray } from './js/dd-array.js';
  
 // -------------------------------------------------------------------------------------------------
 // MAIN SETUP

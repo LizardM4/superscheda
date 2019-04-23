@@ -17,8 +17,8 @@
 
 'use strict';
 
-import { DDArray } from './ddarray.js';
-import { DDFormula, DDFormulaGraph, DDSelectorStorage } from './ddformula.js';
+import { DDArray } from './dd-array.js';
+import { DDFormula, DDFormulaGraph, DDSelectorStorage } from './dd-formula.js';
 import { arrayCompare, arrayMultidimensionalPrefill, arrayBinarySearch, timeIt, strictParseInt, strictParseFloat } from './helper.js';
 import { Versioner } from './versioning.js';
 import $ from 'jquery';
