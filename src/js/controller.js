@@ -24,6 +24,9 @@ import { DDGraph, DDType } from './ddgraph.js';
 import './jquery-animaterotate.js';
 import $ from 'jquery';
 
+const defaultCharacterPromise = import(/* webpackChunkName: "default", webpackPrefetch: true */
+        '../data/default.json');
+
 let _uniqueCnt = 0;
 
 class SuperschedaController {
@@ -73,7 +76,7 @@ class SuperschedaController {
 
         this._initAutosave();
         if (!this.loadAutosave()) {
-            this.loadRemoteFile('etc/default.json');
+            this.loadRemoteFile(defaultCharacterPromise);
         }
     }
 
@@ -293,7 +296,7 @@ class SuperschedaController {
           evt.preventDefault();
           evt.stopPropagation();
           this.toggleWaiting(true);
-          this.loadRemoteFile('etc/default.json', (res) => { this.toggleWaiting(false, res); });
+          this.loadRemoteFile(defaultCharacterPromise, (res) => { this.toggleWaiting(false, res); });
         });
 
     }
@@ -707,20 +710,28 @@ class SuperschedaController {
     }
 
 
-    loadRemoteFile(name, postLoadAction=null) {
-        console.log('Reloading remote file ' + name);
-        $.getJSON(name, (jsonData) => {
+    loadRemoteFile(nameOrPromise, postLoadAction=null) {
+        const onSuccess = (jsonData) => {
             this.graph.loadDataBag(jsonData);
             this.autosort();
             if (postLoadAction) {
                 postLoadAction(true);
             }
-        }).fail((jqxhr, textStatus, error) => {
-            this.notify('danger', 'Error ' + error + ': ' + textStatus + '.');
+        };
+        const onFailure = (reason) => {
+            this.notify('danger', reason);
             if (postLoadAction) {
                 postLoadAction(false);
             }
-        });
+        };
+        if (typeof nameOrPromise === 'string') {
+            console.log('Reloading remote file ' + name);
+            $.getJSON(name, onSuccess).fail(
+                (jqxhr, textStatus, error) => onFailure('Error ' + error + ': ' + textStatus + '.')
+            );
+        } else {
+            nameOrPromise.then(onSuccess, onFailure);
+        }
     }
 
     loadFromDropbox(path, postLoadAction=null) {
