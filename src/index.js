@@ -28,6 +28,9 @@ const bootstrapPromise = Promise.all([
         './js/btn-custom-check.js')
 ]);
 
+const jQueryPromise = import(/* webpackChunkName: "jquery", webpackPreload: true */
+    'jquery');
+
 const APPID = 'h2jyx20rz9lbwiw';
 
 async function prepareControllerAndDropbox(appId) {
@@ -151,6 +154,27 @@ library.add(
     fpSword
 );
 dom.watch();
+
+jQueryPromise.then(({default: $}) => {
+    const $video = $('video');
+    const conditionallyChooseBackdrop = () => {
+      if ($video[0].currentSrc) {
+        if ($video[0].currentSrc.endsWith('webm'))  {
+          console.log('Playing WEBM with Alpha channel.');
+          // Can improve the video to be fully visible and use webm alpha
+          $video.closest('.modal-backdrop').addClass('full-opc')
+        } else {
+          console.log('Playing fallback MP4.');
+        }
+      }
+    };
+    if ($video[0].currentSrc) {
+      conditionallyChooseBackdrop();
+    } else {
+      $video.on('loadeddata', conditionallyChooseBackdrop);
+    }
+});
+
 
 // console.log('Hello webpack');
 
