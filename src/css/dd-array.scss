@@ -48,3 +48,7 @@ striped.*/
 .always-stripe .striped-xs-sm {
    @include stripe;
 }
+
+.always-stripe [data-dd-array="item"] {
+  padding: #{map-get($spacers, 2)} !important;
+}
