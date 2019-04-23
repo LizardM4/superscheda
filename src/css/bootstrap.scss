@@ -16,6 +16,7 @@
 //
 
 @import "~bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/mixins/breakpoints";
 @import "btn-addon.scss";
 
 .pr-3p5 {
@@ -24,4 +25,10 @@
 
 .table input[type="text"] {
   min-width: 3rem;
+}
+
+@include media-breakpoint-up(md) {
+    .separatable-md:not(:last-of-type) {
+      border-right: $border-width solid $border-color;
+    }
 }
