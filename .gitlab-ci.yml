@@ -1,0 +1,40 @@
+stages:
+  - build
+  - deploy
+
+.deploy_template: &deploy_definition  # Hidden key that defines an anchor named 'job_definition'
+  before_script:
+    - apt-get update -qq
+    - apt-get install -qq -yy rsync openssh-client
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - eval $(ssh-agent -s)
+    - echo "${DEPLOY_KEY}" | tr -d '\r' | ssh-add - > /dev/null
+    - ssh-keyscan -p ${DEPLOY_PORT} "${DEPLOY_HOST}" >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  only:
+    - master
+
+build:webpack:
+  stage: build
+  image: node:alpine
+  before_script:
+    - npm install
+  script:
+    - npm run build-prod
+  artifacts:
+    paths:
+      - dist
+
+
+deploy:production:
+  stage: deploy
+  <<: *deploy_definition
+  environment:
+    name: deploy
+    url: https://dd.5p4k.me
+  script:
+    - rsync -avz --delete -e "ssh -p ${DEPLOY_PORT}" dist/ "${DEPLOY_USER}@${DEPLOY_HOST}:www/"
+  when: manual
+  dependencies:
+    - build:webpack
