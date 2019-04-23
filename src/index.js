@@ -231,7 +231,7 @@ import {
     faShieldAlt,
     faSignOutAlt,
     faSort,
-    faSpin,
+    faSpinner,
     faSyncAlt,
     faTimes
 } from '@fortawesome/free-solid-svg-icons';
@@ -271,6 +271,7 @@ library.add(
     faShieldAlt,
     faSignOutAlt,
     faSort,
+    faSpinner,
     faSquare,
     faSyncAlt,
     faTimes,
