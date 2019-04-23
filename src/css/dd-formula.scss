@@ -29,3 +29,12 @@ input[data-dd-formula]:not(.dd-void) {
 input.dd-void[data-dd-formula]:not([placeholder]) {
   border-color: #{$danger}!important;
 }
+
+
+.dd-tmp {
+  opacity: 0.5;
+}
+
+.dd-tmp-on .dd-tmp {
+  opacity: 1.0;
+}

@@ -15,8 +15,36 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins/breakpoints";
+
 /*Automatically hide all placeholders in the arrays if there is an item
 next to them*/
 *[data-dd-array="item"] ~ .array-placeholder { display: none!important; }
 
 *[data-dd-array="master"] { display: none!important; }
+
+
+/* ARRAY-RELATED ---------------------------------------------------------------------------*/
+
+/*An array container is difficult to scroll through in XS and SM sizes, so make it always
+striped is marked as such. For normal devices, make it striped only if marked with always
+striped.*/
+
+@mixin stripe {
+   &:nth-of-type(#{$table-striped-order}) {
+    background-color: $table-accent-bg;
+    border: $table-border-width solid $table-border-color;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+   .striped-xs-sm {
+      @include stripe;
+   }
+}
+
+.always-stripe .striped-xs-sm {
+   @include stripe;
+}

@@ -38,6 +38,7 @@ $spell-last-opacity: 0.5;
   font-weight: $headings-font-weight;
   line-height: $headings-line-height;
   color: $headings-color;
+  width: 100%;
   @include font-size($h6-font-size);
 }
 

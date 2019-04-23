@@ -62,7 +62,7 @@ window.addEventListener('load', (evt) => {
 import './css/bootstrap.scss';
 import './css/btn-custom-check.css';
 import './css/fork-me-ribbon.css';
-import './css/dd-array.css';
+import './css/dd-array.scss';
 import './css/dd-spells.scss';
 import './css/dd-formula.scss';
 import './css/zigzag.scss';
