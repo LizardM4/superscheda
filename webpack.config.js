@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const SriPlugin = require('webpack-subresource-integrity');
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const WebappWebpackPlugin = require('webapp-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -34,21 +34,39 @@ module.exports = {
      filename: 'css/[name].[contenthash].css',
     }),
     new SriPlugin({hashFuncNames: ['sha256', 'sha384']}),
-    new FaviconsWebpackPlugin({
+    new WebappWebpackPlugin({
       logo: './src/img/favicon.png',
       prefix: 'img/favicon-[hash]/',
-      title: 'Superscheda',
-      icons: {
-        android: true,
-        appleIcon: true,
-        appleStartup: false,
-        coast: false,
-        favicons: true,
-        firefox: true,
-        opengraph: false,
-        twitter: false,
-        yandex: false,
-        windows: false
+      favicons: {
+        appName: 'Superscheda',
+        lang: 'it-IT',
+        appleStatusBarStyle: 'default',
+        icons: {
+          android: true,
+          appleIcon: true,
+          appleStartup: false,
+          coast: true,
+          favicons: true,
+          firefox: true,
+          yandex: true,
+          windows: true
+        }
+      }
+    }),
+    new WebappWebpackPlugin({
+      logo: './src/img/startup.png',
+      prefix: 'img/startup-[hash]/',
+      favicons: {
+        icons: {
+          android: false,
+          appleIcon: false,
+          appleStartup: true,
+          coast: false,
+          favicons: false,
+          firefox: false,
+          yandex: false,
+          windows: false
+        }
       }
     })
   ],
