@@ -17,11 +17,11 @@
 
 'use strict';
 
-import jQuery from 'jquery';
+import $ from 'jquery';
 
 // https://stackoverflow.com/a/15191130/1749822
-jQuery.fn.extend({
-    animateRotate: function(angle, duration, easing, complete) {
+$.fn.extend({
+    animateRotate: function(startAngle, endAngle, duration, easing, complete) {
         const args = $.speed(duration, easing, complete);
         const step = args.step;
         for (let i = 0; i < this.length; i++) {
@@ -31,7 +31,7 @@ jQuery.fn.extend({
                 $.style(e, 'transform', 'rotate(' + now + 'deg)');
                 if (step) return step.apply(e, arguments);
             };
-            $({deg: 0}).animate({deg: angle}, args);
+            $({deg: startAngle}).animate({deg: endAngle}, args);
         }
     }
 });
