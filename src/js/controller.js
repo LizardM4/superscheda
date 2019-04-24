@@ -217,9 +217,11 @@ class SuperschedaController {
             this._modalWaitingBackdrop.removeClass('show');
         } else {
             if (success) {
-                this._modalWaitingBody.removeClass('fa-times').addClass('fa-check').addClass('show');
+                this._modalWaitingBody.find('svg').attr('data-icon', 'check');
+                this._modalWaitingBody.addClass('show');
             } else {
-                this._modalWaitingBody.removeClass('fa-check').addClass('fa-times').addClass('show');
+                this._modalWaitingBody.find('svg').attr('data-icon', 'times');
+                this._modalWaitingBody.addClass('show');
             }
             setTimeout(() => {
                 this.toggleWaiting(false);
@@ -382,30 +384,21 @@ class SuperschedaController {
 
     _initGUIAnimatedChevrons() {
         // Find all the chevron buttons
-        $('div.card div.card-header button.close i.fas').each((_, match) => {
-            const $match = $(match);
-            const $button = $match.parents('button');
+        $('div.card div.card-header button.close').each((_, match) => {
+            const $button = $(match);
             const $card = $button.parents('div.card');
             $card.on('hide.bs.collapse', () => {
                 $button.prop('disabled', true);
-                $match.animateRotate(180, {
-                    complete: () => {
-                        $button.prop('disabled', false);
-                        $match.css('transform', '')
-                            .removeClass('fa-chevron-circle-up')
-                            .addClass('fa-chevron-circle-down');
-                    }
+                const $icon = $button.find('svg');
+                $icon.animateRotate(0, 180, {
+                    complete: () => $button.prop('disabled', false)
                 });
             });
             $card.on('show.bs.collapse', () => {
                 $button.prop('disabled', true);
-                $match.animateRotate(180, {
-                    complete: () => {
-                        $button.prop('disabled', false);
-                        $match.css('transform', '')
-                            .removeClass('fa-chevron-circle-down')
-                            .addClass('fa-chevron-circle-up');
-                    }
+                const $icon = $button.find('svg');
+                $icon.animateRotate(180, 360, {
+                    complete: () => $button.prop('disabled', false)
                 });
             });
         });
@@ -417,7 +410,7 @@ class SuperschedaController {
         this._loadModal = $('#load_from');
 
         this._modalWaitingBackdrop = $('#waiting_backdrop');
-        this._modalWaitingBody = this._modalWaiting.find('p > i.fas');
+        this._modalWaitingBody = this._modalWaiting.find('p');
         this._modalWaiting.on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', (evt) => {
             if (evt.target === this._modalWaiting[0]){
                 if (!this._modalWaiting.hasClass('show')) {
@@ -541,22 +534,19 @@ class SuperschedaController {
                         $collapsible.attr('id', collapseId);
                         $collapser.attr('data-target', '#' + collapseId);
                         // And turn the icon
-                        const $icon = $collapser.find('i');
                         $collapsible.on('hide.bs.collapse', () => {
                             $collapser.prop('disabled', true);
                         });
                         $collapsible.on('hidden.bs.collapse', () => {
                             $collapser.prop('disabled', false);
-                            $icon.removeClass('fa-angle-double-up')
-                                 .addClass('fa-ellipsis-h');
+                            $collapser.find('svg').attr('data-icon', 'ellipsis-h');
                         });
                         $collapsible.on('show.bs.collapse', () => {
                             $collapser.prop('disabled', true);
                         });
                         $collapsible.on('shown.bs.collapse', () => {
                             $collapser.prop('disabled', false);
-                            $icon.removeClass('fa-ellipsis-h')
-                                 .addClass('fa-angle-double-up');
+                            $collapser.find('svg').attr('data-icon', 'angle-double-up');
                         });
                     }
                 });

@@ -209,7 +209,7 @@ import {
     faBullseye,
     faCheck,
     faCheckSquare,
-    faChevronCircleDown,
+    faChevronCircleDown,  // not used currently,  needed if we start with collapsed sections
     faChevronCircleUp,
     faCommentDots,
     faCopyright,
