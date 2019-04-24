@@ -164,7 +164,20 @@ window.addEventListener('load', (evt) => {
                         $accordion.collapse('show');
                     }
                 }
+                // Move manually
+                $('html, body').animate({scrollTop: $target.offset().top}, 'slow');
             }
+            evt.preventDefault();
+            evt.stopPropagation();
+            return false;
+        });
+
+        // Ensure scroll-to-top links are also correct
+        $('a.navbar-brand[href="#"]').click((evt) => {
+            $('html, body').animate({scrollTop: 0}, 'slow');
+            evt.preventDefault();
+            evt.stopPropagation();
+            return false;
         });
 
         // Activate the TOCs
