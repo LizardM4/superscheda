@@ -667,6 +667,9 @@ class SuperschedaController {
         }
         if (accessToken) {
             this._dropbox = dbxConstructor({accessToken: accessToken});
+            // Modify the hash string to store the access token, in case the users
+            // want to add this to their favourites
+            window.location.hash = '#access_token=' + encodeURIComponent(accessToken);
             // Test if this dropbox works
             this._dropbox.usersGetCurrentAccount()
                 .then(() => { this._dbxCompleteSetup(appId, true, dbxConstructor); })
