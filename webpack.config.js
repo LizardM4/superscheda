@@ -40,7 +40,8 @@ module.exports = {
       favicons: {
         appName: 'Superscheda',
         lang: 'it-IT',
-        appleStatusBarStyle: 'default',
+        appleStatusBarStyle: 'black',
+        start_url: null,  // Explicitly disable this because the web app should pick up the access token
         icons: {
           android: true,
           appleIcon: true,
