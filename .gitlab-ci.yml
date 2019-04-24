@@ -3,6 +3,7 @@ stages:
   - deploy
 
 .deploy_template: &deploy_definition  # Hidden key that defines an anchor named 'job_definition'
+  image: debian:stretch
   before_script:
     - apt-get update -qq
     - apt-get install -qq -yy rsync openssh-client
@@ -34,7 +35,7 @@ deploy:production:
     name: deploy
     url: https://dd.5p4k.me
   script:
-    - rsync -avz --delete -e "ssh -p ${DEPLOY_PORT}" dist/ "${DEPLOY_USER}@${DEPLOY_HOST}:www/"
+    - rsync -avz --delete -e "ssh -p ${DEPLOY_PORT}" dist/ "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/"
   when: manual
   dependencies:
     - build:webpack
