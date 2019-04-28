@@ -68,6 +68,7 @@ class SuperschedaController {
         this._initArrayAutosort();
         this._initSpells();
         this._initAttacks();
+        this._initSkills();
         this._initGUIAnimatedChevrons();
         this._initGUIDynamicTitles();
         this._initGUIDynamicIncrementers();
@@ -486,6 +487,40 @@ class SuperschedaController {
                 }
             }
         });
+    }
+
+    _initSkills() {
+        $('#skills_list')
+            .on('ddarray.insertion', (evt, insertedItems) => {
+                evt.stopPropagation();
+                insertedItems.forEach(insertedItem => {
+                    insertedItem = $(insertedItem);
+                    // Set up analogously the collapsible element
+                    const $collapsible = insertedItem.find('.collapse');
+                    const $collapser = insertedItem.find('[data-toggle="collapse"]');
+                    if ($collapsible.length === 1 && $collapser.length === 1) {
+                        ++_uniqueCnt;
+                        const collapseId = 'collapse_' + _uniqueCnt.toString();
+                        $collapsible.attr('id', collapseId);
+                        $collapser.attr('data-target', '#' + collapseId);
+                        // And turn the icon
+                        $collapsible.on('hide.bs.collapse', () => {
+                            $collapser.prop('disabled', true);
+                        });
+                        $collapsible.on('hidden.bs.collapse', () => {
+                            $collapser.prop('disabled', false);
+                            $collapser.find('svg').attr('data-icon', 'ellipsis-h');
+                        });
+                        $collapsible.on('show.bs.collapse', () => {
+                            $collapser.prop('disabled', true);
+                        });
+                        $collapsible.on('shown.bs.collapse', () => {
+                            $collapser.prop('disabled', false);
+                            $collapser.find('svg').attr('data-icon', 'angle-double-up');
+                        });
+                    }
+                });
+            });
     }
 
     _initAttacks() {

@@ -105,21 +105,6 @@ window.addEventListener('load', (evt) => {
             }
         });
 
-        // Event for activating/deactivating the details of the abilities
-        const $skillsMod = $('#toggle_skills');
-        $skillsMod.click((evt) => {
-            const $extraMods = $('.extra-mods');
-            const $skillsArray = $('#skills_list');
-            if ($extraMods.hasClass('d-none')) {
-                $('.extra-mods').removeClass('d-none');
-                $('#skills_list').addClass('always-stripe');
-                $skillsMod.text('Nascondi');
-            } else {
-                $('.extra-mods').addClass('d-none');
-                $('#skills_list').removeClass('always-stripe');
-                $skillsMod.text('Mostra');
-            }
-        });
 
         // Toggle the dd-nav-toc class that drives the toc; having multiple TOCs
         // causes some not to trigger, so we toggle between one and the other.

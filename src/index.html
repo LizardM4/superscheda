@@ -1947,19 +1947,13 @@
                   <div class="text-truncate"><label class="col-form-label">Totale punti spesi:</label></div>
                   <input type="text" class="form-control" data-dd-id="punti_spesi" data-dd-type="int" data-dd-formula="cond_sum_mul 2 /abilita[-1].di_classe /abilita[-1].gradi">
                 </div>
-                <div class="col-md-2 col-6">
-                  <label class="col-form-label">Modificatori:</label>
-                  <button type="button" class="btn btn-secondary d-block w-100" id="toggle_skills">
-                    Mostra
-                  </button>
-                </div>
               </div>
 
               <h6 class="mt-3">Elenco abilità</h6>
 
               <div class="d-none d-md-block">
                 <div class="form-row pr-3p5">
-                  <div class="col-8 text-truncate">
+                  <div class="col-7 text-truncate">
                     <label class="col-form-label col-form-label-sm">Acquisita · Nome · Di classe</label>
                   </div>
                   <div class="col-2 text-truncate">
@@ -1967,6 +1961,9 @@
                   </div>
                   <div class="col-1 text-truncate">
                     <label class="col-form-label col-form-label-sm">Gradi</label>
+                  </div>
+                  <div class="col-1 text-truncate">
+                    <label class="col-form-label col-form-label-sm">Misc</label>
                   </div>
                   <div class="col-1 text-truncate">
                     <label class="col-form-label col-form-label-sm">Totale</label>
@@ -1979,7 +1976,7 @@
                 <div class="form-row striped-xs-sm pb-2 pb-md-1 px-2 px-md-0" data-dd-array="master" data-dd-id="abilita">
                   <div class="col">
                     <div class="form-row">
-                      <div class="col-md-8">
+                      <div class="col-md-7">
                         <label class="col-form-label col-form-label-sm d-md-none">Acquisita · Nome · Di classe</label>
                         <div class="input-group input-group-sm">
                           <div class="input-group-prepend">
@@ -1998,7 +1995,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-2 col-6">
+                      <div class="col-md-2 col-4">
                         <label class="col-form-label col-form-label-sm d-md-none">Car chiave · Mod C</label>
                         <div class="input-group input-group-sm">
                           <select class="custom-select custom-select-sm" data-dd-id="chiave">
@@ -2012,16 +2009,22 @@
                           <input data-dd-id="mod_c" data-dd-formula="sel ./chiave /caratteristiche.for.mod_temp /caratteristiche.des.mod_temp /caratteristiche.cos.mod_temp /caratteristiche.int.mod_temp /caratteristiche.sag.mod_temp /caratteristiche.car.mod_temp" type="text" class="form-control form-control-sm" data-dd-type="int">
                         </div>
                       </div>
-                      <div class="col-md-1 col-3">
+                      <div class="col-md-1 col-2">
                         <label class="col-form-label col-form-label-sm d-md-none">Gradi</label>
                         <input data-dd-id="gradi" type="text" class="form-control form-control-sm" data-dd-type="int">
                       </div>
-                      <div class="col-md-1 col-3">
+                      <div class="col-md-1 col-2">
+                        <label class="col-form-label col-form-label-sm d-md-none">Misc</label>
+                        <button class="btn btn-sm btn-secondary w-100" data-toggle="collapse" aria-expanded="false">
+                          <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                      </div>
+                      <div class="col-md-1 col-2">
                         <label class="col-form-label col-form-label-sm d-md-none">Totale</label>
                         <input data-dd-id="totale" type="text" data-dd-formula="sum ./mod_c ./gradi ./razza ./archetipo[0] ./archetipo[1] ./b_sinergia ./talento ./oggetto ./vari" class="form-control form-control-sm" data-dd-type="int">
                       </div>
                     </div>
-                    <div class="form-row pb-1 extra-mods d-none">
+                    <div class="form-row pb-1 extra-mods collapse">
                       <div class="col-md col-3">
                         <label class="py-md-0 col-form-label col-form-label-sm">Razza</label>
                         <input data-dd-id="razza" type="text" class="form-control form-control-sm" data-dd-type="int">
