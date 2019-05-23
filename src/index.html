@@ -381,12 +381,31 @@
           </div>
           <div class="collapse show" id="card_base">
             <div class="card-body">
+              <div class="text-center" id="picture_container">
+                <input type="hidden" data-dd-id="pic_path" id="pic_path">
+                <span id="picture_loading" class="d-none"><i class="fas fa-spinner fa-pulse fa-3x"></i></span>
+                <span id="picture_missing" class="fa-stack fa-lg d-none">
+                  <i class="fas fa-camera fa-stack-1x"></i>
+                  <i class="fas fa-ban fa-stack-2x"></i>
+                </span>
+              </div>
               <div class="form-row">
                 <div class="col-md-3 col-6">
                   <div class="text-truncate">
                     <div class="text-truncate"><label class="col-form-label">Nome del personaggio</label></div>
                   </div>
-                  <input type="text" class="form-control" id="dd_page_title" data-dd-id="nome">
+                  <div class="input-group">
+                    <input type="text" class="form-control" id="dd_page_title" data-dd-id="nome">
+                    <div class="input-group-append">
+                      <button class="btn btn-addon py-0 px-1" type="button" id="btn_load_pic">
+                        <span class="fa-stack align-middle size-80">
+                          <i class="fas fa-camera fa-stack-1x"></i>
+                          <i class="fas fa-ban fa-stack-2x"></i>
+                        </span>
+                        <i class="fas fa-camera mx-2"></i>
+                      </button>
+                    </div>
+                  </div>
                 </div>
                 <div class="col-md-3 col-6">
                   <label class="col-form-label">Razza</label>
