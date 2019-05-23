@@ -35,7 +35,7 @@ Requires a minimum seup as follows:
 
 This must be the jquery object passed as the `explorer` argument.
 The `dbx` object is a Dropbox API instance.
-`fileClickEvent` is a event handler for the click on an entry.
+`fileClickHandler` is a event handler for the click on an entry.
 The target of the event has a `data-file` attribute containing the file name.
 `entryFilter` is a function(tag, name), where tag is either "file" or "folder",
 and name is the filename.
@@ -47,7 +47,7 @@ import $ from 'jquery';
 import { pathCombine, pathNormalize } from './helper.js';
 
 class DropboxExplorer {
-    constructor(dbx, explorer, fileClickEvent, entryFilter=null) {
+    constructor(dbx, explorer, fileClickHandler=null, entryFilter=null) {
         this._dropbox = dbx;
         this._explorer = $(explorer);
         this._entryFilter = entryFilter;
@@ -56,8 +56,24 @@ class DropboxExplorer {
         this._breadcrumb = this._nav.find('ol.breadcrumb');
         this._spinner = this._explorer.find('.dropbox-spinner');
         this._alert = this._explorer.find('.dropbox-alert');
-        this._fileClickEvent = fileClickEvent;
+        this._fileClickHandler = fileClickHandler;
         this.workDir = '/';
+    }
+
+    get entryFilter() {
+        return this._entryFilter;
+    }
+
+    set entryFilter(v) {
+        this._entryFilter = v;
+    }
+
+    get fileClickHandler() {
+        return this._fileClickHandler;
+    }
+
+    set fileClickHandler(v) {
+        this._fileClickHandler = v;
     }
 
     get workDir() {
@@ -197,7 +213,7 @@ class DropboxExplorer {
         entries.forEach(entry => {
             const name = entry['name'];
             const tag = entry['.tag'];
-            if (this._entryFilter && !this._entryFilter(tag, name)) {
+            if (this.entryFilter && !this.entryFilter(tag, name)) {
                 return;
             }
             if (tag === 'file') {
@@ -205,7 +221,14 @@ class DropboxExplorer {
                     .text(' ' + name)
                     .attr('data-file', name)
                     .prepend($('<i class="far fa-file" aria-hidden="true"></i>'))
-                    .click(this._fileClickEvent)
+                    .click((evt) => {
+                        evt.preventDefault();
+                        evt.stopPropagation();
+                        if (this.fileClickHandler) {
+                            this.fileClickHandler(evt)
+                        }
+                        return false;
+                    })
                     .appendTo(
                         $('<li></li>')
                         .addClass('dropbox-' + tag)
