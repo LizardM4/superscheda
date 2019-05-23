@@ -37,6 +37,7 @@ class SuperschedaController {
 
     constructor() {
         this._dropbox = null;
+        this._dbxConnected = false;
         this._hasLocalStorage = true;
         this._saveModal = null;
         this._saveExplorer = null;
@@ -69,6 +70,7 @@ class SuperschedaController {
         this._initSpells();
         this._initAttacks();
         this._initSkills();
+        this._initPicture();
         this._initGUIAnimatedChevrons();
         this._initGUIDynamicTitles();
         this._initGUIDynamicIncrementers();
@@ -121,6 +123,7 @@ class SuperschedaController {
             this._dbxSetupSaveToDialog();
             this._dbxSetupLoadFromDialog();
             this._dbxSetupLogoff();
+            this._dbxConnected = true;
         } else {
             if (this._hasLocalStorage) {
                 // Forget the access token if any
@@ -353,7 +356,7 @@ class SuperschedaController {
     };
 
     guiLoadDDFromDropbox() {
-        if (this._loadExplorer) {
+        if (this._dbxConnected) {
             const onFileClick = evt => {
                 // Change the control value
                 this._loadModal.modal('hide');
@@ -378,6 +381,34 @@ class SuperschedaController {
         this._loadModal.modal('show');
     }
 
+    guiLoadPicFromDropbox() {
+        if (this._dbxConnected) {
+            const onFileClick = evt => {
+                // Change the control value
+                this._loadModal.modal('hide');
+                const file = evt.target.getAttribute('data-file');
+                const path = pathCombine(this._loadExplorer.workDir, file, true);
+                // Will update the raw control value and this will trigger the change event
+                this.graph.nodeByPath('pic_path').value = path;
+            };
+
+            const entryFilter = (tag, name) => {
+                // Only images
+                if (tag === 'folder') {
+                    return true;
+                }
+                name = name.toLowerCase();
+                return name.endsWith('.jpg')
+                    || name.endsWith('.jpeg')
+                    || name.endsWith('.png')
+                    || name.endsWith('.gif')
+                    || name.endsWith('.webp')
+                    || name.endsWith('.svg');
+            };
+
+            this._loadExplorer.entryFilter = entryFilter;
+            this._loadExplorer.fileClickHandler = onFileClick;
+        }
         this._loadModal.modal('show');
     }
 
@@ -419,6 +450,9 @@ class SuperschedaController {
         this._modalWaiting = $('#waiting');
         this._saveModal = $('#save_to');
         this._loadModal = $('#load_from');
+        this._picContainer = $('#picture_container');
+        this._picLoading = this._picContainer.children('#picture_loading');
+        this._picMissing = this._picContainer.children('#picture_missing');
 
         this._modalWaitingBackdrop = $('#waiting_backdrop');
         this._modalWaitingBody = this._modalWaiting.find('p');
@@ -501,6 +535,7 @@ class SuperschedaController {
 
     _initGUIButtons() {
         $('#btn_load_dd').click(() => { this.guiLoadDDFromDropbox(); });
+        $('#btn_load_pic').click(() => { this.guiLoadPicFromDropbox(); });
     }
 
     _initSkills() {
@@ -535,6 +570,13 @@ class SuperschedaController {
                     }
                 });
             });
+    }
+
+    _initPicture() {
+        const $picInput = $('input#pic_path');
+        $picInput.change((evt) => {
+            this.guiChangePicture($picInput.val());
+        });
     }
 
     _initAttacks() {
@@ -798,6 +840,41 @@ class SuperschedaController {
                 if (postLoadAction) {
                     postLoadAction(false);
                 }
+            });
+    }
+
+    guiChangePicture(path) {
+        this._picContainer.children('img').remove();
+
+        if (path === null || path === '') {
+            this._picMissing.addClass('d-none');
+            this._picLoading.addClass('d-none');
+            return;
+        } else if (!this._dbxConnected) {
+            this._picMissing.removeClass('d-none');
+            this._picLoading.addClass('d-none');
+            return;
+        }
+
+        this._picLoading.removeClass('d-none');
+
+        console.log('Loading Dropbox file ' + path + ' as character picture.');
+
+        this._dropbox.filesDownload({path: path})
+            .then((response) => {
+                const blob = response.fileBlob;
+                const reader = new FileReader();
+                reader.addEventListener('loadend', () => {
+                    this._picLoading.addClass('d-none');
+                    $('<img class="img-fluid mx-auto">')
+                        .attr('src', reader.result)
+                        .appendTo(this._picContainer);
+                });
+                reader.readAsDataURL(blob);
+            })
+            .catch((error) => {
+                this._picMissing.removeClass('d-none');
+                this._picLoading.addClass('d-none');
             });
     }
 

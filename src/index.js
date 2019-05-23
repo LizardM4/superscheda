@@ -202,9 +202,11 @@ import { faFile, faFolder, faSquare } from '@fortawesome/free-regular-svg-icons'
 import { faDropbox, faGitlab } from '@fortawesome/free-brands-svg-icons';
 import {
     faAngleDoubleUp,
+    faBan,
     faBars,
     faBolt,
     faBullseye,
+    faCamera,
     faCheck,
     faCheckSquare,
     faChevronCircleDown,  // not used currently,  needed if we start with collapsed sections
@@ -243,9 +245,11 @@ library.add(
     faDropbox,
     faGitlab,
     faAngleDoubleUp,
+    faBan,
     faBars,
     faBolt,
     faBullseye,
+    faCamera,
     faCheck,
     faCheckSquare,
     faChevronCircleDown,
