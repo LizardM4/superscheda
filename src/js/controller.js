@@ -72,6 +72,7 @@ class SuperschedaController {
         this._initGUIAnimatedChevrons();
         this._initGUIDynamicTitles();
         this._initGUIDynamicIncrementers();
+        this._initGUIButtons();
 
         this._detectLocalStorage();
 
@@ -314,8 +315,6 @@ class SuperschedaController {
             this._saveModal.find('.dropbox-explorer'),
             evt => {
                 // Change the control value
-                evt.preventDefault();
-                evt.stopPropagation();
                 fileNameInput.val(evt.target.getAttribute('data-file')).change();
             },
             (tag, name) => {
@@ -353,15 +352,10 @@ class SuperschedaController {
         });
     };
 
-    _dbxSetupLoadFromDialog() {
-        // Setup dropbox explorer
-        this._loadExplorer = new DropboxExplorer(
-            this._dropbox,
-            this._loadModal.find('.dropbox-explorer'),
-            evt => {
+    guiLoadDDFromDropbox() {
+        if (this._loadExplorer) {
+            const onFileClick = evt => {
                 // Change the control value
-                evt.preventDefault();
-                evt.stopPropagation();
                 this._loadModal.modal('hide');
                 this.toggleWaiting(true);
                 const file = evt.target.getAttribute('data-file');
@@ -371,11 +365,27 @@ class SuperschedaController {
                 this._saveExplorer.workDir = this._loadExplorer.workDir;
                 // And also suggest the name
                 this._saveModal.find('input').val(file).change();
-            },
-            (tag, name) => {
+            };
+
+            const entryFilter = (tag, name) => {
                 // Only folders and json files
                 return tag === 'folder' || name.endsWith('.json');
-            }
+            };
+
+            this._loadExplorer.entryFilter = entryFilter;
+            this._loadExplorer.fileClickHandler = onFileClick;
+        }
+        this._loadModal.modal('show');
+    }
+
+        this._loadModal.modal('show');
+    }
+
+    _dbxSetupLoadFromDialog() {
+        // Setup dropbox explorer
+        this._loadExplorer = new DropboxExplorer(
+            this._dropbox,
+            this._loadModal.find('.dropbox-explorer')
         );
 
         this._loadModal.on('show.bs.modal', () => {
@@ -487,6 +497,10 @@ class SuperschedaController {
                 }
             }
         });
+    }
+
+    _initGUIButtons() {
+        $('#btn_load_dd').click(() => { this.guiLoadDDFromDropbox(); });
     }
 
     _initSkills() {
