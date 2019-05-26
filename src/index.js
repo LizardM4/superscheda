@@ -198,7 +198,7 @@ import './css/navbar-helper.scss';
 // -------------------------------------------------------------------------------------------------
 
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
-import { faFile, faFolder, faSquare } from '@fortawesome/free-regular-svg-icons';
+import { faFile, faImages, faFolder, faSquare, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faDropbox, faGitlab } from '@fortawesome/free-brands-svg-icons';
 import {
     faAngleDoubleUp,
@@ -266,6 +266,7 @@ library.add(
     faFolderOpen,
     faGitlab,
     faHourglassStart,
+    faImages,
     faMinus,
     faMinusSquare,
     faMortarPestle,
@@ -281,6 +282,7 @@ library.add(
     faSquare,
     faSyncAlt,
     faTimes,
+    faTrashAlt,
     fpMace,
     fpProtest,
     fpQuiver,
