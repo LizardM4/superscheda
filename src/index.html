@@ -382,7 +382,6 @@
           <div class="collapse show" id="card_base">
             <div class="card-body">
               <div class="text-center" id="picture_container">
-                <input type="hidden" data-dd-id="pic_path" id="pic_path">
                 <span id="picture_loading" class="d-none"><i class="fas fa-spinner fa-pulse fa-3x"></i></span>
                 <span id="picture_missing" class="fa-stack fa-lg d-none">
                   <i class="fas fa-camera fa-stack-1x"></i>
@@ -394,15 +393,18 @@
                   <div class="text-truncate">
                     <div class="text-truncate"><label class="col-form-label">Nome del personaggio</label></div>
                   </div>
+                  <input type="text" class="form-control" id="dd_page_title" data-dd-id="nome">
+                </div>
+                <div class="col-md-3 col-6">
+                  <label class="col-form-label">Immagine</label>
                   <div class="input-group">
-                    <input type="text" class="form-control" id="dd_page_title" data-dd-id="nome">
-                    <div class="input-group-append">
-                      <button class="btn btn-addon py-0 px-1" type="button" id="btn_load_pic">
-                        <span class="fa-stack align-middle size-80">
-                          <i class="fas fa-camera fa-stack-1x"></i>
-                          <i class="fas fa-ban fa-stack-2x"></i>
-                        </span>
-                        <i class="fas fa-camera mx-2"></i>
+                    <input type="text" readonly class="form-control" id="pic_path" data-dd-id="pic_path" placeholder="(nessuna)">
+                    <div class="input-group-append btn-group">
+                      <button type="button" disabled class="btn btn-addon" id="btn_load_pic">
+                        <i class="far fa-images"></i>
+                      </button>
+                      <button type="button" class="btn btn-addon" id="btn_erase_pic">
+                        <i class="far fa-trash-alt"></i>
                       </button>
                     </div>
                   </div>
@@ -412,21 +414,21 @@
                   <input type="text" class="form-control" data-dd-id="razza">
                 </div>
                 <div class="col-md-3 col-6">
+                  <div class="text-truncate">
+                    <label class="col-form-label">Nome del giocatore</label>
+                  </div>
+                  <input type="text" class="form-control" data-dd-id="giocatore">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="col-md-3 col-6">
                   <label class="col-form-label">Archetipo 1</label>
                   <input type="text" class="form-control" data-dd-id="archetipo[0]">
                 </div>
                 <div class="col-md-3 col-6">
                   <label class="col-form-label">Archetipo 2</label>
                   <input type="text" class="form-control" data-dd-id="archetipo[1]">
-                </div>
-              </div>
-
-              <div class="form-row">
-                <div class="col-md-3 col-6">
-                  <div class="text-truncate">
-                    <label class="col-form-label">Nome del giocatore</label>
-                  </div>
-                  <input type="text" class="form-control" data-dd-id="giocatore">
                 </div>
                 <div class="col-md-3 col-6">
                   <label class="col-form-label">Classe</label>
@@ -436,21 +438,9 @@
                   <label class="col-form-label">Classe/CdP</label>
                   <input type="text" class="form-control" data-dd-id="classe[1]">
                 </div>
-                <div class="col-md-3 col-6">
-                  <label class="col-form-label">Classe/CdP</label>
-                  <input type="text" class="form-control" data-dd-id="classe[2]">
-                </div>
               </div>
 
-              <div class="form-row" data-dd-id="png">
-                <div class="col-md-3 col-6">
-                  <label class="col-form-label">Classe da PNG</label>
-                  <input type="text" class="form-control" data-dd-id="classe[0]">
-                </div>
-                <div class="col-md-3 col-6">
-                  <label class="col-form-label">Classe/CdP</label>
-                  <input type="text" class="form-control" data-dd-id="classe[1]">
-                </div>
+              <div class="form-row">
                 <div class="col-md-3 col-6">
                   <label class="col-form-label">Classe/CdP</label>
                   <input type="text" class="form-control" data-dd-id="classe[2]">
@@ -458,6 +448,14 @@
                 <div class="col-md-3 col-6">
                   <label class="col-form-label">Classe/CdP</label>
                   <input type="text" class="form-control" data-dd-id="classe[3]">
+                </div>
+                <div class="col-md-3 col-6">
+                  <label class="col-form-label">Classe/CdP</label>
+                  <input type="text" class="form-control" data-dd-id="classe[4]">
+                </div>
+                <div class="col-md-3 col-6">
+                  <label class="col-form-label">Classe da PNG</label>
+                  <input type="text" class="form-control" data-dd-id="classe_png">
                 </div>
               </div>
 

@@ -519,4 +519,31 @@ Versioner.instance().addPatch('0.2.6', (dataBag) => {
     }
 });
 
+Versioner.instance().addPatch('0.2.7', (dataBag) => {
+    const npc = objGet(dataBag, 'png', null);
+    if (npc === null) {
+        return;
+    }
+    delete dataBag['png'];
+    const npcClasses = objGet(npc, 'classe', []);
+    if (!Array.isArray(npcClasses)) {
+        return;
+    }
+    let classes = objGet(dataBag, 'classe');
+    if (!Array.isArray('classes')) {
+        classes = [];
+        dataBag['classe'] = classes;
+    }
+    for (let i = 0; i < npcClasses.length; i++) {
+        if (npcClasses[i] === null || npcClasses[i] === '') {
+            continue;
+        }
+        if (i === 0) {
+            dataBag['classe_png'] = npcClasses[i];
+        } else {
+            classes.push(npcClasses[i]);
+        }
+    }
+});
+
 export { Versioner };

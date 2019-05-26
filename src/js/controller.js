@@ -148,7 +148,7 @@ class SuperschedaController {
             $('#auth_dbx').modal('show');
         }
         // No matter what, enable the buttons
-        $('nav#main_nav button[disabled]').not('#btn_logout').prop('disabled', false);
+        $('nav#main_nav button[disabled], #btn_load_pic[disabled]').not('#btn_logout').prop('disabled', false);
     }
 
     autosave() {
@@ -536,6 +536,7 @@ class SuperschedaController {
     _initGUIButtons() {
         $('#btn_load_dd').click(() => { this.guiLoadDDFromDropbox(); });
         $('#btn_load_pic').click(() => { this.guiLoadPicFromDropbox(); });
+        $('#btn_erase_pic').click(() => { this.graph.nodeByPath('pic_path').value = null; });
     }
 
     _initSkills() {
