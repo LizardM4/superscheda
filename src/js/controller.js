@@ -740,6 +740,8 @@ class SuperschedaController {
 
     loadRemoteFile(nameOrPromise, postLoadAction=null) {
         const onSuccess = (jsonData) => {
+            // Shallow copy jsonData, for a Promise this is an immutable Module object
+            jsonData = Object.assign({}, jsonData);
             this.graph.loadDataBag(jsonData);
             this.autosort();
             if (postLoadAction) {
