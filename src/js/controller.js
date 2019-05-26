@@ -149,6 +149,11 @@ class SuperschedaController {
         }
         // No matter what, enable the buttons
         $('nav#main_nav button[disabled], #btn_load_pic[disabled]').not('#btn_logout').prop('disabled', false);
+        // And load the picture if needed
+        const node = this.graph.nodeByPath('pic_path');
+        if (node.value !== null) {
+            node.obj.change();
+        }
     }
 
     autosave() {
@@ -850,6 +855,11 @@ class SuperschedaController {
         if (path === null || path === '') {
             this._picMissing.addClass('d-none');
             this._picLoading.addClass('d-none');
+            return;
+        } else if (this._dropbox === null) {
+            // Still waiting to complete dropbox setup.
+            this._picMissing.addClass('d-none');
+            this._picLoading.removeClass('d-none');
             return;
         } else if (!this._dbxConnected) {
             this._picMissing.removeClass('d-none');
