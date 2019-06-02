@@ -31,6 +31,11 @@ const DDType = Object.freeze({
     NONE:    Symbol('none')
 });
 
+const DDKeywordType = Object.freeze({
+    NONE:   Symbol('none'),
+    VALUE:  Symbol('value'),
+    STATIC: Symbol('static')
+});
 
 function defaultPerType(type) {
     switch (type) {
@@ -403,6 +408,29 @@ class DDGraph {
         return $obj.is('input[data-dd-id], select[data-dd-id], textarea[data-dd-id]');
     }
 
+    static providesKeyword($obj) {
+        if ($obj.is('.dd-keyword-provider')) {
+            return DDKeywordType.VALUE;
+        } else if ($obj.is('[dd-keyword]')) {
+            return DDKeywordType.STATIC;
+        }
+        return DDKeywordType.NONE;
+    }
+
+    static extractKeyword(ddNode) {
+        const kwdType = DDGraph.providesKeyword(ddNode.obj);
+        let retval = null;
+        if (kwdType === DDKeywordType.VALUE) {
+            retval = ddNode.value.toString();
+        } else if (kwdType === DDKeywordType.STATIC) {
+            retval = ddNode.obj.attr('dd-keyword').toString();
+        }
+        if (retval !== null) {
+            retval = retval.toLowerCase().split(' ');
+        }
+        return retval;
+    }
+
     static isHiddenNode($obj) {
         return $obj.is('input[type="hidden"]');
     }
@@ -521,7 +549,7 @@ class DDGraph {
     /**
     Converts a strongly typed @p value into its string representation for a DOM input.
 
-    @param type One of @ref DDTYpe.
+    @param type One of @ref DDType.
     @param value A strongly typed value.
     */
     static formatValue(type, value) {
@@ -805,6 +833,51 @@ class DDNode {
     hasChild(child) {
         console.assert(!this.holdsData);
         return this._childById[child.id] === child;
+    }
+
+    getKeywords() {
+        return DDGraph.extractKeyword(this);
+    }
+
+    searchBegin() {
+        const $obj = this.isRoot ? $('body') : this.obj;
+        $obj.addClass('dd-searching');
+    }
+
+    searchFilter(keywords) {
+        const matchNodes = [];
+        const childIsMatch = [false];
+        this.traverse((node, evt) => {
+            if (node.obj === null) {
+                return;
+            }
+            if (evt === DFSEvent.ENTER) {
+                const nodeKeywords = node.getKeywords();
+                let isMatch = false;
+                if (Array.isArray(nodeKeywords)) {
+                    isMatch = (keywords.filter(k => -1 !== nodeKeywords.indexOf(k)).length > 0);
+                }
+                childIsMatch.push(isMatch);
+            } else {
+                const hasMatchingChild = childIsMatch.pop();
+                if (hasMatchingChild) {
+                    node.obj.addClass('dd-is-match');
+                    childIsMatch[childIsMatch.length - 1] = true;
+                } else {
+                    node.obj.removeClass('dd-is-match');
+                }
+            }
+       });
+    }
+
+    searchEnd() {
+        const $obj = this.isRoot ? $('body') : this.obj;
+        $obj.removeClass('dd-searching');
+        this.traverse((node, evt) => {
+            if (evt === DFSEvent.ENTER && node.obj !== null) {
+                node.obj.removeClass('dd-is-match');
+            }
+        });
     }
 
     static childCompare(a, b) {
