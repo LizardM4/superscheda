@@ -28,6 +28,7 @@ const DDType = Object.freeze({
     FLOAT:   Symbol('float'),
     BOOL:    Symbol('bool'),
     STRING:  Symbol('string'),
+    COLOR:   Symbol('color'),
     NONE:    Symbol('none')
 });
 
@@ -38,6 +39,7 @@ function defaultPerType(type) {
         case DDType.FLOAT:  return 0.;
         case DDType.BOOL:   return false;
         case DDType.STRING: return '';
+        case DDType.COLOR:  return '#ffffff';
         default:            return null;
     }
 }
@@ -421,7 +423,10 @@ class DDGraph {
         }
         if ($obj.attr('type') === 'checkbox') {
             return DDType.BOOL;
+        } else if ($obj.attr('type') === 'color') {
+            return DDType.COLOR;
         }
+
         const declaredType = $obj.attr('data-dd-type');
         if (declaredType) {
             const inferredType = DDType[declaredType.toUpperCase()];
@@ -447,8 +452,8 @@ class DDGraph {
     @param rawValue A raw value as obtained from an input (so a string, null, or a boolean).
     */
     static testVoid(type, rawValue) {
-        if (type === DDType.BOOL) {
-            return false; // Booleans are never void
+        if (type === DDType.BOOL || type == DDType.COLOR) {
+            return false; // Booleans or colors are never void
         }
         if (type === DDType.NONE || rawValue === null) {
             return true;
@@ -504,6 +509,7 @@ class DDGraph {
                     }
                 }
                 break;
+            case DDType.COLOR: 
             case DDType.STRING:
                 // Nothing to do, already string.
                 break;
@@ -521,7 +527,7 @@ class DDGraph {
     /**
     Converts a strongly typed @p value into its string representation for a DOM input.
 
-    @param type One of @ref DDTYpe.
+    @param type One of @ref DDType.
     @param value A strongly typed value.
     */
     static formatValue(type, value) {
@@ -539,6 +545,11 @@ class DDGraph {
             case DDType.BOOL:
                 // Do an explicit cast to bool
                 return !!value;
+                break;
+            case DDType.COLOR:
+                if (value === null) {
+                    return defaultPerType(DDType.COLOR);
+                }
                 break;
         }
         if (typeof value === 'undefined' || value === null) {
