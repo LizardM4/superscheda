@@ -23,6 +23,7 @@ import { DDArray } from './dd-array.js';
 import { DDGraph, DDType } from './dd-graph.js';
 import './jquery-animaterotate.js';
 import $ from 'jquery';
+import Popper from 'popper.js';
 
 const defaultCharacterPromise = import(/* webpackChunkName: "default", webpackPrefetch: true */
         '../data/default.json');
@@ -688,6 +689,28 @@ class SuperschedaController {
           });
         });
 
+        $('#spell_list').on('ddarray.insertion', (evt, insertedItems) => {
+                evt.stopPropagation();
+                insertedItems.forEach(insertedItem => {
+                    const spellPopoverBtn = $(insertedItem).find('.dd-spell-popover');
+                    const spellPopover = $(insertedItem).find('.popover');
+                    // Construct the popper
+                    const popper = new Popper(spellPopoverBtn[0], spellPopover[0], {
+                        placement: 'top', modifiers: {arrow: {element: '.arrow'}}
+                    });
+                    spellPopoverBtn.data('popper', popper);
+                    // Restore the d-none when hidden to prevent catching other mouse events.
+                    spellPopover.on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', (evt) => {
+                        if (spellPopover[0] !== evt.target) {
+                            return;
+                        }
+                        if (!$(evt.target).hasClass('show')) {
+                            $(evt.target).addClass('d-none');
+                        }
+                    });
+                });
+        });
+
         // Apply new status when clicking on button
         this.graph.nodeByPath('incantesimi[-1]').obj.find('button').each((_, btn) => {
             btn = $(btn);
@@ -716,6 +739,30 @@ class SuperschedaController {
                     const controller = DDArray.getController(parentSpellNode.obj);
                     parentSpellNode.childById('preparazione').value = 'preparato';
                     controller.sort(this._autosortCompareFn);
+                });
+            } else if (btn.hasClass('dd-spell-popover')) {
+                btn.click((evt) => {
+                    // Toggle the popover
+                    const $currTgt = $(evt.currentTarget);
+                    if (!$currTgt.data('popper')) {
+                        return;
+                    }
+                    const parentSpellNode = this.graph.findParentNode($currTgt);
+                    const spellPopover = parentSpellNode.obj.find('div.popover');
+                    if (spellPopover.hasClass('show')) {
+                        // We would need to reapply a d-none, but this is done automatically
+                        // on transition end. The reason why we need d-none is because popover
+                        // have a very high zindex and catch the events for the surrounding
+                        // controls.
+                        spellPopover.removeClass('show');
+                    } else {
+                        // Dismiss all the currently active tooltips
+                        $('#spell_list').find('div.popover.show').removeClass('show');
+                        spellPopover.removeClass('d-none');
+                        spellPopover.addClass('show');
+                        // After display, needs repositioning
+                        $currTgt.data('popper').scheduleUpdate();
+                    }
                 });
             }
         });

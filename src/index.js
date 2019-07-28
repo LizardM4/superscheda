@@ -31,7 +31,9 @@ const bootstrapPromise = Promise.all([
     import(/* webpackChunkName: "bootstrap", webpackPreload: true */
         'bootstrap'),
     import(/* webpackChunkName: "btn-custom-check", webpackPreload: true */
-        './js/btn-custom-check.js')
+        './js/btn-custom-check.js'),
+    import(/* webpackChunkName: "popper.js", webpackPreload: true */
+        'popper.js')
 ]);
 
 const jQueryPromise = import(/* webpackChunkName: "jquery", webpackPreload: true */
@@ -215,6 +217,7 @@ import {
     faCopyright,
     faDownload,
     faEllipsisH,
+    faEllipsisV,
     faExclamationCircle,
     faExclamationTriangle,
     faFileAlt,
@@ -259,6 +262,7 @@ library.add(
     faDownload,
     faDropbox,
     faEllipsisH,
+    faEllipsisV,
     faExclamationCircle,
     faExclamationTriangle,
     faFileAlt,

@@ -2254,17 +2254,46 @@
 
               <span class="hidden-anchor" id="sec_spell_list"></span>
               <h5 class="mt-3">Elenco incantesimi</h5>
-              <div data-dd-array="container" class="mx-n3 mx-md-0">
+              <div id="spell_list" data-dd-array="container" class="mx-n3 mx-md-0">
                 <p class="form-text text-center mb-1">
                   <button type="button" class="close float-none text-success" data-dd-array="prepend" aria-label="Prepend">
                     <i class="fas fa-plus-square" aria-hidden="true"></i>
                   </button>
                 </p>
                 <div data-dd-array="master" data-dd-id="incantesimi" class="spell-known form-row striped-xs-sm pb-2 pb-md-1 px-2 px-md-0">
+                  <div class="popover bs-popover-top fade d-none mr-5" role="tooltip">
+                    <div class="arrow"></div>
+                    <div class="popover-body">
+                      <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                          <input type="color" class="btn btn-sm btn-addon h-100" value="#000">
+                        </div>
+                        <input type="text" class="form-control form-control-sm" data-dd-id="descrizione">
+                        <div data-dd-id="componenti" class="input-group-append btn-group btn-group-toggle" data-toggle="buttons">
+                          <label class="btn btn-sm btn-addon">
+                            <input type="checkbox" data-dd-id="materiale">
+                            <i class="fas fa-mortar-pestle fa-lg fa-fw"></i>
+                          </label>
+                          <label class="btn btn-sm btn-addon">
+                            <input type="checkbox" data-dd-id="verbale">
+                            <i class="fas fa-comment-dots fa-lg fa-fw"></i>
+                          </label>
+                          <label class="btn btn-sm btn-addon">
+                            <input type="checkbox" data-dd-id="somatica">
+                            <i class="fas fa-praying-hands fa-lg fa-fw"></i>
+                          </label>
+                          <label class="btn btn-sm btn-addon">
+                            <input type="checkbox" data-dd-id="focus">
+                            <i class="fas fa-bullseye fa-lg fa-fw"></i>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <div class="d-none d-md-block col-12 d-only-if-first-spell">
                     <div class="form-row pr-3p5">
                       <div class="col">
-                        <label class="col-form-label col-form-label-sm">Incantesimo · Componenti M, V, S, F</label>
+                        <label class="col-form-label col-form-label-sm">Incantesimo · Dettagli</label>
                       </div>
                       <div class="col-2 text-truncate">
                         <label class="col-form-label col-form-label-sm">Dominio/Scuola</label>
@@ -2283,26 +2312,13 @@
                   <div class="col">
                     <div class="form-row">
                       <div class="col-md col-12">
-                        <label class="col-form-label col-form-label-sm d-md-none">Incantesimo · Componenti</label>
+                        <label class="col-form-label col-form-label-sm d-md-none">Incantesimo · Dettagli</label>
                         <div class="input-group input-group-sm">
                           <input type="text" class="form-control form-control-sm dd-sort-key" data-dd-sort-key-index="2" data-dd-id="incantesimo">
-                          <div data-dd-id="componenti" class="input-group-append btn-group btn-group-toggle" data-toggle="buttons">
-                            <label class="btn btn-sm btn-addon">
-                              <input type="checkbox" data-dd-id="materiale">
-                              <i class="fas fa-mortar-pestle fa-lg fa-fw"></i>
-                            </label>
-                            <label class="btn btn-sm btn-addon">
-                              <input type="checkbox" data-dd-id="verbale">
-                              <i class="fas fa-comment-dots fa-lg fa-fw"></i>
-                            </label>
-                            <label class="btn btn-sm btn-addon">
-                              <input type="checkbox" data-dd-id="somatica">
-                              <i class="fas fa-praying-hands fa-lg fa-fw"></i>
-                            </label>
-                            <label class="btn btn-sm btn-addon">
-                              <input type="checkbox" data-dd-id="focus">
-                              <i class="fas fa-bullseye fa-lg fa-fw"></i>
-                            </label>
+                          <div class="input-group-append">
+                            <button class="btn btn-sm btn-addon dd-spell-popover" type="button">
+                              <i class="fas fa-ellipsis-v fa-lg fa-fw"></i>
+                            </button>
                           </div>
                         </div>
                       </div>
