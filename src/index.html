@@ -2261,13 +2261,11 @@
                   </button>
                 </p>
                 <div data-dd-array="master" data-dd-id="incantesimi" class="spell-known form-row striped-xs-sm pb-2 pb-md-1 px-2 px-md-0">
-                  <div class="popover bs-popover-top fade d-none mr-5" role="tooltip">
+                  <div class="popover shadow bs-popover-top fade d-none mr-5" role="tooltip">
                     <div class="arrow"></div>
                     <div class="popover-body">
+                      <label class="col-form-label col-form-label-sm">Descrizione · componenti (M V S F/FD)</label>
                       <div class="input-group input-group-sm">
-                        <div class="input-group-prepend">
-                          <input type="color" class="btn btn-sm btn-addon h-100" value="#000">
-                        </div>
                         <input type="text" class="form-control form-control-sm" data-dd-id="descrizione">
                         <div data-dd-id="componenti" class="input-group-append btn-group btn-group-toggle" data-toggle="buttons">
                           <label class="btn btn-sm btn-addon">
@@ -2293,7 +2291,7 @@
                   <div class="d-none d-md-block col-12 d-only-if-first-spell">
                     <div class="form-row pr-3p5">
                       <div class="col">
-                        <label class="col-form-label col-form-label-sm">Incantesimo · Dettagli</label>
+                        <label class="col-form-label col-form-label-sm">Incantesimo · Tag · Dettagli</label>
                       </div>
                       <div class="col-2 text-truncate">
                         <label class="col-form-label col-form-label-sm">Dominio/Scuola</label>
@@ -2312,9 +2310,15 @@
                   <div class="col">
                     <div class="form-row">
                       <div class="col-md col-12">
-                        <label class="col-form-label col-form-label-sm d-md-none">Incantesimo · Dettagli</label>
+                        <label class="col-form-label col-form-label-sm d-md-none">Incantesimo · Tag · Dettagli</label>
                         <div class="input-group input-group-sm">
-                          <input type="text" class="form-control form-control-sm dd-sort-key" data-dd-sort-key-index="2" data-dd-id="incantesimo">
+                          <input type="text" class="form-control form-control-sm dd-sort-key dd-colorable" data-dd-sort-key-index="2" data-dd-id="incantesimo" data-toggle="tooltip" title="">
+                          <div class="input-group-append">
+                            <label class="btn btn-sm btn-addon m-0">
+                              <input data-dd-id="tag" class="d-none" type="color" value="#ffffff">
+                              <i class="fas fa-palette fa-lg fa-fw"></i>
+                            </label>
+                          </div>
                           <div class="input-group-append">
                             <button class="btn btn-sm btn-addon dd-spell-popover" type="button">
                               <i class="fas fa-ellipsis-v fa-lg fa-fw"></i>
@@ -2324,7 +2328,7 @@
                       </div>
                       <div class="col-md-2 col-4">
                         <label class="col-form-label col-form-label-sm d-md-none">Dominio/Scuola</label>
-                        <select class="custom-select custom-select-sm" data-dd-id="dominio_scuola">
+                        <select class="custom-select custom-select-sm dd-colorable" data-dd-id="dominio_scuola">
                           <option value="universale" selected>Universale</option>
                           <optgroup label="Scuole">
                               <option value="abiurazione">Abiurazione</option>
@@ -2375,11 +2379,11 @@
                       </div>
                       <div class="col-md-1 col-3">
                         <label class="col-form-label col-form-label-sm d-md-none">Liv</label>
-                        <input type="text" class="form-control form-control-sm dd-sort-key" data-dd-sort-key-index="1" data-dd-type="int" data-dd-id="liv">
+                        <input type="text" class="form-control form-control-sm dd-sort-key dd-colorable" data-dd-sort-key-index="1" data-dd-type="int" data-dd-id="liv">
                       </div>
                       <div class="col-md-1 col-3">
                         <label class="col-form-label col-form-label-sm d-md-none">Rif</label>
-                        <input type="text" class="form-control form-control-sm" data-dd-id="rif">
+                        <input type="text" class="form-control form-control-sm dd-colorable" data-dd-id="rif">
                       </div>
                       <div class="col-md-1 col-2 pr-xl-3">
                         <label class="col-form-label col-form-label-sm d-md-none d-inline-block-if-spell-known">Prepara</label>

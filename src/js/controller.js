@@ -24,6 +24,7 @@ import { DDGraph, DDType } from './dd-graph.js';
 import './jquery-animaterotate.js';
 import $ from 'jquery';
 import Popper from 'popper.js';
+import Color from 'color';
 
 const defaultCharacterPromise = import(/* webpackChunkName: "default", webpackPrefetch: true */
         '../data/default.json');
@@ -692,6 +693,7 @@ class SuperschedaController {
         $('#spell_list').on('ddarray.insertion', (evt, insertedItems) => {
                 evt.stopPropagation();
                 insertedItems.forEach(insertedItem => {
+                    $(insertedItem).find('[data-toggle="tooltip"]').tooltip({container: insertedItem});
                     const spellPopoverBtn = $(insertedItem).find('.dd-spell-popover');
                     const spellPopover = $(insertedItem).find('.popover');
                     // Construct the popper
@@ -712,7 +714,8 @@ class SuperschedaController {
         });
 
         // Apply new status when clicking on button
-        this.graph.nodeByPath('incantesimi[-1]').obj.find('button').each((_, btn) => {
+        const masterSpell = this.graph.nodeByPath('incantesimi[-1]');
+        masterSpell.obj.find('button').each((_, btn) => {
             btn = $(btn);
             if (btn.hasClass('d-inline-block-if-spell-known')) {
                 // Prepare button
@@ -743,11 +746,11 @@ class SuperschedaController {
             } else if (btn.hasClass('dd-spell-popover')) {
                 btn.click((evt) => {
                     // Toggle the popover
-                    const $currTgt = $(evt.currentTarget);
-                    if (!$currTgt.data('popper')) {
+                    const $currentTarget = $(evt.currentTarget);
+                    if (!$currentTarget.data('popper')) {
                         return;
                     }
-                    const parentSpellNode = this.graph.findParentNode($currTgt);
+                    const parentSpellNode = this.graph.findParentNode($currentTarget);
                     const spellPopover = parentSpellNode.obj.find('div.popover');
                     if (spellPopover.hasClass('show')) {
                         // We would need to reapply a d-none, but this is done automatically
@@ -761,11 +764,56 @@ class SuperschedaController {
                         spellPopover.removeClass('d-none');
                         spellPopover.addClass('show');
                         // After display, needs repositioning
-                        $currTgt.data('popper').scheduleUpdate();
+                        $currentTarget.data('popper').scheduleUpdate();
                     }
                 });
             }
         });
+
+        masterSpell.obj.find('input[type="color"]').change((evt) => {
+            const $currentTarget = $(evt.currentTarget);
+            const color = $currentTarget.val();
+            const parentSpellNode = this.graph.findParentNode($currentTarget);
+            const colorableControls = parentSpellNode.obj.find('.dd-colorable');
+            colorableControls.css('background-color', color);
+            if (Color(color).isDark()) {
+                colorableControls.addClass('text-light');
+            } else {
+                colorableControls.removeClass('text-light');
+            }
+        });
+
+        masterSpell.obj.find('.popover input').change((evt) => {
+            const node = this.graph.getNodeOfDOMElement(evt.target);
+            if (node === null) {
+                return;
+            }
+            const spell = this.graph.findParentNode(node.obj.parents('.popover'));
+            let desc = spell.childById('descrizione').value;
+            if (desc === null) {
+                desc = '';
+            }
+            const comps = [];
+            spell.childById('componenti').children.forEach(child => {
+                if (child.value) {
+                    comps.push(child.id[0].toUpperCase());
+                }
+            });
+
+            if (comps.length > 0) {
+                if (desc.length > 0) {
+                    desc += ' ';
+                }
+                desc += '[' + comps.join('') + ']';
+            }
+
+            // https://stackoverflow.com/a/9875490/1749822
+            spell.obj
+                .find('[data-toggle="tooltip"]')
+                .attr('title', desc)
+                .tooltip('_fixTitle');
+        });
+
     }
 
 
