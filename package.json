@@ -36,6 +36,7 @@
     "babel-loader": "^8.0.6",
     "bootstrap": "^4.3.1",
     "clean-webpack-plugin": "^2.0.2",
+    "color": "^3.1.2",
     "css-loader": "^2.1.1",
     "dropbox": "^4.0.28",
     "es6-promise": "^4.2.8",
