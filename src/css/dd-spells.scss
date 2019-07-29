@@ -98,3 +98,21 @@ $d-inline-block-rules: ();
 #spell_list div[data-dd-array] div.tooltip .tooltip-inner {
   max-width: unset;
 }
+
+.dd-collapse {
+  /*
+  This is used for an input[type="color"]. It needs not to be visible,
+  but it cannot be removed from the layout, otherwise mobile platforms
+  won't trigger the color input, even if we click on its label.
+  Unfortunately, Firefox still takes up to 3x3 pixels for it even if
+  we set everything to zero, so the only solution is to scale everything
+  down. Visibility hidden also causes it not to work unfortunately.
+  */
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: 0;
+  height: 0;
+  transform: scale(0);
+  position: absolute;
+}
