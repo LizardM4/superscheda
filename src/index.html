@@ -2010,7 +2010,7 @@
                       </div>
                       <div class="col-md-1 col-2">
                         <label class="col-form-label col-form-label-sm d-md-none">Misc</label>
-                        <button class="btn btn-sm btn-secondary w-100" data-toggle="collapse" aria-expanded="false">
+                        <button class="btn btn-sm btn-secondary w-100" data-toggle="button popover">
                           <i class="fas fa-ellipsis-h"></i>
                         </button>
                       </div>
@@ -2019,38 +2019,43 @@
                         <input data-dd-id="totale" type="text" data-dd-formula="sum ./mod_c ./gradi ./razza ./archetipo[0] ./archetipo[1] ./b_sinergia ./talento ./oggetto ./vari" class="form-control form-control-sm" data-dd-type="int">
                       </div>
                     </div>
-                    <div class="form-row pb-1 extra-mods collapse">
-                      <div class="col-md col-3">
-                        <label class="py-md-0 col-form-label col-form-label-sm">Razza</label>
-                        <input data-dd-id="razza" type="text" class="form-control form-control-sm" data-dd-type="int">
-                      </div>
-                      <div class="col-md col-3">
-                        <label class="py-md-0 col-form-label col-form-label-sm">Arch 1</label>
-                        <input data-dd-id="archetipo[0]" type="text" class="form-control form-control-sm" data-dd-type="int">
-                      </div>
-                      <div class="col-md col-3">
-                        <label class="py-md-0 col-form-label col-form-label-sm">Arch 2</label>
-                        <input data-dd-id="archetipo[1]" type="text" class="form-control form-control-sm" data-dd-type="int">
-                      </div>
-                      <div class="col-md col-3">
-                        <label class="py-md-0 col-form-label col-form-label-sm">Sin</label>
-                        <input data-dd-id="sinergia" type="text" class="form-control form-control-sm">
-                      </div>
-                      <div class="col-md col-3">
-                        <label class="py-md-0 col-form-label col-form-label-sm">B Sin</label>
-                        <input data-dd-id="b_sinergia" type="text" class="form-control form-control-sm" data-dd-type="int">
-                      </div>
-                      <div class="col-md col-3">
-                        <label class="py-md-0 col-form-label col-form-label-sm">Tal</label>
-                        <input data-dd-id="talento" type="text" class="form-control form-control-sm" data-dd-type="int">
-                      </div>
-                      <div class="col-md col-3">
-                        <label class="py-md-0 col-form-label col-form-label-sm">Ogg</label>
-                        <input data-dd-id="oggetto" type="text" class="form-control form-control-sm" data-dd-type="int">
-                      </div>
-                      <div class="col-md col-3">
-                        <label class="py-md-0 col-form-label col-form-label-sm">VV</label>
-                        <input data-dd-id="vari" type="text" class="form-control form-control-sm" data-dd-type="int">
+                    <div class="popover shadow bs-popover-top fade d-none mr-5" role="tooltip">
+                      <div class="arrow"></div>
+                      <div class="popover-body">
+                        <div class="form-row">
+                          <div class="col-md col-3">
+                            <label class="py-md-0 col-form-label col-form-label-sm">Razza</label>
+                            <input data-dd-id="razza" type="text" class="form-control form-control-sm" data-dd-type="int">
+                          </div>
+                          <div class="col-md col-3">
+                            <label class="py-md-0 col-form-label col-form-label-sm">Arch 1</label>
+                            <input data-dd-id="archetipo[0]" type="text" class="form-control form-control-sm" data-dd-type="int">
+                          </div>
+                          <div class="col-md col-3">
+                            <label class="py-md-0 col-form-label col-form-label-sm">Arch 2</label>
+                            <input data-dd-id="archetipo[1]" type="text" class="form-control form-control-sm" data-dd-type="int">
+                          </div>
+                          <div class="col-md col-3">
+                            <label class="py-md-0 col-form-label col-form-label-sm">Sin</label>
+                            <input data-dd-id="sinergia" type="text" class="form-control form-control-sm">
+                          </div>
+                          <div class="col-md col-3">
+                            <label class="py-md-0 col-form-label col-form-label-sm">B Sin</label>
+                            <input data-dd-id="b_sinergia" type="text" class="form-control form-control-sm" data-dd-type="int">
+                          </div>
+                          <div class="col-md col-3">
+                            <label class="py-md-0 col-form-label col-form-label-sm">Tal</label>
+                            <input data-dd-id="talento" type="text" class="form-control form-control-sm" data-dd-type="int">
+                          </div>
+                          <div class="col-md col-3">
+                            <label class="py-md-0 col-form-label col-form-label-sm">Ogg</label>
+                            <input data-dd-id="oggetto" type="text" class="form-control form-control-sm" data-dd-type="int">
+                          </div>
+                          <div class="col-md col-3">
+                            <label class="py-md-0 col-form-label col-form-label-sm">VV</label>
+                            <input data-dd-id="vari" type="text" class="form-control form-control-sm" data-dd-type="int">
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -2299,7 +2304,7 @@
                             </label>
                           </div>
                           <div class="input-group-append btn-group btn-group-toggle" data-toggle="buttons">
-                            <button class="btn btn-sm btn-addon dd-spell-popover" type="button">
+                            <button class="btn btn-sm btn-addon" data-toggle="popover" type="button">
                               <i class="fas fa-ellipsis-v fa-lg fa-fw"></i>
                             </button>
                           </div>

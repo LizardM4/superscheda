@@ -551,31 +551,7 @@ class SuperschedaController {
             .on('ddarray.insertion', (evt, insertedItems) => {
                 evt.stopPropagation();
                 insertedItems.forEach(insertedItem => {
-                    insertedItem = $(insertedItem);
-                    // Set up analogously the collapsible element
-                    const $collapsible = insertedItem.find('.collapse');
-                    const $collapser = insertedItem.find('[data-toggle="collapse"]');
-                    if ($collapsible.length === 1 && $collapser.length === 1) {
-                        ++_uniqueCnt;
-                        const collapseId = 'collapse_' + _uniqueCnt.toString();
-                        $collapsible.attr('id', collapseId);
-                        $collapser.attr('data-target', '#' + collapseId);
-                        // And turn the icon
-                        $collapsible.on('hide.bs.collapse', () => {
-                            $collapser.prop('disabled', true);
-                        });
-                        $collapsible.on('hidden.bs.collapse', () => {
-                            $collapser.prop('disabled', false);
-                            $collapser.find('svg').attr('data-icon', 'ellipsis-h');
-                        });
-                        $collapsible.on('show.bs.collapse', () => {
-                            $collapser.prop('disabled', true);
-                        });
-                        $collapsible.on('shown.bs.collapse', () => {
-                            $collapser.prop('disabled', false);
-                            $collapser.find('svg').attr('data-icon', 'angle-double-up');
-                        });
-                    }
+                    this._initGUIPopoversInArray($(insertedItem));
                 });
             });
     }
@@ -584,6 +560,55 @@ class SuperschedaController {
         const $picInput = $('input#pic_path');
         $picInput.change((evt) => {
             this.guiChangePicture($picInput.val());
+        });
+    }
+
+    _initGUIPopoversInArray($item) {
+        const $container = DDArray.getController($item).container;
+        const directDescendants = (_, domElement) => {
+            return $(domElement).parentsUntil($container, '[data-dd-array="container"]').length === 0;
+        }
+        const $popover = $item.find('.popover').filter(directDescendants);
+        const $popoverBtn = $item.find('[data-toggle~="popover"]').filter(directDescendants);
+        if ($popoverBtn.length !== 1 || $popover.length !== 1) {
+            return;
+        }
+        // Construct the popper
+        const popper = new Popper($popoverBtn[0], $popover[0], {
+            placement: 'top', modifiers: {arrow: {element: '.arrow'}}
+        });
+        // Restore the d-none when hidden to prevent catching other mouse events.
+        $popover.on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', (evt) => {
+            if ($popover[0] !== evt.target) {
+                return;
+            }
+            if (!$(evt.target).hasClass('show')) {
+                $(evt.target).addClass('d-none');
+            }
+        });
+        // Setup the trigger event
+        $popoverBtn.click((evt) => {
+            if ($popoverBtn.hasClass('active')) {
+                // We would need to reapply a d-none, but this is done automatically
+                // on transition end. The reason why we need d-none is because popover
+                // have a very high zindex and catch the events for the surrounding
+                // controls.
+                $popover.removeClass('show');
+            } else {
+                // Dismiss all the currently active tooltips.
+                $container
+                    .find('button[data-toggle~="popover"].active')
+                    .filter(directDescendants)
+                    .button('toggle');
+                $container
+                    .find('div.popover.show')
+                    .filter(directDescendants)
+                    .removeClass('show');
+                $popover.removeClass('d-none');
+                // After display, needs repositioning
+                popper.update();
+                $popover.addClass('show');
+            }
         });
     }
 
@@ -694,22 +719,7 @@ class SuperschedaController {
                 evt.stopPropagation();
                 insertedItems.forEach(insertedItem => {
                     $(insertedItem).find('[data-toggle="tooltip"]').tooltip({container: insertedItem});
-                    const spellPopoverBtn = $(insertedItem).find('.dd-spell-popover');
-                    const spellPopover = $(insertedItem).find('.popover');
-                    // Construct the popper
-                    const popper = new Popper(spellPopoverBtn[0], spellPopover[0], {
-                        placement: 'top', modifiers: {arrow: {element: '.arrow'}}
-                    });
-                    spellPopoverBtn.data('popper', popper);
-                    // Restore the d-none when hidden to prevent catching other mouse events.
-                    spellPopover.on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', (evt) => {
-                        if (spellPopover[0] !== evt.target) {
-                            return;
-                        }
-                        if (!$(evt.target).hasClass('show')) {
-                            $(evt.target).addClass('d-none');
-                        }
-                    });
+                    this._initGUIPopoversInArray($(insertedItem));
                 });
         });
 
@@ -742,35 +752,6 @@ class SuperschedaController {
                     const controller = DDArray.getController(parentSpellNode.obj);
                     parentSpellNode.childById('preparazione').value = 'preparato';
                     controller.sort(this._autosortCompareFn);
-                });
-            } else if (btn.hasClass('dd-spell-popover')) {
-                btn.click((evt) => {
-                    // Toggle the popover
-                    const $currentTarget = $(evt.currentTarget);
-                    if (!$currentTarget.data('popper')) {
-                        return;
-                    }
-                    const parentSpellNode = this.graph.findParentNode($currentTarget);
-                    const spellPopover = parentSpellNode.obj.find('div.popover');
-                    if ($currentTarget.hasClass('active')) {
-                        // We would need to reapply a d-none, but this is done automatically
-                        // on transition end. The reason why we need d-none is because popover
-                        // have a very high zindex and catch the events for the surrounding
-                        // controls.
-                        spellPopover.removeClass('show');
-                    } else {
-                        // Dismiss all the currently active tooltips.
-                        $('#spell_list')
-                            .find('button.dd-spell-popover.active')
-                            .button('toggle');
-                        $('#spell_list')
-                            .find('div.popover.show')
-                            .removeClass('show');
-                        spellPopover.removeClass('d-none');
-                        spellPopover.addClass('show');
-                        // After display, needs repositioning
-                        $currentTarget.data('popper').scheduleUpdate();
-                    }
                 });
             }
         });
