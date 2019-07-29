@@ -752,15 +752,20 @@ class SuperschedaController {
                     }
                     const parentSpellNode = this.graph.findParentNode($currentTarget);
                     const spellPopover = parentSpellNode.obj.find('div.popover');
-                    if (spellPopover.hasClass('show')) {
+                    if ($currentTarget.hasClass('active')) {
                         // We would need to reapply a d-none, but this is done automatically
                         // on transition end. The reason why we need d-none is because popover
                         // have a very high zindex and catch the events for the surrounding
                         // controls.
                         spellPopover.removeClass('show');
                     } else {
-                        // Dismiss all the currently active tooltips
-                        $('#spell_list').find('div.popover.show').removeClass('show');
+                        // Dismiss all the currently active tooltips.
+                        $('#spell_list')
+                            .find('button.dd-spell-popover.active')
+                            .button('toggle');
+                        $('#spell_list')
+                            .find('div.popover.show')
+                            .removeClass('show');
                         spellPopover.removeClass('d-none');
                         spellPopover.addClass('show');
                         // After display, needs repositioning
