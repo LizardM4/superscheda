@@ -124,7 +124,25 @@ class DDGraph {
             reindex: (evt, domItemPrevIdxIdxTriples) => {
                 this.formulaGraph.dynamicRecomputeFormulasPush(false);
                 const domItems = domItemPrevIdxIdxTriples.map(([domItem, previousIdx, newIdx]) => domItem);
-                this.getNodeChildrenOfDOMElements($(domItems)).forEach(child => { child.reindexIfNeeded(); });
+                // Collect all the nodes that may need an update to the formula
+                const updatedNodes = [];
+                this.getNodeChildrenOfDOMElements($(domItems)).forEach(child => {
+                    updatedNodes.splice(updatedNodes.length, 0, ...child.reindexIfNeeded());
+                });
+                updatedNodes.forEach(([node, oldPath]) => {
+                    // It is correct to call it only if it *can* be in formula graph, because the change
+                    // of id *may* cause it to be matched somewhere.
+                    if (node.canBeInFormulaGraph) {
+                        this.formulaGraph.updateFormulaNodeSelectors(oldPath, node);
+                    }
+                });
+                updatedNodes.forEach(([node, oldPath]) => {
+                    // It is correct to call it only if it *can* be in formula graph, because the change
+                    // of id *may* cause it to be matched somewhere.
+                    if (node.canBeInFormulaGraph) {
+                        this.formulaGraph.updateFormulaNodeNeighbors(oldPath, node);
+                    }
+                });
                 this.formulaGraph.recomputePendingFormulas(false);
                 this.formulaGraph.dynamicRecomputeFormulasPop();
             }
@@ -1215,11 +1233,6 @@ class DDNode {
             // Rename
             this.parent._updateChild(oldId, this);
             this.graph._updateNode(oldPath, this);
-            // It is correct to call it only if it *can* be in formula graph, because the change
-            // of id *may* cause it to be matched somewhere.
-            if (this.canBeInFormulaGraph) {
-                this.graph.formulaGraph.updateFormulaNode(oldPath, this);
-            }
         }
     }
 
@@ -1233,14 +1246,20 @@ class DDNode {
         const newIndices = this._getArrayIndices();
         if (arrayCompare(oldIndices, newIndices) !== 0) {
             this._arrayIndices = newIndices;
+            const changedNodes = [];
             this.traverse((node, evt) => {
                 if (evt === DFSEvent.ENTER) {
+                    // Collect all nodes that get a change
+                    const oldPath = node.path;
                     node._assignIdAndPath();
+                    if (node.path != oldPath) {
+                        changedNodes.push([node, oldPath])
+                    }
                 }
             });
-            return true;
+            return changedNodes;
         }
-        return false;
+        return [];
     }
 
     /**

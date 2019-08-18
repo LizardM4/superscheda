@@ -221,13 +221,14 @@ class DDSelector {
         return selInstance;
     }
 
-    _updateNodeUsingSelector(oldPath, updatedNode) {
-        const selInstance = this._instances[oldPath];
+    _updateNodeUsingSelector(oldPath, updatedNode, argDefSelInst) {
+        console.assert(argDefSelInst.node === updatedNode);
         // Another node may have taken the place of the old path
-        if  (selInstance.node === updatedNode) {
+        if  (this._instances[oldPath].node === updatedNode) {
+            console.assert(argDefSelInst === this._instances[oldPath])
             delete this._instances[oldPath];
         }
-        this._instances[updatedNode.path] = selInstance;
+        this._instances[updatedNode.path] = argDefSelInst;
     }
 
     _unregisterNodeUsingSelector(node) {
@@ -293,9 +294,11 @@ class DDSelectorInstance {
     addToMatchingNodes(node) {
         if (this._matchingNodes === null) {
             this.recacheMatchingNodes();
+            console.assert(this._matchingNodes.has(node));
+        } else {
+            console.assert(!this._matchingNodes.has(node));
+            this._matchingNodes.add(node);
         }
-        console.assert(!this._matchingNodes.has(node));
-        this._matchingNodes.add(node);
     }
 
     removeFromMatchingNodes(node) {
@@ -624,7 +627,7 @@ class DDFormula {
     _updateFormulaNode(oldFormulaNodePath) {
         this._argDefs.forEach(argDef => {
             if (argDef instanceof DDSelectorInstance) {
-                argDef.selector._updateNodeUsingSelector(oldFormulaNodePath, this.node);
+                argDef.selector._updateNodeUsingSelector(oldFormulaNodePath, this.node, argDef);
             }
         });
     }
@@ -978,15 +981,23 @@ class DDFormulaGraph {
         return !!node._formulaNode;
     }
 
-    updateFormulaNode(oldPath, node) {
+    updateFormulaNodeSelectors(oldPath, node) {
+        if (!this.dynamicUpdateGraph) {
+            return;
+        }
+        if (node._formulaNode) {
+            if (node._formulaNode.formula) {
+                node._formulaNode.formula._updateFormulaNode(oldPath);
+            }
+        }
+    }
+
+    updateFormulaNodeNeighbors(oldPath, node) {
         if (!this.dynamicUpdateGraph) {
             return;
         }
         if (node._formulaNode) {
             this._levelsOutdated = true;
-            if (node._formulaNode.formula) {
-                node._formulaNode.formula._updateFormulaNode(oldPath);
-            }
             this._detachFormulaNodeFromSuccessors(node._formulaNode);
             this._attachFormulaNodeToSuccessors(node._formulaNode);
         } else {
