@@ -1169,6 +1169,14 @@ class DDNode {
         return ddItems.map(getOneIndex);
     }
 
+    _assignVoidClass() {
+        if (this.holdsData && this.isVoid) {
+            this.obj.addClass('dd-void');
+        } else {
+            this.obj.removeClass('dd-void');
+        }
+    }
+
     _setup() {
         console.assert(!this.isRoot);
         console.assert(this.obj);
@@ -1182,11 +1190,7 @@ class DDNode {
             if (evt.target !== this.obj[0]) {
                 return;
             }
-            if (this.isVoid) {
-                this.obj.addClass('dd-void');
-            } else {
-                this.obj.removeClass('dd-void');
-            }
+            this._assignVoidClass();
             this._recomputeFormulasIfNecessary();
             evt.stopPropagation();
         });
@@ -1194,6 +1198,7 @@ class DDNode {
         this._arrayIndices = this._getArrayIndices(this.parent);
         // Upon first insertion, will also set the formula up
         this._assignIdAndPath();
+        this._assignVoidClass();
     }
 
     _collectPathPieces() {
