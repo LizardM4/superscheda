@@ -853,6 +853,8 @@
     "classe": [
         null,
         null,
+        null,
+        null,
         null
     ],
     "classe_armatura": {
@@ -871,6 +873,7 @@
             null
         ]
     },
+    "classe_png": null,
     "colto_alla_sprovvista": {
         "armatura": null,
         "armatura_naturale": null,
@@ -980,6 +983,7 @@
     },
     "nome": null,
     "note": null,
+    "note_incantesimi": null,
     "occhi": null,
     "ogg_protettivo": null,
     "pelle": null,
@@ -987,14 +991,7 @@
     "penalita_nuotare": null,
     "peso": null,
     "peso_tot": null,
-    "png": {
-        "classe": [
-            null,
-            null,
-            null,
-            null
-        ]
-    },
+    "pic_path": null,
     "privilegi": null,
     "punti_ferita": {
         "temp": null,
@@ -1247,5 +1244,5 @@
             "nome": "Vista cieca"
         }
     ],
-    "_version": "0.2.6"
+    "_version": "0.2.7"
 }
