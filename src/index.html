@@ -48,7 +48,6 @@
         <a class="dropdown-item" href="#sec_prof_lang_vis">Competenze</a>
         <a class="dropdown-item" href="#sec_lang">Linguaggi</a>
         <a class="dropdown-item" href="#sec_vis">Visione</a>
-        <a class="dropdown-item" href="#sec_notes">Note</a>
         <a class="dropdown-item" href="#sec_attack_stats">Combattimento</a>
           <a class="dropdown-item pl-5" href="#sec_hit_die">Dado vita</a>
           <a class="dropdown-item pl-5" href="#sec_armor">Armatura</a>
@@ -63,6 +62,7 @@
         <a class="dropdown-item" href="#sec_load">Carico</a>
         <a class="dropdown-item" href="#sec_equip">Equipaggiamento</a>
         <a class="dropdown-item" href="#sec_treasures">Denaro</a>
+        <a class="dropdown-item" href="#sec_player_notes">Appunti del giocatore</a>
       </div>
     </div>
 
@@ -303,9 +303,6 @@
             <li class="nav-item w-100">
               <a class="nav-link text-truncate" href="#sec_prof_lang_vis">Competenze, Linguaggi, Visione</a>
             </li>
-            <li class="nav-item w-100">
-              <a class="nav-link text-truncate" href="#sec_notes">Note</a>
-            </li>
 
             <li class="nav-item w-100">
               <a class="nav-link text-truncate" href="#sec_attack_stats">Combattimento</a>
@@ -334,6 +331,9 @@
             </li>
             <li class="nav-item w-100">
               <a class="nav-link text-truncate" href="#sec_treasures">Denaro</a>
+            </li>
+            <li class="nav-item w-100">
+              <a class="nav-link text-truncate" href="#sec_player_notes">Appunti del giocatore</a>
             </li>
           </ul>
         </div>
@@ -947,7 +947,7 @@
                 </div>
               </div>
               <span class="hidden-anchor" id="sec_notes"></span>
-              <h6>Note</h6>
+              <h6>Note sulle capacità del personaggio:</h6>
               <textarea data-dd-id="note" class="form-control"></textarea>
             </div>
           </div>
@@ -2231,7 +2231,7 @@
 
               <div class="form-row">
                 <div class="col">
-                  <label class="col-form-label">Appunti:</label>
+                  <label class="col-form-label">Appunti sugli incantesimi:</label>
                   <textarea data-dd-id="note_incantesimi" class="form-control"></textarea>
                 </div>
               </div>
@@ -2678,6 +2678,39 @@
                 </p>
               </div>
 
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="card my-1" role="tab">
+          <span class="hidden-anchor" id="sec_player_notes"></span>
+          <div class="card-header" role="tab" data-toggle="collapse" data-target="#card_player_notes" aria-expanded="true" aria-controls="card_player_notes">
+            <h5 class="mb-0 text-truncate">
+              <button type="button" class="close float-left mr-3" aria-label="Toggle">
+                <i class="fas fa-chevron-circle-up" aria-hidden="true"></i>
+              </button>
+              Appunti del giocatore
+            </h5>
+          </div>
+          <div class="collapse show" id="card_player_notes">
+            <div class="card-body">
+              <textarea data-dd-id="player_notes" class="form-control" rows="20"></textarea>
             </div>
           </div>
         </div>
