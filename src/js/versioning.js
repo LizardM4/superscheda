@@ -546,4 +546,11 @@ Versioner.instance().addPatch('0.2.7', (dataBag) => {
     }
 });
 
+
+Versioner.instance().addPatch('0.2.8', (dataBag) => {
+    dataBag['notes_special'] = objGet(dataBag, 'note', null, false);
+    delete dataBag['note'];
+});
+
+
 export { Versioner };
