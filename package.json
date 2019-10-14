@@ -24,11 +24,11 @@
     },
     "homepage": "https://dd.5p4k.me",
     "devDependencies": {
-        "@babel/core": "*",
+        "@babel/core": "^7.6.4",
         "@babel/plugin-syntax-dynamic-import": "*",
         "@babel/plugin-transform-runtime": "*",
-        "@babel/preset-env": "*",
-        "@babel/runtime": "*",
+        "@babel/preset-env": "^7.6.3",
+        "@babel/runtime": "^7.6.3",
         "@fortawesome/fontawesome-svg-core": "*",
         "@fortawesome/free-brands-svg-icons": "*",
         "@fortawesome/free-regular-svg-icons": "*",
@@ -52,12 +52,12 @@
         "postcss-loader": "*",
         "precss": "*",
         "sass-loader": "*",
-        "sortablejs": "*",
-        "terser-webpack-plugin": "*",
+        "sortablejs": "^1.10.1",
+        "terser-webpack-plugin": "^2.1.3",
         "webapp-webpack-plugin": "*",
-        "webpack": "*",
+        "webpack": "^4.41.1",
         "webpack-cli": "*",
-        "webpack-subresource-integrity": "*"
+        "webpack-subresource-integrity": "^1.3.4"
     },
     "dependencies": {}
 }
