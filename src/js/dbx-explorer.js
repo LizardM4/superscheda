@@ -118,7 +118,7 @@ class DropboxExplorer {
             }
             if (i < pathPieces.length - 1) {
                 // Compute the path to this folder
-                const dirPath = pathNormalize(pathPieces.slice(0, i), true);
+                const dirPath = pathNormalize(pathPieces.slice(0, i + 1), true);
                 // Make sure this doesn't have the active look.
                 $item.removeClass('active').removeAttr('aria-current');
                 // Generate a new anchor; set that to be the innermost item
