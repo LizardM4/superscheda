@@ -949,6 +949,7 @@ class SuperschedaController {
         }
 
         this._picLoading.removeClass('d-none');
+        this._picMissing.addClass('d-none');
 
         console.log('Loading Dropbox file ' + path + ' as character picture.');
 
