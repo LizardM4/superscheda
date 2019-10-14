@@ -28,7 +28,7 @@
 }
 
 @include media-breakpoint-up(md) {
-    .separatable-md:not(:last-of-type) {
+    .separatable:not(:last-of-type) {
       border-right: $border-width solid $border-color;
     }
 }
