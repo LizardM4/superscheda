@@ -364,11 +364,25 @@ class DDFormula {
             return 0;
         }
         let retval = 0;
+        let truncate = false;
+        if (typeof args[0] !== 'number') {
+            const op = args.shift();
+            switch (op) {
+                case 'trunc':
+                    truncate = true;
+                    break;
+                default:
+                    break;
+            }
+        }
         for (let i = 0; i < args.length; i++) {
             if (typeof args[i] !== 'number') {
                 return null; // Cannot compute
             }
             retval += args[i];
+        }
+        if (truncate) {
+            retval = Math.trunc(retval);
         }
         return retval;
     }
