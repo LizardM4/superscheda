@@ -7,7 +7,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "des",
+            "chiave": "dex",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -26,7 +26,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "car",
+            "chiave": "cha",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -64,7 +64,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "des",
+            "chiave": "dex",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -83,7 +83,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "sag",
+            "chiave": "wis",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -102,7 +102,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "car",
+            "chiave": "cha",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -121,7 +121,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "des",
+            "chiave": "dex",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -159,7 +159,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "cos",
+            "chiave": "con",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -216,7 +216,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "car",
+            "chiave": "cha",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -254,7 +254,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "des",
+            "chiave": "dex",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -292,7 +292,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "sag",
+            "chiave": "wis",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -311,7 +311,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "car",
+            "chiave": "cha",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -330,7 +330,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "car",
+            "chiave": "cha",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -349,7 +349,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "des",
+            "chiave": "dex",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -368,7 +368,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "des",
+            "chiave": "dex",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -387,7 +387,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "for",
+            "chiave": "str",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -406,7 +406,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "sag",
+            "chiave": "wis",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -425,7 +425,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "sag",
+            "chiave": "wis",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -444,7 +444,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "sag",
+            "chiave": "wis",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -463,7 +463,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "car",
+            "chiave": "cha",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -482,7 +482,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "car",
+            "chiave": "cha",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -501,7 +501,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "des",
+            "chiave": "dex",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -520,7 +520,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "for",
+            "chiave": "str",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -558,7 +558,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "for",
+            "chiave": "str",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -577,7 +577,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "des",
+            "chiave": "dex",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -596,7 +596,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "sag",
+            "chiave": "wis",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -615,7 +615,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "des",
+            "chiave": "dex",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -634,7 +634,7 @@
                 null
             ],
             "b_sinergia": null,
-            "chiave": "car",
+            "chiave": "cha",
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
@@ -666,6 +666,109 @@
             "vari": null
         }
     ],
+    "ability_scores": {
+        "archetype": [
+            {
+                "cha": null,
+                "con": null,
+                "dex": null,
+                "int": null,
+                "str": null,
+                "wis": null
+            },
+            {
+                "cha": null,
+                "con": null,
+                "dex": null,
+                "int": null,
+                "str": null,
+                "wis": null
+            }
+        ],
+        "base": {
+            "cha": null,
+            "con": null,
+            "dex": null,
+            "int": null,
+            "str": null,
+            "wis": null
+        },
+        "level": {
+            "cha": null,
+            "con": null,
+            "dex": null,
+            "int": null,
+            "str": null,
+            "wis": null
+        },
+        "magic": {
+            "cha": null,
+            "con": null,
+            "dex": null,
+            "int": null,
+            "str": null,
+            "wis": null
+        },
+        "misc": [
+            {
+                "cha": null,
+                "con": null,
+                "dex": null,
+                "int": null,
+                "str": null,
+                "wis": null
+            },
+            {
+                "cha": null,
+                "con": null,
+                "dex": null,
+                "int": null,
+                "str": null,
+                "wis": null
+            }
+        ],
+        "mod_temp": {
+            "cha": null,
+            "con": null,
+            "dex": null,
+            "int": null,
+            "str": null,
+            "wis": null
+        },
+        "mod_tot": {
+            "cha": null,
+            "con": null,
+            "dex": null,
+            "int": null,
+            "str": null,
+            "wis": null
+        },
+        "race": {
+            "cha": null,
+            "con": null,
+            "dex": null,
+            "int": null,
+            "str": null,
+            "wis": null
+        },
+        "temp": {
+            "cha": null,
+            "con": null,
+            "dex": null,
+            "int": null,
+            "str": null,
+            "tmp_active": false,
+            "wis": null
+        },
+        "tot": {
+            "cha": null,
+            "con": null,
+            "dex": null,
+            "int": null,
+            "str": null,
+            "wis": null
+        }
+    },
     "allineamento": null,
     "altezza": null,
     "archetipo": [
@@ -706,13 +809,13 @@
             "tipo": "senza_armi",
             "tiro_colpire": {
                 "bab": null,
-                "car_chiave": "for",
+                "car_chiave": "str",
                 "mod_c": null,
                 "modificatori": null
             },
             "tiro_colpire_tot": null,
             "tiro_danni": {
-                "car_chiave": "for",
+                "car_chiave": "str",
                 "mod_c": null,
                 "modificatori": null
             },
@@ -731,117 +834,6 @@
         "att_opportunita": null
     },
     "capelli": null,
-    "caratteristiche": {
-        "car": {
-            "archetipo": [
-                null,
-                null
-            ],
-            "livello": null,
-            "magia": null,
-            "mod_temp": null,
-            "mod_tot": null,
-            "razza": null,
-            "temp": null,
-            "tiro_base": null,
-            "tot": null,
-            "varie": [
-                null,
-                null
-            ]
-        },
-        "cos": {
-            "archetipo": [
-                null,
-                null
-            ],
-            "livello": null,
-            "magia": null,
-            "mod_temp": null,
-            "mod_tot": null,
-            "razza": null,
-            "temp": null,
-            "tiro_base": null,
-            "tot": null,
-            "varie": [
-                null,
-                null
-            ]
-        },
-        "des": {
-            "archetipo": [
-                null,
-                null
-            ],
-            "livello": null,
-            "magia": null,
-            "mod_temp": null,
-            "mod_tot": null,
-            "razza": null,
-            "temp": null,
-            "tiro_base": null,
-            "tot": null,
-            "varie": [
-                null,
-                null
-            ]
-        },
-        "for": {
-            "archetipo": [
-                null,
-                null
-            ],
-            "livello": null,
-            "magia": null,
-            "mod_temp": null,
-            "mod_tot": null,
-            "razza": null,
-            "temp": null,
-            "tiro_base": null,
-            "tot": null,
-            "varie": [
-                null,
-                null
-            ]
-        },
-        "int": {
-            "archetipo": [
-                null,
-                null
-            ],
-            "livello": null,
-            "magia": null,
-            "mod_temp": null,
-            "mod_tot": null,
-            "razza": null,
-            "temp": null,
-            "tiro_base": null,
-            "tot": null,
-            "varie": [
-                null,
-                null
-            ]
-        },
-        "sag": {
-            "archetipo": [
-                null,
-                null
-            ],
-            "livello": null,
-            "magia": null,
-            "mod_temp": null,
-            "mod_tot": null,
-            "razza": null,
-            "temp": null,
-            "tiro_base": null,
-            "tot": null,
-            "varie": [
-                null,
-                null
-            ]
-        },
-        "tmp_active": false
-    },
     "carico": {
         "dal_terreno": null,
         "leggero": null,
@@ -982,8 +974,9 @@
         ]
     },
     "nome": null,
-    "note": null,
     "note_incantesimi": null,
+    "notes_mechanics": null,
+    "notes_special": null,
     "occhi": null,
     "ogg_protettivo": null,
     "pelle": null,
@@ -992,6 +985,7 @@
     "peso": null,
     "peso_tot": null,
     "pic_path": null,
+    "player_notes": null,
     "privilegi": null,
     "punti_ferita": {
         "temp": null,
@@ -1014,6 +1008,92 @@
         "tot": null
     },
     "sa_leggere": false,
+    "saving_throws": {
+        "archetype": [
+            {
+                "fortitude_con": null,
+                "fortitude_dex": null,
+                "reflex_dex": null,
+                "will_cha": null,
+                "will_int": null,
+                "will_wis": null
+            },
+            {
+                "fortitude_con": null,
+                "fortitude_dex": null,
+                "reflex_dex": null,
+                "will_cha": null,
+                "will_int": null,
+                "will_wis": null
+            }
+        ],
+        "class": {
+            "fortitude_con": null,
+            "fortitude_dex": null,
+            "reflex_dex": null,
+            "will_cha": null,
+            "will_int": null,
+            "will_wis": null
+        },
+        "magic": {
+            "fortitude_con": null,
+            "fortitude_dex": null,
+            "reflex_dex": null,
+            "will_cha": null,
+            "will_int": null,
+            "will_wis": null
+        },
+        "misc": [
+            {
+                "fortitude_con": null,
+                "fortitude_dex": null,
+                "reflex_dex": null,
+                "will_cha": null,
+                "will_int": null,
+                "will_wis": null
+            },
+            {
+                "fortitude_con": null,
+                "fortitude_dex": null,
+                "reflex_dex": null,
+                "will_cha": null,
+                "will_int": null,
+                "will_wis": null
+            }
+        ],
+        "mod": {
+            "fortitude_con": null,
+            "fortitude_dex": null,
+            "reflex_dex": null,
+            "will_cha": null,
+            "will_int": null,
+            "will_wis": null
+        },
+        "mod_special": {
+            "fortitude_con": null,
+            "fortitude_dex": null,
+            "reflex_dex": null,
+            "will_cha": null,
+            "will_int": null,
+            "will_wis": null
+        },
+        "race": {
+            "fortitude_con": null,
+            "fortitude_dex": null,
+            "reflex_dex": null,
+            "will_cha": null,
+            "will_int": null,
+            "will_wis": null
+        },
+        "tot": {
+            "fortitude_con": null,
+            "fortitude_dex": null,
+            "reflex_dex": null,
+            "will_cha": null,
+            "will_int": null,
+            "will_wis": null
+        }
+    },
     "segni_particolari": null,
     "sesso": "n",
     "stat_incantesimi": {
@@ -1116,104 +1196,6 @@
     },
     "taglia": "media",
     "talenti": null,
-    "tiro_salvezza": {
-        "riflessi_des": {
-            "archetipo": [
-                null,
-                null
-            ],
-            "classe": null,
-            "magia": null,
-            "mod": null,
-            "mod_speciali": null,
-            "razza": null,
-            "tot": null,
-            "varie": [
-                null,
-                null
-            ]
-        },
-        "tempra_cos": {
-            "archetipo": [
-                null,
-                null
-            ],
-            "classe": null,
-            "magia": null,
-            "mod": null,
-            "mod_speciali": null,
-            "razza": null,
-            "tot": null,
-            "varie": [
-                null,
-                null
-            ]
-        },
-        "tempra_des": {
-            "archetipo": [
-                null,
-                null
-            ],
-            "classe": null,
-            "magia": null,
-            "mod": null,
-            "mod_speciali": null,
-            "razza": null,
-            "tot": null,
-            "varie": [
-                null,
-                null
-            ]
-        },
-        "volonta_car": {
-            "archetipo": [
-                null,
-                null
-            ],
-            "classe": null,
-            "magia": null,
-            "mod": null,
-            "mod_speciali": null,
-            "razza": null,
-            "tot": null,
-            "varie": [
-                null,
-                null
-            ]
-        },
-        "volonta_int": {
-            "archetipo": [
-                null,
-                null
-            ],
-            "classe": null,
-            "magia": null,
-            "mod": null,
-            "mod_speciali": null,
-            "razza": null,
-            "tot": null,
-            "varie": [
-                null,
-                null
-            ]
-        },
-        "volonta_sag": {
-            "archetipo": [
-                null,
-                null
-            ],
-            "classe": null,
-            "magia": null,
-            "mod": null,
-            "mod_speciali": null,
-            "razza": null,
-            "tot": null,
-            "varie": [
-                null,
-                null
-            ]
-        }
-    },
     "velocita": {
         "armatura": null,
         "base": null,
@@ -1244,5 +1226,5 @@
             "nome": "Vista cieca"
         }
     ],
-    "_version": "0.2.7"
+    "_version": "0.2.9"
 }
