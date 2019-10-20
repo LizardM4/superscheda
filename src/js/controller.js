@@ -70,6 +70,7 @@ class SuperschedaController {
         this._initDlNewBtns();
         this._initArrayAutosort();
         this._initSpells();
+        this._initAbilities();
         this._initAttacks();
         this._initSkills();
         this._initPicture();
@@ -612,6 +613,28 @@ class SuperschedaController {
         });
     }
 
+    _initCustomCheckboxInArrayItem($arrayItem) {
+        $arrayItem.find('.custom-checkbox').each((_, chkDiv) => {
+            // Find the label and the input
+            chkDiv = $(chkDiv);
+            const $input = chkDiv.children('input[type="checkbox"]:not(id)');
+            const $label = chkDiv.children('label:not([for])');
+            if ($input.length === 1 && $label.length === 1) {
+                // Setup a pair of for/id items
+                ++_uniqueCnt;
+                const inputId = 'chk_' + _uniqueCnt.toString();
+                $input.attr('id', inputId);
+                $label.attr('for', inputId);
+            }
+        });
+    }
+
+    _initAbilities() {
+        $('#ability_modifiers_list').on('ddarray.insertion', (evt, insertedItems) => {
+            insertedItems.forEach(insertedItem => this._initCustomCheckboxInArrayItem($(insertedItem)));
+        });
+    }
+
     _initAttacks() {
         const smTocController = DDArray.getController($('#toc_attacks_sm'));
         const mdTocController = DDArray.getController($('#toc_attacks_md'));
@@ -636,19 +659,7 @@ class SuperschedaController {
                     insertedItem.find('.hidden-anchor').attr('id', 'att_' + idx.toString());
                     $(smTocController.append()).find('a').attr('href', '#att_' + idx.toString());
                     $(mdTocController.append()).find('a').attr('href', '#att_' + idx.toString());
-                    insertedItem.find('.custom-checkbox').each((_, chkDiv) => {
-                        // Find the label and the input
-                        chkDiv = $(chkDiv);
-                        const $input = chkDiv.children('input[type="checkbox"]:not(id)');
-                        const $label = chkDiv.children('label:not([for])');
-                        if ($input.length === 1 && $label.length === 1) {
-                            // Setup a pair of for/id items
-                            ++_uniqueCnt;
-                            const inputId = 'chk_' + _uniqueCnt.toString();
-                            $input.attr('id', inputId);
-                            $label.attr('for', inputId);
-                        }
-                    });
+                    this._initCustomCheckboxInArrayItem(insertedItem);
                     // Set up analogously the collapsible element
                     const $collapsible = insertedItem.find('.collapse');
                     const $collapser = insertedItem.find('[data-toggle="collapse"]');
