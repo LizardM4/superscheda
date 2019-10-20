@@ -1,6 +1,6 @@
 {
     "name": "superscheda",
-    "version": "0.2.8",
+    "version": "0.2.9",
     "description": "D&D 3.5 interactive character sheet",
     "private": true,
     "scripts": {

@@ -552,5 +552,111 @@ Versioner.instance().addPatch('0.2.8', (dataBag) => {
     delete dataBag['note'];
 });
 
+Versioner.instance().addPatch('0.2.9', (dataBag) => {
+    const remapAbilities = {
+        'for': 'str',
+        'des': 'dex',
+        'cos': 'con',
+        'int': 'int',
+        'sag': 'wis',
+        'car': 'cha'
+    };
+
+    const remapAbilityAttributes = {
+        'tiro_base': 'base',
+        'razza': 'race',
+        'archetipo': 'archetype',
+        'livello': 'level',
+        'magia': 'magic',
+        'varie': 'misc',
+        'tot': 'tot',
+        'temp': 'temp',
+        'mod_tot': 'mod_tot',
+        'mod_temp': 'mod_temp'
+    };
+
+    const remapSavingThrows = {
+        'tempra_cos': 'fortitude_con',
+        'tempra_des': 'fortitude_dex',
+        'riflessi_des': 'reflex_dex',
+        'volonta_sag': 'will_wis',
+        'volonta_car': 'will_cha',
+        'volonta_int': 'will_int'
+    };
+
+    const remapSavingThrowsAttributes = {
+        'mod': 'mod',
+        'classe': 'class',
+        'razza': 'race',
+        'archetipo': 'archetype',
+        'magia': 'magic',
+        'varie': 'misc',
+        'mod_speciali': 'mod_special',
+        'tot': 'tot'
+    };
+
+    const remapTranspose = (outerEntryMap, innerEntryMap, src, dst) => {
+        for (const [oldInnerEntry, newOuterEntry] of Object.entries(innerEntryMap)) {
+            let newEntry = {};
+            for (const [oldOuterEntry, newInnerEntry] of Object.entries(outerEntryMap)) {
+                const oldEntry = objGet(src, oldOuterEntry, {}, true);
+                const value = objGet(oldEntry, oldInnerEntry);
+                if (Array.isArray(value)) {
+                    if (!Array.isArray(newEntry)) {
+                        newEntry = [newEntry];
+                    }
+                    while (value.length > newEntry.length) {
+                        newEntry.push(Object.assign({}, newEntry[newEntry.length - 1]))
+                    }
+                    for (let i = 0; i < value.length; ++i) {
+                        newEntry[i][newInnerEntry] = value[i]
+                    }
+                } else {
+                    newEntry[newInnerEntry] = value;
+                }
+            };
+            dst[newOuterEntry] = newEntry;
+        };
+    };
+
+
+    const oldAbilities = objGet(dataBag, 'caratteristiche', {}, true);
+    const newAbilities = {};
+    delete dataBag['caratteristiche'];
+    remapTranspose(remapAbilities, remapAbilityAttributes, oldAbilities, newAbilities);
+
+    const oldSavingThrows = objGet(dataBag, 'tiro_salvezza', {}, true);
+    const newSavingThrows = {};
+    delete dataBag['tiro_salvezza'];
+    remapTranspose(remapSavingThrows, remapSavingThrowsAttributes, oldSavingThrows, newSavingThrows);
+
+    dataBag['ability_scores'] = newAbilities;
+    dataBag['saving_throws'] = newSavingThrows;
+
+    objGet(dataBag, 'abilita', [], true).forEach(skill => {
+        const oldKey = objGet(skill, 'chiave');
+        if (oldKey) {
+            skill['chiave'] = remapAbilities[oldKey];
+        }
+    });
+
+    objGet(dataBag, 'attacchi', [], true).forEach(attack => {
+        const attackRoll = objGet(attack, 'tiro_colpire');
+        if (attackRoll) {
+            const oldKey = objGet(attackRoll, 'car_chiave');
+            if (oldKey) {
+                attackRoll['car_chiave'] = remapAbilities[oldKey];
+            }
+        }
+        const damageRoll = objGet(attack, 'tiro_danni');
+        if (damageRoll) {
+            const oldKey = objGet(damageRoll, 'car_chiave');
+            if (oldKey) {
+                damageRoll['car_chiave'] = remapAbilities[oldKey];
+            }
+        }
+    });
+});
+
 
 export { Versioner };
