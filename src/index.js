@@ -101,9 +101,9 @@ window.addEventListener('load', (evt) => {
         // Toggle temporary modifiers classes (influences opacity of controls)
         $('#chk_tmp_mod').change((evt, ddNode) => {
             if ($(evt.target).is(':checked')) {
-                $('table[data-dd-id="caratteristiche"]').addClass('dd-tmp-on');
+                $('table[data-dd-id="ability_scores"]').addClass('dd-tmp-on');
             } else {
-                $('table[data-dd-id="caratteristiche"]').removeClass('dd-tmp-on');
+                $('table[data-dd-id="ability_scores"]').removeClass('dd-tmp-on');
             }
         });
 

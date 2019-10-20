@@ -630,6 +630,9 @@ Versioner.instance().addPatch('0.2.9', (dataBag) => {
     delete dataBag['tiro_salvezza'];
     remapTranspose(remapSavingThrows, remapSavingThrowsAttributes, oldSavingThrows, newSavingThrows);
 
+    // Only special case
+    newAbilities['temp']['active'] = objGet(oldAbilities, 'tmp_active', false, true);
+
     dataBag['ability_scores'] = newAbilities;
     dataBag['saving_throws'] = newSavingThrows;
 

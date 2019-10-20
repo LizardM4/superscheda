@@ -643,7 +643,7 @@
                         <td><input type="text" data-dd-id="cha" data-dd-formula="sum /ability_scores.base.cha /ability_scores.race.cha /ability_scores.archetype[0].cha /ability_scores.archetype[1].cha /ability_scores.level.cha /ability_scores.magic.cha /ability_scores.misc[0].cha /ability_scores.misc[1].cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                       </tr>
                       <tr data-dd-id="temp">
-                        <th class="text-right align-middle px-3" scope="row"><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="chk_tmp_mod" data-dd-id="tmp_active"><label class="custom-control-label" for="chk_tmp_mod">Tmp</label></div></th>
+                        <th class="text-right align-middle px-3" scope="row"><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="chk_tmp_mod" data-dd-id="active"><label class="custom-control-label" for="chk_tmp_mod">Tmp</label></div></th>
                         <td><input type="text" data-dd-id="str" class="text-right form-control form-control-sm dd-tmp" data-dd-type="int"></td>
                         <td><input type="text" data-dd-id="dex" class="text-right form-control form-control-sm dd-tmp" data-dd-type="int"></td>
                         <td><input type="text" data-dd-id="con" class="text-right form-control form-control-sm dd-tmp" data-dd-type="int"></td>
@@ -662,12 +662,12 @@
                       </tr>
                       <tr data-dd-id="mod_temp">
                         <th class="text-right align-middle px-3" scope="row">M&nbsp;Tmp</th>
-                        <td><input type="text" data-dd-id="str" data-dd-formula="mod any 2 -10 /ability_scores.tot.str /ability_scores.tmp_active /ability_scores.temp.str" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="dex" data-dd-formula="mod any 2 -10 /ability_scores.tot.dex /ability_scores.tmp_active /ability_scores.temp.dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="con" data-dd-formula="mod any 2 -10 /ability_scores.tot.con /ability_scores.tmp_active /ability_scores.temp.con" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="int" data-dd-formula="mod any 2 -10 /ability_scores.tot.int /ability_scores.tmp_active /ability_scores.temp.int" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="wis" data-dd-formula="mod any 2 -10 /ability_scores.tot.wis /ability_scores.tmp_active /ability_scores.temp.wis" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="cha" data-dd-formula="mod any 2 -10 /ability_scores.tot.cha /ability_scores.tmp_active /ability_scores.temp.cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="str" data-dd-formula="mod any 2 -10 /ability_scores.tot.str /ability_scores.temp.active /ability_scores.temp.str" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="dex" data-dd-formula="mod any 2 -10 /ability_scores.tot.dex /ability_scores.temp.active /ability_scores.temp.dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="con" data-dd-formula="mod any 2 -10 /ability_scores.tot.con /ability_scores.temp.active /ability_scores.temp.con" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="int" data-dd-formula="mod any 2 -10 /ability_scores.tot.int /ability_scores.temp.active /ability_scores.temp.int" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="wis" data-dd-formula="mod any 2 -10 /ability_scores.tot.wis /ability_scores.temp.active /ability_scores.temp.wis" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="cha" data-dd-formula="mod any 2 -10 /ability_scores.tot.cha /ability_scores.temp.active /ability_scores.temp.cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                       </tr>
                     </tbody>
                   </table>
