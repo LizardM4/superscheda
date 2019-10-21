@@ -1439,7 +1439,7 @@
                       <h6>
                         <div class="form-inline justify-content-between">
                           Tiro per colpire
-                          <input type="hidden" data-dd-type="int" data-dd-id="mod_taglia" data-dd-formula="size_mod ./taglia">
+                          <input type="hidden" class="dd-no-store" data-dd-type="int" data-dd-id="mod_taglia" data-dd-formula="size_mod ./taglia">
                           <input type="text" class="form-control form-control-sm w-25" data-dd-type="int" data-dd-id="tiro_colpire_tot" data-dd-formula="mod any 1 ./mod_taglia ./tiro_colpire.mod_c ./tiro_colpire.bab ./tiro_colpire.modificatori[-1].mod -4 ./competente 4">
                         </div>
                       </h6>
@@ -2639,7 +2639,7 @@
                         </button>
                       </div>
                     </div>
-                    <input type="hidden" data-dd-id="tot_peso" data-dd-type="float" data-dd-formula="mul ./peso ./quantita">
+                    <input type="hidden" class="dd-no-store" data-dd-id="tot_peso" data-dd-type="float" data-dd-formula="mul ./peso ./quantita">
                   </div>
                   <div class="col-auto form-row align-items-center justify-content-center">
                     <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
