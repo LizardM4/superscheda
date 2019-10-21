@@ -532,6 +532,23 @@ class DDGraph {
                 // Nothing to do, already string.
                 break;
             case DDType.BOOL:
+                if (typeof rawValue === 'string') {
+                    // Try casting
+                    switch (rawValue.toLowerCase()) {
+                        case 'true':
+                        case '1':
+                        case 'on':
+                        case 'yes':
+                            rawValue = true;
+                            break;
+                        case 'false':
+                        case '0':
+                        case 'off':
+                        case 'no':
+                            rawValue = false;
+                            break;
+                    }
+                }
                 if (typeof rawValue !== 'boolean') {
                     if (nullIfInvalid) {
                         return null;
