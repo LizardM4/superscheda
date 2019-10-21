@@ -43,3 +43,7 @@
 .modal-backdrop.full-opc {
     background-color: rgba(0, 0, 0, 0.5);
 }
+
+input[type="hidden"][value="false"].dd-conditionally-hide + .dd-conditionally-hidden {
+    display: none!important;
+}
