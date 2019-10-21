@@ -85,7 +85,7 @@ class DDArray {
         return updatedItems;
     }
 
-    _insert(idx, numInsert=1) {
+    _insert(idx, numInsert=1, afterCloneHook=null) {
         console.assert(idx <= this.length);
         if (numInsert <= 0) {
             return;
@@ -97,6 +97,9 @@ class DDArray {
                 .clone(true)
                 .attr('data-dd-array', 'item')
                 .attr('data-dd-index', (idx + i).toString());
+            if (afterCloneHook !== null) {
+                afterCloneHook($newItem);
+            }
             newItems.push($newItem[0]);
         }
         // Insert into the elements
@@ -150,12 +153,12 @@ class DDArray {
         }
     }
 
-    append() {
-        return this._insert(this.length, 1)[0];;
+    append(afterCloneHook=null) {
+        return this._insert(this.length, 1, afterCloneHook)[0];;
     }
 
-    prepend() {
-        return this._insert(0, 1)[0];;
+    prepend(afterCloneHook=null) {
+        return this._insert(0, 1, afterCloneHook)[0];;
     }
 
     remove(itemOrIndex) {
