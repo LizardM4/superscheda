@@ -667,24 +667,6 @@
         }
     ],
     "ability_scores": {
-        "archetype": [
-            {
-                "cha": null,
-                "con": null,
-                "dex": null,
-                "int": null,
-                "str": null,
-                "wis": null
-            },
-            {
-                "cha": null,
-                "con": null,
-                "dex": null,
-                "int": null,
-                "str": null,
-                "wis": null
-            }
-        ],
         "base": {
             "cha": null,
             "con": null,
@@ -701,7 +683,7 @@
             "str": null,
             "wis": null
         },
-        "magic": {
+        "mod": {
             "cha": null,
             "con": null,
             "dex": null,
@@ -709,55 +691,13 @@
             "str": null,
             "wis": null
         },
-        "misc": [
-            {
-                "cha": null,
-                "con": null,
-                "dex": null,
-                "int": null,
-                "str": null,
-                "wis": null
-            },
-            {
-                "cha": null,
-                "con": null,
-                "dex": null,
-                "int": null,
-                "str": null,
-                "wis": null
-            }
-        ],
-        "mod_temp": {
-            "cha": null,
-            "con": null,
-            "dex": null,
-            "int": null,
-            "str": null,
-            "wis": null
-        },
-        "mod_tot": {
-            "cha": null,
-            "con": null,
-            "dex": null,
-            "int": null,
-            "str": null,
-            "wis": null
-        },
+        "others": null,
         "race": {
             "cha": null,
             "con": null,
             "dex": null,
             "int": null,
             "str": null,
-            "wis": null
-        },
-        "temp": {
-            "cha": null,
-            "con": null,
-            "dex": null,
-            "int": null,
-            "str": null,
-            "tmp_active": false,
             "wis": null
         },
         "tot": {
@@ -1009,59 +949,15 @@
     },
     "sa_leggere": false,
     "saving_throws": {
-        "archetype": [
-            {
-                "fortitude_con": 1,
-                "fortitude_dex": null,
-                "reflex_dex": null,
-                "will_cha": null,
-                "will_int": null,
-                "will_wis": null
-            },
-            {
-                "fortitude_con": null,
-                "fortitude_dex": 2,
-                "reflex_dex": null,
-                "will_cha": null,
-                "will_int": null,
-                "will_wis": null
-            }
-        ],
         "class": {
             "fortitude_con": null,
             "fortitude_dex": null,
-            "reflex_dex": 3,
+            "reflex_dex": null,
             "will_cha": null,
             "will_int": null,
             "will_wis": null
         },
-        "magic": {
-            "fortitude_con": null,
-            "fortitude_dex": null,
-            "reflex_dex": null,
-            "will_cha": 4,
-            "will_int": null,
-            "will_wis": null
-        },
-        "misc": [
-            {
-                "fortitude_con": null,
-                "fortitude_dex": null,
-                "reflex_dex": null,
-                "will_cha": null,
-                "will_int": 5,
-                "will_wis": null
-            },
-            {
-                "fortitude_con": null,
-                "fortitude_dex": null,
-                "reflex_dex": null,
-                "will_cha": null,
-                "will_int": null,
-                "will_wis": 6
-            }
-        ],
-        "mod": {
+        "key_ability": {
             "fortitude_con": null,
             "fortitude_dex": null,
             "reflex_dex": null,
@@ -1069,21 +965,14 @@
             "will_int": null,
             "will_wis": null
         },
-        "mod_special": {
-            "fortitude_con": 1,
-            "fortitude_dex": 1,
-            "reflex_dex": 1,
-            "will_cha": 1,
-            "will_int": 1,
-            "will_wis": 1
-        },
+        "others": null,
         "race": {
-            "fortitude_con": 2,
-            "fortitude_dex": 2,
-            "reflex_dex": 2,
-            "will_cha": 2,
-            "will_int": 2,
-            "will_wis": 2
+            "fortitude_con": null,
+            "fortitude_dex": null,
+            "reflex_dex": null,
+            "will_cha": null,
+            "will_int": null,
+            "will_wis": null
         },
         "tot": {
             "fortitude_con": null,
@@ -1226,5 +1115,5 @@
             "nome": "Vista cieca"
         }
     ],
-    "_version": "0.2.9"
+    "_version": "0.2.10"
 }
