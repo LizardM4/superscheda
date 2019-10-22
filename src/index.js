@@ -209,6 +209,7 @@ import {
     faBolt,
     faBullseye,
     faCamera,
+    faCaretDown,
     faCheck,
     faCheckSquare,
     faChevronCircleDown,  // not used currently,  needed if we start with collapsed sections
@@ -250,6 +251,7 @@ library.add(
     faBolt,
     faBullseye,
     faCamera,
+    faCaretDown,
     faCheck,
     faCheckSquare,
     faChevronCircleDown,

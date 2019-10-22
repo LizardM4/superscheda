@@ -1011,7 +1011,7 @@
     "saving_throws": {
         "archetype": [
             {
-                "fortitude_con": null,
+                "fortitude_con": 1,
                 "fortitude_dex": null,
                 "reflex_dex": null,
                 "will_cha": null,
@@ -1020,7 +1020,7 @@
             },
             {
                 "fortitude_con": null,
-                "fortitude_dex": null,
+                "fortitude_dex": 2,
                 "reflex_dex": null,
                 "will_cha": null,
                 "will_int": null,
@@ -1030,7 +1030,7 @@
         "class": {
             "fortitude_con": null,
             "fortitude_dex": null,
-            "reflex_dex": null,
+            "reflex_dex": 3,
             "will_cha": null,
             "will_int": null,
             "will_wis": null
@@ -1039,7 +1039,7 @@
             "fortitude_con": null,
             "fortitude_dex": null,
             "reflex_dex": null,
-            "will_cha": null,
+            "will_cha": 4,
             "will_int": null,
             "will_wis": null
         },
@@ -1049,7 +1049,7 @@
                 "fortitude_dex": null,
                 "reflex_dex": null,
                 "will_cha": null,
-                "will_int": null,
+                "will_int": 5,
                 "will_wis": null
             },
             {
@@ -1058,7 +1058,7 @@
                 "reflex_dex": null,
                 "will_cha": null,
                 "will_int": null,
-                "will_wis": null
+                "will_wis": 6
             }
         ],
         "mod": {
@@ -1070,20 +1070,20 @@
             "will_wis": null
         },
         "mod_special": {
-            "fortitude_con": null,
-            "fortitude_dex": null,
-            "reflex_dex": null,
-            "will_cha": null,
-            "will_int": null,
-            "will_wis": null
+            "fortitude_con": 1,
+            "fortitude_dex": 1,
+            "reflex_dex": 1,
+            "will_cha": 1,
+            "will_int": 1,
+            "will_wis": 1
         },
         "race": {
-            "fortitude_con": null,
-            "fortitude_dex": null,
-            "reflex_dex": null,
-            "will_cha": null,
-            "will_int": null,
-            "will_wis": null
+            "fortitude_con": 2,
+            "fortitude_dex": 2,
+            "reflex_dex": 2,
+            "will_cha": 2,
+            "will_int": 2,
+            "will_wis": 2
         },
         "tot": {
             "fortitude_con": null,

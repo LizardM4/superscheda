@@ -363,8 +363,8 @@ function _migrateAttack(d) {
     }
     delete d['quantita'];
 
-    const attackRoll = objGet(d, 'tiro_colpire');
-    const damageRoll = objGet(d, 'tiro_danni');
+    const attackRoll = objGet(d, 'tiro_colpire', {}, true);
+    const damageRoll = objGet(d, 'tiro_danni', {}, true);
 
     let newType = convType[objGet(d, 'tipo', null)];
     if (newType !== null && newType[newType.length - 1] === '_') {
@@ -529,7 +529,7 @@ Versioner.instance().addPatch('0.2.7', (dataBag) => {
     if (!Array.isArray(npcClasses)) {
         return;
     }
-    let classes = objGet(dataBag, 'classe');
+    let classes = objGet(dataBag, 'classe', null);
     if (!Array.isArray('classes')) {
         classes = [];
         dataBag['classe'] = classes;
@@ -600,7 +600,7 @@ Versioner.instance().addPatch('0.2.9', (dataBag) => {
             let newEntry = {};
             for (const [oldOuterEntry, newInnerEntry] of Object.entries(outerEntryMap)) {
                 const oldEntry = objGet(src, oldOuterEntry, {}, true);
-                const value = objGet(oldEntry, oldInnerEntry);
+                const value = objGet(oldEntry, oldInnerEntry, null);
                 if (Array.isArray(value)) {
                     if (!Array.isArray(newEntry)) {
                         newEntry = [newEntry];
@@ -637,23 +637,23 @@ Versioner.instance().addPatch('0.2.9', (dataBag) => {
     dataBag['saving_throws'] = newSavingThrows;
 
     objGet(dataBag, 'abilita', [], true).forEach(skill => {
-        const oldKey = objGet(skill, 'chiave');
+        const oldKey = objGet(skill, 'chiave', null);
         if (oldKey) {
             skill['chiave'] = remapAbilities[oldKey];
         }
     });
 
     objGet(dataBag, 'attacchi', [], true).forEach(attack => {
-        const attackRoll = objGet(attack, 'tiro_colpire');
+        const attackRoll = objGet(attack, 'tiro_colpire', null);
         if (attackRoll) {
-            const oldKey = objGet(attackRoll, 'car_chiave');
+            const oldKey = objGet(attackRoll, 'car_chiave', null);
             if (oldKey) {
                 attackRoll['car_chiave'] = remapAbilities[oldKey];
             }
         }
-        const damageRoll = objGet(attack, 'tiro_danni');
+        const damageRoll = objGet(attack, 'tiro_danni', null);
         if (damageRoll) {
-            const oldKey = objGet(damageRoll, 'car_chiave');
+            const oldKey = objGet(damageRoll, 'car_chiave', null);
             if (oldKey) {
                 damageRoll['car_chiave'] = remapAbilities[oldKey];
             }
@@ -661,5 +661,80 @@ Versioner.instance().addPatch('0.2.9', (dataBag) => {
     });
 });
 
+Versioner.instance().addPatch('0.2.10', (dataBag) => {
+    const abilityNullableEntries = [
+        'str',
+        'dex',
+        'con',
+        'int',
+        'wis',
+        'cha'
+    ];
+    const savingThrowNullableEntries = [
+        'fortitude_con',
+        'fortitude_dex',
+        'reflex_dex',
+        'will_wis',
+        'will_cha',
+        'will_int'
+    ];
+    const optionalModifiers = {
+        'archetype': 'Archetipo',
+        'magic': 'Magia',
+        'misc': 'Varie',
+        'temp': 'Temp',
+        'mod_special': 'Speciali'
+    };
+
+    const abilityScores = objGet(dataBag, 'ability_scores', {}, true);
+    const abilityScoresOtherModifiers = objGet(dataBag, 'others', [], true);
+    const savingThrows = objGet(dataBag, 'saving_throws', {}, true);
+    const savingThrowsOtherModifiers = objGet(dataBag, 'others', [], true);
+
+    const addModifier = (newModifiers, nullableEntries, modifierScores, name) => {
+        // Check if all null
+        let allNull = true;
+        for (let i = 0; i < nullableEntries.length; i++) {
+            if (objGet(modifierScores, nullableEntries[i], null) !== null) {
+                allNull = false;
+                break;
+            }
+        }
+        if (!allNull) {
+            modifierScores['name'] = name;
+            modifierScores['toggleable'] = (objGet(modifierScores, 'active', null) !== null);
+            modifierScores['active'] = objGet(modifierScores, 'active', true, true);
+            newModifiers.push(modifierScores);
+        }
+    };
+
+    const opTable = [
+        [abilityScores, abilityScoresOtherModifiers, abilityNullableEntries],
+        [savingThrows, savingThrowsOtherModifiers, savingThrowNullableEntries]
+    ];
+
+    for (const [table, otherModifiers, nullableEntries] of Object.values(opTable)) {
+        for (const [modifierKey, modifierName] of Object.entries(optionalModifiers)) {
+            const modifierScores = objGet(table, modifierKey, null);
+            delete table[modifierKey];
+            if (Array.isArray(modifierScores)) {
+                for (let i = 0; i < modifierScores.length; ++i) {
+                    addModifier(otherModifiers, nullableEntries, modifierScores[i], modifierName + ' ' + (i + 1).toString());
+                }
+            } else if (modifierScores !== null) {
+                addModifier(otherModifiers, nullableEntries, modifierScores, modifierName);
+            }
+        }
+
+    }
+
+    abilityScores['others'] = abilityScoresOtherModifiers;
+    savingThrows['others'] = savingThrowsOtherModifiers;
+    abilityScores['mod'] = objGet(abilityScores, 'mod_temp', null);
+    delete abilityScores['mod_temp'];
+    savingThrows['key_ability'] = objGet(savingThrows, 'mod', null);
+    delete savingThrows['mod'];
+
+});
 
 export { Versioner };

@@ -70,7 +70,7 @@ class SuperschedaController {
         this._initDlNewBtns();
         this._initArrayAutosort();
         this._initSpells();
-        this._initAbilities();
+        this._initAbilitiesAndSavingThrows();
         this._initAttacks();
         this._initSkills();
         this._initPicture();
@@ -629,9 +629,21 @@ class SuperschedaController {
         });
     }
 
-    _initAbilities() {
-        $('#ability_modifiers_list').on('ddarray.insertion', (evt, insertedItems) => {
-            insertedItems.forEach(insertedItem => this._initCustomCheckboxInArrayItem($(insertedItem)));
+    _initAbilitiesAndSavingThrows() {
+        const $tables = [$('#ability_scores_list'), $('#saving_throws_list')];
+        $tables.forEach($table => {
+            const controller = DDArray.getController($table);
+            $table.on('ddarray.insertion', (evt, insertedItems) => {
+                insertedItems.forEach(insertedItem => this._initCustomCheckboxInArrayItem($(insertedItem)));
+                // Need to sort because hidden elements do not blur
+                controller.sort(this._autosortCompareFn);
+            });
+
+            DDArray.getDirectChildrenArrays($table, 'append_permanent').click(() => {
+                controller.append($newItem => {
+                    $newItem.find('input[data-dd-id="toggleable"]').val('false');
+                });
+            });
         });
     }
 

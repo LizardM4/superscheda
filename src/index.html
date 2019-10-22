@@ -582,26 +582,6 @@
                         <td><input type="text" data-dd-id="cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                         <td></td>
                       </tr>
-                      <tr data-dd-id="archetype[0]">
-                        <th class="text-right align-middle px-3" scope="row">Arch&nbsp;1</th>
-                        <td><input type="text" data-dd-id="str" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="con" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="int" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="wis" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td></td>
-                      </tr>
-                      <tr data-dd-id="archetype[1]">
-                        <th class="text-right align-middle px-3" scope="row">Arch&nbsp;2</th>
-                        <td><input type="text" data-dd-id="str" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="con" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="int" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="wis" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td></td>
-                      </tr>
                       <tr data-dd-id="level">
                         <th class="text-right align-middle px-3" scope="row">Lvl</th>
                         <td><input type="text" data-dd-id="str" class="text-right form-control form-control-sm" data-dd-type="int"></td>
@@ -612,57 +592,56 @@
                         <td><input type="text" data-dd-id="cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                         <td></td>
                       </tr>
-                      <tr data-dd-id="magic">
-                        <th class="text-right align-middle px-3" scope="row">Magia</th>
-                        <td><input type="text" data-dd-id="str" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="con" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="int" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="wis" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td></td>
+                    </tbody>
+                    <tbody data-dd-array="container" id="ability_scores_list">
+                      <tr data-dd-id="others" data-dd-array="master">
+                        <th class="text-right flex-nowrap" scope="row">
+                          <div class="form-inline flex-nowrap">
+                            <input type="hidden" data-dd-id="toggleable" value="true" class="dd-conditionally-hide dd-sort-key" data-dd-type="bool">
+                            <div class="custom-control custom-checkbox dd-conditionally-hidden">
+                              <input type="checkbox" class="custom-control-input" data-dd-id="active" checked>
+                              <label class="custom-control-label"></label>
+                            </div>
+                            <input type="text" data-dd-id="name" class="form-control form-control-sm w-100">
+                          </div>
+                        </th>
+                        <td><input type="text" data-dd-id="str" class="text-right form-control form-control-sm w-100" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="dex" class="text-right form-control form-control-sm w-100" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="con" class="text-right form-control form-control-sm w-100" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="int" class="text-right form-control form-control-sm w-100" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="wis" class="text-right form-control form-control-sm w-100" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="cha" class="text-right form-control form-control-sm w-100" data-dd-type="int"></td>
+                        <td class="align-bottom">
+                          <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
+                            <i class="fas fa-minus-square" aria-hidden="true"></i>
+                          </button>
+                        </td>
                       </tr>
-                      <tr data-dd-id="misc[0]">
-                        <th class="text-right align-middle px-3" scope="row">VV1</th>
-                        <td><input type="text" data-dd-id="str" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="con" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="int" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="wis" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td></td>
-                      </tr>
-                      <tr data-dd-id="misc[1]">
-                        <th class="text-right align-middle px-3" scope="row">VV2</th>
-                        <td><input type="text" data-dd-id="str" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="con" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="int" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="wis" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td></td>
+                      <tr>
+                        <td colspan="8" class="text-center">
+                          <div class="dropdown">
+                            <button type="button" class="close float-none text-success btn-sm" data-toggle="dropdown" aria-label="Append" aria-haspopup="true" aria-expanded="false">
+                              <i class="fas fa-plus-square" aria-hidden="true"></i>
+                              <i class="fas fa-sm fa-caret-down"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                              <button type="button" class="dropdown-item" data-dd-array="append">Attivabile</button>
+                              <button type="button" class="dropdown-item" data-dd-array="append_permanent">Permanente</button>
+                            </div>
+                          </div>
+                        </td>
                       </tr>
                       <tr data-dd-id="tot">
                         <th class="text-right align-middle px-3" scope="row">Tot</th>
-                        <td><input type="text" data-dd-id="str" data-dd-formula="sum /ability_scores.base.str /ability_scores.race.str /ability_scores.archetype[0].str /ability_scores.archetype[1].str /ability_scores.level.str /ability_scores.magic.str /ability_scores.misc[0].str /ability_scores.misc[1].str" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="dex" data-dd-formula="sum /ability_scores.base.dex /ability_scores.race.dex /ability_scores.archetype[0].dex /ability_scores.archetype[1].dex /ability_scores.level.dex /ability_scores.magic.dex /ability_scores.misc[0].dex /ability_scores.misc[1].dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="con" data-dd-formula="sum /ability_scores.base.con /ability_scores.race.con /ability_scores.archetype[0].con /ability_scores.archetype[1].con /ability_scores.level.con /ability_scores.magic.con /ability_scores.misc[0].con /ability_scores.misc[1].con" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="int" data-dd-formula="sum /ability_scores.base.int /ability_scores.race.int /ability_scores.archetype[0].int /ability_scores.archetype[1].int /ability_scores.level.int /ability_scores.magic.int /ability_scores.misc[0].int /ability_scores.misc[1].int" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="wis" data-dd-formula="sum /ability_scores.base.wis /ability_scores.race.wis /ability_scores.archetype[0].wis /ability_scores.archetype[1].wis /ability_scores.level.wis /ability_scores.magic.wis /ability_scores.misc[0].wis /ability_scores.misc[1].wis" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="cha" data-dd-formula="sum /ability_scores.base.cha /ability_scores.race.cha /ability_scores.archetype[0].cha /ability_scores.archetype[1].cha /ability_scores.level.cha /ability_scores.magic.cha /ability_scores.misc[0].cha /ability_scores.misc[1].cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="str" data-dd-formula="sum /ability_scores.base.str /ability_scores.race.str /ability_scores.level.str /ability_scores.others[-1].str" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="dex" data-dd-formula="sum /ability_scores.base.dex /ability_scores.race.dex /ability_scores.level.dex /ability_scores.others[-1].dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="con" data-dd-formula="sum /ability_scores.base.con /ability_scores.race.con /ability_scores.level.con /ability_scores.others[-1].con" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="int" data-dd-formula="sum /ability_scores.base.int /ability_scores.race.int /ability_scores.level.int /ability_scores.others[-1].int" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="wis" data-dd-formula="sum /ability_scores.base.wis /ability_scores.race.wis /ability_scores.level.wis /ability_scores.others[-1].wis" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="cha" data-dd-formula="sum /ability_scores.base.cha /ability_scores.race.cha /ability_scores.level.cha /ability_scores.others[-1].cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                         <td></td>
                       </tr>
-                      <tr data-dd-id="temp">
-                        <th class="text-right align-middle px-3" scope="row"><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="chk_tmp_mod" data-dd-id="active"><label class="custom-control-label" for="chk_tmp_mod">Tmp</label></div></th>
-                        <td><input type="text" data-dd-id="str" class="text-right form-control form-control-sm dd-tmp" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="dex" class="text-right form-control form-control-sm dd-tmp" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="con" class="text-right form-control form-control-sm dd-tmp" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="int" class="text-right form-control form-control-sm dd-tmp" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="wis" class="text-right form-control form-control-sm dd-tmp" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="cha" class="text-right form-control form-control-sm dd-tmp" data-dd-type="int"></td>
-                        <td></td>
-                      </tr>
-                      <tr data-dd-id="mod_tot">
+                      <tr data-dd-id="mod">
                         <th class="text-right align-middle px-3" scope="row">M&nbsp;Tot</th>
                         <td><input type="text" data-dd-id="str" data-dd-formula="mod any 2 -10 /ability_scores.tot.str" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                         <td><input type="text" data-dd-id="dex" data-dd-formula="mod any 2 -10 /ability_scores.tot.dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
@@ -672,58 +651,7 @@
                         <td><input type="text" data-dd-id="cha" data-dd-formula="mod any 2 -10 /ability_scores.tot.cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                         <td></td>
                       </tr>
-                      <tr data-dd-id="mod_temp">
-                        <th class="text-right align-middle px-3" scope="row">M&nbsp;Tmp</th>
-                        <td><input type="text" data-dd-id="str" data-dd-formula="mod any 2 -10 /ability_scores.tot.str /ability_scores.temp.active /ability_scores.temp.str" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="dex" data-dd-formula="mod any 2 -10 /ability_scores.tot.dex /ability_scores.temp.active /ability_scores.temp.dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="con" data-dd-formula="mod any 2 -10 /ability_scores.tot.con /ability_scores.temp.active /ability_scores.temp.con" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="int" data-dd-formula="mod any 2 -10 /ability_scores.tot.int /ability_scores.temp.active /ability_scores.temp.int" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="wis" data-dd-formula="mod any 2 -10 /ability_scores.tot.wis /ability_scores.temp.active /ability_scores.temp.wis" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="cha" data-dd-formula="mod any 2 -10 /ability_scores.tot.cha /ability_scores.temp.active /ability_scores.temp.cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-                    <tbody data-dd-id="modifiers" data-dd-array="container" id="ability_modifiers_list">
-                      <tr data-dd-array="master">
-                        <th class="text-right flex-nowrap" scope="row">
-                          <!-- <div class="form-inline flex-nowrap">
-                            <div class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input" data-dd-id="active">
-                              <label class="custom-control-label"></label>
-                            </div>
-                            <input type="text" data-dd-id="name"class="form-control form-control-sm w-100">
-                          </div> -->
-                          <div class="input-group input-group-sm">
-                            <div class="input-group-prepend">
-                              <span class="btn btn-sm btn-addon btn-custom-check" tabindex="0">
-                                <input type="checkbox" data-dd-id="active">
-                                <i data-checkbox="unchecked" class="far fa-square fa-lg"></i>
-                                <i data-checkbox="checked" class="fas fa-check-square fa-lg"></i>
-                              </span>
-                            </div>
-                            <input type="text" class="form-control form-control-sm" data-dd-id="name">
-                          </div>
-                        </th>
-                        <td><div class="form-inline"><input type="text" data-dd-id="str" data-dd-formula="mod any 2 -10 /ability_scores.tot.str /ability_scores.temp.active /ability_scores.temp.str" class="text-right form-control form-control-sm w-100" data-dd-type="int"></div></td>
-                        <td><div class="form-inline"><input type="text" data-dd-id="dex" data-dd-formula="mod any 2 -10 /ability_scores.tot.dex /ability_scores.temp.active /ability_scores.temp.dex" class="text-right form-control form-control-sm w-100" data-dd-type="int"></div></td>
-                        <td><div class="form-inline"><input type="text" data-dd-id="con" data-dd-formula="mod any 2 -10 /ability_scores.tot.con /ability_scores.temp.active /ability_scores.temp.con" class="text-right form-control form-control-sm w-100" data-dd-type="int"></div></td>
-                        <td><div class="form-inline"><input type="text" data-dd-id="int" data-dd-formula="mod any 2 -10 /ability_scores.tot.int /ability_scores.temp.active /ability_scores.temp.int" class="text-right form-control form-control-sm w-100" data-dd-type="int"></div></td>
-                        <td><div class="form-inline"><input type="text" data-dd-id="wis" data-dd-formula="mod any 2 -10 /ability_scores.tot.wis /ability_scores.temp.active /ability_scores.temp.wis" class="text-right form-control form-control-sm w-100" data-dd-type="int"></div></td>
-                        <td><div class="form-inline"><input type="text" data-dd-id="cha" data-dd-formula="mod any 2 -10 /ability_scores.tot.cha /ability_scores.temp.active /ability_scores.temp.cha" class="text-right form-control form-control-sm w-100" data-dd-type="int"></div></td>
-                        <td class="align-bottom">
-                          <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
-                            <i class="fas fa-minus-square" aria-hidden="true"></i>
-                          </button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td colspan="8" class="text-center">
-                          <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
-                            <i class="fas fa-plus-square" aria-hidden="true"></i>
-                          </button>
-                        </td>
-                      </tr>
-                    </tbody>
+                    </tbdoy>
                   </table>
                 </div>
                 <div class="col-xl-6">
@@ -744,17 +672,19 @@
                         <th scope="col" class="text-center">V<sup>Sag</sup></th>
                         <th scope="col" class="text-center">V<sup>Car</sup></th>
                         <th scope="col" class="text-center">V<sup>Int</sup></th>
+                        <th></th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr data-dd-id="mod">
+                      <tr data-dd-id="key_ability">
                         <th class="text-right align-middle px-3" scope="row">M&nbsp;Car</th>
-                        <td><input type="text" data-dd-id="fortitude_con" data-dd-formula="ref /ability_scores.mod_temp.con" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="fortitude_dex" data-dd-formula="ref /ability_scores.mod_temp.dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="reflex_dex" data-dd-formula="ref /ability_scores.mod_temp.dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="will_wis" data-dd-formula="ref /ability_scores.mod_temp.wis" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="will_cha" data-dd-formula="ref /ability_scores.mod_temp.cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="will_int" data-dd-formula="ref /ability_scores.mod_temp.int" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="fortitude_con" data-dd-formula="ref /ability_scores.mod.con" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="fortitude_dex" data-dd-formula="ref /ability_scores.mod.dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="reflex_dex" data-dd-formula="ref /ability_scores.mod.dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="will_wis" data-dd-formula="ref /ability_scores.mod.wis" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="will_cha" data-dd-formula="ref /ability_scores.mod.cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="will_int" data-dd-formula="ref /ability_scores.mod.int" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td></td>
                       </tr>
                       <tr data-dd-id="class">
                         <th class="text-right align-middle px-3" scope="row">Classe</th>
@@ -764,6 +694,7 @@
                         <td><input type="text" data-dd-id="will_wis" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                         <td><input type="text" data-dd-id="will_cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                         <td><input type="text" data-dd-id="will_int" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td></td>
                       </tr>
                       <tr data-dd-id="race">
                         <th class="text-right align-middle px-3" scope="row">Razza</th>
@@ -773,71 +704,58 @@
                         <td><input type="text" data-dd-id="will_wis" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                         <td><input type="text" data-dd-id="will_cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                         <td><input type="text" data-dd-id="will_int" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td></td>
                       </tr>
-                      <tr data-dd-id="archetype[0]">
-                        <th class="text-right align-middle px-3" scope="row">Arch&nbsp;1</th>
+                    </tbody>
+
+                    <tbody data-dd-array="container" id="saving_throws_list">
+                      <tr data-dd-id="others" data-dd-array="master">
+                        <th class="text-right flex-nowrap" scope="row">
+                          <div class="form-inline flex-nowrap">
+                            <input type="hidden" data-dd-id="toggleable" value="true" class="dd-conditionally-hide dd-sort-key" data-dd-type="bool">
+                            <div class="custom-control custom-checkbox dd-conditionally-hidden">
+                              <input type="checkbox" class="custom-control-input" data-dd-id="active" checked>
+                              <label class="custom-control-label"></label>
+                            </div>
+                            <input type="text" data-dd-id="name" class="form-control form-control-sm w-100">
+                          </div>
+                        </th>
                         <td><input type="text" data-dd-id="fortitude_con" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                         <td><input type="text" data-dd-id="fortitude_dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                         <td><input type="text" data-dd-id="reflex_dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                         <td><input type="text" data-dd-id="will_wis" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                         <td><input type="text" data-dd-id="will_cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                         <td><input type="text" data-dd-id="will_int" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td class="align-bottom">
+                          <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
+                            <i class="fas fa-minus-square" aria-hidden="true"></i>
+                          </button>
+                        </td>
                       </tr>
-                      <tr data-dd-id="archetype[1]">
-                        <th class="text-right align-middle px-3" scope="row">Arch&nbsp;2</th>
-                        <td><input type="text" data-dd-id="fortitude_con" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="fortitude_dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="reflex_dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="will_wis" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="will_cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="will_int" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                      </tr>
-                      <tr data-dd-id="magic">
-                        <th class="text-right align-middle px-3" scope="row">Magia</th>
-                        <td><input type="text" data-dd-id="fortitude_con" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="fortitude_dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="reflex_dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="will_wis" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="will_cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="will_int" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                      </tr>
-                      <tr data-dd-id="misc[0]">
-                        <th class="text-right align-middle px-3" scope="row">VV&nbsp;1</th>
-                        <td><input type="text" data-dd-id="fortitude_con" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="fortitude_dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="reflex_dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="will_wis" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="will_cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="will_int" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                      </tr>
-                      <tr data-dd-id="misc[1]">
-                        <th class="text-right align-middle px-3" scope="row">VV&nbsp;2</th>
-                        <td><input type="text" data-dd-id="fortitude_con" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="fortitude_dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="reflex_dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="will_wis" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="will_cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="will_int" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                      </tr>
-                      <tr data-dd-id="mod_special">
-                        <th class="text-right align-middle px-3" scope="row">M&nbsp;Spec</th>
-                        <td><input type="text" data-dd-id="fortitude_con" class="form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="fortitude_dex" class="form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="reflex_dex" class="form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="will_wis" class="form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="will_cha" class="form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="will_int" class="form-control form-control-sm" data-dd-type="int"></td>
+                      <tr>
+                        <td colspan="8" class="text-center">
+                          <div class="dropdown">
+                            <button type="button" class="close float-none text-success btn-sm" data-toggle="dropdown" aria-label="Append" aria-haspopup="true" aria-expanded="false">
+                              <i class="fas fa-plus-square" aria-hidden="true"></i>
+                              <i class="fas fa-sm fa-caret-down"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                              <button type="button" class="dropdown-item" data-dd-array="append">Attivabile</button>
+                              <button type="button" class="dropdown-item" data-dd-array="append_permanent">Permanente</button>
+                            </div>
+                          </div>
+                        </td>
                       </tr>
                       <tr data-dd-id="tot">
                         <th class="text-right align-middle px-3" scope="row">Tot</th>
-                        <td><input type="text" data-dd-id="fortitude_con"   data-dd-formula="sum /tiro_salvezza.mod.fortitude_con /tiro_salvezza.classe.fortitude_con /tiro_salvezza.razza.fortitude_con /tiro_salvezza.archetipo[0].fortitude_con /tiro_salvezza.archetipo[1]fortitude_con /tiro_salvezza.magia.fortitude_con /tiro_salvezza.varie[0].fortitude_con /tiro_salvezza.varie[1].fortitude_con /tiro_salvezza.mod_speciali.fortitude_con" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="fortitude_dex"   data-dd-formula="sum /tiro_salvezza.mod.fortitude_dex /tiro_salvezza.classe.fortitude_dex /tiro_salvezza.razza.fortitude_dex /tiro_salvezza.archetipo[0].fortitude_dex /tiro_salvezza.archetipo[1]fortitude_dex /tiro_salvezza.magia.fortitude_dex /tiro_salvezza.varie[0].fortitude_dex /tiro_salvezza.varie[1].fortitude_dex /tiro_salvezza.mod_speciali.fortitude_dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="reflex_dex" data-dd-formula="sum /tiro_salvezza.mod.reflex_dex /tiro_salvezza.classe.reflex_dex /tiro_salvezza.razza.reflex_dex /tiro_salvezza.archetipo[0].reflex_dex /tiro_salvezza.archetipo[1]reflex_dex /tiro_salvezza.magia.reflex_dex /tiro_salvezza.varie[0].reflex_dex /tiro_salvezza.varie[1].reflex_dex /tiro_salvezza.mod_speciali.reflex_dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="will_wis"  data-dd-formula="sum /tiro_salvezza.mod.will_wis /tiro_salvezza.classe.will_wis /tiro_salvezza.razza.will_wis /tiro_salvezza.archetipo[0].will_wis /tiro_salvezza.archetipo[1]will_wis /tiro_salvezza.magia.will_wis /tiro_salvezza.varie[0].will_wis /tiro_salvezza.varie[1].will_wis /tiro_salvezza.mod_speciali.will_wis" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="will_cha"  data-dd-formula="sum /tiro_salvezza.mod.will_cha /tiro_salvezza.classe.will_cha /tiro_salvezza.razza.will_cha /tiro_salvezza.archetipo[0].will_cha /tiro_salvezza.archetipo[1]will_cha /tiro_salvezza.magia.will_cha /tiro_salvezza.varie[0].will_cha /tiro_salvezza.varie[1].will_cha /tiro_salvezza.mod_speciali.will_cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="will_int"  data-dd-formula="sum /tiro_salvezza.mod.will_int /tiro_salvezza.classe.will_int /tiro_salvezza.razza.will_int /tiro_salvezza.archetipo[0].will_int /tiro_salvezza.archetipo[1]will_int /tiro_salvezza.magia.will_int /tiro_salvezza.varie[0].will_int /tiro_salvezza.varie[1].will_int /tiro_salvezza.mod_speciali.will_int" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="fortitude_con" data-dd-formula="sum /saving_throws.key_ability.fortitude_con /saving_throws.classe.fortitude_con /saving_throws.razza.fortitude_con /saving_throws.others[-1].fortitude_con" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="fortitude_dex" data-dd-formula="sum /saving_throws.key_ability.fortitude_dex /saving_throws.classe.fortitude_dex /saving_throws.razza.fortitude_dex /saving_throws.others[-1].fortitude_dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="reflex_dex" data-dd-formula="sum /saving_throws.key_ability.reflex_dex /saving_throws.classe.reflex_dex /saving_throws.razza.reflex_dex /saving_throws.others[-1].reflex_dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="will_wis" data-dd-formula="sum /saving_throws.key_ability.will_wis /saving_throws.classe.will_wis /saving_throws.razza.will_wis /saving_throws.others[-1].will_wis" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="will_cha" data-dd-formula="sum /saving_throws.key_ability.will_cha /saving_throws.classe.will_cha /saving_throws.razza.will_cha /saving_throws.others[-1].will_cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="will_int" data-dd-formula="sum /saving_throws.key_ability.will_int /saving_throws.classe.will_int /saving_throws.razza.will_int /saving_throws.others[-1].will_int" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                       </tr>
-                    </tbody>
+                    </tbdoy>
                   </table>
                 </div>
               </div>
@@ -946,7 +864,7 @@
                     <td class="text-center text-muted align-middle"><small>10/1d20</small></td>
                     <td><input type="text" data-dd-id="armatura" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                     <td><input type="text" data-dd-id="scudo" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                    <td><input type="text" data-dd-id="des" data-dd-formula="ref /ability_scores.mod_temp.dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                    <td><input type="text" data-dd-id="des" data-dd-formula="ref /ability_scores.mod.dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                     <td><input type="text" data-dd-id="taglia" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                     <td><input type="text" data-dd-id="armatura_naturale" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                     <td><input type="text" data-dd-id="deviazione" class="text-right form-control form-control-sm" data-dd-type="int"></td>
@@ -962,7 +880,7 @@
                     <td class="text-center text-muted align-middle"><small>10/1d20</small></td>
                     <td><input type="text" data-dd-id="armatura" class="text-right form-control form-control-sm" disabled data-dd-type="int"></td>
                     <td><input type="text" data-dd-id="scudo" class="text-right form-control form-control-sm" disabled data-dd-type="int"></td>
-                    <td><input type="text" data-dd-id="des" data-dd-formula="ref /ability_scores.mod_temp.dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                    <td><input type="text" data-dd-id="des" data-dd-formula="ref /ability_scores.mod.dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                     <td><input type="text" data-dd-id="taglia" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                     <td><input type="text" data-dd-id="armatura_naturale" class="text-right form-control form-control-sm" disabled data-dd-type="int"></td>
                     <td><input type="text" data-dd-id="deviazione" class="text-right form-control form-control-sm" data-dd-type="int"></td>
@@ -1118,7 +1036,7 @@
                    </thead>
                    <tbody>
                     <tr>
-                      <td><input type="text" data-dd-id="des" data-dd-formula="ref /ability_scores.mod_temp.dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                      <td><input type="text" data-dd-id="des" data-dd-formula="ref /ability_scores.mod.dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                       <td><input type="text" data-dd-id="talento" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                       <td><input type="text" data-dd-id="varie[0]" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                       <td><input type="text" data-dd-id="varie[1]" class="text-right form-control form-control-sm" data-dd-type="int"></td>
@@ -1214,7 +1132,7 @@
                    <tbody>
                     <tr>
                       <td><input type="text" data-dd-id="bonus_att_base" data-dd-formula="ref /bonus_att_base.att[0]" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                      <td><input type="text" data-dd-id="for" data-dd-formula="ref /ability_scores.mod_temp.str" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                      <td><input type="text" data-dd-id="for" data-dd-formula="ref /ability_scores.mod.str" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                       <td><input type="text" data-dd-id="taglia" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                       <td><input type="text" data-dd-id="talento" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                       <td><input type="text" data-dd-id="magia" class="text-right form-control form-control-sm" data-dd-type="int"></td>
@@ -1472,7 +1390,7 @@
                           </div>
                           <div class="form-row pb-1">
                             <div class="col-3 col-sm-2">
-                              <input data-dd-id="mod_c" data-dd-formula="sel ./car_chiave /ability_scores.mod_temp.str /ability_scores.mod_temp.dex /ability_scores.mod_temp.con /ability_scores.mod_temp.int /ability_scores.mod_temp.wis /ability_scores.mod_temp.cha" type="text" class="form-control form-control-sm" data-dd-type="int">
+                              <input data-dd-id="mod_c" data-dd-formula="sel ./car_chiave /ability_scores.mod.str /ability_scores.mod.dex /ability_scores.mod.con /ability_scores.mod.int /ability_scores.mod.wis /ability_scores.mod.cha" type="text" class="form-control form-control-sm" data-dd-type="int">
                             </div>
                             <div class="col-auto form-inline pl-2">
                               <label class="col-form-label col-form-label-sm">Car. chiave:</label>
@@ -1535,7 +1453,7 @@
                           </div>
                           <div class="form-row pb-1">
                             <div class="col-3 col-sm-2">
-                              <input data-dd-id="mod_c" data-dd-formula="sel ./car_chiave /ability_scores.mod_temp.str /ability_scores.mod_temp.dex /ability_scores.mod_temp.con /ability_scores.mod_temp.int /ability_scores.mod_temp.wis /ability_scores.mod_temp.cha" type="text" class="form-control form-control-sm" data-dd-type="int">
+                              <input data-dd-id="mod_c" data-dd-formula="sel ./car_chiave /ability_scores.mod.str /ability_scores.mod.dex /ability_scores.mod.con /ability_scores.mod.int /ability_scores.mod.wis /ability_scores.mod.cha" type="text" class="form-control form-control-sm" data-dd-type="int">
                             </div>
                             <div class="col-auto form-inline pl-2">
                               <label class="col-form-label col-form-label-sm">Car. chiave:</label>
@@ -2036,7 +1954,7 @@
                             <option value="wis">Sag</option>
                             <option value="cha">Car</option>
                           </select>
-                          <input data-dd-id="mod_c" data-dd-formula="sel ./chiave /ability_scores.mod_temp.str /ability_scores.mod_temp.dex /ability_scores.mod_temp.con /ability_scores.mod_temp.int /ability_scores.mod_temp.wis /ability_scores.mod_temp.cha" type="text" class="form-control form-control-sm" data-dd-type="int">
+                          <input data-dd-id="mod_c" data-dd-formula="sel ./chiave /ability_scores.mod.str /ability_scores.mod.dex /ability_scores.mod.con /ability_scores.mod.int /ability_scores.mod.wis /ability_scores.mod.cha" type="text" class="form-control form-control-sm" data-dd-type="int">
                         </div>
                       </div>
                       <div class="col-md-1 col-2">
