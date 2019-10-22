@@ -98,16 +98,6 @@ window.addEventListener('load', (evt) => {
 
         const $window = $(window);
 
-        // Toggle temporary modifiers classes (influences opacity of controls)
-        $('#chk_tmp_mod').change((evt, ddNode) => {
-            if ($(evt.target).is(':checked')) {
-                $('table[data-dd-id="ability_scores"]').addClass('dd-tmp-on');
-            } else {
-                $('table[data-dd-id="ability_scores"]').removeClass('dd-tmp-on');
-            }
-        });
-
-
         // Toggle the dd-nav-toc class that drives the toc; having multiple TOCs
         // causes some not to trigger, so we toggle between one and the other.
         // Since we are at it, let's also hide the top bar if the size is too small

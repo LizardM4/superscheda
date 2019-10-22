@@ -77,6 +77,7 @@ class SuperschedaController {
         this._initGUIAnimatedChevrons();
         this._initGUIDynamicTitles();
         this._initGUIDynamicIncrementers();
+        this._initGUITmpToggle();
         this._initGUIButtons();
 
         this._detectLocalStorage();
@@ -537,6 +538,17 @@ class SuperschedaController {
                 if (typeof newValue === 'number' && newValue === newValue) {
                     node.value = newValue;
                 }
+            }
+        });
+    }
+
+    _initGUITmpToggle() {
+        // Toggle temporary modifiers classes (influences opacity of controls)
+        $('.dd-tmp input[type="checkbox"].dd-toggle-tmp').change((evt, ddNode) => {
+            if ($(evt.target).is(':checked')) {
+                $(evt.target).closest('.dd-tmp').addClass('dd-tmp-on');
+            } else {
+                $(evt.target).closest('.dd-tmp').removeClass('dd-tmp-on');
             }
         });
     }
