@@ -737,4 +737,12 @@ Versioner.instance().addPatch('0.2.10', (dataBag) => {
 
 });
 
+
+
+Versioner.instance().addPatch('0.2.11', (dataBag) => {
+    dataBag['race'] = objGet(dataBag, 'razza', null, false);
+    delete dataBag['razza'];
+});
+
+
 export { Versioner };
