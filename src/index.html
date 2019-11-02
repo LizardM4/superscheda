@@ -625,7 +625,7 @@
                               <i class="fas fa-sm fa-caret-down"></i>
                             </button>
                             <div class="dropdown-menu">
-                              <button type="button" class="dropdown-item" data-dd-array="append">Attivabile</button>
+                              <button type="button" class="dropdown-item" data-dd-array="append">Temporaneo</button>
                               <button type="button" class="dropdown-item" data-dd-array="append_permanent">Permanente</button>
                             </div>
                           </div>
@@ -633,12 +633,12 @@
                       </tr>
                       <tr data-dd-id="tot">
                         <th class="text-right align-middle px-3" scope="row">Tot</th>
-                        <td><input type="text" data-dd-id="str" data-dd-formula="sum /ability_scores.base.str /ability_scores.race.str /ability_scores.level.str /ability_scores.others[-1].str" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="dex" data-dd-formula="sum /ability_scores.base.dex /ability_scores.race.dex /ability_scores.level.dex /ability_scores.others[-1].dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="con" data-dd-formula="sum /ability_scores.base.con /ability_scores.race.con /ability_scores.level.con /ability_scores.others[-1].con" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="int" data-dd-formula="sum /ability_scores.base.int /ability_scores.race.int /ability_scores.level.int /ability_scores.others[-1].int" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="wis" data-dd-formula="sum /ability_scores.base.wis /ability_scores.race.wis /ability_scores.level.wis /ability_scores.others[-1].wis" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="cha" data-dd-formula="sum /ability_scores.base.cha /ability_scores.race.cha /ability_scores.level.cha /ability_scores.others[-1].cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="str" data-dd-formula="sum /ability_scores.base.str /ability_scores.race.str /ability_scores.level.str /ability_scores.others[-1].active /ability_scores.others[-1].str" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="dex" data-dd-formula="sum /ability_scores.base.dex /ability_scores.race.dex /ability_scores.level.dex /ability_scores.others[-1].active /ability_scores.others[-1].dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="con" data-dd-formula="sum /ability_scores.base.con /ability_scores.race.con /ability_scores.level.con /ability_scores.others[-1].active /ability_scores.others[-1].con" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="int" data-dd-formula="sum /ability_scores.base.int /ability_scores.race.int /ability_scores.level.int /ability_scores.others[-1].active /ability_scores.others[-1].int" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="wis" data-dd-formula="sum /ability_scores.base.wis /ability_scores.race.wis /ability_scores.level.wis /ability_scores.others[-1].active /ability_scores.others[-1].wis" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="cha" data-dd-formula="sum /ability_scores.base.cha /ability_scores.race.cha /ability_scores.level.cha /ability_scores.others[-1].active /ability_scores.others[-1].cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                         <td></td>
                       </tr>
                       <tr data-dd-id="mod">
@@ -740,7 +740,7 @@
                               <i class="fas fa-sm fa-caret-down"></i>
                             </button>
                             <div class="dropdown-menu">
-                              <button type="button" class="dropdown-item" data-dd-array="append">Attivabile</button>
+                              <button type="button" class="dropdown-item" data-dd-array="append">Temporaneo</button>
                               <button type="button" class="dropdown-item" data-dd-array="append_permanent">Permanente</button>
                             </div>
                           </div>
@@ -748,12 +748,12 @@
                       </tr>
                       <tr data-dd-id="tot">
                         <th class="text-right align-middle px-3" scope="row">Tot</th>
-                        <td><input type="text" data-dd-id="fortitude_con" data-dd-formula="sum /saving_throws.key_ability.fortitude_con /saving_throws.classe.fortitude_con /saving_throws.razza.fortitude_con /saving_throws.others[-1].fortitude_con" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="fortitude_dex" data-dd-formula="sum /saving_throws.key_ability.fortitude_dex /saving_throws.classe.fortitude_dex /saving_throws.razza.fortitude_dex /saving_throws.others[-1].fortitude_dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="reflex_dex" data-dd-formula="sum /saving_throws.key_ability.reflex_dex /saving_throws.classe.reflex_dex /saving_throws.razza.reflex_dex /saving_throws.others[-1].reflex_dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="will_wis" data-dd-formula="sum /saving_throws.key_ability.will_wis /saving_throws.classe.will_wis /saving_throws.razza.will_wis /saving_throws.others[-1].will_wis" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="will_cha" data-dd-formula="sum /saving_throws.key_ability.will_cha /saving_throws.classe.will_cha /saving_throws.razza.will_cha /saving_throws.others[-1].will_cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
-                        <td><input type="text" data-dd-id="will_int" data-dd-formula="sum /saving_throws.key_ability.will_int /saving_throws.classe.will_int /saving_throws.razza.will_int /saving_throws.others[-1].will_int" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="fortitude_con" data-dd-formula="sum /saving_throws.key_ability.fortitude_con /saving_throws.classe.fortitude_con /saving_throws.razza.fortitude_con /saving_throws.others[-1].active /saving_throws.others[-1].fortitude_con" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="fortitude_dex" data-dd-formula="sum /saving_throws.key_ability.fortitude_dex /saving_throws.classe.fortitude_dex /saving_throws.razza.fortitude_dex /saving_throws.others[-1].active /saving_throws.others[-1].fortitude_dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="reflex_dex" data-dd-formula="sum /saving_throws.key_ability.reflex_dex /saving_throws.classe.reflex_dex /saving_throws.razza.reflex_dex /saving_throws.others[-1].active /saving_throws.others[-1].reflex_dex" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="will_wis" data-dd-formula="sum /saving_throws.key_ability.will_wis /saving_throws.classe.will_wis /saving_throws.razza.will_wis /saving_throws.others[-1].active /saving_throws.others[-1].will_wis" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="will_cha" data-dd-formula="sum /saving_throws.key_ability.will_cha /saving_throws.classe.will_cha /saving_throws.razza.will_cha /saving_throws.others[-1].active /saving_throws.others[-1].will_cha" class="text-right form-control form-control-sm" data-dd-type="int"></td>
+                        <td><input type="text" data-dd-id="will_int" data-dd-formula="sum /saving_throws.key_ability.will_int /saving_throws.classe.will_int /saving_throws.razza.will_int /saving_throws.others[-1].active /saving_throws.others[-1].will_int" class="text-right form-control form-control-sm" data-dd-type="int"></td>
                       </tr>
                     </tbdoy>
                   </table>

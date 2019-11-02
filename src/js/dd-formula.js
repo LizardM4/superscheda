@@ -375,9 +375,17 @@ class DDFormula {
                     break;
             }
         }
+        const activationStack = [];
         for (let i = 0; i < args.length; i++) {
-            if (typeof args[i] !== 'number') {
+            if (typeof args[i] === 'boolean') {
+                activationStack.push(args[i]);
+                continue;
+            } if (typeof args[i] !== 'number') {
                 return null; // Cannot compute
+            }
+            // If there is any bool in the activation stack, use it to toggle the current element
+            if (activationStack.length > 0 && !activationStack.pop(0)) {
+                continue;
             }
             retval += args[i];
         }
@@ -504,16 +512,18 @@ class DDFormula {
             return null;
         }
         let tot = 0;
+        const activationStack = [];
         for (let i = 0; i < args.length; i++) {
             // If you find a boolean, make it conditionally activate or deactivate the next modifier
             if (typeof args[i] === 'boolean') {
-                ++i;
-                if (!args[i - 1]) {
-                    continue;
-                }
-            }
-            if (typeof args[i] !== 'number') {
+                activationStack.push(args[i]);
+                continue;
+            } else if (typeof args[i] !== 'number') {
                 return null; // Cannot compute
+            }
+            // If there is any bool in the activation stack, use it to toggle the current element
+            if (activationStack.length > 0 && !activationStack.pop(0)) {
+                continue;
             }
             tot += args[i];
         }
