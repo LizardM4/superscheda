@@ -20,7 +20,8 @@
 @import "btn-addon.scss";
 
 .pr-3p5 {
-    padding-right: (1.25 * $spacer);
+    padding-right: (1.3 * $spacer) !important;
+    padding-left: 0 !important;
 }
 
 .table input[type="text"] {
