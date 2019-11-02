@@ -526,6 +526,9 @@ class SuperschedaController {
             const $target = $(evt.target).closest('.btn');
             const $inputs = $target.closest('.input-group')
                 .find('input[data-dd-path][data-dd-type]:not([type="hidden"])');
+            if ($inputs.length === 0) {
+                return;
+            }
             const node = window.DD.graph.getNodeOfDOMElement($inputs[0]);
             if (node && typeof node.value === 'number') {
                 let increment = $target.attr('data-dd-increment');
