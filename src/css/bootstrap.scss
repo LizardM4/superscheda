@@ -34,6 +34,12 @@
     }
 }
 
+@include media-breakpoint-up(lg) {
+    .separatable-lg:not(:last-of-type) {
+      border-right: $border-width solid $border-color;
+    }
+}
+
 
 .modal-backdrop.fade:not(.show) {
     opacity: 0;

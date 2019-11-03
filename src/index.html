@@ -805,65 +805,45 @@
             <div class="card-body">
 
 
-              <div class="col-md-6 separatable">
+              <div class="col col-lg-8 separatable-lg">
                 <h6>Classi e dado vita</h6>
                 <div class="form-row">
                   <div class="col">
-                    <label class="col-form-label col-form-label-sm">Classe · Prestigio</label>
+                    <label class="col-form-label col-form-label-sm">Ragione DV</label>
                   </div>
                   <div class="col-5 col-xl-4">
                     <label class="col-form-label col-form-label-sm">Num dadi · Dado</label>
                   </div>
                   <div class="col-auto pr-3p5"></div>
                 </div>
-                <div class="form-row pb-1">
-                  <div class="col">
-                    <div class="input-group input-group-sm">
-                      <div class="input-group-append input-group-prepend">
-                        <span class="input-group-text">Razza:</span>
-                      </div>
-                      <input type="text" class="form-control form-control-sm dd-no-store" data-dd-id="race_ref" data-dd-formula="ref /race" readonly>
-                    </div>
-                  </div>
-                  <div class="col-5 col-xl-4" data-dd-id="racial_hit_dice">
-                    <div class="input-group input-group-sm">
-                      <input type="text" class="form-control form-control-sm text-right" data-dd-id="count" data-dd-type="int">
-                      <div class="input-group-append input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-dice fa-lg"></i></span>
-                      </div>
-                      <input type="text" class="form-control form-control-sm" data-dd-id="dice" data-dd-type="int">
-                      <div class="input-group-append">
-                        <button class="btn btn-sm btn-addon" data-dd-increment="1">
-                          <i class="fas fa-plus"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-auto pr-3p5"></div>
-                </div>
-                <div data-dd-id="classes" data-dd-array="container">
+                <div data-dd-id="hit_dice" data-dd-array="container">
                   <div class="form-row pb-1" data-dd-array="master">
                     <div class="col">
                       <div class="input-group input-group-sm">
-                        <input type="text" class="form-control form-control-sm" data-dd-id="class">
-                        <div class="input-group-append btn-group btn-group-toggle" data-toggle="buttons">
-                          <label class="btn btn-sm btn-addon">
-                            <input type="checkbox" data-dd-id="prestige">
-                            <i class="fas fa-award fa-lg"></i>
-                          </label>
-                        </div>
+                        <select class="custom-select custom-select-sm" data-dd-id="type">
+                          <option value="race" selected>Razza</option>
+                          <option value="class">Classe</option>
+                          <option value="prestige">Prestigio</option>
+                          <option value="archetype">Archetipo</option>
+                        </select>
+                        <input type="text" class="form-control form-control-sm w-50" data-dd-id="name">
                       </div>
                     </div>
                     <div class="col-5 col-xl-4" data-dd-id="hit_dice">
                       <div class="input-group input-group-sm">
                         <input type="text" class="form-control form-control-sm text-right" data-dd-id="count" data-dd-type="int">
-                        <div class="input-group-append input-group-prepend">
-                          <span class="input-group-text"><i class="fas fa-dice fa-lg"></i></span>
-                        </div>
-                        <input type="text" class="form-control form-control-sm" data-dd-id="dice" data-dd-type="int">
+                        <select class="custom-select custom-select-sm" data-dd-id="dice">
+                          <option value="4" selected>d4</option>
+                          <option value="6">d6</option>
+                          <option value="8">d8</option>
+                          <option value="10">d10</option>
+                          <option value="12">d12</option>
+                          <option value="20">d20</option>
+                          <option value="100">d%</option>
+                        </select>
                         <div class="input-group-append">
                           <button class="btn btn-sm btn-addon" data-dd-increment="1">
-                            <i class="fas fa-plus"></i>
+                            <i class="fas fa-dice"></i> <i class="fas fa-plus"></i>
                           </button>
                         </div>
                       </div>
