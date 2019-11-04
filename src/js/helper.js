@@ -172,6 +172,86 @@ function pathNormalize(path, absolute=true) {
     return path;
 }
 
+function compressDiceExpression(expression) {
+    if (typeof expression === 'string') {
+        expression = parseDiceExpression(expression);
+    }
+    expression.sort((a, b) => {
+        if (Array.isArray(a) && !Array.isArray(b)) {
+            return -1;
+        } else if (!Array.isArray(a) && Array.isArray(b)) {
+            return 1;
+        } else if (!Array.isArray(a)) {
+            return a - b;
+        } else {
+            console.assert(a.length === 2 && b.length === 2);
+            return a[0] - b[0];
+        }
+    });
+    for (var i = 0; i < expression.length - 1; i++) {
+        if (Array.isArray(expression[i])) {
+            if (Array.isArray(expression[i + 1])) {
+                console.assert(expression[i].length === 2 && expression[i].length === 2);
+                if (expression[i + 1][0] === expression[i][0]) {
+                    expression[i][1] += expression[i + 1][1];
+                    expression.splice(i + 1, 1);
+                    --i;
+                }
+            }
+        } else if (typeof expression[i] === 'number' && typeof expression[i + 1] === 'number') {
+            expression[i] += expression[i + 1];
+            expression.splice(i + 1, 1);
+            --i;
+        }
+    }
+    return expression;
+}
+
+function parseDiceExpression(expression) {
+    const parseIntOrKeep = (txt) => {
+        const val = strictParseInt(txt);
+        if (val !== val) {
+            return txt;
+        }
+        return val;
+    };
+    expression = expression.replace(/\s/, '');
+    expression = expression.split('+').map(entry => {
+        entry = entry.toLowerCase().split('d').map(parseIntOrKeep);
+        if (entry.length === 1) {
+            return entry[0];
+        } else if (entry.length === 2) {
+            // Swap dice first
+            return [entry[1], entry[0]];
+        }
+        return entry;
+    });
+    // Remove entries that cannot be understood
+    for (let i = 0; i < expression.length; i++) {
+        let isOk = true;
+        if (Array.isArray(expression[i])) {
+            if (expression[i].length !== 2) {
+                isOk = false;
+            } else if (typeof expression[i][1] !== 'number') {
+                isOk = false;
+            }
+        } else if (typeof expression[i] !== 'number') {
+            isOk = false;
+        }
+        if (!isOk) {
+            expression.splice(i, 1);
+            --i;
+        }
+    }
+    return expression;
+}
+
+function diceExpressionToString(expression) {
+    return expression.map(x => {
+        // TODO
+    })
+}
+
 
 // https://stackoverflow.com/a/2880929/1749822
 function parseQueryString() {

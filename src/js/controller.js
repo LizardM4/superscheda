@@ -521,6 +521,18 @@ class SuperschedaController {
         });
     }
 
+
+    _initGUIHitDiceAugment() {
+        $('i.fa-dice').closest('.btn').click((evt) => {
+            const $target = $(evt.target).closest('.btn');
+            const $dice = $target.closest('.input-group')
+                .find('select[data-dd-path]');
+            const diceName = $dice.val();
+            // TODO store and retrieve dice list
+        });
+    }
+
+
     _initGUIDynamicIncrementers() {
         $('[data-dd-increment]').click((evt) => {
             const $target = $(evt.target).closest('.btn');

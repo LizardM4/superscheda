@@ -805,63 +805,98 @@
             <div class="card-body">
 
 
-              <div class="col col-lg-8 separatable-lg">
-                <h6>Classi e dado vita</h6>
-                <div class="form-row">
-                  <div class="col">
-                    <label class="col-form-label col-form-label-sm">Ragione DV</label>
-                  </div>
-                  <div class="col-5 col-xl-4">
-                    <label class="col-form-label col-form-label-sm">Num dadi · Dado</label>
-                  </div>
-                  <div class="col-auto pr-3p5"></div>
-                </div>
-                <div data-dd-id="hit_dice" data-dd-array="container">
-                  <div class="form-row pb-1" data-dd-array="master">
+              <h6>Classi e dado vita</h6>
+              <div data-dd-id="hit_dice" class="row">
+                <div class="col-12 col-lg-8 separatable-lg">
+                  <div class="form-row">
                     <div class="col">
-                      <div class="input-group input-group-sm">
-                        <select class="custom-select custom-select-sm" data-dd-id="type">
-                          <option value="race" selected>Razza</option>
-                          <option value="class">Classe</option>
-                          <option value="prestige">Prestigio</option>
-                          <option value="archetype">Archetipo</option>
-                        </select>
-                        <input type="text" class="form-control form-control-sm w-50" data-dd-id="name">
+                      <label class="col-form-label col-form-label-sm">Ragione DV</label>
+                    </div>
+                    <div class="col-5 col-xl-4">
+                      <label class="col-form-label col-form-label-sm">Num dadi · Dado</label>
+                    </div>
+                    <div class="col-auto pr-3p5"></div>
+                  </div>
+                  <div data-dd-array="container">
+                    <div data-dd-id="entries" class="form-row pb-1" data-dd-array="master">
+                      <div class="col">
+                        <div class="input-group input-group-sm">
+                          <select class="custom-select custom-select-sm" data-dd-id="type">
+                            <option value="race" selected>Razza</option>
+                            <option value="class">Classe</option>
+                            <option value="prestige">Prestigio</option>
+                            <option value="archetype">Archetipo</option>
+                          </select>
+                          <input type="text" class="form-control form-control-sm w-50" data-dd-id="name">
+                        </div>
+                      </div>
+                      <div class="col-5 col-xl-4">
+                        <div class="input-group input-group-sm">
+                          <input type="text" class="form-control form-control-sm text-right" data-dd-id="count" data-dd-type="int">
+                          <select class="custom-select custom-select-sm" data-dd-id="dice">
+                            <option value="4" selected>d4</option>
+                            <option value="6">d6</option>
+                            <option value="8">d8</option>
+                            <option value="10">d10</option>
+                            <option value="12">d12</option>
+                            <option value="20">d20</option>
+                            <option value="100">d%</option>
+                          </select>
+                          <div class="input-group-append">
+                            <button class="btn btn-sm btn-addon" data-dd-increment="1">
+                              <i class="fas fa-dice"></i> <i class="fas fa-plus"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-auto form-row align-items-center justify-content-center">
+                        <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
+                          <i class="fas fa-minus-square" aria-hidden="true"></i>
+                        </button>
                       </div>
                     </div>
-                    <div class="col-5 col-xl-4" data-dd-id="hit_dice">
+                    <p class="mb-2 text-muted text-center form-text array-placeholder">
+                      <small>Nessuna classe.</small>
+                    </p>
+                    <p class="form-text text-center">
+                      <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
+                        <i class="fas fa-plus-square" aria-hidden="true"></i>
+                      </button>
+                    </p>
+                  </div>
+
+                </div>
+
+
+                <div class="col col-lg-4">
+                  <div class="form-row mb-1">
+                    <div class="col-5">
+                      <label class="col-form-label col-form-label-sm">Totale DV:</label>
+                    </div>
+                    <div class="col">
                       <div class="input-group input-group-sm">
-                        <input type="text" class="form-control form-control-sm text-right" data-dd-id="count" data-dd-type="int">
-                        <select class="custom-select custom-select-sm" data-dd-id="dice">
-                          <option value="4" selected>d4</option>
-                          <option value="6">d6</option>
-                          <option value="8">d8</option>
-                          <option value="10">d10</option>
-                          <option value="12">d12</option>
-                          <option value="20">d20</option>
-                          <option value="100">d%</option>
-                        </select>
+                        <input class="form-control form-control-sm" data-dd-id="tot" data-dd-type="int" data-dd-formula="sum ./entries[-1].count">
                         <div class="input-group-append">
-                          <button class="btn btn-sm btn-addon" data-dd-increment="1">
-                            <i class="fas fa-dice"></i> <i class="fas fa-plus"></i>
+                          <span class="input-group-text"><span style="width: 1.25em">DV</span></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col-5">
+                      <label class="col-form-label col-form-label-sm">Aumento PF:</label>
+                    </div>
+                    <div class="col">
+                      <div class="input-group input-group-sm">
+                        <input class="form-control form-control-sm" data-dd-id="hp_next_lev">
+                        <div class="input-group-append">
+                          <button class="btn btn-sm btn-addon" id="btn_clear_increase">
+                            <i class="fas fa-check fa-fw"></i>
                           </button>
                         </div>
                       </div>
                     </div>
-                    <div class="col-auto form-row align-items-center justify-content-center">
-                      <button type="button" class="close float-none text-danger" data-dd-array="remove" aria-label="Remove">
-                        <i class="fas fa-minus-square" aria-hidden="true"></i>
-                      </button>
-                    </div>
                   </div>
-                  <p class="mb-2 text-muted text-center form-text array-placeholder">
-                    <small>Nessuna classe.</small>
-                  </p>
-                  <p class="form-text text-center">
-                    <button type="button" class="close float-none text-success" data-dd-array="append" aria-label="Append">
-                      <i class="fas fa-plus-square" aria-hidden="true"></i>
-                    </button>
-                  </p>
                 </div>
 
               </div>
