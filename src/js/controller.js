@@ -17,7 +17,17 @@
 
 'use strict';
 
-import { timeIt, arrayCompare, parseQueryString, storageAvailable, pathCombine } from './helper.js';
+import {
+    timeIt,
+    arrayCompare,
+    parseQueryString,
+    storageAvailable,
+    pathCombine,
+    compressDiceExpression,
+    parseDiceExpression,
+    diceExpressionToString,
+    solveDiceExpression
+} from './helper.js';
 import { DropboxExplorer } from './dbx-explorer.js';
 import { DDArray } from './dd-array.js';
 import { DDGraph, DDType } from './dd-graph.js';
@@ -77,6 +87,7 @@ class SuperschedaController {
         this._initGUIAnimatedChevrons();
         this._initGUIDynamicTitles();
         this._initGUIDynamicIncrementers();
+        this._initGUIHitDiceAugment();
         this._initGUITmpToggle();
         this._initGUIButtons();
 
@@ -523,12 +534,34 @@ class SuperschedaController {
 
 
     _initGUIHitDiceAugment() {
-        $('i.fa-dice').closest('.btn').click((evt) => {
+        const $hpNextLvl = $('#txt_hp_next_lev');
+        const $btn = $('.btn-dice-add');
+        $btn.click((evt) => {
+            const hpNextLvlNode = window.DD.graph.getNodeOfDOMElement($hpNextLvl[0]);
+            const constitutionNode = window.DD.graph.nodeByPath('ability_scores.mod.con');
             const $target = $(evt.target).closest('.btn');
-            const $dice = $target.closest('.input-group')
-                .find('select[data-dd-path]');
-            const diceName = $dice.val();
-            // TODO store and retrieve dice list
+            const $diceType = $target.closest('.input-group').find('select[data-dd-path]');
+            const diceType = parseInt($diceType.val());
+            let expression = parseDiceExpression(hpNextLvlNode.value);
+            expression.push([diceType, 1]);
+            const conMod = constitutionNode.formulaValue;
+            if (conMod > 0) {
+                expression.push(conMod);
+            }
+            expression = compressDiceExpression(expression);
+            hpNextLvlNode.value = diceExpressionToString(expression);
+        });
+
+        $('#btn_solve_hp').click(evt => {
+            const hpNextLvlNode = window.DD.graph.getNodeOfDOMElement($hpNextLvl[0]);
+            let expression = parseDiceExpression(hpNextLvlNode.value);
+            expression = solveDiceExpression(expression);
+            hpNextLvlNode.value = diceExpressionToString(expression);
+        });
+
+        $('#btn_clear_hp').click(evt => {
+            const hpNextLvlNode = window.DD.graph.getNodeOfDOMElement($hpNextLvl[0]);
+            hpNextLvlNode.value = null;
         });
     }
 

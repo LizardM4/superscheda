@@ -843,7 +843,7 @@
                             <option value="100">d%</option>
                           </select>
                           <div class="input-group-append">
-                            <button class="btn btn-sm btn-addon" data-dd-increment="1">
+                            <button class="btn btn-sm btn-addon btn-dice-add" data-dd-increment="1">
                               <i class="fas fa-dice"></i> <i class="fas fa-plus"></i>
                             </button>
                           </div>
@@ -888,10 +888,13 @@
                     </div>
                     <div class="col">
                       <div class="input-group input-group-sm">
-                        <input class="form-control form-control-sm" data-dd-id="hp_next_lev">
+                        <input class="form-control form-control-sm" data-dd-id="hp_next_lev" id="txt_hp_next_lev">
                         <div class="input-group-append">
-                          <button class="btn btn-sm btn-addon" id="btn_clear_increase">
-                            <i class="fas fa-check fa-fw"></i>
+                          <button class="btn btn-sm btn-addon" id="btn_solve_hp" data-placement="top" data-trigger="hover" title="Calcola">
+                            <i class="fas fa-dice fa-fw"></i>
+                          </button>
+                          <button class="btn btn-sm btn-addon" id="btn_clear_hp" data-placement="top" data-trigger="hover" title="Reset">
+                            <i class="fas fa-times fa-fw"></i>
                           </button>
                         </div>
                       </div>

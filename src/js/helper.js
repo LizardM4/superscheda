@@ -207,7 +207,28 @@ function compressDiceExpression(expression) {
     return expression;
 }
 
+function solveDiceExpression(expression) {
+    if (typeof expression === 'string') {
+        expression = parseDiceExpression(expression);
+    }
+    let total = 0;
+    for (let i = 0; i < expression.length; i++) {
+        if (Array.isArray(expression[i])) {
+            console.assert(expression[i].length === 2);
+            for (let j = 0; j < expression[i][1]; ++j) {
+                total += 1 + Math.floor(Math.random() * expression[i][0]);
+            }
+        } else if (typeof expression[i] === 'number') {
+            total += expression[i];
+        }
+    }
+    return [total];
+}
+
 function parseDiceExpression(expression) {
+    if (expression === null) {
+        return [];
+    }
     const parseIntOrKeep = (txt) => {
         const val = strictParseInt(txt);
         if (val !== val) {
@@ -247,9 +268,15 @@ function parseDiceExpression(expression) {
 }
 
 function diceExpressionToString(expression) {
-    return expression.map(x => {
-        // TODO
-    })
+    const diceEntryToString = entry => {
+        if (Array.isArray(entry)) {
+            console.assert(entry.length === 2);
+            return `${entry[1]}d${entry[0]}`;
+        } else {
+            return entry.toString();
+        }
+    };
+    return expression.map(diceEntryToString).join(' + ');
 }
 
 
@@ -305,5 +332,9 @@ export {
     pathCombine,
     pathNormalize,
     parseQueryString,
-    storageAvailable
+    storageAvailable,
+    parseDiceExpression,
+    compressDiceExpression,
+    diceExpressionToString,
+    solveDiceExpression
 };
