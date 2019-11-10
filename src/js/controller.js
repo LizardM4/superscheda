@@ -559,9 +559,19 @@ class SuperschedaController {
             hpNextLvlNode.value = diceExpressionToString(expression);
         });
 
-        $('#btn_clear_hp').click(evt => {
+        $('#btn_add_hp').click(evt => {
+            const currHpNode = window.DD.graph.nodeByPath('hit_dice.hp.tot');
             const hpNextLvlNode = window.DD.graph.getNodeOfDOMElement($hpNextLvl[0]);
+            let expression = parseDiceExpression(hpNextLvlNode.value);
             hpNextLvlNode.value = null;
+            expression = solveDiceExpression(expression);
+            if (expression.length !== 1 || typeof expression[0] !== 'number' ||
+                currHpNode.formulaValue === null || typeof currHpNode.formulaValue !== 'number')
+            {
+                currHpNode.value = currHpNode.value.toString() + ' + ' + diceExpressionToString(expression);
+            } else {
+                currHpNode.value += expression[0];
+            }
         });
     }
 
