@@ -20,6 +20,7 @@ build:webpack:
   stage: build
   image: node:alpine
   before_script:
+    - apk add --no-cache python3
     - npm install
   script:
     - npm run build-prod
