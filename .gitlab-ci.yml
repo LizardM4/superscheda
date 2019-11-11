@@ -40,3 +40,16 @@ deploy:production:
   when: manual
   dependencies:
     - build:webpack
+
+
+deploy:testing:
+  stage: deploy
+  <<: *deploy_definition
+  environment:
+    name: testing
+    url: https://dd.5p4k.me/testing
+  script:
+    - rsync -avz --delete -e "ssh -p ${DEPLOY_PORT}" dist/ "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/testing/"
+  when: manual
+  dependencies:
+    - build:webpack
