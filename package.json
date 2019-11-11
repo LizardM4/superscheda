@@ -54,7 +54,7 @@
         "sass-loader": "*",
         "sortablejs": "^1.10.1",
         "terser-webpack-plugin": "^2.1.3",
-        "webapp-webpack-plugin": "*",
+        "favicons-webpack-plugin": "*",
         "webpack": "^4.41.1",
         "webpack-cli": "*",
         "webpack-subresource-integrity": "^1.3.4"

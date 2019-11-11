@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const SriPlugin = require('webpack-subresource-integrity');
-const WebappWebpackPlugin = require('webapp-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -34,7 +34,7 @@ module.exports = {
      filename: 'css/[name].[contenthash].css',
     }),
     new SriPlugin({hashFuncNames: ['sha256', 'sha384']}),
-    new WebappWebpackPlugin({
+    new FaviconsWebpackPlugin({
       logo: './src/img/favicon.png',
       prefix: 'img/favicon-[hash]/',
       favicons: {
@@ -54,7 +54,7 @@ module.exports = {
         }
       }
     }),
-    new WebappWebpackPlugin({
+    new FaviconsWebpackPlugin({
       logo: './src/img/startup.png',
       prefix: 'img/startup-[hash]/',
       favicons: {
