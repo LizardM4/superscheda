@@ -762,12 +762,12 @@ Versioner.instance().addPatch('0.2.12', (dataBag) => {
     let raceDescription = 'Razza';
     const raceName = objGet(dataBag, 'race', null, false);
     if (raceName !== null) {
-        raceDescription += ' ' + raceName;
+        raceDescription = `${raceName} (${raceDescription})`;
     }
 
     const hdEntries = [];
 
-    // Get all hit dices
+    // Get all hit dice
     const hdBag = objGet(dataBag, 'dado_vita', {}, true);
     const hitDices = objGet(hdBag, 'classe', [], true).filter(nonNull).map(parseDice);
     let totHitDices = objGet(hdBag, 'tot', null, false);
@@ -831,7 +831,7 @@ Versioner.instance().addPatch('0.2.12', (dataBag) => {
 
     const hpBag = objGet(dataBag, 'punti_ferita', {}, true);
 
-    // If there is only one class and the total number of dices is defined, then put that into that class
+    // If there is only one class and the total number of dice is defined, then put that into that class
     if (hdEntries.length === 1 && typeof totHitDices === 'number') {
         hdEntries[0]['count'] = totHitDices;
         totHitDices = null;
