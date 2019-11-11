@@ -759,6 +759,12 @@ Versioner.instance().addPatch('0.2.12', (dataBag) => {
     };
     const nonNull = el => el !== null;
 
+    let raceDescription = 'Razza';
+    const raceName = objGet(dataBag, 'race', null, false);
+    if (raceName !== null) {
+        raceDescription += ' ' + raceName;
+    }
+
     const hdEntries = [];
 
     // Get all hit dices
@@ -799,7 +805,7 @@ Versioner.instance().addPatch('0.2.12', (dataBag) => {
         const dice = parseDice(racialDice);
         hdEntries.push({
             'type': 'race',
-            'name': objGet(dataBag, 'race', null, false),
+            'name': raceDescription,
             'die': dice[0],
             'count': dice[1]
         });
@@ -845,6 +851,45 @@ Versioner.instance().addPatch('0.2.12', (dataBag) => {
     delete dataBag['punti_ferita'];
 
     dataBag['hit_dice'] = hd;
+});
+
+Versioner.instance().addPatch('0.2.13', (dataBag) => {
+    const abilityScores = objGet(dataBag, 'ability_scores', {}, true);
+    const savingThrows = objGet(dataBag, 'saving_throws', {}, true);
+
+    let raceDescription = 'Razza';
+    const raceName = objGet(dataBag, 'race', null, false);
+    if (raceName !== null) {
+        raceDescription += ' ' + raceName;
+    }
+
+    abilityScores['entries'] = objGet(abilityScores, 'others', null, false);
+    savingThrows['entries'] = objGet(savingThrows, 'others', null, false);
+
+    delete abilityScores['others'];
+    delete abilityScores['others'];
+
+    const racialAbilityScores = objGet(abilityScores, 'race', {}, true);
+
+    delete abilityScores['race'];
+
+    let anyNonNull = false;
+    for (const score of Object.values(racialAbilityScores)) {
+        if (score !== null) {
+            anyNonNull = true;
+            break;
+        }
+    }
+
+    if (anyNonNull) {
+        if (abilityScores['entries'] === null) {
+            abilityScores['entries'] = [];
+        }
+        racialAbilityScores['toggleable'] = false;
+        racialAbilityScores['active'] = true;
+        racialAbilityScores['name'] = raceDescription;
+        abilityScores['entries'].splice(0, 0, racialAbilityScores);
+    }
 });
 
 
