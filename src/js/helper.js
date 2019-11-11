@@ -230,6 +230,9 @@ function parseDiceExpression(expression) {
         return [];
     }
     const parseIntOrKeep = (txt) => {
+        if (txt === '') {
+            return 0;
+        }
         const val = strictParseInt(txt);
         if (val !== val) {
             return txt;

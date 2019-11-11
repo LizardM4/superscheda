@@ -16,7 +16,7 @@
 //
 'use strict';
 
-import { arrayCompare, arrayBinarySearch, timeIt, dictShallowCopy } from './helper.js';
+import { arrayCompare, arrayBinarySearch, timeIt, dictShallowCopy, parseDiceExpression } from './helper.js';
 import { DFSEvent } from './dd-graph.js';
 
 
@@ -742,6 +742,109 @@ Versioner.instance().addPatch('0.2.10', (dataBag) => {
 Versioner.instance().addPatch('0.2.11', (dataBag) => {
     dataBag['race'] = objGet(dataBag, 'razza', null, false);
     delete dataBag['razza'];
+});
+
+
+Versioner.instance().addPatch('0.2.12', (dataBag) => {
+    const parseDice = el => {
+        if (typeof el === 'string') {
+            const diceExpr = parseDiceExpression(el);
+            if (diceExpr.length > 0) {
+                return diceExpr[0];
+            }
+            return [null, el];
+        } else {
+            return [el, 1];
+        }
+    };
+    const nonNull = el => el !== null;
+
+    const hdEntries = [];
+
+    // Get all hit dices
+    const hdBag = objGet(dataBag, 'dado_vita', {}, true);
+    const hitDices = objGet(hdBag, 'classe', [], true).filter(nonNull).map(parseDice);
+    let totHitDices = objGet(hdBag, 'tot', null, false);
+    if (totHitDices !== null) {
+        const diceExpr = parseDiceExpression(totHitDices);
+        if (diceExpr.length > 0) {
+            totHitDices = diceExpr[0][1];
+        } else {
+            const castAttempt = safeParseInt(totHitDices);
+            if (castAttempt !== null) {
+                totHitDices = castAttempt;
+            }
+        }
+    }
+
+
+    const pushEntryPopDice = (type, name) => {
+        const dice = hitDices.length > 0 ? hitDices.shift() : [null, null];
+        hdEntries.push({
+            'type': type,
+            'name': name,
+            'die': dice[0],
+            'count': dice[1] === 0 ? null : dice[1]
+        });
+    }
+
+    // Collect all needed entries
+    const classes = objGet(dataBag, 'classe', [], true).filter(nonNull);
+    const npcClass = objGet(dataBag, 'classe_png', null, false);
+    const archetypes = objGet(dataBag, 'archetipo', [], true).filter(nonNull);
+    const racialDice = objGet(hdBag, 'razza', null, false);
+
+    // Do we have racial dice?
+    if (racialDice !== null) {
+        const dice = parseDice(racialDice);
+        hdEntries.push({
+            'type': 'race',
+            'name': objGet(dataBag, 'race', null, false),
+            'die': dice[0],
+            'count': dice[1]
+        });
+    }
+
+    // Push classes
+    for (let i = 0; i < classes.length; ++i) {
+        pushEntryPopDice('class', classes[i]);
+    }
+    // Then archetypes
+    for (let i = 0; i < archetypes.length; ++i) {
+        pushEntryPopDice('archetype', archetypes[i]);
+    }
+    // Then png classes
+    if (npcClass !== null) {
+        pushEntryPopDice('npc_class', npcClass);
+    }
+
+    delete dataBag['classe'];
+    delete dataBag['archetipo'];
+    delete dataBag['classe_png'];
+    delete dataBag['dado_vita'];
+
+    const hpBag = objGet(dataBag, 'punti_ferita', {}, true);
+
+    // If there is only one class and the total number of dices is defined, then put that into that class
+    if (hdEntries.length === 1 && typeof totHitDices === 'number') {
+        hdEntries[0]['count'] = totHitDices;
+        totHitDices = null;
+    }
+
+    const hd = {
+        'entries': hdEntries.length > 0 ? hdEntries : null,
+        'hp': {
+            'remain': objGet(hpBag, 'temp', null, false),
+            'temp': null,
+            'next_lev': null,
+            'tot': objGet(hpBag, 'tot', null, false),
+        },
+        'tot': totHitDices
+    };
+
+    delete dataBag['punti_ferita'];
+
+    dataBag['hit_dice'] = hd;
 });
 
 
