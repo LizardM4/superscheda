@@ -49,7 +49,7 @@
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
-            "nome": "Artigianato ()",
+            "nome": "Artigianato (...)",
             "oggetto": null,
             "razza": null,
             "sinergia": null,
@@ -182,7 +182,7 @@
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
-            "nome": "Conoscenze ()",
+            "nome": "Conoscenze (...)",
             "oggetto": null,
             "razza": null,
             "sinergia": null,
@@ -334,7 +334,7 @@
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
-            "nome": "Intrattenere ()",
+            "nome": "Intrattenere (...)",
             "oggetto": null,
             "razza": null,
             "sinergia": null,
@@ -448,7 +448,7 @@
             "di_classe": false,
             "gradi": null,
             "mod_c": null,
-            "nome": "Professione ()",
+            "nome": "Professione (...)",
             "oggetto": null,
             "razza": null,
             "sinergia": null,
@@ -675,6 +675,19 @@
             "str": null,
             "wis": null
         },
+        "entries": [
+            {
+                "active": true,
+                "cha": null,
+                "con": null,
+                "dex": null,
+                "int": null,
+                "name": "Razza",
+                "str": null,
+                "toggleable": false,
+                "wis": null
+            }
+        ],
         "level": {
             "cha": null,
             "con": null,
@@ -684,15 +697,6 @@
             "wis": null
         },
         "mod": {
-            "cha": null,
-            "con": null,
-            "dex": null,
-            "int": null,
-            "str": null,
-            "wis": null
-        },
-        "others": null,
-        "race": {
             "cha": null,
             "con": null,
             "dex": null,
@@ -711,10 +715,6 @@
     },
     "allineamento": null,
     "altezza": null,
-    "archetipo": [
-        null,
-        null
-    ],
     "att_opportunita": null,
     "attacchi": [
         {
@@ -782,13 +782,6 @@
         "sopra_testa": null,
         "sping_trasc": null
     },
-    "classe": [
-        null,
-        null,
-        null,
-        null,
-        null
-    ],
     "classe_armatura": {
         "armatura": null,
         "armatura_naturale": null,
@@ -805,7 +798,6 @@
             null
         ]
     },
-    "classe_png": null,
     "colto_alla_sprovvista": {
         "armatura": null,
         "armatura_naturale": null,
@@ -864,27 +856,29 @@
             null
         ]
     },
-    "dado_vita": {
-        "classe": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        ],
-        "razza": null,
-        "tot": null
-    },
     "denaro_preziosi": null,
     "divinita": null,
     "equipaggiamento": null,
     "eta": null,
     "giocatore": null,
     "grado_max": null,
+    "hit_dice": {
+        "entries": [
+            {
+                "count": null,
+                "die": "4",
+                "name": null,
+                "type": "class"
+            }
+        ],
+        "hp": {
+            "next_lev": null,
+            "remain": null,
+            "temp": null,
+            "tot": null
+        },
+        "tot": null
+    },
     "incantesimi": null,
     "iniziativa": {
         "des": null,
@@ -933,7 +927,7 @@
     },
     "punti_spesi": null,
     "punti_totali": null,
-    "razza": null,
+    "race": null,
     "resistenza_danno": {
         "migl_tot": null,
         "tot_tipo": [
@@ -957,6 +951,7 @@
             "will_int": null,
             "will_wis": null
         },
+        "entries": null,
         "key_ability": {
             "fortitude_con": null,
             "fortitude_dex": null,
@@ -965,7 +960,6 @@
             "will_int": null,
             "will_wis": null
         },
-        "others": null,
         "race": {
             "fortitude_con": null,
             "fortitude_dex": null,
@@ -1115,5 +1109,5 @@
             "nome": "Vista cieca"
         }
     ],
-    "_version": "0.2.10"
+    "_version": "0.2.13"
 }
