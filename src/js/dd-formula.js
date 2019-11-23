@@ -384,7 +384,7 @@ class DDFormula {
                 return null; // Cannot compute
             }
             // If there is any bool in the activation stack, use it to toggle the current element
-            if (activationStack.length > 0 && !activationStack.pop(0)) {
+            if (activationStack.length > 0 && !activationStack.shift()) {
                 continue;
             }
             retval += args[i];
