@@ -1,0 +1,33 @@
+$primary:       #d9534f !default;
+$secondary:     #5cb85c !default;
+$success:       #5bc0de !default;
+$info:          #235e6f !default;
+$light:         #f9f9f9 !default;
+$card-border-color: $primary;
+$card-color: #0f8a5f !default;
+$card-cap-color: $light;
+$card-cap-bg: $primary;
+$card-bg: rgba(255, 255, 255, 0.5) !default;
+$table-accent-bg: #ebf4eb !default;
+$input-group-addon-bg: $table-accent-bg !default;
+$input-group-addon-border-color: $secondary;
+$input-border-color: $secondary;
+$input-color: $card-color;
+$table-color: $card-color;
+$close-color: $card-color;
+$input-disabled-bg: #eaf0ee !default;
+
+.card-header h5 button.close {
+    color: $light;
+}
+
+#xmas-bg {
+    background: linear-gradient(0deg, rgba(236,236,236,1) 0%, rgba(199,201,212,1) 66%, rgba(164,165,185,1) 100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}
