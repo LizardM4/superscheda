@@ -43,8 +43,6 @@ const sortablePromise = import(/* webpackChunkName: "sortablejs", webpackPreload
     'sortablejs');
 
 import { DDArray } from './js/dd-array.js';
-
-import './js/xmas.js';
  
 // -------------------------------------------------------------------------------------------------
 // MAIN SETUP

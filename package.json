@@ -53,7 +53,6 @@
         "postcss-loader": "*",
         "precss": "*",
         "sass-loader": "*",
-        "snowfall-animation": "^1.0.5",
         "sortablejs": "^1.10.1",
         "terser-webpack-plugin": "^2.3.1",
         "webpack": "^4.41.4",
