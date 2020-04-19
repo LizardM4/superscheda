@@ -89,7 +89,20 @@ module.exports = {
         use: {
           loader: 'html-loader',
           options: {
-            attrs: ['img:src', 'source:src']
+            attributes: {
+              list: [
+                {
+                  tag: 'img',
+                  attribute: 'src',
+                  type: 'src'
+                },
+                {
+                  tag: 'source',
+                  attribute: 'src',
+                  type: 'src'
+                }
+              ]
+            }
           }
         }
       },
