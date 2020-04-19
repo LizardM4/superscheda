@@ -36,6 +36,8 @@ module.exports = {
     new SriPlugin({hashFuncNames: ['sha256', 'sha384']}),
     new FaviconsWebpackPlugin({
       logo: './src/img/favicon.png',
+      mode: 'webapp',
+      devMode: 'webapp',
       prefix: 'img/favicon-[hash]/',
       favicons: {
         appName: 'Superscheda',
@@ -56,6 +58,8 @@ module.exports = {
     }),
     new FaviconsWebpackPlugin({
       logo: './src/img/startup.png',
+      mode: 'webapp',
+      devMode: 'webapp',
       prefix: 'img/startup-[hash]/',
       favicons: {
         icons: {
