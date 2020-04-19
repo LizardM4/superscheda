@@ -750,6 +750,7 @@ class SuperschedaController {
                         const collapseId = 'collapse_' + _uniqueCnt.toString();
                         $collapsible.attr('id', collapseId);
                         $collapser.attr('data-target', '#' + collapseId);
+                        $collapser.attr('aria-controls', collapseId);
                         // And turn the icon
                         $collapsible.on('hide.bs.collapse', () => {
                             $collapser.prop('disabled', true);
