@@ -448,8 +448,7 @@ class DDFormula {
         }
         let count = 0;
         for (let i = 0; i < levels.length; ++i) {
-            if (levels[i] != lev || args[i] !== status) {
-            //            ^^ Deliberately allow string conversion!!
+            if (levels[i] !== lev || args[i] !== status) {
                 continue;
             }
             ++count;
