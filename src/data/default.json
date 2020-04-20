@@ -879,7 +879,6 @@
         },
         "tot": null
     },
-    "incantesimi": null,
     "iniziativa": {
         "des": null,
         "talento": null,
@@ -908,7 +907,6 @@
         ]
     },
     "nome": null,
-    "note_incantesimi": null,
     "notes_mechanics": null,
     "notes_special": null,
     "occhi": null,
@@ -921,10 +919,6 @@
     "pic_path": null,
     "player_notes": null,
     "privilegi": null,
-    "punti_ferita": {
-        "temp": null,
-        "tot": null
-    },
     "punti_spesi": null,
     "punti_totali": null,
     "race": null,
@@ -979,103 +973,22 @@
     },
     "segni_particolari": null,
     "sesso": "n",
-    "stat_incantesimi": {
-        "al_giorno": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
+    "spells": {
+        "counters": [
+            {
+                "daily_bonus": null,
+                "daily_limit": null,
+                "daily_tot": null,
+                "free": null,
+                "known": null,
+                "known_limit": null,
+                "level": 0,
+                "save_throw_dc": null,
+                "used": null
+            }
         ],
-        "bonus": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        ],
-        "cd_salvezza": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        ],
-        "conosciuti": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        ],
-        "max_conosciuti": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        ],
-        "preparati": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        ],
-        "totale": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        ],
-        "usati": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        ]
+        "entries": null,
+        "notes": null
     },
     "taglia": "media",
     "talenti": null,
@@ -1109,5 +1022,5 @@
             "nome": "Vista cieca"
         }
     ],
-    "_version": "0.2.13"
+    "_version": "0.2.14"
 }
