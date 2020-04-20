@@ -796,7 +796,7 @@ class SuperschedaController {
 
     _initSpells() {
         // Transfer classes to spell array items
-        this.graph.nodeByPath('incantesimi[-1].preparazione').obj.change((evt) => {
+        this.graph.nodeByPath('spells.entries[-1].status').obj.change((evt) => {
           const selectNode = this.graph.getNodeOfDOMElement(evt.target);
           const arrayItem = selectNode.parent;
           selectNode.obj.find('option').each((_, option) => {
@@ -818,7 +818,7 @@ class SuperschedaController {
         });
 
         // Apply new status when clicking on button
-        const masterSpell = this.graph.nodeByPath('incantesimi[-1]');
+        const masterSpell = this.graph.nodeByPath('spells.entries[-1]');
         masterSpell.obj.find('button').each((_, btn) => {
             btn = $(btn);
             if (btn.hasClass('d-inline-block-if-spell-known')) {
@@ -828,7 +828,7 @@ class SuperschedaController {
                     const controller = DDArray.getController(parentSpellNode.obj);
                     const newSpellNode = this.graph.getNodeOfDOMElement(controller.append());
                     newSpellNode.loadDataBag(parentSpellNode.dumpDataBag());
-                    newSpellNode.childById('preparazione').value = 'preparato';
+                    newSpellNode.childById('status').value = 'ready';
                     controller.sort(this._autosortCompareFn);
                 });
             } else if (btn.hasClass('d-inline-block-if-spell-ready')) {
@@ -836,7 +836,7 @@ class SuperschedaController {
                 btn.click((evt) => {
                     const parentSpellNode = this.graph.findParentNode($(evt.target));
                     const controller = DDArray.getController(parentSpellNode.obj);
-                    parentSpellNode.childById('preparazione').value = 'usato';
+                    parentSpellNode.childById('status').value = 'used';
                     controller.sort(this._autosortCompareFn);
                 });
             } else if (btn.hasClass('d-inline-block-if-spell-used')) {
@@ -844,7 +844,7 @@ class SuperschedaController {
                 btn.click((evt) => {
                     const parentSpellNode = this.graph.findParentNode($(evt.target));
                     const controller = DDArray.getController(parentSpellNode.obj);
-                    parentSpellNode.childById('preparazione').value = 'preparato';
+                    parentSpellNode.childById('status').value = 'ready';
                     controller.sort(this._autosortCompareFn);
                 });
             }
@@ -869,12 +869,12 @@ class SuperschedaController {
                 return;
             }
             const spell = this.graph.findParentNode(node.obj.parents('.popover'));
-            let desc = spell.childById('descrizione').value;
+            let desc = spell.childById('description').value;
             if (desc === null) {
                 desc = '';
             }
             const comps = [];
-            spell.childById('componenti').children.forEach(child => {
+            spell.childById('components').children.forEach(child => {
                 if (child.value) {
                     comps.push(child.id[0].toUpperCase());
                 }

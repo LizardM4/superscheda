@@ -892,5 +892,132 @@ Versioner.instance().addPatch('0.2.13', (dataBag) => {
     }
 });
 
+Versioner.instance().addPatch('0.2.14', (dataBag) => {
+    const defaultCounters = Array(10).fill(null);
+    let spellCounters = objGet(dataBag, 'stat_incantesimi', {}, true);
+    const spellCounterDailyLimit = objGet(spellCounters, 'al_giorno', defaultCounters, true);
+    const spellCounterDailyBonus = objGet(spellCounters, 'bonus', defaultCounters, true);
+    const spellCounterSaveThrowDC = objGet(spellCounters, 'cd_salvezza', defaultCounters, true);
+    const spellCounterKnown = objGet(spellCounters, 'conosciuti', defaultCounters, true);
+    const spellCounterKnownLimit = objGet(spellCounters, 'max_conosciuti', defaultCounters, true);
+    const spellCounterReady = objGet(spellCounters, 'preparati', defaultCounters, true);
+    const spellCounterDailyTot = objGet(spellCounters, 'totale', defaultCounters, true);
+    const spellCounterUsed = objGet(spellCounters, 'usati', defaultCounters, true);
+    spellCounters = [];
+    for (let i = 0; i < defaultCounters.length; i++) {
+        spellCounters.push({
+            'level':         i,
+            'daily_limit':   spellCounterDailyLimit.length  <= i ? null : spellCounterDailyLimit[i],
+            'daily_bonus':   spellCounterDailyBonus.length  <= i ? null : spellCounterDailyBonus[i],
+            'save_throw_dc': spellCounterSaveThrowDC.length <= i ? null : spellCounterSaveThrowDC[i],
+            'known':         spellCounterKnown.length       <= i ? null : spellCounterKnown[i],
+            'known_limit':   spellCounterKnownLimit.length  <= i ? null : spellCounterKnownLimit[i],
+            'free':          null,  // New field, would be total - ready
+            'daily_tot':     spellCounterDailyTot.length    <= i ? null : spellCounterDailyTot[i],
+            'used':          spellCounterUsed.length        <= i ? null : spellCounterUsed[i]
+        });
+    }
+
+    const spellNotes = objGet(dataBag, 'note_incantesimi', null, false);
+    let oldSpells = objGet(dataBag, 'incantesimi', null, false);
+    let spellEntries = null;
+
+    if (oldSpells !== null) {
+
+        const remapSchoolDomain = {
+            'universale': 'universal',
+            'abiurazione': 'abjuration',
+            'ammaliamento': 'enchantment',
+            'divinazione': 'divination',
+            'evocazione': 'conjuration',
+            'convocazione': 'conjuration_summoning',
+            'richiamo': 'conjuration_calling',
+            'guarigione': 'conjuration_healing',
+            'teletrasporto': 'conjuration_teleportation',
+            'creazione': 'conjuration_creation',
+            'illusione': 'illusion',
+            'allucinazione': 'illusion_phantasm',
+            'finzione': 'illusion_figment',
+            'mascheramento': 'illusion_glamer',
+            'ombra': 'illusion_shadow',
+            'trama': 'illusion_pattern',
+            'invocazione': 'evocation',
+            'necromanzia': 'necromancy',
+            'trasmutazione': 'transmutation',
+            'acqua': 'water',
+            'animale': 'animal',
+            'aria': 'air',
+            'bene': 'good',
+            'caos': 'chaos',
+            'conoscenza': 'knowledge',
+            'distruzione': 'destruction',
+            'fortuna': 'luck',
+            'forza': 'strength',
+            'fuoco': 'fire',
+            'guarigione': 'healing',
+            'guerra': 'war',
+            'inganno': 'trickery',
+            'legge': 'law',
+            'magia': 'magic',
+            'male': 'evil',
+            'morte': 'death',
+            'protezione': 'protection',
+            'sole': 'sun',
+            'terra': 'earth',
+            'vegetale': 'plant',
+            'viaggio': 'travel'
+        };
+
+        const remapStatus = {
+            'preparato': 'ready',
+            'usato': 'used'
+        };
+
+        spellEntries = [];
+        for (let i = 0; i < oldSpells.length; ++i) {
+            const spellComponents = objGet(oldSpells[i], 'componenti', {}, true);
+            const spellComponentMaterial = objGet(spellComponents, 'materiale', false, true);
+            const spellComponentSomatic = objGet(spellComponents, 'somatica', false, true);
+            const spellComponentVerbal = objGet(spellComponents, 'verbale', false, true);
+            const spellComponentFocus = objGet(spellComponents, 'focus', false, true);
+            const spellDescription = objGet(oldSpells[i], 'descrizione', null, false);
+            let spellDomainSchool = objGet(oldSpells[i], 'dominio_scuola', null, false);
+            spellDomainSchool = objGet(remapSchoolDomain, spellDomainSchool, 'universal', true);
+            const spellName = objGet(oldSpells[i], 'incantesimo', null, false);
+            const spellLevel = objGet(oldSpells[i], 'liv', null, false);
+            let spellStatus = objGet(oldSpells[i], 'preparazione', null, false);
+            spellStatus = objGet(remapStatus, spellStatus, null, true);
+            const spellRef = objGet(oldSpells[i], 'rif', null, false);
+            const spellTag = objGet(oldSpells[i], 'tag', null, false);
+            spellEntries.push({
+                'components': {
+                    'material': spellComponentMaterial,
+                    'somatic': spellComponentSomatic,
+                    'verbal': spellComponentVerbal,
+                    'focus': spellComponentFocus,
+                },
+                'description': spellDescription,
+                'domain_school': spellDomainSchool,
+                'name': spellName,
+                'level': spellLevel,
+                'status': spellStatus,
+                'ref': spellRef,
+                'tag': spellTag
+            });
+        }
+    }
+
+
+    delete dataBag['stat_incantesimi'];
+    delete dataBag['note_incantesimi'];
+    delete dataBag['incantesimi'];
+
+    dataBag['spells'] = {
+        'counters': spellCounters,
+        'entries': spellEntries,
+        'notes': spellNotes
+    };
+});
+
 
 export { Versioner };

@@ -441,20 +441,15 @@ class DDFormula {
             return null;
         }
         const lev = args.shift();
-        if (typeof lev !== 'number') {
-            return null;
-        }
-        const preparation = args.shift();
+        const status = args.shift();
         const levels = args.splice(0, Math.floor(args.length / 2));
         if (levels.length !== args.length) {
             return null;
         }
         let count = 0;
         for (let i = 0; i < levels.length; ++i) {
-            if (typeof levels[i] !== 'number') {
-                return null;
-            }
-            if (levels[i] !== lev || args[i] !== preparation) {
+            if (levels[i] != lev || args[i] !== status) {
+            //            ^^ Deliberately allow string conversion!!
                 continue;
             }
             ++count;
