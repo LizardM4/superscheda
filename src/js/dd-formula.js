@@ -670,6 +670,8 @@ class DDFormula {
                     this._argDefs[i] = true;
                 } else if (arg === 'false') {
                     this._argDefs[i] = false;
+                } else if (arg === 'null') {
+                    this._argDefs[i] = null;
                 } else if (arg === "''" || arg == '""') {
                     // Keep it as string. Except if it's the empty string
                     this._argDefs[i] = '';
