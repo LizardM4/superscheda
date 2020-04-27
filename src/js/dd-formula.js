@@ -532,7 +532,7 @@ class DDFormula {
     }
 
     _evalSel() {
-        if (this._argDefs.length <= 1) {
+        if (this._argDefs.length <= 2) {
             return null;
         }
         let select = this._argDefs[0];
@@ -551,8 +551,14 @@ class DDFormula {
                 select = select.toLowerCase();
             }
         }
+        let selDefault = this._argDefs[1];
+        if (selDefault instanceof DDSelectorInstance) {
+            selDefault.matchingNodes.forEach(element => {
+                selDefault = element.formulaValue;
+            });
+        }
         // select should appear in only one selector
-        for (let i = 1; i < this._argDefs.length; ++i) {
+        for (let i = 2; i < this._argDefs.length; ++i) {
             const argDef = this._argDefs[i];
             console.assert(argDef instanceof DDSelectorInstance);
             // Does the selected path contain the selector
@@ -571,7 +577,7 @@ class DDFormula {
                 return retval;
             }
         }
-        return null;
+        return selDefault;
     }
 
     getAllSelectorInstances() {
