@@ -1043,6 +1043,41 @@ Versioner.instance().addPatch('0.2.15', (dataBag) => {
         skill['varie'] = [misc, otherMisc];
         skill['talento'] = [feat, otherFeat];
     }
+
+    const defaultSaveThrow = {
+        "fortitude_con": null,
+        "fortitude_dex": null,
+        "reflex_dex": null,
+        "will_cha": null,
+        "will_int": null,
+        "will_wis": null
+    };
+
+    const savingThrows = objGet(dataBag, 'saving_throws', {}, true);
+    const classModifier = objGet(savingThrows, 'class', defaultSaveThrow, true);
+    classModifier['name'] = 'Classe';
+    classModifier['active'] = true;
+    classModifier['toggleable'] = false;
+
+    // Get a nice class name
+    const hitDices = objGet(dataBag, 'hit_dice', {}, true);
+    const hitDiceEntries = objGet(hitDices, 'entries', null, false);
+    if (Array.isArray(hitDiceEntries) && hitDiceEntries.length > 0) {
+        const name = objGet(hitDiceEntries[0], 'name', null, false);
+        if (typeof name === 'string' && name.length > 0) {
+            classModifier['name'] = name;
+        }
+    }
+
+    delete savingThrows['class'];
+
+    let modEntries = objGet(savingThrows, 'entries', null, false);
+    if (!Array.isArray(modEntries)) {
+        modEntries = [];
+        savingThrows['entries'] = modEntries;
+    }
+
+    modEntries.splice(0, 0, classModifier);
 });
 
 export { Versioner };

@@ -1007,15 +1007,19 @@
     },
     "sa_leggere": false,
     "saving_throws": {
-        "class": {
-            "fortitude_con": null,
-            "fortitude_dex": null,
-            "reflex_dex": null,
-            "will_cha": null,
-            "will_int": null,
-            "will_wis": null
-        },
-        "entries": null,
+        "entries": [
+            {
+                "active": true,
+                "fortitude_con": null,
+                "fortitude_dex": null,
+                "name": "Classe",
+                "reflex_dex": null,
+                "toggleable": false,
+                "will_cha": null,
+                "will_int": null,
+                "will_wis": null
+            }
+        ],
         "key_ability": {
             "fortitude_con": null,
             "fortitude_dex": null,
