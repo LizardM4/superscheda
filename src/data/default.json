@@ -2,10 +2,6 @@
     "abilita": [
         {
             "acquisita": false,
-            "archetipo": [
-                null,
-                null
-            ],
             "b_sinergia": null,
             "chiave": "dex",
             "di_classe": false,
@@ -15,16 +11,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": false,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": false,
             "b_sinergia": null,
             "chiave": "cha",
             "di_classe": false,
@@ -34,16 +32,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": true,
             "b_sinergia": null,
             "chiave": "int",
             "di_classe": false,
@@ -53,16 +53,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": true,
             "b_sinergia": null,
             "chiave": "dex",
             "di_classe": false,
@@ -72,16 +74,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": true,
             "b_sinergia": null,
             "chiave": "wis",
             "di_classe": false,
@@ -91,16 +95,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": true,
             "b_sinergia": null,
             "chiave": "cha",
             "di_classe": false,
@@ -110,16 +116,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": true,
             "b_sinergia": null,
             "chiave": "dex",
             "di_classe": false,
@@ -129,16 +137,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": true,
             "b_sinergia": null,
             "chiave": "int",
             "di_classe": false,
@@ -148,16 +158,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": true,
             "b_sinergia": null,
             "chiave": "con",
             "di_classe": false,
@@ -167,16 +179,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": false,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": false,
             "b_sinergia": null,
             "chiave": "int",
             "di_classe": false,
@@ -186,16 +200,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": false,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": false,
             "b_sinergia": null,
             "chiave": "int",
             "di_classe": false,
@@ -205,16 +221,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": true,
             "b_sinergia": null,
             "chiave": "cha",
             "di_classe": false,
@@ -224,16 +242,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": false,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": false,
             "b_sinergia": null,
             "chiave": "int",
             "di_classe": false,
@@ -243,16 +263,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": true,
             "b_sinergia": null,
             "chiave": "dex",
             "di_classe": false,
@@ -262,16 +284,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": true,
             "b_sinergia": null,
             "chiave": "int",
             "di_classe": false,
@@ -281,16 +305,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": true,
             "b_sinergia": null,
             "chiave": "wis",
             "di_classe": false,
@@ -300,16 +326,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": true,
             "b_sinergia": null,
             "chiave": "cha",
             "di_classe": false,
@@ -319,16 +347,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": true,
             "b_sinergia": null,
             "chiave": "cha",
             "di_classe": false,
@@ -338,16 +368,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": true,
             "b_sinergia": null,
             "chiave": "dex",
             "di_classe": false,
@@ -357,16 +389,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": true,
             "b_sinergia": null,
             "chiave": "dex",
             "di_classe": false,
@@ -376,16 +410,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": true,
             "b_sinergia": null,
             "chiave": "str",
             "di_classe": false,
@@ -395,16 +431,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": true,
             "b_sinergia": null,
             "chiave": "wis",
             "di_classe": false,
@@ -414,16 +452,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": true,
             "b_sinergia": null,
             "chiave": "wis",
             "di_classe": false,
@@ -433,16 +473,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": false,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": false,
             "b_sinergia": null,
             "chiave": "wis",
             "di_classe": false,
@@ -452,16 +494,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": true,
             "b_sinergia": null,
             "chiave": "cha",
             "di_classe": false,
@@ -471,16 +515,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": true,
             "b_sinergia": null,
             "chiave": "cha",
             "di_classe": false,
@@ -490,16 +536,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": false,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": false,
             "b_sinergia": null,
             "chiave": "dex",
             "di_classe": false,
@@ -509,16 +557,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": true,
             "b_sinergia": null,
             "chiave": "str",
             "di_classe": false,
@@ -528,16 +578,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": false,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": false,
             "b_sinergia": null,
             "chiave": "int",
             "di_classe": false,
@@ -547,16 +599,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": true,
             "b_sinergia": null,
             "chiave": "str",
             "di_classe": false,
@@ -566,16 +620,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": false,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": false,
             "b_sinergia": null,
             "chiave": "dex",
             "di_classe": false,
@@ -585,16 +641,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": true,
             "b_sinergia": null,
             "chiave": "wis",
             "di_classe": false,
@@ -604,16 +662,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": true,
             "b_sinergia": null,
             "chiave": "dex",
             "di_classe": false,
@@ -623,16 +683,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": false,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": false,
             "b_sinergia": null,
             "chiave": "cha",
             "di_classe": false,
@@ -642,16 +704,18 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
-            "totale": null,
-            "vari": null
-        },
-        {
-            "acquisita": true,
-            "archetipo": [
+            "talento": [
                 null,
                 null
             ],
+            "totale": null,
+            "varie": [
+                null,
+                null
+            ]
+        },
+        {
+            "acquisita": true,
             "b_sinergia": null,
             "chiave": "int",
             "di_classe": false,
@@ -661,9 +725,15 @@
             "oggetto": null,
             "razza": null,
             "sinergia": null,
-            "talento": null,
+            "talento": [
+                null,
+                null
+            ],
             "totale": null,
-            "vari": null
+            "varie": [
+                null,
+                null
+            ]
         }
     ],
     "ability_scores": {
@@ -829,11 +899,11 @@
         },
         {
             "attivo": false,
-            "nome": "Armi semplici"
+            "nome": "Armi da guerra"
         },
         {
             "attivo": false,
-            "nome": "Armi da guerra"
+            "nome": "Armi semplici"
         },
         {
             "attivo": false,
@@ -1022,5 +1092,5 @@
             "nome": "Vista cieca"
         }
     ],
-    "_version": "0.2.14"
+    "_version": "0.2.15"
 }
