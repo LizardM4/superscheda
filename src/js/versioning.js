@@ -1020,4 +1020,29 @@ Versioner.instance().addPatch('0.2.14', (dataBag) => {
 });
 
 
+Versioner.instance().addPatch('0.2.15', (dataBag) => {
+    const skills = objGet(dataBag, 'abilita', [], true);
+    for (let i = 0; i < skills.length; i++) {
+        const skill = skills[i];
+        const archetypes = objGet(skill, 'archetipo', [null, null], true);
+        const feat = objGet(skill, 'talento', null, false);
+        const misc = objGet(skill, 'vari', null, false);
+        let otherFeat = null;
+        let otherMisc = null;
+        if (Array.isArray(archetypes)) {
+            if (archetypes.length > 0) {
+                otherFeat = archetypes[0];
+            }
+            if (archetypes.length > 1) {
+                otherMisc = archetypes[1];
+            }
+        }
+        delete skill['archetipo'];
+        delete skill['vari'];
+        delete skill['talento'];
+        skill['varie'] = [misc, otherMisc];
+        skill['talento'] = [feat, otherFeat];
+    }
+});
+
 export { Versioner };
